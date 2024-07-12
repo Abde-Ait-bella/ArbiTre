@@ -13,6 +13,7 @@ use App\Http\Controllers\delegueController;
 use App\Http\Controllers\JoueurController;
 use App\Http\Controllers\matcheController;
 use App\Http\Controllers\SaisonController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StadeController;
 use App\Http\Controllers\VilleController;
 use Illuminate\Http\Request;
@@ -102,9 +103,10 @@ Route::put('/joueur/{id}', [JoueurController::class, 'update'])->middleware('aut
 Route::delete('/joueur/{id}' , [JoueurController::class, 'destroy'])->middleware('auth');
 
 //change_password
-Route::post('/change_password' , [change_passwordController::class, 'update'])->middleware('auth');
+Route::post('/change_password' , [SettingsController::class, 'updatePassword'])->middleware('auth');
 
 //change_name
+Route::post('/change_name' , [SettingsController::class, 'updateName'])->middleware('auth');
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
@@ -114,15 +116,5 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('resetPassword', 'App\Http\Controllers\ChangePasswordController@passwordResetProcess');
 });
 
-// Route::controller(TodoController::class)->group(function () {
-//     Route::get('todos', 'index');
-//     Route::post('todo', 'store');
-//     Route::get('todo/{id}', 'show');
-//     Route::put('todo/{id}', 'update');
-//     Route::delete('todo/{id}', 'destroy');
-// });
-// Route::get('/csrf-token', function () {
-//     return response()->json(['token' => csrf_token()]);
-// });
 require __DIR__.'/auth.php';
 

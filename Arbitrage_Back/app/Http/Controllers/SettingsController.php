@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class change_passwordController extends Controller
+class SettingsController extends Controller
 {
-    public function update(Request $request)
+    public function updatePassword(Request $request)
     {
         $user = $request->user();
         if (Hash::check($request->old_password, $user->password)) {
@@ -16,11 +16,23 @@ class change_passwordController extends Controller
             $user->save();
             return response()->json([
                 "message" => 'تم اعادة تعيين الرمز السري',
-            ],200);
-        }else {
+            ], 200);
+        } else {
             return response()->json([
                 "message" => 'الرمز السري الحالي غير صحيح',
-            ],400);
+            ], 400);
         }
+    }
+
+    public function updateName(Request $request)
+    {
+        $user = $request->user();
+
+        $user->name = $request->name;
+        $user->save();
+        
+        return response()->json([
+            "message" => 'تم تغيير الإسم',
+        ], 200);
     }
 }
