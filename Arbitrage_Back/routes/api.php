@@ -104,6 +104,7 @@ Route::delete('/joueur/{id}' , [JoueurController::class, 'destroy'])->middleware
 //change_password
 Route::post('/change_password' , [change_passwordController::class, 'update'])->middleware('auth');
 
+//change_name
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
