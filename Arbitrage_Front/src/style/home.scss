@@ -1,0 +1,24 @@
+.download-file{
+    img{
+        opacity: 0;
+    visibility: hidden;
+       transition: 1s;
+    }
+    .download-file-text{
+        transition: 1s;
+        margin-left: 80px !important;
+    }
+}
+  
+
+.download-file:hover{
+    img{
+        opacity: 1;
+    visibility: visible;
+       transition: 1s;
+    }
+    .download-file-text{
+        transition: 1s;
+        margin-left: 15px !important;
+    }
+}

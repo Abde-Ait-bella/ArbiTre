@@ -53,7 +53,7 @@ export function Matche(props) {
                     name: "arbitre_c_id"
                 }))
 
-                const centre = transformedOption.filter(item => item.type === 'center')
+                const centre = transformedOption.filter(item => item.type === 'centre')
                 const assistant = transformedOption.filter(item => item.type === 'assistant')
 
 

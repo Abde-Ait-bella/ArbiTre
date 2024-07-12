@@ -54,9 +54,10 @@ import AddedVille from './Component/Villes/AddedVille';
 import UpdateVille from './Component/Villes/UpdateVille';
 import UpdatedVille from './Component/Villes/UpdatedVille';
 import DeletedVille from './Component/Villes/DeletedVille';
-import "./style/App.scss"
+import "./style/App.scss";
 
-import { Change_password } from './Component/change_password';
+// import { Change_password } from './Component/change_password';
+import  Settings  from './Component/Settings';
 import { axiosClinet } from './Api/axios';
 
 import { AuthUser } from './AuthContext';
@@ -104,8 +105,9 @@ function App() {
 
   const handleSidebarClose = (e) => {
     console.log(e.nativeEvent.srcElement.attributes.class.value)
-
-    if (window.innerWidth <= 360) {
+    
+    console.log('screen.width', document.documentElement.clientWidth)
+    if (window.innerWidth <= 768) {
       if (e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle fw-bold show" || e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle fw-bold" || e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle active Active fw-bold show" || e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle active Active fw-bold") {
         setIsSidebarOpen(true);
       } else {
@@ -134,7 +136,6 @@ function App() {
                     <Link to='/' className="">
                       <h3 className="logo">
                         <i class="fa-solid fa-flag-checkered ms-2 me-3"></i>
-                        {/* <img style={{ width: php'40px', height: '40px', marginLeft: '10px'}} src="./img/user.svg" alt="" /> */}
                         ArbiTre</h3>
                     </Link>
                   </div>
@@ -145,7 +146,7 @@ function App() {
                     </div>
                     <div class="me-4">
                       <p class="mb-0 text-center fs-4 text-white d-flex justify-content-center">{user?.name}</p>
-                      <span className='d-flex justify-content-center'>{user?.email}</span>
+                      <span className="badge badge-primary text-wrap" style={{ width: '13rem'}}>{user?.email}</span>
                     </div>
                   </div>
                   <div class="navbar-nav w-100 nav-part-3">
@@ -188,12 +189,12 @@ function App() {
 
               <div className={`content bg-dark ${isSidebarOpen ? 'open' : ''}`} >
                 {/* <!-- Navbar Start --> */}
-                <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0 navbar-top">
+                <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0 navbar-top justify-content-around">
 
-                  <a href="#" class="sidebar-toggler flex-shrink-0 me-4 d-none d-lg-block justify-cotent-center" onClick={handleSidebarToggle}>
+                  <a class="sidebar-toggler flex-shrink-0 me-4 d-none d-lg-block justify-cotent-center" onClick={handleSidebarToggle}>
                     {isSidebarOpen ? <i class="fa fa-bars d-flex justify-content-center align-items-center h-100"></i> : <i class="fa-solid fa-right-long fs-4 d-flex justify-content-center align-items-center h-100"></i>}
                   </a>
-                  <a href="#" class="sidebar-toggler flex-shrink-0 me-4 d-block d-lg-none justify-cotent-center" onClick={handleSidebarToggle}>
+                  <a class="sidebar-toggler flex-shrink-0 me-4 d-block d-lg-none justify-cotent-center" onClick={handleSidebarToggle}>
                     {isSidebarOpen ? <i class="fa-solid fa-right-long fs-4 d-flex justify-content-center align-items-center h-100"></i> : <i class="fa fa-bars d-flex justify-content-center align-items-center h-100"></i>}
                   </a>
 
@@ -277,7 +278,7 @@ function App() {
                       <Route path='/composants/deletedVille' element={<DeletedVille />} />
                       <Route path='/composants/updatedVille' element={<UpdatedVille />} />
 
-                      <Route path='/change_password' element={<Change_password />} />
+                      <Route path='/change_password' element={<Settings />} />
                     </ Route>
                   </Routes>
                   {/* <RouterProvider router={router}/> */}

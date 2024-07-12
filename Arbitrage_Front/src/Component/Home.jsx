@@ -11,6 +11,10 @@ import ImageRed from "../../public/img/red-card.png";
 import ImageMatche from "../../public/img/matche.png";
 import ImageBalance from "../../public/img/balance.png";
 import Palestine from "../../public/img/palistaine.png";
+import imgPdf from "../../public/img/pngdow.png";
+import imgWord from "../../public/img/word.png";
+
+import "../style/home.scss";
 
 ChartJS.register(
     ArcElement,
@@ -747,8 +751,6 @@ function Home() {
                                             </SkeletonTheme>
                                         </div>
                                     </>
-
-
                                     :
                                     <Pie data={data_Pie} options={options_Pie} style={{ height: '450px' }} />
                             }
@@ -855,6 +857,42 @@ function Home() {
                         </div>
                     </div>
                 </div>
+                
+                <div class="row">
+                            <div className="col-sm-6 col-xl-4 mt-4" style={{ cursor : 'pointer'}}>
+                                <a href="../../public/files/transport.pdf" download="المسافة بالكيلومتر بين المدن المنضوية تحت لواء عصبة سوس لكرة القدم 2016-2017">
+                                <div class="download-file bg-secondary rounded d-flex align-items-center justify-content-around p-1 px-2">
+                                    <img src={imgPdf} style={{ height: '75px' }} alt="" />
+                                    <div class="download-file-text ms-lg-3 mt-2">
+                                        <p class="mb-2 fs-5 fw-bold ">تعويضات التنقل</p>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                            
+                            <div className="col-sm-6 col-xl-4 mt-4" style={{ cursor : 'pointer'}}>
+                                <a href="../../public/files/rapport.docx" download="rapport du match format exploitable">
+                                <div class="download-file bg-secondary rounded d-flex align-items-center justify-content-around p-2 px-2">
+                                    <img src={imgWord} style={{ height: '67px' }} alt="" />
+                                    <div class="download-file-text ms-lg-3 mt-2">
+                                        <p class="mb-2 fs-5 fw-bold ">نمودج التقرير</p>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                            
+                            <div className="col-sm-6 col-xl-4 mt-4" style={{ cursor : 'pointer'}}>
+                                <a href="../../public/files/transport.pdf" download="المسافة بالكيلومتر بين المدن المنضوية تحت لواء عصبة سوس لكرة القدم 2016-2017">
+                                <div class="download-file bg-secondary rounded d-flex align-items-center justify-content-around p-1 px-2">
+                                    <img src={imgPdf} style={{ height: '75px' }} alt="" />
+                                    <div class="download-file-text ms-lg-3 mt-2">
+                                        <p class="mb-2 fs-5 fw-bold ">نمودج التوصيل</p>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                            
+                </div>
                         <div class="bg-secondary rounded d-flex align-items-center justify-content-around p-2 bg-white mt-4" style={{ fontFamily: 'El Messiri', color:'red' }}>
                             <img src={Palestine} style={{ height: '45px' }} alt="" />
                             <div class="">
@@ -863,7 +901,7 @@ function Home() {
                         </div>
             </div >
             {/* <!-- Sale & Revenue End --> */}
-
+            
         </>
     )
 }
