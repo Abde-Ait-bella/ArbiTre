@@ -48,7 +48,6 @@ export function Change_password() {
         setErrors(errors)
         return errors;
     }
-    console.log(errors)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -63,7 +62,6 @@ export function Change_password() {
                         setResponse(response?.data?.message)
 
                     }).catch(({ response }) => {
-                        console.log(response)
                         setLoading(false);
                         setResponse('')
                         setErrorBack(response?.data?.message)

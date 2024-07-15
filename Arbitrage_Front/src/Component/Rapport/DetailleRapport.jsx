@@ -88,15 +88,9 @@ function DetailleRapport() {
             
                 .contentP {
                     margin-top: 75px; 
-                    // width: 10px;
-                    // display: flex;
-                    // justify-content: center;
                 }
                 .contentP2 {
                     margin-top: 125px; 
-                    // width: 10px;
-                    // display: flex;
-                    // justify-content: center;
                 }
                 .signature{
                     margin-top: 50px;
@@ -331,9 +325,9 @@ function DetailleRapport() {
                                                             </tr>
                                                             <tr className="text-center">
                                                                 <th className="p-1 px-3">الفريق</th>
-                                                                <th className="p-1 px-3">اسم اللاعب</th>
+                                                                <th className="p-1 px-3">إسم اللاعب</th>
                                                                 <th className="p-1 px-3">رقم الرخصة</th>
-                                                                <th className="p-1 px-3">سبب الانذار</th>
+                                                                <th className="p-1 px-3">سبب الإنذار</th>
                                                                 <th className="p-1 px-3">دق.</th>
                                                             </tr>
                                                         </thead>
@@ -366,7 +360,7 @@ function DetailleRapport() {
                                                             </tr>
                                                             <tr className="text-center">
                                                                 <th className="p-1 px-3">الفريق</th>
-                                                                <th className="p-1 px-3">اسم اللاعب</th>
+                                                                <th className="p-1 px-3">إسم اللاعب</th>
                                                                 <th className="p-1 px-3">رقم الرخصة</th>
                                                                 <th className="p-1 px-3">سبب الطرد</th>
                                                                 <th className="p-1 px-3">دق.</th>
@@ -599,13 +593,13 @@ function DetailleRapport() {
                                                                 <th scope="row">1.	توقيت حضور مراقب المباراة : <p className="text-center mb-0">{rapports?.temp_presence_delegue}</p></th>
                                                             </tr>
                                                             <tr className="text-dark">
-                                                                <th>2. توقيت حضور رجال الأمن مع الاشاؤة الى العدد : <p className="text-center mb-0 mt-2"><span>التوقيت : {rapports?.temp_presence_agents_sécurité}</span> <span className="me-2">العدد : {rapports?.nombre_agents_sécurité}</span></p></th>
+                                                                <th>2. توقيت حضور رجال الأمن مع الإشارة الى العدد : <p className="text-center mb-0 mt-2"><span>التوقيت : {rapports?.temp_presence_agents_sécurité}</span> <span className="me-2">العدد : {rapports?.nombre_agents_sécurité}</span></p></th>
                                                             </tr>
                                                             <tr className="text-dark">
-                                                                <th>.3 ارضية الملعب : <p className="text-center mb-0">{rapports?.etat_stade}</p></th>
+                                                                <th>3. أرضية الملعب : <p className="text-center mb-0">{rapports?.etat_stade}</p></th>
                                                             </tr>
                                                             <tr className="text-dark">
-                                                                <th>.4 مستودع  ملابس الحكام : <p className="text-center mb-0">{rapports?.etat_vestiaire}</p></th>
+                                                                <th>4. مستودع  ملابس الحكام : <p className="text-center mb-0">{rapports?.etat_vestiaire}</p></th>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -619,7 +613,7 @@ function DetailleRapport() {
                                 </div>
                                 <div className={` container ${skypTable ? "" : "page-break contentP2"}`}>
                                     <div>
-                                        <label htmlFor="" className="fw-bold fs-5 text-dark text-center mb-5">التقرير الاضافي :
+                                        <label htmlFor="" className="fw-bold fs-5 text-dark text-center mb-5">التقرير الإضافي :
                                             <p className="mt-3 text-dark fs-5">{rapports?.rapport_supp}</p></label>
                                     </div>
                                     <div className="signature">

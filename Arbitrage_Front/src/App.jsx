@@ -18,7 +18,6 @@ import AddedClub from './Component/Club/AddedClub';
 import DeletedClub from './Component/Club/DeletedClub';
 import UpdateClub from './Component/Club/UpdateClub';
 import UpdatedClub from './Component/Club/UpdatedClub';
-// import "bootstrap/dist/css/bootstrap.min.css";
 import RapportListe from './Component/Rapport/RapportListe';
 import DetailleRapport from './Component/Rapport/DetailleRapport';
 import AddRapport from './Component/Rapport/AddRapport/AddRapport';
@@ -56,7 +55,6 @@ import UpdatedVille from './Component/Villes/UpdatedVille';
 import DeletedVille from './Component/Villes/DeletedVille';
 import "./style/App.scss";
 
-// import { Change_password } from './Component/change_password';
 import  Settings  from './Component/Settings';
 import { axiosClinet } from './Api/axios';
 
@@ -93,7 +91,6 @@ function App() {
 
   const logout = async () => {
     await axiosClinet.post('/logout').then((Response) => {
-      console.log(Response)
       navigate('/login')
       userDataLogout();
     })
@@ -104,9 +101,7 @@ function App() {
   };
 
   const handleSidebarClose = (e) => {
-    console.log(e.nativeEvent.srcElement.attributes.class.value)
     
-    console.log('screen.width', document.documentElement.clientWidth)
     if (window.innerWidth <= 768) {
       if (e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle fw-bold show" || e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle fw-bold" || e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle active Active fw-bold show" || e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle active Active fw-bold") {
         setIsSidebarOpen(true);
@@ -294,7 +289,6 @@ function App() {
                         <div class="col-md-4 text-center">
                           Created By <a target="_blank" className='text-warning' href="https://www.linkedin.com/in/abde-ssamad-ait-bella-92481a249/">AbdeSsamad Ait-bella</a>
                           <br />
-                          {/* Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a> */}
                         </div>
                         <div className="col-md-4 d-none d-lg-block">
                           <Link to='/' className="navbar-brand mt-1 me-0 brand d-flex justify-content-center w-100">

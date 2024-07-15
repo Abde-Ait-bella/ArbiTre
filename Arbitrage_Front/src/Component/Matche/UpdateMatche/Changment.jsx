@@ -38,7 +38,6 @@ export function Changement(props) {
                 ]);
 
                 const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) === user?.id);
-                console.log('dataJoueurs', dataJoueurs)
 
                 const optionJoueursEntr = dataJoueurs?.map(item => ({
                     value: item.nom,
@@ -117,8 +116,6 @@ export function Changement(props) {
     };
 
     const handleChangeSelectJEntr = (event, index) => {
-        console.log(event);
-        // let valeur = event
         if (event === null) {
             var valeur = {
                 value: "",
@@ -283,7 +280,6 @@ export function Changement(props) {
         changeUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        console.log(numberOfAttributes)
         if (numberOfAttributes === 9 || numberOfAttributes === 12) {
             setError("")
             props.dataChangement(changeUpdate);

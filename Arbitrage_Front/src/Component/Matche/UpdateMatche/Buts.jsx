@@ -188,7 +188,6 @@ export function Buts(props) {
         butUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        console.log(numberOfAttributes)
         if (numberOfAttributes === 6 || numberOfAttributes === 9) {
             setError("")
             props.dataButs(butUpdate);
@@ -198,7 +197,6 @@ export function Buts(props) {
         }
 
     };
-    console.log('butUpdate', butUpdate)
 
 
     return (

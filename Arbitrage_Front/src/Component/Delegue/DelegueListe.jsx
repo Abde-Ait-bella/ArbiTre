@@ -38,7 +38,6 @@ function DelegueListe() {
         axiosClinet.delete(`/delegue/${id}`).then(
             (response) => {
                 const { status } = response;
-                console.log(response)
                 if (status === 200) {
                     setLoadingDelete(false)
                     navigate('/composants/deletedDelegue');

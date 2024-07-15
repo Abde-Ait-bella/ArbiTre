@@ -186,7 +186,6 @@ export function Avert(props) {
         const { name, value } = TypeEvent;
         const newAverts = [...avert];
         newAverts[index][name] = value;
-        console.log('newAverts', newAverts)
         setAvert(newAverts);
     }
 

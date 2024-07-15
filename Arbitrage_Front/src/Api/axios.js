@@ -15,7 +15,6 @@ axiosClinet.interceptors.request.use(
   );
 
   axiosClinet.interceptors.response.use(null, function(error) {
-    console.log('error', error)
     if (error.response.status === 401) {
         localStorage.removeItem('user');
         localStorage.removeItem('AUTHENTICATED')

@@ -1,8 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { axiosClinet } from "./Api/axios";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-// import { Loader, Loader2 } from "lucide-react";
-// import $ from "jquery";
 
 function ForgotPassword() {
 
@@ -18,7 +16,6 @@ function ForgotPassword() {
             navigate('/')
         }
         setEmail(searchParams.get('email'))
-        console.log(email)
     }, [])
 
     const [errors, setErrors] = useState();
@@ -53,7 +50,6 @@ function ForgotPassword() {
         return errors;
     }
 
-    console.log(isValide)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -66,7 +62,6 @@ function ForgotPassword() {
             await axiosClinet.post('/sendPasswordResetLink', values).then(
                 (response) => {
                     setLoading(false);
-                    console.log('full response', response)
                     setResponce(response.data.data)
                 }
             ).catch(({ response }) => {

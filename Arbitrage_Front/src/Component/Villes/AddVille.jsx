@@ -12,7 +12,6 @@ function AddVille() {
     const { user } = AuthUser();
 
 
-    console.log('user.id', user?.id)
     const handleAddVille = (event) => {
         const { name, value } = event.target;
         setAddVille(prevValues => ({
@@ -20,7 +19,6 @@ function AddVille() {
             [name]: value,
             user_id: parseInt(user?.id),
         }))
-        console.log(addVille)
     }
 
     const handleSubmit = async (e) => {

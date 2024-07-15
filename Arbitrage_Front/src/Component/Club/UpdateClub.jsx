@@ -61,7 +61,6 @@ function UpdateStade() {
             ).catch(
                 (error) => {
                     setLoadingUpdate(false)
-                    console.log('error', error);
                 }
             )
         } else {

@@ -28,23 +28,19 @@ function AddMatche() {
                 }
                 ).catch((response) => {
                     setLoading(false)
-                    console.log(response)
                 })
             }
             if (dataAvert) {
                 setLoading(true)
-                console.log(id)
                 await axiosClinet.put(`/avertissement/${id}`, dataAvert).then(
                     (response) => {
                         const { data } = response;
-                        console.log(response)
                         if (data.status == true) {
                             setLoading(false)
                             navigate('/updatedMatche')
                         }
                     }
                     ).catch((response) => {
-                        console.log(response)
                         setLoading(false)
                     })
                 }
@@ -60,7 +56,6 @@ function AddMatche() {
                 }
             ).catch((response) => {
                 setLoading(false)
-                console.log(response)
             })
         }
         if (dataButs) {
@@ -75,7 +70,6 @@ function AddMatche() {
                 }
             ).catch((response) => {
                 setLoading(false)
-                console.log(response)
             })
         }
     }
@@ -89,22 +83,18 @@ function AddMatche() {
     const handleAvertData = (dataFromChild) => {
         setDataAvert(dataFromChild);
     }
-    console.log("dataAvert", dataAvert)
 
     const handleMatcheData = (dataFromChild) => {
         setDataMatche(dataFromChild);
     }
-    console.log("dataMatche", dataMatche)
 
     const handleChangementData = (dataFromChild) => {
         setDataChangement(dataFromChild);
     }
-    console.log("dataChangement", dataChangement)
 
     const handleButsData = (dataFromChild) => {
         setDataButs(dataFromChild);
     }
-    console.log("dataButs", dataButs)
 
     return (
         <div className="bg-dark p-4">

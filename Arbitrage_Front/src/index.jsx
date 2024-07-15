@@ -24,12 +24,3 @@ root.render(
         </BrowserRouter>
     </AuthProvider>
 );
-
-// const appRoot = ReactDOM.createRoot(document.getElementById('app-root'));
-// appRoot.render(
-//     <BrowserRouter>
-//         <Routes>
-//             <Route path='/login' element={<Login />} />
-//         </Routes>
-//     </BrowserRouter>
-// );

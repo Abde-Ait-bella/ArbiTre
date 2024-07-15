@@ -43,7 +43,6 @@ function Matches() {
             .then(
                 (response) => {
                     const { status } = response;
-                    console.log(response)
                     if (status === 200) {
                         navigate('/DeletedMatche');
                         setLoadingDelete(false)

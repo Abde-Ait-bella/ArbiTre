@@ -31,7 +31,6 @@ function VillesListe() {
         axiosClinet.delete(`/ville/${id}`).then(
             (response) => {
                 const { status } = response;
-                console.log(response)
                 if (status === 200) {
                     setLoadingDelete(false)
                     navigate('/composants/deletedVille');

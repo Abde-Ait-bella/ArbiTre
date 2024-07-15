@@ -171,7 +171,6 @@ export function Buts(props) {
 
     }
 
-    console.log('Data  Buts', buts)
 
     const handleChangeInput = (event, index) => {
         const { name, value } = event.target;

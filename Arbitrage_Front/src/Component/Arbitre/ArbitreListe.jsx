@@ -37,7 +37,6 @@ function ArbiTreListe() {
         axiosClinet.delete(`/arbitre/${id}`).then(
             (response) => {
                 const { status } = response;
-                console.log(response)
                 if (status === 200) {
                     navigate('/composants/deletedArbitre');
                     setLoadingDelete(false)

@@ -81,7 +81,6 @@ function Login() {
             setLoadingLogin(true);
             await axiosClinet.post('/login', values).then(
                 (response) => {
-                    console.log(response)
                     const { status, data } = response;
                     userDataLogin(data.user)
                     if (status === 200) {
@@ -92,7 +91,6 @@ function Login() {
                     }
                 }
             ).catch(({ response }) => {
-                console.log(response)
                 setErrorBack(response?.data?.message === "These credentials do not match our records." ? "هذه المعلومات لا تتطابق مع سجلاتنا ." : "" || response?.data?.message === "Too many login attempts. Please try again in 12 seconds." ? "هناك عدد كبير جدًا من محاولات تسجيل الدخول. يرجى المحاولة مرة أخرى خلال 12 ثانية." : "")
                 setLoadingLogin(false)
             })

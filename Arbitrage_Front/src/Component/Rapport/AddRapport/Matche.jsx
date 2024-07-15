@@ -53,7 +53,6 @@ export function Matche(props) {
 
                 const centre = transformedOption.filter(item => item.type === 'centre')
                 const assistant = transformedOption.filter(item => item.type === 'assistant')
-                console.log('arbitreUser', arbitreUser)
 
                 const arbireAssistant_1 = assistant.map(item => ({
                     value: item.value,
@@ -255,7 +254,6 @@ export function Matche(props) {
         stadeClub_1: ""
     });
 
-    console.log('dernierIdMatche', state?.dernierIdMatche)
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setInputValue(prevValues => ({
@@ -327,14 +325,12 @@ export function Matche(props) {
             villeDelegue: villeDelegue,
             stadeClub_1: stadeClub_1,
         }))
-        console.log("matche :", inputValue)
     };
 
     const [isValideData, setIsValideData] = useState();
 
     const sendData = () => {
         const numberKey = Object.keys(inputValue).length;
-        console.log('numberKey', numberKey)
         if (numberKey === 27) {
             props.dataMatche(inputValue);
             setIsValideData(prev => !prev)
@@ -666,7 +662,7 @@ export function Matche(props) {
                         <div className="row my-2 mx-2">
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputPassword4">التوقيت</label>
-                                <input type="time" name='temps' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                <input type="time" name='temps' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputTime" />
                             </div>
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputEmail4">الملعب</label>
@@ -691,11 +687,11 @@ export function Matche(props) {
                                         <div className="row">
                                             <div className="form-group col-md-4">
                                                 <label htmlFor="inputPassword4">1.	توقيت حضور مراقب المباراة : </label>
-                                                <input type="time" name='temp_presence_delegue' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                <input type="time" name='temp_presence_delegue' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputTime" />
                                             </div>
                                             <div className="form-group col-md-4">
                                                 <label htmlFor="inputPassword4">2.  توقيت حضور رجال الأمن :</label>
-                                                <input type="time" name='temp_presence_agents_sécurité' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                <input type="time" name='temp_presence_agents_sécurité' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputTime" />
                                             </div>
                                             <div className="form-group col-md-4">
                                                 <label htmlFor="inputPassword4">3.	عدد رجال الامن</label>

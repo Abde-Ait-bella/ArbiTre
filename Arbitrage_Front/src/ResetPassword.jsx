@@ -13,16 +13,13 @@ function ResetPassword() {
     const [errorBack, setErrorBack] = useState();
     const [loading, setLoading] = useState();
     const [searchParams] = useSearchParams();
-    // const [email, setEmail] = useState();
     const [status, setStatus] = useState();
     const { token } = useParams();
     const { email } = useParams();
 
     useEffect(() => {
-        // setEmail(searchParams.get('/email'))
     }, [email, token])
 
-    console.log(email, token)
 
     const handelCHange = (e) => {
         const newObject = { ...values, [e.target.name]: e.target.value };
@@ -67,7 +64,6 @@ function ResetPassword() {
             await axiosClinet.post('/resetPassword', { ...values, email, 'resetToken': token }).then(
                 (response) => {
                     setLoading(false)
-                    console.log(response)
                     setStatus(response?.data.data)
                 }
             ).catch(({ response }) => {

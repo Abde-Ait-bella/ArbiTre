@@ -31,7 +31,6 @@ function StadesListe() {
             })
     }, [])
 
-    console.log(stadesDefault)
 
 
     const handleDelete = async (id) => {
@@ -40,7 +39,6 @@ function StadesListe() {
         await axiosClinet.delete(`/stade/${id}`).then(
             (response) => {
                 const { status } = response;
-                console.log(response)
                 if (status === 200) {
                     setLoadingDelete(false)
                     navigate('/composants/DeletedStade');

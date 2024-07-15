@@ -301,7 +301,6 @@ export function Changement(props) {
         change.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        console.log(numberOfAttributes)
         if (numberOfAttributes === 9) {
             setError("")
             props.dataChangement(change);
@@ -470,7 +469,6 @@ export function Changement(props) {
                                                         value={change[index]?.joueur_nom_sort ? optionsJSort?.find((l) => l.value === change[index]?.joueur_nom_sort) : ""}
                                                         placeholder="أكتب و اختر"
                                                     />
-                                                    {console.log(change)}
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">

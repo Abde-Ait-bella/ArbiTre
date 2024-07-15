@@ -36,7 +36,6 @@ const Settings = () => {
 
 
     const Validation = (data) => {
-        console.log(data)
         const errors = {}
         let formIsValid = true
         let formIsValidName = true

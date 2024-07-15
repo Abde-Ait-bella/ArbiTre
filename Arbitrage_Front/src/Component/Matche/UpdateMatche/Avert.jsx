@@ -188,7 +188,6 @@ export function Avert(props) {
         }else {
             setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
-        console.log('numberOfAttributes', numberOfAttributes == null)
 
     };
 
@@ -205,7 +204,6 @@ export function Avert(props) {
         let numberOfAttributes;
         avertUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
-            console.log('numberOfAttributes', numberOfAttributes)
         });
         if (numberOfAttributes === 8 || numberOfAttributes === 12) {
             setError("")

@@ -109,7 +109,6 @@ function Home() {
     }, [user, season])
 
     const avertSeason = avertData?.filter((a) => matcheSeason?.some((m) => m.id === parseInt(a?.matche_id)))
-    console.log('avertSeason', avertData?.filter((a) => matcheSeason?.some((m) => m.id === parseInt(a?.matche_id))));
     const avert_G = avertSeason?.filter((a) => a.type === 'G')
     const avert_R = avertSeason?.filter((a) => a.type === 'R')
 
@@ -242,7 +241,6 @@ function Home() {
             title: {
                 display: true,
                 text: 'المنافسات',
-                // color: '#6C7293',
                 color: 'white',
                 font: {
                     family: 'El Messiri',
@@ -333,7 +331,7 @@ function Home() {
     };
 
     const dataPolarAria = {
-        labels: ['الصغار', 'الفتيان', 'الشبان', 'الشرفي التاني', 'الشرفي التاني', 'الشرفي الممتاز'],
+        labels: ['الصغار', 'الفتيان', 'الشبان', 'الشرفي الثاني', 'الشرفي الأول', 'الشرفي الممتاز'],
         datasets: [
             {
                 label: 'عدد المباريات',
@@ -860,7 +858,7 @@ function Home() {
                 
                 <div class="row">
                             <div className="col-sm-6 col-xl-4 mt-4" style={{ cursor : 'pointer'}}>
-                                <a href="../../public/files/transport.pdf" download="المسافة بالكيلومتر بين المدن المنضوية تحت لواء عصبة سوس لكرة القدم 2016-2017">
+                                <a href="files/transport.pdf" download="المسافة بالكيلومتر بين المدن المنضوية تحت لواء عصبة سوس لكرة القدم 2016-2017">
                                 <div class="download-file bg-secondary rounded d-flex align-items-center justify-content-around p-1 px-2">
                                     <img src={imgPdf} style={{ height: '75px' }} alt="" />
                                     <div class="download-file-text ms-lg-3 mt-2">
@@ -871,7 +869,7 @@ function Home() {
                             </div>
                             
                             <div className="col-sm-6 col-xl-4 mt-4" style={{ cursor : 'pointer'}}>
-                                <a href="../../public/files/rapport.docx" download="rapport du match format exploitable">
+                                <a href="files/rapport.docx" download="rapport du match format exploitable">
                                 <div class="download-file bg-secondary rounded d-flex align-items-center justify-content-around p-2 px-2">
                                     <img src={imgWord} style={{ height: '67px' }} alt="" />
                                     <div class="download-file-text ms-lg-3 mt-2">
@@ -882,7 +880,7 @@ function Home() {
                             </div>
                             
                             <div className="col-sm-6 col-xl-4 mt-4" style={{ cursor : 'pointer'}}>
-                                <a href="../../public/files/transport.pdf" download="المسافة بالكيلومتر بين المدن المنضوية تحت لواء عصبة سوس لكرة القدم 2016-2017">
+                                <a href="files/reçu.pdf" download="توصيل">
                                 <div class="download-file bg-secondary rounded d-flex align-items-center justify-content-around p-1 px-2">
                                     <img src={imgPdf} style={{ height: '75px' }} alt="" />
                                     <div class="download-file-text ms-lg-3 mt-2">

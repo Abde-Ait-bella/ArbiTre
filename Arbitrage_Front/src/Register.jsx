@@ -75,9 +75,7 @@ function Register() {
             await axiosClinet.post('/register', values).then(
                 (response) => {
                     setLoading(false);
-                    
-                    console.log('full response', response)
-                    
+                                        
                     const {status} = response;
                     
                     if (status === 200) {

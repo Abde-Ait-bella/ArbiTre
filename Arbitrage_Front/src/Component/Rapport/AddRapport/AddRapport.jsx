@@ -31,7 +31,6 @@ function AddRapport() {
                     }
                 ).catch((response) => {
                     setLoading(false)
-                    console.log(response)
                 })
             }else{
                 setLoading(false)
@@ -46,7 +45,6 @@ function AddRapport() {
                     }
                 ).catch((response) => {
                     setLoading(false)
-                    console.log(response)
                 })
             }
             if (dataChangement) {
@@ -59,7 +57,6 @@ function AddRapport() {
                     }
                 ).catch((response) => {
                     setLoading(false)
-                    console.log(response)
                 })
             }
             if (dataButs) {
@@ -72,7 +69,6 @@ function AddRapport() {
                     }
                 ).catch((response) => {
                     setLoading(false)
-                    console.log(response)
                 })
             }
     }
@@ -80,24 +76,19 @@ function AddRapport() {
     const handleAvertData = (dataFromChild) => {
         setDataAvert(dataFromChild);
     }
-    console.log("dataAvert", dataAvert)
 
     const handleMatcheData = (dataFromChild) => {
         setDataMatche(dataFromChild);
     }
-    console.log("dataMatche", dataMatche)
 
     const handleChangementData = (dataFromChild) => {
         setDataChangement(dataFromChild);
     }
-    console.log("dataChangement", dataChangement)
 
     const handleButsData = (dataFromChild) => {
         setDataButs(dataFromChild);
     }
-    console.log("dataButs", dataButs)
 
-    console.log(dataAvert)
 
     return (
         <>
