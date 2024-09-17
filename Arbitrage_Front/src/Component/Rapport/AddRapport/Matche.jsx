@@ -69,11 +69,21 @@ export function Matche(props) {
                     name: "arbitre_a2_id"
                 }))
 
+                const optionArbire_4 = arbitreUser.map(item => ({
+                    value: item.id,
+                    label: item.nom.toUpperCase() + " " + item.prenom.toUpperCase(),
+                    type: item.type,
+                    ville: item.ville,
+                    name: "arbitre_4_id"
+                }))
+
+
                 setState(prevData => ({
                     ...prevData,
                     centre: centre,
                     assistant_1: arbireAssistant_1,
                     assistant_2: arbireAssistant_2,
+                    arbitre_4: optionArbire_4,
                 }))
             })
         axiosClinet.get('/delegue')
@@ -155,6 +165,11 @@ export function Matche(props) {
                     label: item.nom,
                     name: "assistant_2_ville"
                 }))
+                const optionArbitre_4_ville = dataVilles.map(item => ({
+                    value: item.id,
+                    label: item.nom,
+                    name: "arbitre_4_ville"
+                }))
                 const optionDelegue_ville = dataVilles.map(item => ({
                     value: item.id,
                     label: item.nom,
@@ -166,6 +181,7 @@ export function Matche(props) {
                     centreVille: optionCentre_ville,
                     assistant_1_Ville: optionAssistant_1_ville,
                     assistant_2_Ville: optionAssistant_2_ville,
+                    arbitre_4_ville: optionArbitre_4_ville,
                     delegueVille: optionDelegue_ville
                 }))
             })
@@ -275,11 +291,11 @@ export function Matche(props) {
         }
 
 
-        var villeCentre = event?.name === "arbitre_c_id" ? event.ville : selectedSelect.villeCentre
-        if (event?.name === "arbitre_c_id") {
-            villeCentre = state.villes.find((v) => villeCentre?.id === v.value)
-        }else if(event?.name === "centre_ville"){
-            villeCentre = event
+        var arbitreVille_4 = event?.name === "arbitre_4_id" ? event.ville : selectedSelect.arbitre_4_ville
+        if (event?.name === "arbitre_4_id") {
+            arbitreVille_4 = state.villes.find((v) => arbitreVille_4?.id === v.value)
+        }else if(event?.name === "arbitre_4_ville"){
+            arbitreVille_4 = event
         }
 
         var villeAssistant_1 = event?.name === "arbitre_a1_id" ? event.ville : selectedSelect.villeAssistant_1
@@ -303,6 +319,13 @@ export function Matche(props) {
             villeDelegue = event
         }
 
+        var villeCentre = event?.name === "arbitre_c_id" ? event.ville : selectedSelect.villeCentre
+        if (event?.name === "arbitre_c_id") {
+            villeCentre = state.villes.find((v) => villeCentre?.id === v.value)
+        }else if(event?.name === "centre_ville"){
+            villeCentre = event
+        }
+
 
         setInputValue(prevValues => ({
             ...prevValues,
@@ -312,8 +335,11 @@ export function Matche(props) {
             centre_ville : villeCentre?.value,
             assistant_1_ville: villeAssistant_1?.value,
             assistant_2_ville: villeAssistant_2?.value,
+            arbitre_4_ville: arbitreVille_4?.value,
             delegue_ville: villeDelegue?.value,
         }));
+
+        console.log('InputValue', inputValue);
 
 
         setSelectedSelect(prevValues => ({
@@ -323,6 +349,7 @@ export function Matche(props) {
             villeAssistant_1: villeAssistant_1,
             villeAssistant_2: villeAssistant_2,
             villeDelegue: villeDelegue,
+            arbitre_4_ville: arbitreVille_4,
             stadeClub_1: stadeClub_1,
         }))
     };
@@ -331,7 +358,7 @@ export function Matche(props) {
 
     const sendData = () => {
         const numberKey = Object.keys(inputValue).length;
-        if (numberKey === 27) {
+        if (numberKey === 29) {
             props.dataMatche(inputValue);
             setIsValideData(prev => !prev)
             setError("")
@@ -608,6 +635,20 @@ export function Matche(props) {
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
                                                     <Select className='text-light' options={state.delegueVille} value={selectedSelect.villeDelegue ? { value: selectedSelect?.villeDelegue?.value, label: selectedSelect?.villeDelegue?.label } : null} onChange={handleSelectChange} placeholder="..." />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row d-flex justify-content-center">
+                                            <div className="form-group col-md-3 ">
+                                                <label htmlFor="inputEmail4">الحكم الرابع</label>
+                                                <div className='my-2'>
+                                                    <Select className='text-light' options={state.arbitre_4} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..." />
+                                                </div>
+                                            </div>
+                                        <div className="form-group col-md-3">
+                                                <label htmlFor="inputEmail4">المدينة</label>
+                                                <div className='my-2'>
+                                                    <Select className='text-light' options={state.arbitre_4_ville} value={selectedSelect?.arbitre_4_ville ? { value: selectedSelect?.arbitre_4_ville?.value, label: selectedSelect?.arbitre_4_ville?.label } : null} onChange={handleSelectChange} placeholder="..." />
                                                 </div>
                                             </div>
                                         </div>

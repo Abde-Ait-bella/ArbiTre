@@ -167,8 +167,6 @@ export function Buts(props) {
         newBut[index][name] = value;
         newBut[index].matche_id = state.matchNamber;
         setButs(newBut);
-
-
     }
 
 

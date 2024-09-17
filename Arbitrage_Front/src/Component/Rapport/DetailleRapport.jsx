@@ -84,9 +84,14 @@ function DetailleRapport() {
                 }
                 .contentP2 {
                     margin-top: 125px; 
+                    position: relative;
+                    height: calc(100vh - 150px);
+
                 }
                 .signature{
-                    margin-top: 50px;
+                    position: absolute;
+                    // margin-top: 50px;
+                    bottom: 0;
                 }
                 .page-break {
                     page-break-before: always; /* Ajoutez cette ligne */
@@ -429,21 +434,27 @@ function DetailleRapport() {
                         {rapports?.delegue?.prenom.toUpperCase()}{" "}
                         {rapports?.delegue?.nom.toUpperCase()}
                       </th>
-
-                      {/* <th class="th p-0 px-2">
-                      المدينة
-                      </th> */}
-                      {/* <th class="p-0 px-2">
+                      <th class="th p-0 px-2">الحكم الرابع</th>
+                      <th class="p-0 px-3">
+                        {arbitre
+                          ?.find(
+                            (a) => a.id === parseInt(rapports?.arbitre_4_id)
+                          )
+                          ?.prenom.toUpperCase()}{" "}
+                        {arbitre
+                          ?.find(
+                            (a) => a.id === parseInt(rapports?.arbitre_4_id)
+                          )
+                          ?.nom.toUpperCase()}
+                      </th>
+                      <th class="th p-0 px-2">المدينة</th>
+                      <th class="p-0 px-2">
                         {
                           ville?.find(
-                            (a) => a.id === parseInt(rapports?.delegue_ville)
+                            (a) => a.id === parseInt(rapports?.arbitre_4_ville)
                           )?.nom
                         }
-                      </th> */}
-                      <th class="th p-0 px-2">الحكم الرابع</th>
-                      <th class="p-0 px-3">---</th>
-                      <th class="th p-0 px-2">المدينة</th>
-                      <th class="p-0 px-2">---</th>
+                      </th>
                     </tr>
                   </thead>
                 </table>
@@ -730,13 +741,13 @@ function DetailleRapport() {
                                       colSpan={6}
                                     >
                                       الفريق(أ) :{" "}
-                                      {
+                                      {/* {
                                         club?.find(
                                           (c) =>
                                             c.id ===
                                             parseInt(rapports?.club_id_1)
                                         )?.abbr
-                                      }
+                                      } */}
                                     </th>
                                   </tr>
                                   <tr className="text-center border-top-0">
@@ -751,16 +762,16 @@ function DetailleRapport() {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {(But_1?.length === 0) & (RestBUT1 === 0) ? (
-                                    <tr className="text-center">
-                                      <td className="p-1">-</td>
-                                      <td className="p-1">-</td>
-                                      <td className="p-1">-</td>
-                                      <td className="p-1">-</td>
-                                      <td className="p-1">-</td>
-                                      <td className="p-1">-</td>
-                                    </tr>
-                                  ) : (
+                                  {/* {(But_1?.length === 0) & (RestBUT1 === 0) ? ( */}
+                                  <tr className="text-center">
+                                    <td className="p-1">-</td>
+                                    <td className="p-1">-</td>
+                                    <td className="p-1">-</td>
+                                    <td className="p-1">-</td>
+                                    <td className="p-1">-</td>
+                                    <td className="p-1">-</td>
+                                  </tr>
+                                  {/* ) : (
                                     But_1?.map((b) => (
                                       <tr className="text-center">
                                         <td className="p-1">
@@ -769,8 +780,8 @@ function DetailleRapport() {
                                         <td className="p-1">{b.minute}</td>
                                       </tr>
                                     ))
-                                  )}
-                                  {RestBUT1
+                                  )} */}
+                                  {/* {RestBUT1
                                     ? restBUT_1.map((index) => (
                                         <tr
                                           className="text-center borderd"
@@ -786,7 +797,7 @@ function DetailleRapport() {
                                           </td>
                                         </tr>
                                       ))
-                                    : ""}
+                                    : ""} */}
                                 </tbody>
                               </table>
                             </div>
@@ -807,13 +818,13 @@ function DetailleRapport() {
                                       colSpan={6}
                                     >
                                       الفريق(ب) :{" "}
-                                      {
+                                      {/* {
                                         club?.find(
                                           (c) =>
                                             c.id ===
                                             parseInt(rapports?.club_id_2)
                                         )?.abbr
-                                      }
+                                      } */}
                                     </th>
                                   </tr>
                                   <tr className="text-center border-top-0">
@@ -828,18 +839,18 @@ function DetailleRapport() {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {(But_2?.length === 0) & (RestBUT2 === 0) ? (
-                                    <tr className="text-center">
-                                      <td className="p-1">-</td>
-                                      <td className="p-1">-</td>
-                                      <td className="p-1">-</td>
-                                      <td className="p-1">-</td>
-                                      <td className="p-1">-</td>
-                                      <td className="p-1" rowSpan={2}>
-                                        -
-                                      </td>
-                                    </tr>
-                                  ) : (
+                                  {/* {(But_2?.length === 0) & (RestBUT2 === 0) ? ( */}
+                                  <tr className="text-center">
+                                    <td className="p-1">-</td>
+                                    <td className="p-1">-</td>
+                                    <td className="p-1">-</td>
+                                    <td className="p-1">-</td>
+                                    <td className="p-1">-</td>
+                                    <td className="p-1" rowSpan={2}>
+                                      -
+                                    </td>
+                                  </tr>
+                                  {/* ) : (
                                     But_2?.map((b) => (
                                       <tr className="text-center">
                                         <td className="p-1">
@@ -860,7 +871,7 @@ function DetailleRapport() {
                                           <td className="py-1">-</td>
                                         </tr>
                                       ))
-                                    : ""}
+                                    : ""} */}
                                 </tbody>
                               </table>
                             </div>
@@ -904,7 +915,7 @@ function DetailleRapport() {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {console.log('But_1', But_1)}
+                                  {console.log("But_1", But_1)}
                                   {(But_1?.length === 0) & (RestBUT1 === 0) ? (
                                     <tr className="text-center">
                                       <td className="p-1">-</td>
@@ -914,12 +925,10 @@ function DetailleRapport() {
                                   ) : (
                                     But_1?.map((b) => (
                                       <tr className="text-center">
-                                         <td className="p-1">
+                                        <td className="p-1">
                                           {b.joueur_numero}
                                         </td>
-                                        <td className="p-1">
-                                          {b.joueur_nom}
-                                        </td>
+                                        <td className="p-1">{b.joueur_nom}</td>
                                         <td className="p-1">{b.minute}</td>
                                       </tr>
                                     ))
@@ -981,12 +990,10 @@ function DetailleRapport() {
                                   ) : (
                                     But_2?.map((b) => (
                                       <tr className="text-center">
-                                      <td className="p-1">
-                                        {b.joueur_numero}
-                                      </td>
                                         <td className="p-1">
-                                          {b.joueur_nom}
+                                          {b.joueur_numero}
                                         </td>
+                                        <td className="p-1">{b.joueur_nom}</td>
                                         <td className="p-1">{b.minute}</td>
                                       </tr>
                                     ))
@@ -1039,14 +1046,23 @@ function DetailleRapport() {
                                             </div> */}
                   </div>
                 </div>
-                <div className="expl-content01 mt-5" style={{ fontSize : "11px" }}>
+                <div
+                  className="expl-content01 mt-5"
+                  style={{ fontSize: "11px" }}
+                >
                   <p className="d-flex d-flex align-items-center">
-                      (*) في حالة ركلات الترجيحية , يتم تعبئة الخانة كالآتي : تسجيل 
-                    الركلة :
+                    (*) في حالة ركلات الترجيحية , يتم تعبئة الخانة كالآتي :
+                    تسجيل الركلة :
                     <table className="table table-bordered w-auto me-2 ms-2">
                       <thead>
                         <tr>
-                          <th style={{ lineHeight: "0px", paddingTop: "11px", fontSize : "7px" }}>
+                          <th
+                            style={{
+                              lineHeight: "0px",
+                              paddingTop: "11px",
+                              fontSize: "7px",
+                            }}
+                          >
                             09
                           </th>
                         </tr>
@@ -1058,7 +1074,7 @@ function DetailleRapport() {
                               lineHeight: "1px",
                               fontFamily: "FontAwesome",
                               paddingRight: "10px",
-                              fontSize : "7px"
+                              fontSize: "7px",
                             }}
                           >
                             X
@@ -1066,11 +1082,17 @@ function DetailleRapport() {
                         </tr>
                       </tbody>
                     </table>
-                      ضياع الركلة الترجيحية :  
+                    ضياع الركلة الترجيحية :
                     <table className="table table-bordered w-auto me-2">
                       <thead>
                         <tr>
-                          <th style={{ lineHeight: "0px", paddingTop: "11px", fontSize : "7px" }}>
+                          <th
+                            style={{
+                              lineHeight: "0px",
+                              paddingTop: "11px",
+                              fontSize: "7px",
+                            }}
+                          >
                             09
                           </th>
                         </tr>
@@ -1082,14 +1104,14 @@ function DetailleRapport() {
                               lineHeight: "1px",
                               fontFamily: "FontAwesome",
                               paddingRight: "10px",
-                              fontSize : "7px"
+                              fontSize: "7px",
                             }}
                           >
                             O
                           </td>
                         </tr>
                       </tbody>
-                    </table>                   
+                    </table>
                   </p>
                 </div>
               </div>
@@ -1099,24 +1121,24 @@ function DetailleRapport() {
                 }`}
               >
                 <div className="expl-content02">
-                  <p>يشار هنا إلى جميع الأحداث المسجلة قبل وأثناء وبعد المباراة مع تحديد حالةالملعب وتصرفات الجمهور
+                  <p>
+                    يشار هنا إلى جميع الأحداث المسجلة قبل وأثناء وبعد المباراة
+                    مع تحديد حالةالملعب وتصرفات الجمهور
                   </p>
                 </div>
                 <div>
-                  <label
-                  >
+                  <label>
                     <p className="ligne mt-3 text-dark fs-5">
                       {rapports?.rapport_supp}
                     </p>
                   </label>
                 </div>
                 <div className="ligne signature">
-                  
-                <label htmlFor="" className="fs-6 text-dark">
-                     حرر في مدينة  :{" "}
+                  <label htmlFor="" className="fs-6 text-dark">
+                    حرر في مدينة :{" "}
                   </label>
-                <label htmlFor="" className="fs-6 text-dark">
-                     بتاريخ :{" "}
+                  <label htmlFor="" className="fs-6 text-dark">
+                    بتاريخ :{" "}
                   </label>
                   <label htmlFor="" className="fs-6 text-dark">
                     إمضاء الحكم :{" "}

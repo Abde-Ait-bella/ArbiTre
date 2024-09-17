@@ -72,11 +72,20 @@ export function Matche(props) {
                     name: "arbitre_a2_id"
                 }))
 
+                const optionArbire_4 = arbitreUser.map(item => ({
+                    value: item.id,
+                    label: item.nom.toUpperCase() + " " + item.prenom.toUpperCase(),
+                    type: item.type,
+                    ville: item.ville,
+                    name: "arbitre_4_id"
+                }))
+
                 setState(prevData => ({
                     ...prevData,
                     centre: centre,
                     assistant_1: arbireAssistant_1,
                     assistant_2: arbireAssistant_2,
+                    arbitre_4: optionArbire_4,
                 }))
             })
         axiosClinet.get('/delegue')
@@ -158,17 +167,24 @@ export function Matche(props) {
                     label: item.nom,
                     name: "assistant_2_ville"
                 }))
+                const optionArbitre_4_ville = dataVilles.map(item => ({
+                    value: item.id,
+                    label: item.nom,
+                    name: "arbitre_4_ville"
+                }))
                 const optionDelegue_ville = dataVilles.map(item => ({
                     value: item.id,
                     label: item.nom,
                     name: "delegue_ville"
                 }))
+
                 setState(prevData => ({
                     ...prevData,
                     villes: optionVilles,
                     centreVille: optionCentre_ville,
                     assistant_1_Ville: optionAssistant_1_ville,
                     assistant_2_Ville: optionAssistant_2_ville,
+                    arbitre_4_ville: optionArbitre_4_ville,
                     delegueVille: optionDelegue_ville
                 }))
             })
@@ -253,13 +269,55 @@ export function Matche(props) {
         }
         var villeStade = state?.villes?.find((v) => parseInt(v.value) === parseInt(stadeClub_1?.ville?.id))
 
+        var arbitreVille_4 = event?.name === "arbitre_4_id" ? event.ville : matcheUpdate.arbitre_4_ville
+        if (event?.name === "arbitre_4_id") {
+            arbitreVille_4 = state.villes.find((v) => arbitreVille_4?.id === v.value)
+        }else if(event?.name === "arbitre_4_ville"){
+            arbitreVille_4 = event
+        }
+
+        var villeAssistant_1 = event?.name === "arbitre_a1_id" ? event.ville : matcheUpdate.assistant_1_ville
+        if (event?.name === "arbitre_a1_id") {
+            villeAssistant_1 = state.villes.find((v) => villeAssistant_1?.id === v.value)
+        }else if(event?.name === "assistant_1_ville"){
+            villeAssistant_1 = event
+        }
+
+        var villeAssistant_2 = event?.name === "arbitre_a2_id" ? event.ville : matcheUpdate.assistant_2_ville
+        if (event?.name === "arbitre_a2_id") {
+            villeAssistant_2 = state.villes.find((v) => villeAssistant_2?.id === v.value)
+        }else if(event?.name === "assistant_2_ville"){
+            villeAssistant_2 = event
+        }
+
+        var villeDelegue = event?.name === "delegue_id" ? event.ville : matcheUpdate.delegue_ville
+        if (event?.name === "delegue_id") {
+            villeDelegue = state.villes.find((v) => villeDelegue?.id === v.value)
+        }else if(event?.name === "delegue_ville"){
+            villeDelegue = event
+        }
+
+        var villeCentre = event?.name === "arbitre_c_id" ? event.ville : matcheUpdate.centre_ville
+        if (event?.name === "arbitre_c_id") {
+            villeCentre = state.villes.find((v) => villeCentre?.id === v.value)
+        }else if(event?.name === "centre_ville"){
+            villeCentre = event
+        }
+
         const newObject = { ...matcheUpdate };
         newObject[name] = value;
-        newObject.stade_id = stadeClub_1?.value ? stadeClub_1?.value : parseInt(matcheUpdate?.stade_id);
-        newObject.ville_id = villeStade?.value ? villeStade?.value : parseInt(matcheUpdate?.ville?.id);
+        newObject.stade_id = stadeClub_1?.value ? stadeClub_1?.value : stadeClub_1;
+        newObject.ville_id = villeStade?.value ? villeStade?.value : villeStade;
+        newObject.centre_ville  = villeCentre?.value ? villeCentre?.value : villeCentre,
+        newObject.assistant_1_ville = villeAssistant_1?.value ? villeAssistant_1?.value : villeAssistant_1,
+        newObject.assistant_2_ville = villeAssistant_2?.value ? villeAssistant_2?.value : villeAssistant_2,
+        newObject.arbitre_4_ville = arbitreVille_4?.value ? arbitreVille_4?.value : arbitreVille_4,
+        newObject.delegue_ville = villeDelegue?.value ? villeDelegue?.value : villeDelegue,
         setMatcheUpdate(newObject);
 
     };
+
+    console.log(matcheUpdate);
 
     const [isValide, setIsValide] = useState();
 
@@ -267,6 +325,8 @@ export function Matche(props) {
         props.dataMatche(matcheUpdate);
         setIsValide((prev) => !prev);
     }
+
+    console.log(matcheUpdate);
 
     return (
         <>
@@ -534,6 +594,20 @@ export function Matche(props) {
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
                                                     <Select className='text-light' options={state.delegueVille} value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.delegue_ville))} onChange={handleSelectChange} placeholder="..." />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row d-flex justify-content-center">
+                                            <div className="form-group col-md-3 ">
+                                                <label htmlFor="inputEmail4">الحكم الرابع</label>
+                                                <div className='my-2'>
+                                                    <Select className='text-light' options={state.arbitre_4} value={state.arbitre_4?.find((c) => c.value === parseInt(matcheUpdate?.arbitre_4_id))} onChange={handleSelectChange} placeholder="اختر..." />
+                                                </div>
+                                            </div>
+                                        <div className="form-group col-md-3">
+                                                <label htmlFor="inputEmail4">المدينة</label>
+                                                <div className='my-2'>
+                                                    <Select className='text-light' options={state.arbitre_4_ville} value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.arbitre_4_ville))} onChange={handleSelectChange} placeholder="..." />
                                                 </div>
                                             </div>
                                         </div>

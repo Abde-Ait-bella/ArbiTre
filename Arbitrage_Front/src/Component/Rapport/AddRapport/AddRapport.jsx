@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Avert } from "./Avert";
 import { Changement } from "./Changment";
 import { Matche } from "./Matche"
 import { Buts } from "./Buts";
+import { Penalty } from "./Penalty";
 import { useNavigate } from "react-router-dom";
 import { axiosClinet } from "../../../Api/axios";
 
@@ -101,6 +101,7 @@ function AddRapport() {
                     <Avert dataAvert={handleAvertData} />
                     <Changement dataChangement={handleChangementData} />
                     <Buts dataButs={handleButsData} />
+                    <Penalty />
                     <form onSubmit={handleSubmit}>
                         <div className="d-flex justify-content-center">
                             <div>
