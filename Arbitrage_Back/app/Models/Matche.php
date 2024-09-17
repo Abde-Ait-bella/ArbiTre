@@ -26,6 +26,8 @@ class Matche extends Model
         'assistant_1_ville',
         'arbitre_a2_id',
         'assistant_2_ville',
+        'arbitre_4_id',
+        'arbitre_4_ville',
         'delegue_id',
         'delegue_ville',
         'temps',
