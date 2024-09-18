@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import Select from 'react-select'
+import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import { useParams } from 'react-router-dom';
 import { axiosClinet } from '../../../Api/axios';

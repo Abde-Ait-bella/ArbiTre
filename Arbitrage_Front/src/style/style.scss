@@ -2,3 +2,25 @@ body{
     font-family: El Messiri;
     font-size: 17px;
 }
+
+.penalty {
+    margin-right: 0px;
+    overflow-y: auto;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: thin;
+
+}
+ 
+.penalty select{
+    
+    margin: 0px 5px;
+    border-radius: 5px;
+    width: 200px;
+    height: 40px;
+
+}
+
+.border-left{
+    border-left: 1px solid;
+}
