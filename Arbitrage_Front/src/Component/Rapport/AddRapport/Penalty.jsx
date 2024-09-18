@@ -9,9 +9,6 @@ import Select from 'react-select';
 export function Penalty(props) {
 
     const [state, setState] = useState({
-        // joueurs: [],
-        // joueursCreat: [],
-        // joueursLicence: [],
         clubs: [],
     });
 
@@ -58,35 +55,42 @@ export function Penalty(props) {
 
     
     const [penalty, setPenalty] = useState([{},{},{},{},{}]);
-    const [optionsJ, setOptionsJ] = useState();
+    const [twoClubs, setTwoClubs] = useState({});
+    const [penaltyData, setPenaltyData] = useState([{},{},{},{},{},{},{},{},{},{}]);
 
-    console.log(state.clubs)
 
     const addPenalty = ()=>{
-        setPenalty([...penalty, {}]);
+        setPenaltyData([...penaltyData, {},{}]);
+    }
+
+    const handleChange = (event, indexClub, indexPenalty, indexOpportunity) => {
+
+        const newPenalty = [...penaltyData];
+        newPenalty[indexPenalty].club_id = Object.values(twoClubs)[indexClub];
+        newPenalty[indexPenalty].result = event.target.value;
+        newPenalty[indexPenalty].opportunity = indexOpportunity+1;
+        newPenalty[indexPenalty].matche_id = state.matchNamber;
+        setPenaltyData(newPenalty);
+
+        console.log('penaltyData', penaltyData );
+    }
+
+    
+    const handleChangeClub = (event, index) => {
+        
+        const club_1 = index == 0  ? event.target.value  : twoClubs.club_1_id;
+        const club_2 = index == 1  ? event.target.value  : twoClubs.club_2_id;
+
+        twoClubs.club_1_id = club_1;
+        twoClubs.club_2_id = club_2;
     }
 
 
-
-    const addRow = () => {
-        let numberOfAttributes;
-        buts.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes === 6 || numberOfAttributes == null) {
-            setError("")
-            setButs([...buts, {},]);
-            setValueLicence()
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
-        }
-    };
-
-    const SuppRow = (index) => {
+    const SuppRow = () => {
         setError("")
-        const newBut = [...buts];
-        newBut.splice(index, 1);
-        setButs(newBut);
+        const newPenalty = [...penalty];
+        newPenalty.pop();
+        setPenalty(newPenalty);
     };
 
     const [isValide, setIsValide] = useState();
@@ -104,7 +108,6 @@ export function Penalty(props) {
             setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
     };
-    console.log(penalty);
     return (
         <>
             {
@@ -194,11 +197,17 @@ export function Penalty(props) {
                                 </div>
                                 <div class="card-body">
                                         <div className="row border border-secondary border-4 rounded py-3 px-2 my-1 mt-3">
-                                            <div className="penalty row mb-4">
+
+         
+                                            <div className='d-flex justify-content-end'>
+                                                <button className='btn btn-warning rounded-pill' onClick={addPenalty}><i class="fa-solid fa-plus mt-1 px-3"></i></button>
+                                            </div>
+                                            
+                                            <div className="penalty row mb-4 mt-4">
                                                 <div className="form-group col-md-3">
                                                     <label>الفريق</label>
                                                     <div className='my-2'>
-                                                        <select isClearable   className='text-light' onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب و اختر" >
+                                                        <select isClearable   className='text-light' name='club_1' onChange={(event) => handleChangeClub(event, 0)} placeholder="اكتب و اختر" >
 
                                                         <option className='text-center' key="" value="">إختر النادي</option>
                                                             {state?.clubs.map(club => (
@@ -209,18 +218,18 @@ export function Penalty(props) {
                                                         </select>
                                                     </div>
                                                 </div>
-                                                {penalty.map((p, index) => (
+                                                {penaltyData.slice(0, penaltyData.length / 2).map((_, index) => (
                                                     <div className="form-group col-md-3 border-left" key={index}>
                                                         <label>الفرصة {index + 1}</label>
                                                         <div className="d-flex justify-content-center pt-3 ">
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} name={`penelty${index}`} onChange={(event) => handleAvertInputChange(event, index)} id={`penaltyRadio${index}`} />
+                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} name={`penelty${index}`} onChange={(event) => handleChange(event, 0, index, index)} id={`penaltyRadio${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio${index}`}>
                                                                     هدف
                                                                 </label>
                                                             </div>
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input bg-danger border-0" type="radio" value={0} name={`penelty${index}`}  onChange={(event) => handleAvertInputChange(event, index)} id={`penaltyRadio1${index}`} />
+                                                                <input class="form-check-input bg-danger border-0" type="radio" value={0} name={`penelty${index}`}  onChange={(event) => handleChange(event, 0, index, index)} id={`penaltyRadio1${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio1${index}`}>
                                                                     ضائع
                                                                 </label>
@@ -228,110 +237,51 @@ export function Penalty(props) {
                                                         </div>
                                                     </div>
                                                 ))}
-                                                                
-                                                <div className="d-flex justify-content-center align-items-center col-md-2">
-                                                    <div>
-                                                        <button className='btn btn-warning rounded-pill' onClick={addPenalty}><i class="fa-solid fa-plus mt-1 px-4"></i></button>
-                                                    </div>
-                                                </div>
+                                                            
                                             </div>
-                                            {/* <div className="penalty row mb-4">
+
+                                            <div className="penalty row mb-4">
                                                 <div className="form-group col-md-3">
                                                     <label>الفريق</label>
                                                     <div className='my-2'>
-                                                        <CreatableSelect className='text-light' options={state?.clubs} onChange={(event) => handleChangeSelect(event)} placeholder="اكتب و اختر" />
+                                                    <select isClearable   className='text-light'  onChange={(event) => handleChangeClub(event, 1)} placeholder="اكتب و اختر" >
+                                                            <option className='text-center' key="" value="">إختر النادي</option>
+                                                            {state?.clubs.map(club => (
+                                                                <option className='text-center' key={club.value} value={club.value}>
+                                                                {club.label}
+                                                                </option>
+                                                                ))}
+                                                    </select>
                                                     </div>
                                                 </div>
-                                                <div className="form-group col-md-3 border-left">
-                                                    <label>الفرصة 1</label>
-                                                    <div className="d-flex justify-content-center pt-3">
-                                                        <div class="form-check mx-2">
-                                                            <input class="form-check-input bg-success border-0" type="radio" value="G"  onChange={(event) => handleAvertInputChange(event, index)} id={`flexRadioDefault1${index}`} />
-                                                            <label class="form-check-label" for={`flexRadioDefault1${index}`}>
-                                                                هدف
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check mx-2">
-                                                            <input class="form-check-input bg-danger border-0" type="radio" value="R"  onChange={(event) => handleAvertInputChange(event, index)} id={`flexRadioDefault2${index}`} />
-                                                            <label class="form-check-label" for={`flexRadioDefault2${index}`}>
-                                                                ضائع
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="form-group col-md-3 border-left">
-                                                    <label>2 الفرصة</label>
-                                                    <div className="d-flex justify-content-center pt-3">
-                                                        <div class="form-check mx-2">
-                                                            <input class="form-check-input bg-success border-0" type="radio" value="G"  onChange={(event) => handleAvertInputChange(event, index)} id={`flexRadioDefault1${index}`} />
-                                                            <label class="form-check-label" for={`flexRadioDefault1${index}`}>
-                                                                هدف
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check mx-2">
-                                                            <input class="form-check-input bg-danger border-0" type="radio" value="R"  onChange={(event) => handleAvertInputChange(event, index)} id={`flexRadioDefault2${index}`} />
-                                                            <label class="form-check-label" for={`flexRadioDefault2${index}`}>
-                                                                ضائع
-                                                            </label>
+                                                {penaltyData.slice(penaltyData.length / 2, penaltyData.length).map((p, index) => {
+                                                    const indexPenalty = index + Math.floor(penaltyData.length / 2);
+                                                    return(
+                                                    <div className="form-group col-md-3 border-left" key={index}>
+                                                        <label>الفرصة {index + 1}</label>
+                                                        <div className="d-flex justify-content-center pt-3 ">
+                                                            <div class="form-check mx-2">
+                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} name={`penelty_2${index}`} onChange={(event) => handleChange(event, 1, indexPenalty, index)} id={`penaltyRadio_2${index}`} />
+                                                                <label class="form-check-label" for={`penaltyRadio_2${index}`}>
+                                                                    هدف
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check mx-2">
+                                                                <input class="form-check-input bg-danger border-0" type="radio" value={0} name={`penelty_2${index}`}  onChange={(event) => handleChange(event, 1, indexPenalty, index)} id={`penaltyRadio2_2${index}`} />
+                                                                <label class="form-check-label" for={`penaltyRadio2_2${index}`}>
+                                                                    ضائع
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div className="form-group col-md-3 border-left">
-                                                    <label>الفرصة 3</label>
-                                                    <div className="d-flex justify-content-center pt-3">
-                                                        <div class="form-check mx-2">
-                                                            <input class="form-check-input bg-success border-0" type="radio" value="G"  onChange={(event) => handleAvertInputChange(event, index)} id={`flexRadioDefault1${index}`} />
-                                                            <label class="form-check-label" for={`flexRadioDefault1${index}`}>
-                                                                هدف
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check mx-2">
-                                                            <input class="form-check-input bg-danger border-0" type="radio" value="R"  onChange={(event) => handleAvertInputChange(event, index)} id={`flexRadioDefault2${index}`} />
-                                                            <label class="form-check-label" for={`flexRadioDefault2${index}`}>
-                                                                ضائع
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="form-group col-md-3 border-left">
-                                                    <label>الفرصة 4</label>
-                                                    <div className="d-flex justify-content-center pt-3">
-                                                        <div class="form-check mx-2">
-                                                            <input class="form-check-input bg-success border-0" type="radio" value="G"  onChange={(event) => handleAvertInputChange(event, index)} id={`flexRadioDefault1${index}`} />
-                                                            <label class="form-check-label" for={`flexRadioDefault1${index}`}>
-                                                                هدف
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check mx-2">
-                                                            <input class="form-check-input bg-danger border-0" type="radio" value="R"  onChange={(event) => handleAvertInputChange(event, index)} id={`flexRadioDefault2${index}`} />
-                                                            <label class="form-check-label" for={`flexRadioDefault2${index}`}>
-                                                                ضائع
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="form-group col-md-3 border-left">
-                                                    <label>الفرصة 5</label>
-                                                    <div className="d-flex justify-content-center pt-3">
-                                                        <div class="form-check mx-2">
-                                                            <input class="form-check-input bg-success border-0" type="radio" value="G"  onChange={(event) => handleAvertInputChange(event, index)} id={`flexRadioDefault1${index}`} />
-                                                            <label class="form-check-label" for={`flexRadioDefault1${index}`}>
-                                                                هدف
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check mx-2">
-                                                            <input class="form-check-input bg-danger border-0" type="radio" value="R"  onChange={(event) => handleAvertInputChange(event, index)} id={`flexRadioDefault2${index}`} />
-                                                            <label class="form-check-label" for={`flexRadioDefault2${index}`}>
-                                                                ضائع
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> */}
-                                            
-                                            <div>
-                                                <button className='btn btn-danger moin rounded-pill' onClick={() => SuppRow(index)}><i class="fa-solid fa-xmark mt-1 px-3"></i></button>
+                                                )})}
                                             </div>
+
+                                            <div className='d-flex justify-content-end'>
+                                                <button className='btn btn-danger moin rounded-pill' onClick={SuppRow}><i class="fa-solid fa-xmark mt-1 px-3"></i></button>
+                                                {/* <button className='btn btn-warning rounded-pill' onClick={addPenalty}><i class="fa-solid fa-plus mt-1 px-4"></i></button> */}
+                                            </div>
+                                   
                                         </div>
                                     
                                     <div className='mt-3'>
