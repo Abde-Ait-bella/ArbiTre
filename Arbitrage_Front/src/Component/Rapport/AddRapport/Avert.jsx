@@ -21,9 +21,11 @@ export function Avert(props) {
     });
 
     const [avert, setAvert] = useState([{}]);
-    const { user } = AuthUser();
+    const { user, club_1, club_2 } = AuthUser();
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState()
+
+    console.log('club_1_evrt', club_1)
 
 
     useEffect(() => {
@@ -49,7 +51,7 @@ export function Avert(props) {
                     name: "joueur_numero_licence"
                 }))
 
-                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null);
+                const dataClubs = clubResponse.data.filter((c) => (parseInt(c.user_id) === user?.id || c.user_id === null) && (c.id === parseInt(club_1) || c.id === parseInt(club_2)));
                 const optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + item.abbr,
@@ -77,7 +79,7 @@ export function Avert(props) {
             }
         };
         fetchData();
-    }, []);
+    }, [club_1, club_2]);
 
     //--------select nom joueur
 

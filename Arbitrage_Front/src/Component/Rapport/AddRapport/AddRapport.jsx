@@ -14,6 +14,7 @@ function AddRapport() {
     const [dataMatche, setDataMatche] = useState();
     const [dataChangement, setDataChangement] = useState();
     const [dataButs, setDataButs] = useState();
+    const [dataPenalty, setDataPenalty] = useState();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -89,6 +90,12 @@ function AddRapport() {
         setDataButs(dataFromChild);
     }
 
+    const handlePenaltyData = (dataFromChild) => {
+        setDataPenalty(dataFromChild);
+    }
+
+    console.log('dataPenalty', dataPenalty)
+
 
     return (
         <>
@@ -101,7 +108,7 @@ function AddRapport() {
                     <Avert dataAvert={handleAvertData} />
                     <Changement dataChangement={handleChangementData} />
                     <Buts dataButs={handleButsData} />
-                    <Penalty />
+                    <Penalty dataPenalty={handlePenaltyData}/>
                     <form onSubmit={handleSubmit}>
                         <div className="d-flex justify-content-center">
                             <div>

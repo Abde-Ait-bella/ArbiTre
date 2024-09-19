@@ -12,10 +12,10 @@ export function Penalty(props) {
         clubs: [],
     });
 
-    const [buts, setButs] = useState([{}]);
+    
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState()
-    const { user } = AuthUser();
+    const { user, club_1, club_2 } = AuthUser();
 
 
     useEffect(() => {
@@ -27,11 +27,6 @@ export function Penalty(props) {
                 ]);
 
                 const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null);
-                const optionClubs = dataClubs?.map(item => ({
-                    value: item.id,
-                    label: "(" + item.nom + ")" + item.abbr,
-                    name: "club_id",
-                }))
 
                 const dataMatch = matcheRespose.data;
                 if (!dataMatch || dataMatch.length === 0) {
@@ -42,7 +37,7 @@ export function Penalty(props) {
 
                 setState(prevData => ({
                     ...prevData,
-                    clubs: optionClubs,
+                    clubs: dataClubs,
                     matchNamber: parseInt(matchNamber.pop() + 1)
                 }))
                 setLoading(true);
@@ -51,58 +46,65 @@ export function Penalty(props) {
             }
         };
         fetchData();
-    }, []);
+    }, [club_1, club_2]);
 
     
     const [penalty, setPenalty] = useState([{},{},{},{},{}]);
-    const [twoClubs, setTwoClubs] = useState({});
-    const [penaltyData, setPenaltyData] = useState([{},{},{},{},{},{},{},{},{},{}]);
+    // const [twoClubs, setTwoClubs] = useState({});
+    const [penaltyData_1, setPenaltyData_1] = useState([{},{},{},{},{}]);
+    const [penaltyData_2, setPenaltyData_2] = useState([{},{},{},{},{}]);
 
 
     const addPenalty = ()=>{
-        setPenaltyData([...penaltyData, {},{}]);
+        setPenaltyData_1([...penaltyData_1, {}]);
+        setPenaltyData_2([...penaltyData_2, {}]);
     }
 
-    const handleChange = (event, indexClub, indexPenalty, indexOpportunity) => {
+    const handleChange = (event, indexClub, indexPenalty) => {
 
-        const newPenalty = [...penaltyData];
-        newPenalty[indexPenalty].club_id = Object.values(twoClubs)[indexClub];
-        newPenalty[indexPenalty].result = event.target.value;
-        newPenalty[indexPenalty].opportunity = indexOpportunity+1;
-        newPenalty[indexPenalty].matche_id = state.matchNamber;
-        setPenaltyData(newPenalty);
+        if (indexClub === 0 ) {
+            const newPenalty = [...penaltyData_1];
+            newPenalty[indexPenalty].club_id = club_1;
+            newPenalty[indexPenalty].result = event.target.value;
+            newPenalty[indexPenalty].opportunity = indexPenalty+1;
+            newPenalty[indexPenalty].matche_id = state.matchNamber;
+            setPenaltyData_1(newPenalty);
+        }else{
+            const newPenalty = [...penaltyData_2];
+            newPenalty[indexPenalty].club_id = club_2;
+            newPenalty[indexPenalty].result = event.target.value;
+            newPenalty[indexPenalty].opportunity = indexPenalty+1;
+            newPenalty[indexPenalty].matche_id = state.matchNamber;
+            setPenaltyData_2(newPenalty);
+        }
 
-        console.log('penaltyData', penaltyData );
+        console.log('penaltyData_1', penaltyData_1, 'penaltyData_2', penaltyData_2 );
     }
 
-    
-    const handleChangeClub = (event, index) => {
-        
-        const club_1 = index == 0  ? event.target.value  : twoClubs.club_1_id;
-        const club_2 = index == 1  ? event.target.value  : twoClubs.club_2_id;
-
-        twoClubs.club_1_id = club_1;
-        twoClubs.club_2_id = club_2;
-    }
 
 
     const SuppRow = () => {
         setError("")
-        const newPenalty = [...penalty];
-        newPenalty.pop();
-        setPenalty(newPenalty);
+        const newPenalty_1 = [...penaltyData_1];
+        const newPenalty_2 = [...penaltyData_2];
+        newPenalty_1.pop();
+        newPenalty_2.pop();
+        setPenaltyData_1(newPenalty_1);
+        setPenaltyData_2(newPenalty_2);
     };
 
     const [isValide, setIsValide] = useState();
 
     const sendData = () => {
-        let numberOfAttributes;
-        buts.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes === 6) {
+    //     let numberOfAttributes;
+
+    const penaltyData = penaltyData_1.concat(penaltyData_2)
+
+    const isComplete = penaltyData.every(p => p.club_id && p.matche_id && p.opportunity && p.result);
+
+        if (isComplete === true) {
             setError("")
-            props.dataButs(buts);
+            props.dataPenalty(penaltyData);
             setIsValide(prev => !prev)
         } else {
             setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
@@ -205,31 +207,23 @@ export function Penalty(props) {
                                             
                                             <div className="penalty row mb-4 mt-4">
                                                 <div className="form-group col-md-3">
-                                                    <label>الفريق</label>
+                                                    <label>فريق</label>
                                                     <div className='my-2'>
-                                                        <select isClearable   className='text-light' name='club_1' onChange={(event) => handleChangeClub(event, 0)} placeholder="اكتب و اختر" >
-
-                                                        <option className='text-center' key="" value="">إختر النادي</option>
-                                                            {state?.clubs.map(club => (
-                                                                    <option className='text-center' key={club.value} value={club.value}>
-                                                                    {club.label}
-                                                                    </option>
-                                                                ))}
-                                                        </select>
+                                                        <p className='fs-5'>{state.clubs.find((c) => c.id === club_1)?.nom ? state.clubs.find((c) => c.id === club_1)?.nom : "..."}</p>
                                                     </div>
                                                 </div>
-                                                {penaltyData.slice(0, penaltyData.length / 2).map((_, index) => (
-                                                    <div className="form-group col-md-3 border-left" key={index}>
+                                                {penaltyData_1.map((_, index) => (
+                                                    <div className={`form-group col-md-3 mb-2 ${(index != (penaltyData_1.length - 1)) ? " border-left" : ""}`} key={index}>
                                                         <label>الفرصة {index + 1}</label>
                                                         <div className="d-flex justify-content-center pt-3 ">
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} name={`penelty${index}`} onChange={(event) => handleChange(event, 0, index, index)} id={`penaltyRadio${index}`} />
+                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} name={`penelty${index}`} onChange={(event) => handleChange(event, 0, index)} id={`penaltyRadio${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio${index}`}>
                                                                     هدف
                                                                 </label>
                                                             </div>
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input bg-danger border-0" type="radio" value={0} name={`penelty${index}`}  onChange={(event) => handleChange(event, 0, index, index)} id={`penaltyRadio1${index}`} />
+                                                                <input class="form-check-input bg-danger border-0" type="radio" value={0} name={`penelty${index}`}  onChange={(event) => handleChange(event, 0, index)} id={`penaltyRadio1${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio1${index}`}>
                                                                     ضائع
                                                                 </label>
@@ -242,43 +236,34 @@ export function Penalty(props) {
 
                                             <div className="penalty row mb-4">
                                                 <div className="form-group col-md-3">
-                                                    <label>الفريق</label>
+                                                    <label>فريق</label>
                                                     <div className='my-2'>
-                                                    <select isClearable   className='text-light'  onChange={(event) => handleChangeClub(event, 1)} placeholder="اكتب و اختر" >
-                                                            <option className='text-center' key="" value="">إختر النادي</option>
-                                                            {state?.clubs.map(club => (
-                                                                <option className='text-center' key={club.value} value={club.value}>
-                                                                {club.label}
-                                                                </option>
-                                                                ))}
-                                                    </select>
+                                                        <p className='fs-5'>{state.clubs.find((c) => c.id === club_2)?.nom ? state.clubs.find((c) => c.id === club_2)?.nom : "..."}</p>
                                                     </div>
                                                 </div>
-                                                {penaltyData.slice(penaltyData.length / 2, penaltyData.length).map((p, index) => {
-                                                    const indexPenalty = index + Math.floor(penaltyData.length / 2);
-                                                    return(
-                                                    <div className="form-group col-md-3 border-left" key={index}>
+                                                {penaltyData_1.map((_, index) => (
+                                                    <div className={`form-group col-md-3 mb-2 ${(index != (penaltyData_2.length - 1)) ? " border-left" : ""}`} key={index}>
                                                         <label>الفرصة {index + 1}</label>
                                                         <div className="d-flex justify-content-center pt-3 ">
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} name={`penelty_2${index}`} onChange={(event) => handleChange(event, 1, indexPenalty, index)} id={`penaltyRadio_2${index}`} />
+                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} name={`penelty_2${index}`} onChange={(event) => handleChange(event, 1, index)} id={`penaltyRadio_2${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio_2${index}`}>
                                                                     هدف
                                                                 </label>
                                                             </div>
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input bg-danger border-0" type="radio" value={0} name={`penelty_2${index}`}  onChange={(event) => handleChange(event, 1, indexPenalty, index)} id={`penaltyRadio2_2${index}`} />
+                                                                <input class="form-check-input bg-danger border-0" type="radio" value={0} name={`penelty_2${index}`}  onChange={(event) => handleChange(event, 1, index)} id={`penaltyRadio2_2${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio2_2${index}`}>
                                                                     ضائع
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                )})}
+                                                ))}
                                             </div>
 
                                             <div className='d-flex justify-content-end'>
-                                                <button className='btn btn-danger moin rounded-pill' onClick={SuppRow}><i class="fa-solid fa-xmark mt-1 px-3"></i></button>
+                                                <button className='btn btn-danger moin rounded-pill' onClick={SuppRow}><i class="fa-solid fa-minus mt-1 px-4"></i></button>
                                                 {/* <button className='btn btn-warning rounded-pill' onClick={addPenalty}><i class="fa-solid fa-plus mt-1 px-4"></i></button> */}
                                             </div>
                                    

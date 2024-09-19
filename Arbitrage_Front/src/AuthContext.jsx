@@ -11,7 +11,18 @@ export const AuthProvider = ({ children }) => {
             return savedUser ? JSON.parse(savedUser) : null;
         }
     );
+    
+    const  [club_1, setClub_1] = useState();
+    const  [club_2, setClub_2] = useState();
 
+    const club_1_Option = (dataClub) => {
+        setClub_1(dataClub)
+            console.log(dataClub);
+    }
+
+    const club_2_Option = (dataClub) => {
+        setClub_2(dataClub)
+    }
 
     const userDataLogin = (dataUser) => {
         setUser(dataUser)
@@ -29,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <>
-            <AuthContext.Provider value={{ userDataLogin, user, userDataLogout }}>
+            <AuthContext.Provider value={{ userDataLogin, user, userDataLogout, club_1_Option, club_2_Option, club_1, club_2 }}>
                 {children}
             </AuthContext.Provider>
         </>

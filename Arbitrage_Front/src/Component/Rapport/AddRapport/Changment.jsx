@@ -18,9 +18,7 @@ export function Changement(props) {
     const [change, setChange] = useState([{}]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState()
-    const { user } = AuthUser();
-
-
+    const { user, club_1, club_2 } = AuthUser();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,7 +54,7 @@ export function Changement(props) {
                     name: "joueur_licence_sort"
                 }))
 
-                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null);
+                const dataClubs = clubResponse.data.filter((c) => (parseInt(c.user_id) === user?.id || c.user_id === null ) && (parseInt(club_1) === c.id || parseInt(club_2) === c.id));
                 const optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + " " + item.abbr,
@@ -87,7 +85,7 @@ export function Changement(props) {
             }
         };
         fetchData();
-    }, []);
+    }, [club_1, club_2]);
 
 
     //--------Sélection joueur entrant

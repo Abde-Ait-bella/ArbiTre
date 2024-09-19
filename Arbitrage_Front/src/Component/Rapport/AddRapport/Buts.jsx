@@ -18,7 +18,8 @@ export function Buts(props) {
     const [buts, setButs] = useState([{}]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState()
-    const { user } = AuthUser();
+    const { user, club_1, club_2 } = AuthUser();
+    
 
 
     useEffect(() => {
@@ -43,7 +44,7 @@ export function Buts(props) {
                     name: "joueur_numero_licence"
                 }))
 
-                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null);
+                const dataClubs = clubResponse.data.filter((c) => (parseInt(c.user_id) === user?.id || c.user_id === null) && (parseInt(club_1) === c.id || parseInt(club_2) === c.id));
                 const optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + item.abbr,
@@ -71,7 +72,7 @@ export function Buts(props) {
             }
         };
         fetchData();
-    }, []);
+    }, [club_1, club_2]);
 
     //--------Sélection joueur
 

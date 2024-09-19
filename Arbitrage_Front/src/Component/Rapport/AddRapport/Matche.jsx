@@ -35,6 +35,7 @@ export function Matche(props) {
     });
 
     const { user } = AuthUser();
+    const { club_1_Option, club_2_Option } = AuthUser();
     const [loading, setLoanding] = useState(true);
     const [error, setError] = useState();
 
@@ -285,9 +286,12 @@ export function Matche(props) {
         const { name, value } = event;
         var stadeClub_1 = event?.name === "club_id_1" ? event?.stade : selectedSelect.stadeClub_1
         if (event?.name === "club_id_1") {
+            club_1_Option(value)
             stadeClub_1 = state.stades.find((s) => stadeClub_1?.id === s.value)
         } else if (event?.name === "stade_id") {
             stadeClub_1 = event
+        }else if (event?.name === "club_id_2") {
+            club_2_Option(value)
         }
 
 
