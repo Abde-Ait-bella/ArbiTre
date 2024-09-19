@@ -46,18 +46,29 @@ export function Penalty(props) {
             }
         };
         fetchData();
+
+        setPenaltyData_1([{},{},{},{},{}]);
+        setPenaltyData_2([{},{},{},{},{}]);
     }, [club_1, club_2]);
 
     
-    const [penalty, setPenalty] = useState([{},{},{},{},{}]);
-    // const [twoClubs, setTwoClubs] = useState({});
     const [penaltyData_1, setPenaltyData_1] = useState([{},{},{},{},{}]);
     const [penaltyData_2, setPenaltyData_2] = useState([{},{},{},{},{}]);
+    const [open, setOpen] = useState(false);
 
 
     const addPenalty = ()=>{
         setPenaltyData_1([...penaltyData_1, {}]);
         setPenaltyData_2([...penaltyData_2, {}]);
+    }
+
+    
+    const Open = ()=>{
+        setOpen(!open)
+        if (!open) {
+            setPenaltyData_1([{},{},{},{},{}]);
+            setPenaltyData_2([{},{},{},{},{}]);
+        }
     }
 
     const handleChange = (event, indexClub, indexPenalty) => {
@@ -96,7 +107,6 @@ export function Penalty(props) {
     const [isValide, setIsValide] = useState();
 
     const sendData = () => {
-    //     let numberOfAttributes;
 
     const penaltyData = penaltyData_1.concat(penaltyData_2)
 
@@ -198,11 +208,12 @@ export function Penalty(props) {
                                     ضربات الترجيح
                                 </div>
                                 <div class="card-body">
+                                {
+                                    open ?
                                         <div className="row border border-secondary border-4 rounded py-3 px-2 my-1 mt-3">
-
          
                                             <div className='d-flex justify-content-end'>
-                                                <button className='btn btn-warning rounded-pill' onClick={addPenalty}><i class="fa-solid fa-plus mt-1 px-3"></i></button>
+                                                <button className='btn btn-warning rounded-pill' onClick={addPenalty}><i class="fa-solid fa-plus mt-1 px-4"></i></button>
                                             </div>
                                             
                                             <div className="penalty row mb-4 mt-4">
@@ -212,25 +223,25 @@ export function Penalty(props) {
                                                         <p className='fs-5'>{state.clubs.find((c) => c.id === club_1)?.nom ? state.clubs.find((c) => c.id === club_1)?.nom : "..."}</p>
                                                     </div>
                                                 </div>
-                                                {penaltyData_1.map((_, index) => (
+                                                {club_1 ? penaltyData_1.map((_, index) => (
                                                     <div className={`form-group col-md-3 mb-2 ${(index != (penaltyData_1.length - 1)) ? " border-left" : ""}`} key={index}>
                                                         <label>الفرصة {index + 1}</label>
                                                         <div className="d-flex justify-content-center pt-3 ">
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} name={`penelty${index}`} onChange={(event) => handleChange(event, 0, index)} id={`penaltyRadio${index}`} />
+                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} checked={penaltyData_1[index].result == 1 ? 1 : 0} name={`penelty${index}`} onChange={(event) => handleChange(event, 0, index)} id={`penaltyRadio${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio${index}`}>
                                                                     هدف
                                                                 </label>
                                                             </div>
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input bg-danger border-0" type="radio" value={0} name={`penelty${index}`}  onChange={(event) => handleChange(event, 0, index)} id={`penaltyRadio1${index}`} />
+                                                                <input class="form-check-input bg-danger border-0" type="radio" value={0} checked={penaltyData_1[index].result == 0 ? 1 : 0} name={`penelty${index}`}  onChange={(event) => handleChange(event, 0, index)} id={`penaltyRadio1${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio1${index}`}>
                                                                     ضائع
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                ))}
+                                                )) : <span className='text-warning w-50 '>يجب اختيار الفرق أعلاه أولا<span className='text-warning me-2'>!!</span></span>}
                                                             
                                             </div>
 
@@ -241,40 +252,45 @@ export function Penalty(props) {
                                                         <p className='fs-5'>{state.clubs.find((c) => c.id === club_2)?.nom ? state.clubs.find((c) => c.id === club_2)?.nom : "..."}</p>
                                                     </div>
                                                 </div>
-                                                {penaltyData_1.map((_, index) => (
+                                                {club_2 ? penaltyData_1.map((_, index) => (
                                                     <div className={`form-group col-md-3 mb-2 ${(index != (penaltyData_2.length - 1)) ? " border-left" : ""}`} key={index}>
                                                         <label>الفرصة {index + 1}</label>
                                                         <div className="d-flex justify-content-center pt-3 ">
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} name={`penelty_2${index}`} onChange={(event) => handleChange(event, 1, index)} id={`penaltyRadio_2${index}`} />
+                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} name={`penelty_2${index}`} checked={penaltyData_2[index].result == 1 ? 1 : 0} onChange={(event) => handleChange(event, 1, index)} id={`penaltyRadio_2${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio_2${index}`}>
                                                                     هدف
                                                                 </label>
                                                             </div>
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input bg-danger border-0" type="radio" value={0} name={`penelty_2${index}`}  onChange={(event) => handleChange(event, 1, index)} id={`penaltyRadio2_2${index}`} />
+                                                                <input class="form-check-input bg-danger border-0" type="radio" value={0} name={`penelty_2${index}`} checked={penaltyData_2[index].result == 0 ? 1 : 0} onChange={(event) => handleChange(event, 1, index)} id={`penaltyRadio2_2${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio2_2${index}`}>
                                                                     ضائع
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                ))}
+                                                )) : <span className='text-warning w-50 '>يجب اختيار الفرق أعلاه أولا<span className='text-warning me-2'>!!</span></span>}
                                             </div>
 
                                             <div className='d-flex justify-content-end'>
                                                 <button className='btn btn-danger moin rounded-pill' onClick={SuppRow}><i class="fa-solid fa-minus mt-1 px-4"></i></button>
-                                                {/* <button className='btn btn-warning rounded-pill' onClick={addPenalty}><i class="fa-solid fa-plus mt-1 px-4"></i></button> */}
                                             </div>
                                    
                                         </div>
+                                        : ""
+                                }
+
+                                        <div className='d-flex justify-content-center mt-2'>
+                                                <button className={`btn ${!open ? "btn-success" : "btn-danger"} border-white rounded-pill px-5 `} onClick={Open}>{`${!open ? "فتح" : "إغلق"}`}</button>
+                                        </div> 
                                     
-                                    <div className='mt-3'>
-                                        {error && <span className='text-warning'>{error}<span className='text-warning me-2'>!!</span></span>}
-                                    </div>
-                                    <div className='d-flex justify-content-right pt-2'>
-                                        <button className={`btn me-3 my-2 px-4 fw-bold  ${isValide ? 'bg-warning text-danger' : 'bg-secondary text-white'}`} onClick={sendData}>حفـــــظ</button>
-                                    </div>
+                                        <div className='mt-3'>
+                                            {error && <span className='text-warning'>{error}<span className='text-warning me-2'>!!</span></span>}
+                                        </div>
+                                        <div className='d-flex justify-content-right pt-2'>
+                                            <button className={`btn me-3 my-2 px-4 fw-bold  ${isValide ? 'bg-warning text-danger' : 'bg-secondary text-white'}`} onClick={sendData}>حفـــــظ</button>
+                                        </div>
                                 </div>
                             </div>
                         </div>

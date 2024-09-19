@@ -72,6 +72,18 @@ function AddRapport() {
                     setLoading(false)
                 })
             }
+            if (dataPenalty) {
+                await axiosClinet.post('/penalty', dataPenalty).then(
+                    (response) => {
+                        const { status } = response;
+                        if (status === 200) {
+                            setLoading(false)
+                        }
+                    }
+                ).catch((response) => {
+                    setLoading(false)
+                })
+            }
     }
 
     const handleAvertData = (dataFromChild) => {
