@@ -12,6 +12,7 @@ use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\delegueController;
 use App\Http\Controllers\JoueurController;
 use App\Http\Controllers\matcheController;
+use App\Http\Controllers\PenaltyController;
 use App\Http\Controllers\SaisonController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StadeController;
@@ -101,6 +102,12 @@ Route::get('/joueur' , [JoueurController::class, 'index'])->middleware('auth');
 Route::post('/joueur' , [JoueurController::class, 'store'])->middleware('auth');
 Route::put('/joueur/{id}', [JoueurController::class, 'update'])->middleware('auth');
 Route::delete('/joueur/{id}' , [JoueurController::class, 'destroy'])->middleware('auth');
+
+//penalty
+Route::get('/penalty' , [PenaltyController::class, 'index'])->middleware('auth');
+Route::post('/penalty' , [PenaltyController::class, 'store'])->middleware('auth');
+Route::put('/penalty/{id}', [PenaltyController::class, 'update'])->middleware('auth');
+Route::delete('/penalty/{id}' , [PenaltyController::class, 'destroy'])->middleware('auth');
 
 //change_password
 Route::post('/change_password' , [SettingsController::class, 'updatePassword'])->middleware('auth');

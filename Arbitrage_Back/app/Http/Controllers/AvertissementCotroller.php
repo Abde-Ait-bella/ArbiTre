@@ -51,14 +51,6 @@ class AvertissementCotroller extends Controller
                 // "request" => $requestJoueur
             ]
         );
-
-        // return (
-        //     [
-        //         "status" => true,
-        //         "data" => $avertissement,
-        //         "user" => Auth::user(),
-        //     ]
-        // );
     }
 
     /**

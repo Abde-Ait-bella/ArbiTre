@@ -73,4 +73,8 @@ class Matche extends Model
     {
         return $this->belongsTo(Delegue::class);
     }
+    public function penlty()
+    {
+        return $this->belongsToMany(Penalty::class);
+    }
 }
