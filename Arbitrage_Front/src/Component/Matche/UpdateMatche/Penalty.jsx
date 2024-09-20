@@ -5,6 +5,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { axiosClinet } from '../../../Api/axios';
 import { AuthUser } from '../../../AuthContext';
 import Select from 'react-select';
+import { useParams } from 'react-router-dom';
 
 export function Penalty(props) {
 
@@ -13,17 +14,20 @@ export function Penalty(props) {
     });
 
     
+    const [penaltyUpdate, setPenaltyUpdate] = useState(true);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState()
     const { user, club_1, club_2 } = AuthUser();
+    const { id } = useParams()
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [clubResponse, matcheRespose] = await Promise.all([
+                const [clubResponse, matcheRespose, penaltyRespose] = await Promise.all([
                     axiosClinet.get('/club'),
                     axiosClinet.get('/matche'),
+                    axiosClinet.get('/penalty'),
                 ]);
 
                 const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null);
@@ -34,6 +38,10 @@ export function Penalty(props) {
                 } else (
                     matchNamber = dataMatch.map(item => item.id)
                 )
+
+                // const dataPenalty = penaltyRespose.data.filter((p) => parseInt(p.user_id) === user?.id || p.user_id === null);
+                setPenaltyUpdate([...penaltyRespose.data?.filter((b) => parseInt(b.matche_id) === parseInt(id))]);
+
 
                 setState(prevData => ({
                     ...prevData,
@@ -50,6 +58,8 @@ export function Penalty(props) {
         setPenaltyData_1([{},{},{},{},{}]);
         setPenaltyData_2([{},{},{},{},{}]);
     }, [club_1, club_2]);
+
+    console.log('penaltyUpdate', penaltyUpdate);
 
     
     const [penaltyData_1, setPenaltyData_1] = useState([{},{},{},{},{}]);

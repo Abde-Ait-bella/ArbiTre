@@ -6,6 +6,7 @@ import { Buts } from "./Buts";
 import { useParams, useNavigate } from "react-router-dom";
 import { axiosClinet } from "../../../Api/axios";
 import "../../../style/Matche/updateMatche.scss"
+import { Penalty } from "./Penalty";
 
 
 function AddMatche() {
@@ -107,7 +108,7 @@ function AddMatche() {
                 <Avert dataAvert={handleAvertData} />
                 <Changement dataChangement={handleChangementData} />
                 <Buts dataButs={handleButsData} />
-
+                <Penalty/>
                 <form onSubmit={handleSubmit}>
                     <div className="d-flex justify-content-center">
                         <div>
