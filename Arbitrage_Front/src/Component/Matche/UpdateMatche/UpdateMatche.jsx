@@ -72,7 +72,7 @@ function AddMatche() {
             ).catch((response) => {
                 setLoading(false)
             })
-        }   if (dataPenalty) {
+        }   if (dataPenaltyUpdate) {
             await axiosClinet.put(`/penalty/${id}`, dataPenaltyUpdate).then(
                 (response) => {
                     const { status } = response;
