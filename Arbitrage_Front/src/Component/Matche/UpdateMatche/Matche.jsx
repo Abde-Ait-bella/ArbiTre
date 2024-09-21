@@ -40,6 +40,8 @@ export function Matche(props) {
     const [loading, setLoading] = useState(true);
     const { user } = AuthUser();
     const { id } = useParams();
+    const { club_1_Option, club_2_Option } = AuthUser();
+
 
     useEffect(() => {
         axiosClinet.get('/arbitre')
@@ -263,9 +265,12 @@ export function Matche(props) {
 
         var stadeClub_1 = event?.name === "club_id_1" ? event?.stade : parseInt(matcheUpdate?.stade_id);
         if (event?.name === "club_id_1") {
+            club_1_Option(value)
             stadeClub_1 = state.stades.find((s) => stadeClub_1?.id === parseInt(s.value))
         } else if (event?.name === "stade_id") {
             stadeClub_1 = event
+        }else if (event?.name === "club_id_2") {
+            club_2_Option(value)
         }
         var villeStade = state?.villes?.find((v) => parseInt(v.value) === parseInt(stadeClub_1?.ville?.id))
 

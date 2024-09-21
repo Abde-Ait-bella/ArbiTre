@@ -252,7 +252,7 @@ export function Penalty(props) {
                                                         <p className='fs-5'>{state.clubs.find((c) => c.id === club_2)?.nom ? state.clubs.find((c) => c.id === club_2)?.nom : "..."}</p>
                                                     </div>
                                                 </div>
-                                                {club_2 ? penaltyData_1.map((_, index) => (
+                                                {club_2 ? penaltyData_2.map((_, index) => (
                                                     <div className={`form-group col-md-3 mb-2 ${(index != (penaltyData_2.length - 1)) ? " border-left" : ""}`} key={index}>
                                                         <label>الفرصة {index + 1}</label>
                                                         <div className="d-flex justify-content-center pt-3 ">

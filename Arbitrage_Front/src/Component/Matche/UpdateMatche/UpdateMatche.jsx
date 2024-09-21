@@ -72,6 +72,17 @@ function AddMatche() {
             ).catch((response) => {
                 setLoading(false)
             })
+        }   if (dataPenalty) {
+            await axiosClinet.put(`/penalty/${id}`, dataPenaltyUpdate).then(
+                (response) => {
+                    const { status } = response;
+                    if (status === 200) {
+                        setLoading(false)
+                    }
+                }
+            ).catch((response) => {
+                setLoading(false)
+            })
         }
     }
 
@@ -79,6 +90,7 @@ function AddMatche() {
     const [dataMatche, setDataMatche] = useState();
     const [dataChangement, setDataChangement] = useState();
     const [dataButs, setDataButs] = useState();
+    const [dataPenaltyUpdate, setDataPenaltyUpdate] = useState();
     const [loading, setLoading] = useState(false);
 
     const handleAvertData = (dataFromChild) => {
@@ -97,6 +109,12 @@ function AddMatche() {
         setDataButs(dataFromChild);
     }
 
+    const handlePenaltyData = (dataFromChild) => {
+        setDataPenaltyUpdate(dataFromChild);
+    }
+
+    console.log('dataPenaltyUpdate', dataPenaltyUpdate)
+
     return (
         <div className="bg-dark p-4">
             <div class="card-header bg-secondary border border-light">
@@ -108,7 +126,7 @@ function AddMatche() {
                 <Avert dataAvert={handleAvertData} />
                 <Changement dataChangement={handleChangementData} />
                 <Buts dataButs={handleButsData} />
-                <Penalty/>
+                <Penalty dataPenalty={handlePenaltyData} />
                 <form onSubmit={handleSubmit}>
                     <div className="d-flex justify-content-center">
                         <div>

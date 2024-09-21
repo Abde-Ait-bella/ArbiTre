@@ -14,12 +14,15 @@ export function Penalty(props) {
     });
 
     
-    const [penaltyUpdate, setPenaltyUpdate] = useState(true);
+    const [penaltyUpdate, setPenaltyUpdate] = useState();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState()
     const { user, club_1, club_2 } = AuthUser();
     const { id } = useParams()
-
+    
+    const [penaltyData_1, setPenaltyData_1] = useState([{},{},{},{},{}]);
+    const [penaltyData_2, setPenaltyData_2] = useState([{},{},{},{},{}]);
+    const [open, setOpen] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,8 +42,12 @@ export function Penalty(props) {
                     matchNamber = dataMatch.map(item => item.id)
                 )
 
-                // const dataPenalty = penaltyRespose.data.filter((p) => parseInt(p.user_id) === user?.id || p.user_id === null);
-                setPenaltyUpdate([...penaltyRespose.data?.filter((b) => parseInt(b.matche_id) === parseInt(id))]);
+                const dataPenalty = penaltyRespose.data.filter((p) => parseInt(p.matche_id) === parseInt(id));
+                const middle = (dataPenalty?.length / 2)
+                setPenaltyData_1(dataPenalty?.slice(0, middle))
+                setPenaltyData_2(dataPenalty?.slice(middle))
+
+                setOpen(dataPenalty);
 
 
                 setState(prevData => ({
@@ -57,15 +64,8 @@ export function Penalty(props) {
 
         setPenaltyData_1([{},{},{},{},{}]);
         setPenaltyData_2([{},{},{},{},{}]);
+
     }, [club_1, club_2]);
-
-    console.log('penaltyUpdate', penaltyUpdate);
-
-    
-    const [penaltyData_1, setPenaltyData_1] = useState([{},{},{},{},{}]);
-    const [penaltyData_2, setPenaltyData_2] = useState([{},{},{},{},{}]);
-    const [open, setOpen] = useState(false);
-
 
     const addPenalty = ()=>{
         setPenaltyData_1([...penaltyData_1, {}]);
@@ -99,8 +99,8 @@ export function Penalty(props) {
             setPenaltyData_2(newPenalty);
         }
 
-        console.log('penaltyData_1', penaltyData_1, 'penaltyData_2', penaltyData_2 );
     }
+    console.log('penaltyData_1', penaltyData_1, 'penaltyData_2', penaltyData_2 );
 
 
 
@@ -121,6 +121,8 @@ export function Penalty(props) {
     const penaltyData = penaltyData_1.concat(penaltyData_2)
 
     const isComplete = penaltyData.every(p => p.club_id && p.matche_id && p.opportunity && p.result);
+
+    console.log('open', penaltyData);
 
         if (isComplete === true) {
             setError("")
@@ -230,10 +232,10 @@ export function Penalty(props) {
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
-                                                        <p className='fs-5'>{state.clubs.find((c) => c.id === club_1)?.nom ? state.clubs.find((c) => c.id === club_1)?.nom : "..."}</p>
+                                                        <p className='fs-5'>{club_1 ? state.clubs.find((c) => c.id === club_1)?.nom : state.clubs.find((c) => c.id === penaltyData_1[1].club_id)?.nom}{penaltyData_1[1].club_id ? "" : "..."}</p>
                                                     </div>
                                                 </div>
-                                                {club_1 ? penaltyData_1.map((_, index) => (
+                                                {club_1 || penaltyData_1[1].club_id ? penaltyData_1.map((_, index) => (
                                                     <div className={`form-group col-md-3 mb-2 ${(index != (penaltyData_1.length - 1)) ? " border-left" : ""}`} key={index}>
                                                         <label>الفرصة {index + 1}</label>
                                                         <div className="d-flex justify-content-center pt-3 ">
@@ -251,7 +253,9 @@ export function Penalty(props) {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                )) : <span className='text-warning w-50 '>يجب اختيار الفرق أعلاه أولا<span className='text-warning me-2'>!!</span></span>}
+                                                )) 
+                                                : <span className='text-warning w-50 '>يجب اختيار الفرق أعلاه أولا<span className='text-warning me-2'>!!</span></span>
+                                                }
                                                             
                                             </div>
 
@@ -259,10 +263,10 @@ export function Penalty(props) {
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
-                                                        <p className='fs-5'>{state.clubs.find((c) => c.id === club_2)?.nom ? state.clubs.find((c) => c.id === club_2)?.nom : "..."}</p>
+                                                        <p className='fs-5'>{club_2 ? state.clubs.find((c) => c.id === club_2)?.nom : state.clubs.find((c) => c.id === penaltyData_2[1].club_id)?.nom}{penaltyData_1[1].club_id ? "" : "..."}</p>
                                                     </div>
                                                 </div>
-                                                {club_2 ? penaltyData_1.map((_, index) => (
+                                                {club_2 || penaltyData_2[1].club_id ? penaltyData_2.map((_, index) => (
                                                     <div className={`form-group col-md-3 mb-2 ${(index != (penaltyData_2.length - 1)) ? " border-left" : ""}`} key={index}>
                                                         <label>الفرصة {index + 1}</label>
                                                         <div className="d-flex justify-content-center pt-3 ">
@@ -280,7 +284,9 @@ export function Penalty(props) {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                )) : <span className='text-warning w-50 '>يجب اختيار الفرق أعلاه أولا<span className='text-warning me-2'>!!</span></span>}
+                                                )) 
+                                                : <span className='text-warning w-50 '>يجب اختيار الفرق أعلاه أولا<span className='text-warning me-2'>!!</span></span>
+                                                }
                                             </div>
 
                                             <div className='d-flex justify-content-end'>
