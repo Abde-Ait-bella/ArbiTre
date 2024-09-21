@@ -65,9 +65,41 @@ class PenaltyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Penalty $penalty)
+    public function update(Request $request, string $id)
     {
-        //
+        $user = Auth::user()->id;
+        $updatePenalties = $request->all();
+        $ids = collect($updatePenalties)->pluck('id')->filter();
+
+        $penal = Penalty::where('matche_id', $id);
+
+        if ($ids) {
+            $penal->whereNotIn('id', $ids)->delete();
+        }
+
+        foreach ($updatePenalties as $updatePenalty) {
+
+            if (isset($updatePenalty['id'])) {
+                $Penalty = Penalty::find($updatePenalty['id']);
+                if ($Penalty) {
+                    $Penalty->update($updatePenalty);
+                } else {
+                    Penalty::create($updatePenalty);
+                }
+            } else {
+                Penalty::create($updatePenalty);
+            }
+
+        }
+
+
+        return response()->json(
+                [
+                    "status" => true,
+                    "data" => $updatePenalties,
+                    "user" => $user,
+                ]
+            );
     }
 
     /**
