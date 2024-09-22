@@ -8,6 +8,7 @@ import Register from './Register';
 import ForgotPassword from './forgotPassword';
 import ResetPassword from './ResetPassword';
 import { AuthProvider } from './AuthContext';
+import Home from './Home';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,7 +20,8 @@ root.render(
                 <Route path='/forgot-password' element={<ForgotPassword />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
-                <Route path='*' element={<App />} />
+                <Route path='/dashboard/*' element={<App />} />
+                <Route path='/*' element={<Home />} />
             </Routes>
         </BrowserRouter>
     </AuthProvider>

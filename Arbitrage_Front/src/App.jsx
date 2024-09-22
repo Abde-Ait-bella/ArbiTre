@@ -23,7 +23,7 @@ import DetailleRapport from './Component/Rapport/DetailleRapport';
 import AddRapport from './Component/Rapport/AddRapport/AddRapport';
 import AddedRapport from './Component/Rapport/AddRapport/AddedRapport';
 
-import Home from './Component/Home';
+import HomeDashboard from './Component/HomeDashboard';
 import './css/style.css'
 import './css/bootstrap.min.css'
 import ArbiTreListe from './Component/Arbitre/ArbitreListe';
@@ -146,13 +146,13 @@ function App() {
                   </div>
                   <div class="navbar-nav w-100 nav-part-3">
                     <div className='mb-2'>
-                      <NavLink to='/' className={({ isActive }) =>
+                      <NavLink to='/dashboard' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active pe-3 fw-bold" : "nav-item nav-link pe-3 fw-bold"
                       }><i class="fa-solid fa-house ms-3"></i>الصفحة الرئيسية</NavLink>
                       {/* <i class="fa fa-tachometer-alt me-2"></i> */}
                     </div>
                     <div className="me-2">
-                      <NavLink to='/matches' className={({ isActive }) =>
+                      <NavLink to='matches' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active fw-bold" : "nav-item nav-link fw-bold"
                       }><i class="fa-solid fa-futbol ms-3 me-2"></i>المباريات</NavLink>
                     </div>
@@ -161,16 +161,16 @@ function App() {
                         data-bs-toggle="dropdown" ><i class="fa-solid fa-screwdriver-wrench me-2 ms-3"></i>المكونات</NavLink>
                       <div class="dropdown-menu bg-transparent border-0"
                       >
-                        <NavLink to={"/composants/stades"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الملاعب<i class="fa-solid fa-ring me-3 mt-1"></i></NavLink>
-                        <NavLink to={"/composants/clubs"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الأندية<i class="fa-solid fa-shield me-4 mt-1"></i></NavLink>
-                        <NavLink to={"/composants/arbitres"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الحكام <i class="fa-solid fa-clone me-4 mt-1"></i></NavLink>
-                        <NavLink to={'/composants/delegue'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المناديب <i class="fa-solid fa-user-tie me-2 mt-1"></i></NavLink>
-                        <NavLink to={'/composants/joueur'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الاعبون <i class="fa-solid fa-person-running me-3 mt-1"></i></NavLink>
-                        <NavLink to={'/composants/villes'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المدن <i class="fa-solid fa-city me-4 mt-1"></i></NavLink>
+                        <NavLink to={"composants/stades"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الملاعب<i class="fa-solid fa-ring me-3 mt-1"></i></NavLink>
+                        <NavLink to={"composants/clubs"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الأندية<i class="fa-solid fa-shield me-4 mt-1"></i></NavLink>
+                        <NavLink to={"composants/arbitres"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الحكام <i class="fa-solid fa-clone me-4 mt-1"></i></NavLink>
+                        <NavLink to={'composants/delegue'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المناديب <i class="fa-solid fa-user-tie me-2 mt-1"></i></NavLink>
+                        <NavLink to={'composants/joueur'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الاعبون <i class="fa-solid fa-person-running me-3 mt-1"></i></NavLink>
+                        <NavLink to={'composants/villes'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المدن <i class="fa-solid fa-city me-4 mt-1"></i></NavLink>
                       </div>
                     </div>
                     <div className='mt-1 me-2'>
-                      <NavLink to='/rapport' className={({ isActive }) =>
+                      <NavLink to='rapport' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active fw-bold " : "nav-item nav-link fw-bold"
                       }><i class="fa-solid fa-book ms-3 me-2"></i> التقارير</NavLink>
                     </div>
@@ -218,62 +218,62 @@ function App() {
                 <div onClick={handleSidebarClose}>
                   <Routes>
                     <Route path="/" >
-                      <Route index element={<Home />} />
-                      <Route path="/rapport" element={<RapportListe />} />
-                      <Route path="/detailleRapport/:id" element={<DetailleRapport />} />
-                      <Route path='/addRapport' element={<AddRapport />} />
-                      <Route path='/addedRapport' element={<AddedRapport />} />
+                      <Route index element={<HomeDashboard />} />
+                      <Route path="rapport" element={<RapportListe />} />
+                      <Route path="detailleRapport/:id" element={<DetailleRapport />} />
+                      <Route path='addRapport' element={<AddRapport />} />
+                      <Route path='addedRapport' element={<AddedRapport />} />
 
-                      <Route path="/matches" element={<Matches />} />
-                      <Route path="/addMatche" element={<AddRapport />} />
-                      <Route path='/updateMatche/:id' element={<UpdateMatche />} />
-                      <Route path='/DeletedMatche' element={<DeletedMatche />} />
-                      <Route path='/updatedMatche' element={<UpdatedMatche />} />
+                      <Route path="matches" element={<Matches />} />
+                      <Route path="addMatche" element={<AddRapport />} />
+                      <Route path='updateMatche/:id' element={<UpdateMatche />} />
+                      <Route path='DeletedMatche' element={<DeletedMatche />} />
+                      <Route path='updatedMatche' element={<UpdatedMatche />} />
 
 
-                      <Route path="/composants/stades" element={<Stades />} />
-                      <Route path="/composants/addStade" element={<AddStade />} />
-                      <Route path='/composants/DeletedStade' element={<DeletedStade />} />
-                      <Route path='/composants/updateStade/:id' element={<UpdateStade />} />
-                      <Route path='/composants/AddedStade' element={<AddedStade />} />
-                      <Route path='/composants/updatedStade' element={<UpdatedStade />} />
+                      <Route path="composants/stades" element={<Stades />} />
+                      <Route path="composants/addStade" element={<AddStade />} />
+                      <Route path='composants/DeletedStade' element={<DeletedStade />} />
+                      <Route path='composants/updateStade/:id' element={<UpdateStade />} />
+                      <Route path='composants/AddedStade' element={<AddedStade />} />
+                      <Route path='composants/updatedStade' element={<UpdatedStade />} />
 
-                      <Route path="/composants/clubs" element={<ClubListe />} />
-                      <Route path="/composants/addClub" element={<AddClub />} />
-                      <Route path='/composants/addedClub' element={<AddedClub />} />
-                      <Route path='/composants/deletedClub' element={<DeletedClub />} />
-                      <Route path='/composants/updateClub/:id' element={<UpdateClub />} />
-                      <Route path='/composants/updatedClub' element={<UpdatedClub />} />
+                      <Route path="composants/clubs" element={<ClubListe />} />
+                      <Route path="composants/addClub" element={<AddClub />} />
+                      <Route path='composants/addedClub' element={<AddedClub />} />
+                      <Route path='composants/deletedClub' element={<DeletedClub />} />
+                      <Route path='composants/updateClub/:id' element={<UpdateClub />} />
+                      <Route path='composants/updatedClub' element={<UpdatedClub />} />
 
-                      <Route path='/composants/arbitres' element={<ArbiTreListe />} />
-                      <Route path='/composants/addArbitre' element={<AddArbitre />} />
-                      <Route path='/composants/updateArbitre/:id' element={<UpdateArbitre />} />
-                      <Route path='/composants/addedArbitre' element={<AddedArbitre />} />
-                      <Route path='/composants/deletedArbitre' element={<DeletedArbitre />} />
-                      <Route path='/composants/updatedArbitre' element={<UpdatedArbitre />} />
+                      <Route path='composants/arbitres' element={<ArbiTreListe />} />
+                      <Route path='composants/addArbitre' element={<AddArbitre />} />
+                      <Route path='composants/updateArbitre/:id' element={<UpdateArbitre />} />
+                      <Route path='composants/addedArbitre' element={<AddedArbitre />} />
+                      <Route path='composants/deletedArbitre' element={<DeletedArbitre />} />
+                      <Route path='composants/updatedArbitre' element={<UpdatedArbitre />} />
 
-                      <Route path='/composants/delegue' element={<DelegueListe />} />
-                      <Route path='/composants/addDelegue' element={<AddDelegue />} />
-                      <Route path='/composants/updateDelegue/:id' element={<UpdateDelegue />} />
-                      <Route path='/composants/addedDelegue' element={<AddedDelegue />} />
-                      <Route path='/composants/deletedDelegue' element={<DeletedDelegue />} />
-                      <Route path='/composants/updatedDelegue' element={<UpdatedDelegue />} />
+                      <Route path='composants/delegue' element={<DelegueListe />} />
+                      <Route path='composants/addDelegue' element={<AddDelegue />} />
+                      <Route path='composants/updateDelegue/:id' element={<UpdateDelegue />} />
+                      <Route path='composants/addedDelegue' element={<AddedDelegue />} />
+                      <Route path='composants/deletedDelegue' element={<DeletedDelegue />} />
+                      <Route path='composants/updatedDelegue' element={<UpdatedDelegue />} />
 
-                      <Route path='/composants/joueur' element={<JoueurListe />} />
-                      <Route path='/composants/addJoueur' element={<AddJoueur />} />
-                      <Route path='/composants/updateJoueur/:id' element={<UpdateJoueur />} />
-                      <Route path='/composants/addedJoueur' element={<AddedJoueur />} />
-                      <Route path='/composants/deletedJoueur' element={<DeletedJoueur />} />
-                      <Route path='/composants/updatedJoueur' element={<UpdatedJoueur />} />
+                      <Route path='composants/joueur' element={<JoueurListe />} />
+                      <Route path='composants/addJoueur' element={<AddJoueur />} />
+                      <Route path='composants/updateJoueur/:id' element={<UpdateJoueur />} />
+                      <Route path='composants/addedJoueur' element={<AddedJoueur />} />
+                      <Route path='composants/deletedJoueur' element={<DeletedJoueur />} />
+                      <Route path='composants/updatedJoueur' element={<UpdatedJoueur />} />
 
-                      <Route path='/composants/villes' element={<VillesListe />} />
-                      <Route path='/composants/addVille' element={<AddVille />} />
-                      <Route path='/composants/updateVille/:id' element={<UpdateVille />} />
-                      <Route path='/composants/addedVille' element={<AddedVille />} />
-                      <Route path='/composants/deletedVille' element={<DeletedVille />} />
-                      <Route path='/composants/updatedVille' element={<UpdatedVille />} />
+                      <Route path='composants/villes' element={<VillesListe />} />
+                      <Route path='composants/addVille' element={<AddVille />} />
+                      <Route path='composants/updateVille/:id' element={<UpdateVille />} />
+                      <Route path='composants/addedVille' element={<AddedVille />} />
+                      <Route path='composants/deletedVille' element={<DeletedVille />} />
+                      <Route path='composants/updatedVille' element={<UpdatedVille />} />
 
-                      <Route path='/change_password' element={<Settings />} />
+                      <Route path='change_password' element={<Settings />} />
                     </ Route>
                   </Routes>
                   {/* <RouterProvider router={router}/> */}

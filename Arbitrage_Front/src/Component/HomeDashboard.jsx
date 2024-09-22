@@ -14,7 +14,7 @@ import Palestine from "../../public/img/palistaine.png";
 import imgPdf from "../../public/img/pngdow.png";
 import imgWord from "../../public/img/word.png";
 
-import "../style/home.scss";
+import "../style/HomeDashboard.scss";
 
 ChartJS.register(
     ArcElement,
