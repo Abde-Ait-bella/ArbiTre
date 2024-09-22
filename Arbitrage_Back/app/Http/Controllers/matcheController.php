@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Matche;
 use App\Http\Controllers\Controller;
+use App\Models\Avertissement;
+use App\Models\But;
+use App\Models\Changement;
+use App\Models\Penalty;
 use Illuminate\Http\Request;
 
 class matcheController extends Controller
@@ -45,9 +49,20 @@ class matcheController extends Controller
      */
     public function destroy(string $id)
     {
-         $matche = Matche::find($id);
-         $matche->delete();
+        $matche = Matche::find($id);
+        $matche->delete();
 
+        $penalty = Penalty::where('matche_id', $id);
+        $penalty->delete();
+
+        $avert = Avertissement::where('matche_id', $id);
+        $avert->delete();
+
+        $but = But::where('matche_id', $id);
+        $but->delete();
+
+        $changement = Changement::where('matche_id', $id);
+        $changement->delete();
     }
 
 }
