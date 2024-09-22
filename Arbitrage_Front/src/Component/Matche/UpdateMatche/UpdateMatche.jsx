@@ -7,13 +7,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { axiosClinet } from "../../../Api/axios";
 import "../../../style/Matche/updateMatche.scss"
 import { Penalty } from "./Penalty";
+import { AuthUser } from "../../../AuthContext";
 
 
 function AddMatche() {
 
     const { id } = useParams();
     const navigate = useNavigate();
-    
+    const { club_1_Option_update, club_2_Option_update } = AuthUser();
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -24,6 +25,8 @@ function AddMatche() {
                     const { data } = response;
                     if (data.status == true) {
                         setLoading(false)
+                        club_1_Option_update('')
+                        club_2_Option_update('')
                         navigate('/updatedMatche')
                     }
                 }

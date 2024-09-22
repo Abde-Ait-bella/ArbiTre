@@ -17,7 +17,6 @@ export function Penalty(props) {
     const [error, setError] = useState()
     const { user, club_1, club_2 } = AuthUser();
 
-
     useEffect(() => {
         const fetchData = async () => {
             try {

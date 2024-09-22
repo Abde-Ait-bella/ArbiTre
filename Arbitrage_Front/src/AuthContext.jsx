@@ -14,6 +14,8 @@ export const AuthProvider = ({ children }) => {
     
     const  [club_1, setClub_1] = useState();
     const  [club_2, setClub_2] = useState();
+    const  [club_1_update, setClub_1_update] = useState();
+    const  [club_2_update, setClub_2_update] = useState();
 
     const club_1_Option = (dataClub) => {
         setClub_1(dataClub)
@@ -22,6 +24,15 @@ export const AuthProvider = ({ children }) => {
 
     const club_2_Option = (dataClub) => {
         setClub_2(dataClub)
+    }
+
+    const club_1_Option_update = (dataClub) => {
+        setClub_1_update(dataClub)
+            console.log(dataClub);
+    }
+
+    const club_2_Option_update = (dataClub) => {
+        setClub_2_update(dataClub)
     }
 
     const userDataLogin = (dataUser) => {
@@ -40,7 +51,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <>
-            <AuthContext.Provider value={{ userDataLogin, user, userDataLogout, club_1_Option, club_2_Option, club_1, club_2 }}>
+            <AuthContext.Provider value={{ userDataLogin, user, userDataLogout, club_1_Option, club_2_Option, club_1, club_2 , club_1_Option_update, club_2_Option_update, club_1_update, club_2_update }}>
                 {children}
             </AuthContext.Provider>
         </>

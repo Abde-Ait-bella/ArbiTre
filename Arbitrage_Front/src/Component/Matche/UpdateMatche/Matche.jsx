@@ -40,7 +40,7 @@ export function Matche(props) {
     const [loading, setLoading] = useState(true);
     const { user } = AuthUser();
     const { id } = useParams();
-    const { club_1_Option, club_2_Option } = AuthUser();
+    const { club_1_Option_update, club_2_Option_update } = AuthUser();
 
 
     useEffect(() => {
@@ -265,12 +265,12 @@ export function Matche(props) {
 
         var stadeClub_1 = event?.name === "club_id_1" ? event?.stade : parseInt(matcheUpdate?.stade_id);
         if (event?.name === "club_id_1") {
-            club_1_Option(value)
+            club_1_Option_update(value)
             stadeClub_1 = state.stades.find((s) => stadeClub_1?.id === parseInt(s.value))
         } else if (event?.name === "stade_id") {
             stadeClub_1 = event
         }else if (event?.name === "club_id_2") {
-            club_2_Option(value)
+            club_2_Option_update(value)
         }
         var villeStade = state?.villes?.find((v) => parseInt(v.value) === parseInt(stadeClub_1?.ville?.id))
 
@@ -322,16 +322,12 @@ export function Matche(props) {
 
     };
 
-    console.log(matcheUpdate);
-
     const [isValide, setIsValide] = useState();
 
     const sendData = () => {
         props.dataMatche(matcheUpdate);
         setIsValide((prev) => !prev);
     }
-
-    console.log(matcheUpdate);
 
     return (
         <>

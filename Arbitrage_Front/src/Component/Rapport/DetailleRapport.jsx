@@ -18,6 +18,7 @@ function DetailleRapport() {
   const [changements, setChangements] = useState();
   const [buts, setButs] = useState();
   const [ville, setVille] = useState();
+  const [penalty, setPenalty] = useState();
   const [loading, setLoading] = useState(true);
   const [skypTable, setSkypTable] = useState(false);
   const [marginB, setMarginB] = useState(false);
@@ -54,6 +55,10 @@ function DetailleRapport() {
 
     axiosClinet.get("/ville").then((respense) => {
       setVille(respense.data);
+    });
+
+    axiosClinet.get("/penalty").then((respense) => {
+      setPenalty(respense.data);
       setLoading(false);
     });
   }, []);
@@ -315,7 +320,6 @@ function DetailleRapport() {
                     <tr>
                       <th className="th p-0 px-3">المنافسة/الفئة : </th>
                       <th class="p-0 px-2">{rapports?.competition?.nom}</th>
-                      {/* <th class="p-1 px-3">الموسم الرياضي : {rapports?.saison?.nom}</th> */}
                       <th class="p-0 px-2">
                         {
                           categories?.find(
@@ -741,21 +745,47 @@ function DetailleRapport() {
                                       colSpan={6}
                                     >
                                       الفريق(أ) :{" "}
-                                      {/* {
+                                      {
                                         club?.find(
                                           (c) =>
                                             c.id ===
                                             parseInt(rapports?.club_id_1)
                                         )?.abbr
-                                      } */}
+                                      } 
                                     </th>
                                   </tr>
                                   <tr className="text-center border-top-0">
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
+                                    <td className="p-1">
+                                    { penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 1
+                                    )?.result}
+                                    </td>
+                                    <td className="p-1">{ penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 2
+                                    ) ? penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 2
+                                    )?.result : "-" }</td>
+                                    <td className="p-1">
+                                    { penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 3
+                                    ) ?  penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 3
+                                    )?.result : "-"}
+                                    </td>
+                                    <td className="p-1">
+                                    { penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 4
+                                    ) ? penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 4
+                                    ).result : "-"}
+                                    </td>
+                                    <td className="p-1">
+                                    { penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 5
+                                    ) ? penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 5
+                                    ).result : "-"}
+                                    </td>
                                     <td className="p-1" rowSpan={2}>
                                       مجموع الأهداف
                                     </td>
@@ -764,13 +794,78 @@ function DetailleRapport() {
                                 <tbody>
                                   {/* {(But_1?.length === 0) & (RestBUT1 === 0) ? ( */}
                                   <tr className="text-center">
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
+                                    <td className="p-1">{ penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 6
+                                    ) ? penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 6
+                                    ).result : "-"}</td>
+                                    <td className="p-1">{ penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 7
+                                    ) ? penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 7
+                                    ).result : "-"}</td>
+                                    <td className="p-1">{ penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 8
+                                    ) ? penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 8
+                                    ).result : "-"}</td>
+                                    <td className="p-1">{ penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 9
+                                    ) ? penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 9
+                                    ).result : "-"}</td>
+                                    <td className="p-1">{ penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 10
+                                    ) ? penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 10
+                                    ).result : "-"}</td>
+                                    <td className="p-1" rowSpan={2}>0
+                                    {penalty?.filter(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.result === 1
+                                        ).length}
+                                    </td>
                                   </tr>
+                                  {
+                                    penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 11
+                                    ) ?
+                                    <tr className="text-center border-top-0">
+                                        <td className="p-1">{ penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 11
+                                        )?.result }
+                                        </td>
+                                        <td className="p-1">{ 
+                                          penalty?.find(
+                                            (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 12
+                                          ) ? penalty?.find(
+                                            (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 12
+                                          )?.result : "-"
+                                          }
+                                        </td>
+                                      <td className="p-1">
+                                        { penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 13
+                                        ) ? penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 13
+                                        )?.result : "-"}
+                                      </td>
+                                      <td className="p-1">
+                                        { penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 14
+                                        ) ? penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 14
+                                        )?.result : "-"}
+                                      </td>
+                                      <td className="p-1">
+                                        { penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 15
+                                        ) ? penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 15
+                                        )?.result : "-"}
+                                      </td>
+                                    </tr>
+                                      : ""
+                                  }
                                   {/* ) : (
                                     But_1?.map((b) => (
                                       <tr className="text-center">
@@ -818,38 +913,130 @@ function DetailleRapport() {
                                       colSpan={6}
                                     >
                                       الفريق(ب) :{" "}
-                                      {/* {
+                                      {
                                         club?.find(
                                           (c) =>
                                             c.id ===
                                             parseInt(rapports?.club_id_2)
                                         )?.abbr
-                                      } */}
+                                      }
                                     </th>
                                   </tr>
                                   <tr className="text-center border-top-0">
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1" rowSpan={2}>
-                                      مجموع الأهداف
-                                    </td>
+                                      <td className="p-1">
+                                        { penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 1
+                                        ) ? penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 1
+                                        )?.result : "-"}
+                                        </td>
+                                        <td className="p-1">{ penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 2
+                                        ) ? penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 2
+                                        )?.result : "-" }</td>
+                                        <td className="p-1">
+                                        { penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 3
+                                        ) ?  penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 3
+                                        )?.result : "-"}
+                                        </td>
+                                        <td className="p-1">
+                                        { penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 4
+                                        ) ? penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 4
+                                        ).result : "-"}
+                                        </td>
+                                        <td className="p-1">
+                                        { penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 5
+                                        ) ? penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 5
+                                        ).result : "-"}
+                                        </td>
+                                        <td className="p-1" rowSpan={2}>
+                                          مجموع الأهداف
+                                        </td>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {/* {(But_2?.length === 0) & (RestBUT2 === 0) ? ( */}
                                   <tr className="text-center">
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1">-</td>
-                                    <td className="p-1" rowSpan={2}>
-                                      -
-                                    </td>
+                                    <td className="p-1">{ penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 6
+                                      ) ? penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 6
+                                      ).result : "-"}</td>
+                                      <td className="p-1">{ penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 7
+                                      ) ? penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 7
+                                      ).result : "-"}</td>
+                                      <td className="p-1">{ penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 8
+                                      ) ? penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 8
+                                      ).result : "-"}</td>
+                                      <td className="p-1">{ penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 9
+                                      ) ? penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 9
+                                      ).result : "-"}</td>
+                                      <td className="p-1">{ penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 10
+                                      ) ? penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 10
+                                      ).result : "-"}</td>
+                                      <td className="p-1" rowSpan={2}>{penalty?.filter(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.result === 1
+                                        ).length < 10 ? "0" : ""}
+                                      {penalty?.filter(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.result === 1
+                                        ).length}
+                                      </td>
                                   </tr>
+                                  {
+                                    penalty?.find(
+                                      (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 11
+                                    ) ?
+                                    <tr className="text-center border-top-0">
+                                        <td className="p-1">{ penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 11
+                                        )?.result }
+                                        </td>
+                                        <td className="p-1">{ 
+                                          penalty?.find(
+                                            (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 12
+                                          ) ? penalty?.find(
+                                            (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 12
+                                          )?.result : "-"
+                                          }
+                                        </td>
+                                      <td className="p-1">
+                                        { penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 13
+                                        ) ? penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 13
+                                        )?.result : "-"}
+                                      </td>
+                                      <td className="p-1">
+                                        { penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 14
+                                        ) ? penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 14
+                                        )?.result : "-"}
+                                      </td>
+                                      <td className="p-1">
+                                        { penalty?.find(
+                                        (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 15
+                                        ) ? penalty?.find(
+                                          (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 15
+                                        )?.result : "-"}
+                                      </td>
+                                    </tr>
+                                      : ""
+                                  }
                                   {/* ) : (
                                     But_2?.map((b) => (
                                       <tr className="text-center">
@@ -915,7 +1102,7 @@ function DetailleRapport() {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {console.log("But_1", But_1)}
+                                  {console.log("penalty", penalty)}
                                   {(But_1?.length === 0) & (RestBUT1 === 0) ? (
                                     <tr className="text-center">
                                       <td className="p-1">-</td>

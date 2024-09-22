@@ -13,11 +13,9 @@ export function Penalty(props) {
         clubs: [],
     });
 
-    
-    const [penaltyUpdate, setPenaltyUpdate] = useState();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState()
-    const { user, club_1, club_2 } = AuthUser();
+    const { user, club_1_update, club_2_update } = AuthUser();
     const { id } = useParams()
     
     const [penaltyData_1, setPenaltyData_1] = useState([{},{},{},{},{}]);
@@ -42,13 +40,16 @@ export function Penalty(props) {
                     matchNamber = dataMatch.map(item => item.id)
                 )
 
-                const dataPenalty = penaltyRespose.data.filter((p) => parseInt(p.matche_id) === parseInt(id));
-                const middle = (dataPenalty?.length / 2)
-                setPenaltyData_1(dataPenalty?.slice(0, middle))
-                setPenaltyData_2(dataPenalty?.slice(middle))
+                const curentMatche = dataMatch.find((m) => m.id == id)
 
-                setOpen(dataPenalty);
+                const dataPenalty_1 = penaltyRespose.data.filter((p) => parseInt(p.matche_id) === parseInt(id) && p.club_id === parseInt(curentMatche?.club_id_1));
+                const dataPenalty_2 = penaltyRespose.data.filter((p) => parseInt(p.matche_id) === parseInt(id) && p.club_id === parseInt(curentMatche?.club_id_2));
+                setPenaltyData_1(!club_1_update && !club_2_update && dataPenalty_1.length > 0 ? dataPenalty_1 : [{},{},{},{},{}])
+                setPenaltyData_2(!club_1_update && !club_2_update && dataPenalty_2.length > 0 ? dataPenalty_2 : [{},{},{},{},{}])
 
+                console.log('dataPenalty_1 def', curentMatche)
+
+                setOpen(dataPenalty_1.length > 0);
 
                 setState(prevData => ({
                     ...prevData,
@@ -62,10 +63,10 @@ export function Penalty(props) {
         };
         fetchData();
 
-        setPenaltyData_1([{},{},{},{},{}]);
-        setPenaltyData_2([{},{},{},{},{}]);
+        // setPenaltyData_1([{},{},{},{},{}]);
+        // setPenaltyData_2([{},{},{},{},{}]);
 
-    }, [club_1, club_2]);
+    }, [club_1_update, club_2_update]);
 
     const addPenalty = ()=>{
         setPenaltyData_1([...penaltyData_1, {}]);
@@ -85,14 +86,14 @@ export function Penalty(props) {
 
         if (indexClub === 0 ) {
             const newPenalty = [...penaltyData_1];
-            newPenalty[indexPenalty].club_id = club_1 ? club_1 : parseInt(penaltyData_1[indexClub].club_id);
+            newPenalty[indexPenalty].club_id = club_1_update ? club_1_update : parseInt(penaltyData_1[indexClub].club_id);
             newPenalty[indexPenalty].result = parseInt(event.target.value);
             newPenalty[indexPenalty].opportunity = indexPenalty+1;
             newPenalty[indexPenalty].matche_id = parseInt(id);
             setPenaltyData_1(newPenalty);
         }else{
             const newPenalty = [...penaltyData_2];
-            newPenalty[indexPenalty].club_id = club_2 ? club_2 : parseInt(penaltyData_2[indexClub].club_id);
+            newPenalty[indexPenalty].club_id = club_2_update ? club_2_update : parseInt(penaltyData_2[indexClub].club_id);
             newPenalty[indexPenalty].result = parseInt(event.target.value);
             newPenalty[indexPenalty].opportunity = indexPenalty+1;
             newPenalty[indexPenalty].matche_id = parseInt(id);
@@ -115,22 +116,13 @@ export function Penalty(props) {
     };
 
     const [isValide, setIsValide] = useState();
-
+    
     const sendData = () => {
 
     const penaltyData = penaltyData_1.concat(penaltyData_2)
-
-    // const isComplete = penaltyData.every(p => p.club_id && p.matche_id && p.opportunity && p.result === 0 || p.result === 1);
-
-    console.log('open', penaltyData);
-
-        // if (isComplete === true) {
             setError("")
             props.dataPenalty(penaltyData);
             setIsValide(prev => !prev)
-        // } else {
-        //     setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
-        // }
     };
     return (
         <>
@@ -232,16 +224,16 @@ export function Penalty(props) {
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
-                                                        <p className='fs-5'>{club_1 ? state.clubs.find((c) => c.id === club_1)?.nom : state.clubs.find((c) => c.id === penaltyData_1[1]?.club_id)?.nom}{penaltyData_1[1]?.club_id ? "" : "..."}</p>
+                                                        <p className='fs-5'>{club_1_update ? state.clubs.find((c) => c.id === club_1_update)?.nom : state.clubs.find((c) => c.id === penaltyData_1[1]?.club_id)?.nom}{penaltyData_1[1]?.club_id ? "" : "..."}</p>
                                                     </div>
                                                 </div>
-                                                {club_1 || penaltyData_1[1]?.club_id ? penaltyData_1?.map((_, index) => (
+                                                {club_1_update || penaltyData_1[1]?.club_id ? penaltyData_1?.map((_, index) => (
                                                     <div className={`form-group col-md-3 mb-2 ${(index != (penaltyData_1.length - 1)) ? " border-left" : ""}`} key={index}>
                                                         <label>الفرصة {index + 1}</label>
                                                         <div className="d-flex justify-content-center pt-3 ">
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} checked={penaltyData_1[index].result == 1 ? 1 : 0} name={`penelty${index}`} onChange={(event) => handleChange(event, 0, index)} id={`penaltyRadio${index}`} />
-                                                                <label class="form-check-label" for={`penaltyRadio${index}`}>
+                                                                <input class="form-check-input bg-success border-0" type="radio" value={1} checked={penaltyData_1[index].result == 1 ? 1 : 0} name={`penelty${index}`} onChange={(event) => handleChange(event, 0, index)} id={`penaltyRadio0${index}`} />
+                                                                <label class="form-check-label" for={`penaltyRadio0${index}`}>
                                                                     هدف
                                                                 </label>
                                                             </div>
@@ -263,10 +255,10 @@ export function Penalty(props) {
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
-                                                        <p className='fs-5'>{club_2 ? state.clubs.find((c) => c.id === club_2)?.nom : state.clubs.find((c) => c.id === penaltyData_2[1]?.club_id)?.nom}{penaltyData_1[1]?.club_id ? "" : "..."}</p>
+                                                        <p className='fs-5'>{club_2_update ? state.clubs.find((c) => c.id === club_2_update)?.nom : state.clubs.find((c) => c.id === penaltyData_2[1]?.club_id)?.nom}{penaltyData_1[1]?.club_id ? "" : "..."}</p>
                                                     </div>
                                                 </div>
-                                                {club_2 || penaltyData_2[1]?.club_id ? penaltyData_2?.map((_, index) => (
+                                                {club_2_update || penaltyData_2[1]?.club_id ? penaltyData_2?.map((_, index) => (
                                                     <div className={`form-group col-md-3 mb-2 ${(index != (penaltyData_2.length - 1)) ? " border-left" : ""}`} key={index}>
                                                         <label>الفرصة {index + 1}</label>
                                                         <div className="d-flex justify-content-center pt-3 ">

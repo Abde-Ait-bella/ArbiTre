@@ -24,7 +24,7 @@ export function Changement(props) {
     const [changeUpdate, setChangeUpdate] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
-    const { user } = AuthUser();
+    const { user, club_1_update, club_2_update } = AuthUser();
 
     const { id } = useParams();
 
@@ -69,7 +69,7 @@ export function Changement(props) {
                 setOptionsJSort(optionJoueursSort);
                 setOptionsLicenceS(optionJoueursLicenceS);
 
-                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null);
+                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null && (parseInt(club_1_update) === c.id || parseInt(club_2_update) === c.id));
                 const optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + " " + item.abbr,
@@ -93,7 +93,7 @@ export function Changement(props) {
             }
         };
         fetchData();
-    }, []);
+    }, [club_1_update, club_2_update]);
 
     //--------Sélection joueur entrant
 

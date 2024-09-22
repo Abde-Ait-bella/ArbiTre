@@ -309,7 +309,7 @@ export function Buts(props) {
                                             <div className="form-group col-md-4">
                                                 <label>الفريق</label>
                                                 <div className='my-2'>
-                                                    <CreatableSelect className='text-light' options={state?.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب و اختر" />
+                                                    <CreatableSelect className='text-light' options={state?.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder={`${state?.clubs.length > 0  ? 'اكتب و اختر' : 'اختر الفرق أعلاه !!'}`} />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-4">

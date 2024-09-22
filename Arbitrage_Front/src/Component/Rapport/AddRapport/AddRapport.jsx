@@ -6,6 +6,7 @@ import { Buts } from "./Buts";
 import { Penalty } from "./Penalty";
 import { useNavigate } from "react-router-dom";
 import { axiosClinet } from "../../../Api/axios";
+import { AuthUser } from "../../../AuthContext";
 
 
 function AddRapport() {
@@ -16,6 +17,8 @@ function AddRapport() {
     const [dataButs, setDataButs] = useState();
     const [dataPenalty, setDataPenalty] = useState();
     const [loading, setLoading] = useState(false);
+    const { club_1_Option, club_2_Option } = AuthUser();
+
     const navigate = useNavigate();
 
     const handleSubmit = async(e) => {
@@ -27,6 +30,8 @@ function AddRapport() {
                         const { status } = response;
                         if (status === 200) {
                             setLoading(false)
+                            club_1_Option('')
+                            club_2_Option('')
                             navigate('/addedRapport')
                         }
                     }

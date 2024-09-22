@@ -22,7 +22,7 @@ export function Avert(props) {
     const [avertUpdate, setAvertUpdate] = useState([]);
     const [error, setError] = useState();
     const [loading, setLoading] = useState(true)
-    const { user } = AuthUser();
+    const { user, club_1_update, club_2_update } = AuthUser();
     const { id } = useParams();
 
 
@@ -48,7 +48,7 @@ export function Avert(props) {
                     name: "joueur_numero_licence"
                 }))
 
-                const dataClubs = clubResponse.data?.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null);
+                const dataClubs = clubResponse.data?.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null && (c.id === parseInt(club_1_update) || c.id === parseInt(club_2_update)));
                 const optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + item.abbr,
@@ -71,7 +71,7 @@ export function Avert(props) {
             }
         };
         fetchData();
-    }, []);
+    }, [club_1_update, club_2_update]);
 
 
 
