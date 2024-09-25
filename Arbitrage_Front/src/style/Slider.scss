@@ -1,34 +1,84 @@
-.slider{
+@keyframes movescrolldown {
+    from {padding-bottom: 0; opacity: 0;}
+    to {padding-bottom: 30px; opacity: 1;}
+}
+
+.slider-default{
     height: 100vh;
-    background-image: url("../../public/img/refree.jpg");
-    content: "";
-    background-repeat: no-repeat;
-    background-size: cover;
+    // background-image: url("../../public/img/refree.jpg");
+    // background-color: #0b0b0e;
+    // background-color: red;
+    // content: "";
+    // background-repeat: no-repeat;
+    // background-size: cover;
     display: flex;
-    justify-content: center;
+    margin: 0;
     align-items: center;
-    .slider-title{
+    flex-wrap: nowrap;
+
+    .slider.home{
         display: flex;
         flex-direction: column;
-        // justify-content: center;
+        justify-content: center;
         align-items: center;
-        height: 27%;
+        height: 100%;
         background-color: rgba($color: #000000, $alpha: 0.5);
-        width: 100%;
+        margin-top: -10px;
         font-family: "Bebas Neue", sans-serif;
         
-        // h1{
-        //     margin-top: -71px;
-        // }
-        p {
-            font-weight: 500;
-            font-size: 56px;
-            margin-top: -39px !important;
-            &.text-arab{
-                font-family: "El Messiri";
+            p {
+                font-weight: 500;
+                font-size: 56px;
+                margin-top: -39px !important;
+                &.text-arab{
+                    font-family: "El Messiri";
+                }
             }
-        }
+            .scroll-down{
+                position: absolute;
+                bottom: 50px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                opacity: 0;
+                gap: 25px;
+                animation-name: movescrolldown;
+                animation-duration: 1s;
+                animation-delay: 3s;
+                animation-iteration-count: infinite;
+                animation-direction: alternate ;
+                animation-timing-function: ease-in-out;
+                & p{
+                    font-size: larger;
+                    color: white;
+                    font-family: 'El Messiri';
+                }
+            }
           
           
-    }
+    }     
+    
+    .slider.about{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-image: linear-gradient(to right , #0b0b0e, #a5a5a5);
+        font-family: "Bebas Neue", sans-serif;
+        padding: 100px;
+        text-align: justify;
+        p {
+                color: #ffffff;
+                font-weight: 500;
+                font-size: 30px;
+                &.text-arab{
+                    font-family: "El Messiri";
+                }
+            }
+    }  
+    
 }
+.footer{
+    height: 100vh;
+    background-color: aqua;
+}  

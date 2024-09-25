@@ -8,13 +8,12 @@ function navbar() {
     const logoRef = useRef();
 
     useEffect(() =>{
-        const split = new SplitType(logoRef.current, { types: 'words, chars' });
-        console.log(split.chars);
+        new SplitType(logoRef.current, { types: 'words, chars' });
         gsap.to('.char', { y: 0, stagger: 0.05, delay: 0.2, duration: .1 });
     },[])
   return (
     <>
-       <div className='navbar-home'>
+       <div className='navbar-home' dir='rtl'>
             <div className='nav-left'>
                 <Link to='/' className="link-logo">
                     <i class="fa-solid fa-flag-checkered ms-2 me-3 fs-2 mb-2 text-white"></i>
