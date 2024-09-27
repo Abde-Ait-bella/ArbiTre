@@ -3,82 +3,153 @@
     to {padding-bottom: 30px; opacity: 1;}
 }
 
-.slider-default{
-    height: 100vh;
-    // background-image: url("../../public/img/refree.jpg");
-    // background-color: #0b0b0e;
-    // background-color: red;
-    // content: "";
-    // background-repeat: no-repeat;
-    // background-size: cover;
-    display: flex;
+.sections{
+    background-color: #0b0b0e;
     margin: 0;
-    align-items: center;
-    flex-wrap: nowrap;
+    transition: background-color 2s ease;
+    z-index: 0;
+    .section-parent{
+        height: 100vh;
+        display: flex;
+        margin: 0;
+        align-items: center;
+        flex-wrap: nowrap;
 
-    .slider.home{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        background-color: rgba($color: #000000, $alpha: 0.5);
-        margin-top: -10px;
-        font-family: "Bebas Neue", sans-serif;
-        
-            p {
-                font-weight: 500;
-                font-size: 56px;
-                margin-top: -39px !important;
-                &.text-arab{
-                    font-family: "El Messiri";
-                }
-            }
-            .scroll-down{
+        .title{
+            font-size: xxx-large;
+            font-weight: 900;
+            margin-bottom: 45px;
+            font-family: 'El Messiri';
+            background-color: rgb(255 255 255 / 50%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            z-index: 1;
+            display: inline-block;
+            position:relative;
+
+            &::before{
+                content: 'من نحن';
+                top: -100px;
                 position: absolute;
-                bottom: 50px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+                background: linear-gradient(90deg, transparent,rgba(255, 255, 255, .4), transparent);
+                z-index: -1;
+                width: 160px;
+                height: 58px;
+                transition: .5s;
                 opacity: 0;
-                gap: 25px;
-                animation-name: movescrolldown;
-                animation-duration: 1s;
-                animation-delay: 3s;
-                animation-iteration-count: infinite;
-                animation-direction: alternate ;
-                animation-timing-function: ease-in-out;
-                & p{
-                    font-size: larger;
-                    color: white;
-                    font-family: 'El Messiri';
-                }
+                background-clip: text;
+                -webkit-background-clip: text;
             }
-          
-          
-    }     
-    
-    .slider.about{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-image: linear-gradient(to right , #0b0b0e, #a5a5a5);
-        font-family: "Bebas Neue", sans-serif;
-        padding: 100px;
-        text-align: justify;
-        p {
+            &:hover::before{
+                top: 0px;
+                opacity: 1;
                 color: #ffffff;
-                font-weight: 500;
-                font-size: 30px;
-                &.text-arab{
-                    font-family: "El Messiri";
-                }
             }
-    }  
+        }
+                
+        }
     
+        .home-section{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            margin-top: -10px;
+            font-family: "Bebas Neue", sans-serif;
+
+           
+                p {
+                    font-weight: 500;
+                    font-size: 56px;
+                    margin-top: -39px !important;
+                    z-index: 2;
+                    &.text-arab{
+                        font-family: "El Messiri";
+                    }
+                }
+                .scroll-down{
+                    position: absolute;
+                    bottom: 50px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    opacity: 0;
+                    gap: 25px;
+                    animation-name: movescrolldown;
+                    animation-duration: 1s;
+                    animation-delay: 3s;
+                    animation-iteration-count: infinite;
+                    animation-direction: alternate ;
+                    animation-timing-function: ease-in-out;
+                    & p{
+                        font-size: larger;
+                        color: white;
+                        font-family: 'El Messiri';
+                    }
+                }
+                .blob-home{
+                    position: absolute;
+                    height: 300px;
+                    width: 300px;
+                    display: flex;
+                    align-items: center;
+                    background: conic-gradient(yellow, red );
+                    filter: blur(60px);
+                    z-index: 1;
+                    opacity: 0.1;
+                    border-radius: 50%;
+                }
+        }     
+        
+        .about-section{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: "Bebas Neue", sans-serif;
+            padding: 0 100px;
+            text-align: justify;
+            &:hover .title::before{
+                top: 0px;
+                opacity: 1;
+                color: #ffffff;
+            }
+            .text-arab {
+                    color: #ffffff;
+                    font-weight: 500;
+                    font-size: 30px;
+                    font-family: "El Messiri";
+                   
+                }
+                .blob_1{
+                    position: absolute;
+                    height: 300px;
+                    width: 300px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: conic-gradient(rgb(61, 61, 61), rgba(5, 20, 153, 0.29));
+                    filter: blur(100px);
+                    z-index: 1;
+                    opacity: 0.2;
+                    }
+                .blob_2{
+                    position: absolute;
+                    height: 100px;
+                    width: 100px;
+                    top: 0;
+                    left: -10px;
+                    background: conic-gradient(rgb(255, 255, 255), rgb(0, 0, 0));
+                    filter: blur(100px);
+                    z-index: 5;
+                    opacity: 0.2;
+                }
+        }  
+        
+    .footer{
+        height: 100vh;
+        background-color: aqua;
+    }  
 }
-.footer{
-    height: 100vh;
-    background-color: aqua;
-}  
