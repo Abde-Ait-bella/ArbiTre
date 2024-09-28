@@ -5,34 +5,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 import { useInView } from 'react-intersection-observer';
 import { Typewriter } from 'react-simple-typewriter'
-import { motion } from 'framer-motion';
-import { AnimatePresence } from 'framer-motion';
+import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
 
 
 
 function Slider() {
-  const [selectedId, setSelectedId] = useState(null)
-  
-  const cards = [{
-    id: 1,
-    subtitle: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. A, minima?',
-    title: 'Card 1'
-  }, {
-    id: 2,
-    subtitle: 'Lorem ipsum dolor sit amet.',
-    title: 'Card 2'
-  }, {
-    id: 3,
-    subtitle: 'Lorem ipsum dolor sit amet.',
-    title: 'Card 3'
-  }, {
-    id: 4,
-    subtitle: 'Lorem ipsum dolor sit amet.',
-    title: 'Card 4'
-  }]
-
-
-
 
   const textRef = useRef();
   const textRefArab = useRef();
@@ -129,12 +106,12 @@ function Slider() {
             </div>
             <div ref={ref}  className='about-section section m-0'>
               <p dir='rtl' className='title'>من نحن</p>
-              <p dir='rtl' className='text-arab text-center'>
+              <p dir='rtl' className='text-arab text-justify'>
                 {inView1 ?
                   <span >
                 <Typewriter
                   words={[
-                    '" منصة تقوم تساعد العمل الاداري للحكم بعد المباراة عن طريق تسهيل عملية كتابة التقرير الخاص بالمباراة وتوفر العديد من المعلومات والميزات كإحصائيات خاصة بالحكم إلخ ... "',
+                    '"أهلاً بكم في منصة ArbiTre.ma ، أول منصة رقمية في المغرب تهدف إلى تسهيل العمل الإداري للحكام بعد المباريات . نسعى من خلال هذه المنصة إلى مساعدة الحكام على تنظيم المهام الإدارية المتعلقة بالمباريات بشكل أسرع وأسهل . "',
                   ]}
                   cursor
                   // pauseFor={5000}
@@ -152,84 +129,42 @@ function Slider() {
                 <div className="blob_2"></div>
               </div>
             </div>
-            <div ref={ref1} className='section p-0 m-0 '>
-              <div class="" style={{color:"black"}}>
-                <h2 class="text-2xl font-bold flex justify-center">
-                  Jobs
-                </h2>
-                {/* Jobs Tab */}
-                <div class="grid grid-cols-4 bg-green-300 justify-between p-4 space-x-2" tyle={{color:"black"}}>
-                    <motion.div className="bg-purple-600 flex items-center justify-center h-screen">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {cards.map((item) => (
-                          <motion.div
-                            className={`card bg-white rounded-lg shadow-md cursor-pointer transform transition-transform duration-500 hover:scale-105 ${
-                              selectedId === item.id ? 'card-selected' : ''
-                            }`}
-                            layoutId={`card-container-${item.id}`}
-                            onClick={() => setSelectedId(item.id)}
-                            key={item.id}
-                            initial={{ scale: 1 }}
-                            animate={{ scale: selectedId === item.id ? 1.1 : 1 }} // Increase scale on selected card
-                            transition={{ duration: 0.3 }}
-                          >
-                            <div className="card-content">
-                              <motion.h2 className="text-xl font-bold mb-2 text-purple-600">{item.title}</motion.h2>
-                              <motion.h5 className="text-sm font-bold mb-1 text-gray-700">{item.subtitle}</motion.h5>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
-
-                      <AnimatePresence>
-                        {selectedId && (
-                          <motion.div
-                            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                          >
-                            {cards.map((item) => (
-                              item.id === selectedId && (
-                                <motion.div
-                                  className="bg-white rounded-lg p-4 shadow-md max-w-lg mx-auto"
-                                  layoutId={`card-container-${item.id}`}
-                                  key={item.id}
-                                  initial={{ scale: 0.8, opacity: 0 }}
-                                  animate={{ scale: 1, opacity: 1 }}
-                                  exit={{ scale: 0.8, opacity: 0 }}
-                                >
-                                  <motion.div className="relative">
-                                    <motion.button
-                                      className="absolute top-2 right-2 py-1 px-2 text-center text-white bg-red-500 rounded-full"
-                                      onClick={() => setSelectedId('')}
-                                    >
-                                      Close
-                                    </motion.button>
-                                    <motion.h2 className="text-xl font-bold mb-2 text-purple-600">{item.title}</motion.h2>
-                                    <motion.h5 className="text-sm font-bold mb-1 text-gray-700">{item.subtitle}</motion.h5>
-                                    <motion.p className="text-md text-gray-700 mb-4">{item.description}</motion.p>
-                                    <motion.p
-                                      className="text-md text-gray-700"
-                                      initial={{ opacity: 0 }}
-                                      animate={{ opacity: 1 }}
-                                      exit={{ opacity: 0 }}
-                                    >
-                                      Additional content can go here!
-                                    </motion.p>
-                                  </motion.div>
-                                </motion.div>
-                              )
-                            ))}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                </div>
+            <div ref={ref1} className='services-section section p-0 m-0 '>
+                <div className="cards">
+                  <div className="form" >
+                    <label htmlFor="">معلومات جاهزة ومسبقة الإعداد</label>
+                    <p>واحدة من أقوى ميزات منصة Arbitre هي أنها توفر لك جميع المعلومات اللازمة بشكل جاهز ومسبق الإعداد الحكام , الأندية , الملاعب . وتمكنك من استرجاع إحصائيات أو تقارير حول مباراة معينة</p>
+                  </div>
+                  <div className="print">
+                    <label htmlFor="">تسجيل وإدارة المباريات</label>
+                    {/* <label htmlFor="">إنشــــــــــاء التقــــاريــــر</label> */}
+                    <p>يمكنك إنشاء تقارير دقيقة وشاملة بشكل تلقائي بعد كل مباراة ، مما يوفر لك الوقت والجهد في كتابة التقارير اليدوية.</p>
+                  </div>
+                  <div className="save">
+                    <label htmlFor="">إحصائيـــــــــــــات وأداء</label>
+                    <p>تحصل على إحصائيات حول أدائك كحكم في المباريات السابقة، مما يساعدك على تحسين مستواك واتخاذ قرارات أفضل في المستقبل .</p>
+                  </div>
+                  <div className="analyse">
+                    <label htmlFor=""> إنتــــــاج تقــــــاريــر <span className='me-3'>PDF</span></label>
+                    <p>بعد كل مباراة ، توفر لك المنصة إمكانية إنتاج تقارير مفصلة على شكل <span>PDF</span> ، بحيث يمكنك تحميلها أو طباعتها وتقديمها للجهات المسؤولة</p>
+                  </div>
+                  <div className="but">
+                    <label htmlFor="">أهدافنـــــــــــــــــــــــــــــــــــــــــا</label>
+                    <p>
+                      هدفنا هو تسهيل الأعمال الإدارية للحكام التي تأتي بعد كل مباراة , مع تمكينهم من التركيز على اللعبة واتخاذ قراراتهم بطمأنينة
+                    </p>
+                  </div>
+                </div>         
+            </div>
+            <div ref={ref2} className='letsgo-section section p-0 m-0'>
+              <div className='image'>
+                <img src={"../public/img/pngwing.png"} alt="" />
+              <div className='letsgo'>
+                <h1 className='letsgo-title'>انضم إلينا</h1>
+                <button className='letsgo-button'>لنبدأ</button>
+              </div>
               </div>
             </div>
-            <h1 ref={ref2} className='section p-0 m-0 bg-white'>test4</h1>
-            <h1  className='section p-0 m-0 bg-danger'>test5</h1>
       </div>
     </div>
   )
