@@ -158,7 +158,9 @@ function Slider() {
             </div>
             <div ref={ref2} className='letsgo-section section p-0 m-0'>
               <div className='image'>
-                <img src={"../public/img/pngwing.png"} alt="" />
+                <img className='free' src={"../public/img/pngwing.png"} alt="" />
+                <img src={"../public/img/Yellow-red_card.png"} alt="" />
+
               <div className='letsgo'>
                 <h1 className='letsgo-title'>انضم إلينا</h1>
                 <button className='letsgo-button'>لنبدأ</button>

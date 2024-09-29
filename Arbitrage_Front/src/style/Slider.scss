@@ -360,33 +360,47 @@
             align-items: center;
             height: 100%;
             .image{
-                width: 100%;
+                width: auto;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 transition: 1s;
+                background-color: rgb(251, 171, 0);
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                position: relative;
+                padding: 43px 30px;
+                border-radius: 20px;
+                z-index: 1;
 
                 .letsgo{
                     position: absolute;
-                right: 50%;
-                
-
+                    right: 30%;
+                    transition: right 1s ease 5s;
+                    .letsgo-title{
+                        display: flex;
+                        flex-wrap: nowrap;
+                        width: 200px;
+                    }
                 }
                 img{
-                    background-color: rgb(251, 171, 0);
-                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                    height: 350px;
-                    border-radius: 15px;
-                    z-index: 1;       
+                    height: 268px;
+                    z-index: 1;  
+                    &.free{     
+                        position: absolute;
+                        height: 276px;
+                        z-index: 2;
+                        bottom: -20px;
+                    }
                 }
                 &:hover{
                     .letsgo{
-                        right: 20%;
+                        right: 125%;
                         transition: right 1s ease;
                     }
                 }       
-            }
         }
+    }
+    
         
     .footer{
         height: 100vh;
