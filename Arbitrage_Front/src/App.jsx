@@ -128,7 +128,7 @@ function App() {
               <div className={`sidebar ps-4 ${isSidebarOpen ? 'open' : ''}`} onClick={(e) => handleSidebarClose(e)}>
                 <nav className="navbar bg-secondary navbar-dark" >
                   <div className='navbar-brand mt-1 me-0 brand d-flex justify-content-center align-items-center top-50 start-0 w-100'>
-                    <Link to='/' className="">
+                    <Link to='/dashboard' className="">
                       <h3 className="logo">
                         <i class="fa-solid fa-flag-checkered ms-2 me-3"></i>
                         ArbiTre</h3>
@@ -193,7 +193,7 @@ function App() {
                     {isSidebarOpen ? <i class="fa-solid fa-right-long fs-4 d-flex justify-content-center align-items-center h-100"></i> : <i class="fa fa-bars d-flex justify-content-center align-items-center h-100"></i>}
                   </a>
 
-                  <Link to={'/'} class="navbar-brand d-flex d-lg-none">
+                  <Link to={'/dashboard'} class="navbar-brand d-flex d-lg-none">
                     <h2 class="text-primary mb-0"><i class="fa-solid fa-flag-checkered ms-2 me-3"></i>ArbiTre</h2>
                   </Link>
 
@@ -291,7 +291,7 @@ function App() {
                           <br />
                         </div>
                         <div className="col-md-4 d-none d-lg-block">
-                          <Link to='/' className="navbar-brand mt-1 me-0 brand d-flex justify-content-center w-100">
+                          <Link to='/dashboard' className="navbar-brand mt-1 me-0 brand d-flex justify-content-center w-100">
                             <h3 className="logo mb-0">
                               <i class="fa-solid fa-flag-checkered ms-2 me-3"></i>
                               ArbiTre</h3>

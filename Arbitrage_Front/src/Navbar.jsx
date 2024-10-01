@@ -15,7 +15,7 @@ function navbar() {
     <>
        <div className='navbar-home' dir='rtl'>
             <div className='nav-left'>
-                <Link to='/' className="link-logo">
+                <Link to='/dashboard' className="link-logo">
                     <i class="fa-solid fa-flag-checkered ms-2 me-3 fs-2 mb-2 text-white"></i>
                     <h1 dir='ltr' ref={logoRef} className="logo">
                         <span>ArbiTre</span>
@@ -35,14 +35,14 @@ function navbar() {
                     </div>
                 </div>
                 <div className='nav-links'>
-                    {/* <Link to='/' className="">
+                    {/* <Link to='/dashboard' className="">
                         من نحن
-                    </Link> */}
-                    {/* <Link to='/' className="">
-                        الخدمات
                     </Link> */}
                     <Link to='/dashboard' className="">
                         لوحة التحكم
+                    </Link>
+                    <Link to='/register' className="">
+                        انشاء الحساب
                     </Link>
                     <Link to='/login' className="">
                     تسجيل الدخول

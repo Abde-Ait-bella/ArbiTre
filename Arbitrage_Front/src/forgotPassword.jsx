@@ -13,7 +13,7 @@ function ForgotPassword() {
 
     useEffect(() => {
         if (window.localStorage.getItem('AUTHENTICATED')) {
-            navigate('/')
+            navigate('/dashboard')
         }
         setEmail(searchParams.get('email'))
     }, [])

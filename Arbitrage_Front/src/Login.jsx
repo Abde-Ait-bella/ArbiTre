@@ -20,7 +20,7 @@ function Login() {
 
     useEffect(() => {
         if (window.localStorage.getItem('AUTHENTICATED')) {
-            navigate('/')
+            navigate('/dashboard')
             setLoading(false)
         } else {
             setLoading(false)
@@ -87,7 +87,7 @@ function Login() {
                         setLoadingLogin(false)
                         localStorage.setItem('token', data.authorisation.token)
                         localStorage.setItem('AUTHENTICATED', true)
-                        navigate('/');
+                        navigate('/dashboard');
                     }
                 }
             ).catch(({ response }) => {
