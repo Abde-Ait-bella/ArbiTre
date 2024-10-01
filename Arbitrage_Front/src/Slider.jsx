@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import "../src/style/Slider.scss"
 import SplitType from 'split-type'
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 import { useInView } from 'react-intersection-observer';
 import { Typewriter } from 'react-simple-typewriter'
-import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
+// import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
 
 
 
@@ -161,9 +162,9 @@ function Slider() {
                 <img className='free' src={"../public/img/pngwing.png"} alt="" />
                 <img src={"../public/img/Yellow-red_card.png"} alt="" />
 
-              <div className='letsgo'>
+              <div dir='rtl' className='letsgo'>
                 <h1 className='letsgo-title'>انضم إلينا</h1>
-                <button className='letsgo-button'>لنبدأ</button>
+                <Link to={'/dashboard'} className='letsgo-button' >لنبدأ</Link>
               </div>
               </div>
             </div>

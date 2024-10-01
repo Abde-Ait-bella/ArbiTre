@@ -35,14 +35,14 @@ function navbar() {
                     </div>
                 </div>
                 <div className='nav-links'>
-                    <Link to='/' className="">
+                    {/* <Link to='/' className="">
                         من نحن
-                    </Link>
-                    <Link to='/' className="">
+                    </Link> */}
+                    {/* <Link to='/' className="">
                         الخدمات
-                    </Link>
-                    <Link to='/' className="">
-                        اتصل بنا
+                    </Link> */}
+                    <Link to='/dashboard' className="">
+                        لوحة التحكم
                     </Link>
                     <Link to='/login' className="">
                     تسجيل الدخول

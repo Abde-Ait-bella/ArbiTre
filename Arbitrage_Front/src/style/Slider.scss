@@ -374,12 +374,36 @@
 
                 .letsgo{
                     position: absolute;
-                    right: 30%;
-                    transition: right 1s ease 5s;
+                    right: 15%;
+                    // right: -125%;
+                    opacity: 1;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 10px;
+                    transition: right 1s ease 3s, opacity 1s ease 3s;
+
                     .letsgo-title{
                         display: flex;
                         flex-wrap: nowrap;
-                        width: 200px;
+                        font-family: 'El Messiri';
+                        font-size: 60px;
+                        width: 243px;
+                        transition: font-size 0.5s ease 3s, width 0.5s ease 3s;
+                    }
+                    .letsgo-button{
+                        width: 243px;
+                        padding: 6px;
+                        border-radius: 20px;
+                        border: 5px solid rgba(25, 25, 25, 0.1);
+                        background-color: rgb(221, 221, 221);
+                        display: flex;
+                        justify-content: center;
+                        &:hover{
+                        border: 5px solid rgb(228, 148, 0);
+                        background-color: rgb(179, 122, 0);
+                        color: #ffffff;
+                        }
                     }
                 }
                 img{
@@ -394,8 +418,15 @@
                 }
                 &:hover{
                     .letsgo{
-                        right: 125%;
-                        transition: right 1s ease;
+                        right: -125%;
+                        opacity: 1;
+                        transition: right 1s ease, opacity 1s ease;
+                        .letsgo-title{
+                            font-size: 70px;
+                            width: 284px;
+                            transition: font-size 0.5s ease, width 0.5s ease;
+
+                        }
                     }
                 }       
         }
