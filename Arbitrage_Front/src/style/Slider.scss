@@ -196,6 +196,7 @@
                         transition:  0.5s;
                         align-items: center;
                         text-align: center;
+                        color: rgb(141, 13, 13);
                     }
                     p{
                         position: absolute;
@@ -235,7 +236,6 @@
                         p{
                             opacity: 1;
                             top: 60%;
-                            // display: block;
                             transition: display 3s ease 5s;
                             transition: opacity 3s ease 1s, top 2s ease 1s;
                             color: #ffffff;
@@ -271,7 +271,6 @@
                         p{
                             opacity: 1;
                             top: 65%;
-                            // display: block;
                             transition: opacity 3s ease 1s, top 2s ease 1s;
                             color: #ffffff;
                         }
@@ -297,7 +296,6 @@
                         p{
                             opacity: 1;
                             top: 65%;
-                            // display: block;
                             transition: opacity 3s ease 1s, top 2s ease 1s;
                             color: #ffffff;
                         }
@@ -324,7 +322,6 @@
                         p{
                             opacity: 1;
                             top: 65%;
-                            // display: block;
                             transition: opacity 3s ease 1s, top 2s ease 1s;
                             color: #ffffff;
                         }
@@ -351,7 +348,6 @@
                         p{
                             opacity: 1;
                             top: 65%;
-                            // display: block;
                             transition: opacity 3s ease 1s, top 2s ease 1s;
                             color: #ffffff;
                         }
@@ -382,7 +378,6 @@
                 .letsgo{
                     position: absolute;
                     right: 15%;
-                    // right: -125%;
                     opacity: 1;
                     display: flex;
                     flex-direction: column;
@@ -409,7 +404,8 @@
                         justify-content: center;
                         &:hover{
                             border: 5px solid rgba(85, 85, 85, 0.479);
-                            background-color: rgb(20, 170, 1);
+                            background-color: rgb(141, 13, 13);
+                            transition: 1s;
                         }
                     }
                 }
