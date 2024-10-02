@@ -46,7 +46,7 @@ function navbar() {
                     </Link>
                     <Link to='/login' className="">
                     تسجيل الدخول
-                    </Link>
+                    </Link> 
                 
                 </div>
             </div>
