@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import "../src/style/Slider.scss"
 import SplitType from 'split-type'
+// import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 import { useInView } from 'react-intersection-observer';
