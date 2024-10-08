@@ -123,16 +123,18 @@ function Login() {
                                             </div>
                                             <div className="form-floating mb-3">
                                                 <input type="email" name="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={handelCHange} />
-                                                <label for="floatingInput">البريد الالكتروني</label>
+                                                <label style={{right: "0"}} for="floatingInput">البريد الالكتروني</label>
                                             </div>
                                             {errors?.email && <p className="text-danger me-3 text-center">{errors?.email}</p>}
+
                                             <div className="form-floating d-flex align-items-center justify-content-around mb-4">
                                                 <div className="form-floating col-10">
                                                     <input type={inputType} name="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={handelCHange} />
-                                                    <label for="floatingPassword">الرمز السري</label>
+                                                    <label style={{right: "0"}}  for="floatingPassword">الرمز السري</label>
                                                 </div>
                                                 <i className={`${iconType} me-2`} onClick={togglePassword} ></i>
                                             </div>
+                                            
                                             {errors?.password && <p className="text-danger me-3 text-center">{errors?.password}</p>}
                                             <div className="d-flex align-items-center justify-content-center mb-4">
                                                 <div className="form-check">

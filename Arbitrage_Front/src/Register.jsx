@@ -97,7 +97,7 @@ function Register() {
                 <div className="container-fluid">
                     <div className="row h-100 align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
                         <div className="col-md-4">
-                            <div className="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
+                            <div className="bg-secondary rounded px-5 py-4 my-4 mx-3">
                                 {errorBack && <div dir="rtl" class="p-3 mb-4 bg-danger text-white text-center rounded">{errorBack}</div>}
                                 <div className="d-flex align-items-center justify-content-between mb-3">
                                     <p className="fs-3 pt-2 fw-bold">إنشاء حساب</p>
@@ -107,18 +107,18 @@ function Register() {
                                 </div>
                                 <div className="form-floating mb-3">
                                     <input type="text" className="form-control" id="floatingText" placeholder="jhondoe" name="name" onChange={handelCHange} />
-                                    <label for="floatingText">الاسم الشخصي</label>
+                                    <label style={{right: "0"}} for="floatingText">الاسم الشخصي</label>
                                 </div>
                                 {errors?.name && <p className="text-danger me-3">{errors?.name}</p>}
                                 <div className="form-floating mb-3">
                                     <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" name="email" onChange={handelCHange} />
-                                    <label for="floatingInput">البريد الالكتروني</label>
+                                    <label style={{right: "0"}} for="floatingInput">البريد الالكتروني</label>
                                 </div>
                                 {errors?.email && <p className="text-danger me-3">{errors?.email}</p>}
                                 <div className="form-floating d-flex align-items-center justify-content-between mb-4">
                                     <div className="form-floating col-11">
                                         <input type={inputType} name="password" className="form-control" id="floatingPassword" placeholder="password" onChange={handelCHange} />
-                                        <label for="floatingPassword">الرمز السري</label>
+                                        <label style={{right: "0"}} for="floatingPassword">الرمز السري</label>
                                     </div>
                                     <i className={`${iconType} me-2`} onClick={togglePassword} ></i>
                                 </div>
@@ -126,7 +126,7 @@ function Register() {
                                 <div className="form-floating d-flex align-items-center justify-content-between mb-4">
                                     <div className="form-floating col-12">
                                         <input type={inputType} name="password_confirmation" className="form-control" id="floatingPassword" placeholder="password" onChange={handelCHange} />
-                                        <label for="floatingPassword">تأكيد الرمز السري </label>
+                                        <label style={{right: "0"}} for="floatingPassword">تأكيد الرمز السري </label>
                                     </div>
                                 </div>
                                 <button type="submit" className="btn btn-danger py-3 w-100 mb-4 fw-bold" onClick={handleSubmit}>إرســـــــــال

@@ -192,7 +192,7 @@
                     background-color: #ffffff;
                     width: 150px;
                     height: 100%;
-                    transition: 2s;
+                    transition: 1s;
                     position: relative;
                     z-index: 1;
                     display: flex;
@@ -229,7 +229,6 @@
                         font-size: 18px;
                         text-align: justify;
                         z-index: 0;
-                        // display: none;
                     }
                     &::after{
                         content: '';
@@ -240,7 +239,7 @@
                         width: 100%;
                         z-index: 1;
                         opacity: 0;
-                        transition: height 3s ease;
+                        transition: height 2.5s ease;
                         z-index: 0;
                     }
                  
@@ -249,7 +248,7 @@
                         background-image: url('../../public/img/data.png');
                         background-size: 100% 130%;
                         background-position: right top;
-                        transition: 1s;
+                        transition: 0.5s;
                         label{
                             opacity: 0;
                             transition:  0.1s;
@@ -257,15 +256,14 @@
                         p{
                             opacity: 1;
                             top: 60%;
-                            transition: display 3s ease 5s;
-                            transition: opacity 3s ease 1s, top 2s ease 1s;
+                            transition: opacity 0.5s ease 0.5s, top 1s ease 0.5s;
                             color: #ffffff;
                         }
                         &::after{
                             z-index: -1;
                             opacity: 1;
                             height: 50%;
-                            transition: height 2s ease;
+                            transition: height 1.5s ease;
                             border-top-left-radius: 20px;
                             border-top-right-radius: 20px;
                             border-bottom-left-radius: 20px;
@@ -276,7 +274,7 @@
                         background-image: url('../../public/img/ajoute.jpg');
                         background-size: cover;
                         background-position: start;
-                        transition: 1s;
+                        transition: 0.5s;
                         &::after{
                             z-index: -1;
                             opacity: 1;
@@ -292,7 +290,7 @@
                         p{
                             opacity: 1;
                             top: 65%;
-                            transition: opacity 3s ease 1s, top 2s ease 1s;
+                            transition: opacity 0.5s ease 0.5s, top 1s ease 0.5s;
                             color: #ffffff;
                         }
                     }
@@ -301,7 +299,7 @@
                         background-image: url('../../public/img/analyse.jpg');
                         background-size: cover;
                         background-position: start;
-                        transition: 1s;
+                        transition: 0.5s;
                         &::after{
                             z-index: -1;
                             opacity: 1;
@@ -317,7 +315,7 @@
                         p{
                             opacity: 1;
                             top: 65%;
-                            transition: opacity 3s ease 1s, top 2s ease 1s;
+                            transition: opacity 0.5s ease 0.5s, top 1s ease 0.5s;
                             color: #ffffff;
                         }
                     }
@@ -326,7 +324,7 @@
                         background-image: url('../../public/img/rapportpdf.jpg');
                         background-size: 120% 100%;
                         background-position: center;
-                        transition: 1s;
+                        transition: 0.5s;
                         &::after{
                             z-index: -1;
                             opacity: 1;
@@ -343,7 +341,7 @@
                         p{
                             opacity: 1;
                             top: 65%;
-                            transition: opacity 3s ease 1s, top 2s ease 1s;
+                            transition: opacity 0.5s ease 0.5s, top 1s ease 0.5s;
                             color: #ffffff;
                         }
                     }
@@ -352,7 +350,7 @@
                         background-image: url('../../public/img/refree.jpg');
                         background-size: cover;
                         background-position: center;
-                        transition: 1s;
+                        transition: 0.5s;
                         &::after{
                             z-index: -1;
                             opacity: 1;
@@ -369,7 +367,7 @@
                         p{
                             opacity: 1;
                             top: 65%;
-                            transition: opacity 3s ease 1s, top 2s ease 1s;
+                            transition: opacity 0.5s ease 0.5s, top 1s ease 0.5s;
                             color: #ffffff;
                         }
                     }

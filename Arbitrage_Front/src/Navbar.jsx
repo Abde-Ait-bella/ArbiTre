@@ -3,9 +3,11 @@ import "./style/Navbar.scss"
 import { Link } from 'react-router-dom'
 import SplitType from 'split-type'
 import gsap from 'gsap';
+import { AuthUser } from './AuthContext';
 
 function navbar() {
     const logoRef = useRef();
+    const {user} = AuthUser();
 
     useEffect(() =>{
         new SplitType(logoRef.current, { types: 'words, chars' });
@@ -35,19 +37,20 @@ function navbar() {
                     </div>
                 </div>
                 <div className='nav-links'>
-                    {/* <Link to='/dashboard' className="">
-                        من نحن
-                    </Link> */}
-                    <Link to='/dashboard' className="">
-                        لوحة التحكم
+                    {user ? 
+                      <Link to='/dashboard' className="w-100">
+                      لوحة التحكم
                     </Link>
-                    <Link to='/register' className="">
-                        انشاء الحساب
-                    </Link>
-                    <Link to='/login' className="">
-                    تسجيل الدخول
-                    </Link> 
-                
+                    :
+                    <>
+                        <Link to='/register' className="w-50">
+                            انشاء الحساب
+                        </Link>
+                        <Link to='/login' className="w-50">
+                            تسجيل الدخول
+                        </Link>
+                    </>
+                  }
                 </div>
             </div>
         </div> 

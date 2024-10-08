@@ -869,7 +869,7 @@ function Home() {
                             </div>
                             
                             <div className="col-sm-6 col-xl-4 mt-4" style={{ cursor : 'pointer'}}>
-                                <a href="files/rapport.docx" download="rapport du match format exploitable">
+                                <a href="files/rapport.pdf" download="rapport du match format exploitable">
                                 <div class="download-file bg-secondary rounded d-flex align-items-center justify-content-around p-2 px-2">
                                     <img src={imgWord} style={{ height: '67px' }} alt="" />
                                     <div class="download-file-text ms-lg-3 mt-2">
