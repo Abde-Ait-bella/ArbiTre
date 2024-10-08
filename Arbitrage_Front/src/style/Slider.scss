@@ -3,11 +3,29 @@
     to {padding-bottom: 30px; opacity: 1;}
 }
 
+@font-face {
+    font-family: myFirstFont;
+    src: url(./Fonts/BlueOcean.ttf);
+ }
+
+ @font-face {
+    font-family: Cairo;
+    src: url(./Fonts/Cairo-VariableFont_slntwght.ttf);
+ }
+
 .sections{
     background-color: #0b0b0e;
     margin: 0;
     transition: background-color 2s ease;
     z-index: 0;
+
+    .scroll {
+        position: fixed;
+        height: 9px;
+        background-color: white;
+        z-index: 999;
+        width: 100%;
+      }
     .section-parent{
         height: 100vh;
         display: flex;
@@ -67,6 +85,7 @@
                     z-index: 2;
                     &.text-arab{
                         font-family: "El Messiri";
+                        
                     }
                 }
                 .scroll-down{
@@ -191,12 +210,14 @@
                         display: flex;
                         justify-content: center;
                         font-size: 37px;
+                        font-size: 25px;
                         font-weight: 900;
                         opacity: 1;
                         transition:  0.5s;
                         align-items: center;
                         text-align: center;
                         color: rgb(141, 13, 13);
+                        font-family: Cairo;
                     }
                     p{
                         position: absolute;

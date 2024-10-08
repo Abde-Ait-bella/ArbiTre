@@ -1,3 +1,11 @@
+.scroll {
+  position: fixed;
+  height: 9px;
+  background-color: white;
+  z-index: 1021;
+  width: 100%;
+}
+
 nav {
   padding-top: 50px;
   height: 100%;

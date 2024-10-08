@@ -8,10 +8,8 @@ export default function Home() {
 
   return (
     <div className='home' dir='ltr'>
-      {/* <div style={{height: "100vh", backgroundColor: "red"}}></div> */}
         <Navbar />
         <Slider />
-        {/* <Services /> */}
     </div>
   )
 }

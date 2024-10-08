@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }) => {
 
     const club_1_Option = (dataClub) => {
         setClub_1(dataClub)
-            console.log(dataClub);
     }
 
     const club_2_Option = (dataClub) => {

@@ -60,6 +60,7 @@ import { axiosClinet } from './Api/axios';
 
 import { AuthUser } from './AuthContext';
 import ScrollToTop from 'react-scroll-to-top';
+import { motion, useScroll } from "framer-motion"
 
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
   const [mobile, setMobile] = useState();
   const navigate = useNavigate();
   const pageRef = useRef();
+  const { scrollYProgress } = useScroll();
 
   const { user, userDataLogout } = AuthUser();
 
@@ -114,6 +116,8 @@ function App() {
   return (
 
     <>
+      <motion.div className='scroll' style={{ scaleX: scrollYProgress }} />  
+
       <div class="container-fluid position-relative p-0" ref={pageRef} id='myDIV' >
         {
           loading ?

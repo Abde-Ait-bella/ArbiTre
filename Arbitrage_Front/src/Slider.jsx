@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 import { useInView } from 'react-intersection-observer';
 import { Typewriter } from 'react-simple-typewriter'
 import { Link } from 'react-router-dom';
-// import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll } from "framer-motion"
 
 
 
@@ -16,7 +16,7 @@ function Slider() {
   const textRef = useRef();
   const textRefArab = useRef();
   const refHome = useRef();
-
+  const { scrollYProgress } = useScroll();
 
   const [ref, inView1] = useInView({ threshold: 0.5 });
   const [ref1, inView2] = useInView({ threshold: 0.5 });
@@ -96,6 +96,7 @@ function Slider() {
 
   return (
     <div ref={refHome} className='sections'  style={{  minHeight: "100vh" }} >
+      <motion.div className='scroll' style={{ scaleX: scrollYProgress }} />  
       <div className='row section-parent'id='section-parent' >
             <div className='home-section section p-0 m-0'>
               <p ref={textRefArab} style={{ marginTop: "-40px" }} dir='rtl' className='text-arab text-white'>أول منصة خاصة بالحكام بالمغرب</p>
@@ -160,8 +161,8 @@ function Slider() {
             </div>
             <div ref={ref2} className='letsgo-section section p-0 m-0'>
               <div className='image'>
-                <img className='free' src={"../public/img/pngwing.png"} alt="" />
-                <img src={"../public/img/Yellow-red_card.png"} alt="" />
+                <img className='free' src={"../img/pngwing.png"} alt="" />
+                <img src={"../img/Yellow-red_card.png"} alt="" />
 
               <div dir='rtl' className='letsgo'>
                 <h1 className='letsgo-title'>انضم إلينا</h1>
