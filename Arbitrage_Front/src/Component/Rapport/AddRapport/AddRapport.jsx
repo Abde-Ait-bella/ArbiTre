@@ -32,7 +32,7 @@ function AddRapport() {
                             setLoading(false)
                             club_1_Option('')
                             club_2_Option('')
-                            navigate('/addedRapport')
+                            navigate('/dashboard/addedRapport')
                         }
                     }
                 ).catch((response) => {

@@ -29,7 +29,7 @@ function navbar() {
                 <div className='info-contact'>
                     <div>
                         <label htmlFor="">البريد الاكتروني</label>
-                        <p>arbitre@gmail.com</p>
+                        <p>abdessamadaitbella1998@gmail.com</p>
                     </div>
                     <div>
                     <label htmlFor="">الهاتف</label>

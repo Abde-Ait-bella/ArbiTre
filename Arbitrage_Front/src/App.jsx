@@ -150,7 +150,7 @@ function App() {
                   </div>
                   <div class="navbar-nav w-100 nav-part-3">
                     <div className='mb-2'>
-                      <NavLink to='/dashboard' className={({ isActive }) =>
+                      <NavLink to='/dashboard/home' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active pe-3 fw-bold" : "nav-item nav-link pe-3 fw-bold"
                       }><i class="fa-solid fa-house ms-3"></i>الصفحة الرئيسية</NavLink>
                       {/* <i class="fa fa-tachometer-alt me-2"></i> */}
@@ -222,7 +222,7 @@ function App() {
                 <div onClick={handleSidebarClose}>
                   <Routes>
                     <Route path="/" >
-                      <Route index element={<HomeDashboard />} />
+                      <Route index path="/home" element={<HomeDashboard />} />
                       <Route path="rapport" element={<RapportListe />} />
                       <Route path="detailleRapport/:id" element={<DetailleRapport />} />
                       <Route path='addRapport' element={<AddRapport />} />

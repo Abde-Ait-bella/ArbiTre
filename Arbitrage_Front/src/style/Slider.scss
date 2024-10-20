@@ -508,6 +508,10 @@
             }
         }
     }
+
+    .info-contact{
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 992px) {
@@ -720,6 +724,20 @@
             }
         }
 
+        .info-contact{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            background-color: #0b0b0e;
+            height: 60%;
+            padding: 20px 0;
+            text-align: center;
+            p{
+                margin: 0;
+            }
+        }
     }
 
     .scroll-mobile {

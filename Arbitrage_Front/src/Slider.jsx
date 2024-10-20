@@ -7,7 +7,11 @@ import { useInView } from 'react-intersection-observer';
 import { Typewriter } from 'react-simple-typewriter'
 import { Link } from 'react-router-dom';
 import { motion, useScroll } from "framer-motion"
-
+import dataImage from "../public/img/data.png"
+import saveImage from "../public/img/save.jpg"
+import analyseImage from "../public/img/analyse.jpg"
+import rapportImage from "../public/img/rapportpdf.jpg"
+import refreeImage from "../public/img/refree.jpg"
 
 
 function Slider() {
@@ -164,35 +168,35 @@ function Slider() {
             <div className="data" >
               <h3 htmlFor="">معلومات جاهزة ومسبقة الإعداد</h3>
               <div className="img">
-                <img src="../public/img/data.png" alt="" />
+                <img src={dataImage} alt="" />
               </div>
               <p>واحدة من أقوى ميزات منصة Arbitre هي أنها توفر لك جميع المعلومات اللازمة بشكل جاهز ومسبق الإعداد الحكام , الأندية , الملاعب . وتمكنك من استرجاع إحصائيات أو تقارير حول مباراة معينة</p>
             </div>
             <div className="save" >
               <h3 htmlFor="">تسجيل وإدارة المباريات</h3>
               <div className="img">
-                <img src="../public/img/save.jpg" alt="" />
+                <img src={saveImage} alt="" />
               </div>
               <p>يمكنك إنشاء تقارير دقيقة وشاملة بشكل تلقائي بعد كل مباراة ، مما يوفر لك الوقت والجهد في كتابة التقارير اليدوية.</p>
             </div>
             <div className="analyse" >
               <h3 htmlFor="">إحصائيـــــــــــــات وأداء</h3>
               <div className="img">
-                <img src="../public/img/analyse.jpg" alt="" />
+                <img src={analyseImage} alt="" />
               </div>
               <p>تحصل على إحصائيات حول أدائك كحكم في المباريات السابقة، مما يساعدك على تحسين مستواك واتخاذ قرارات أفضل في المستقبل .</p>
             </div>
             <div className="print">
               <h3 htmlFor=""> إنتــــــاج تقــــــاريــر <span className='me-3'>PDF</span></h3>
               <div className="img">
-                <img src="../public/img/rapportpdf.jpg" alt="" />
+                <img src={rapportImage} alt="" />
               </div>
               <p>بعد كل مباراة ، توفر لك المنصة إمكانية إنتاج تقارير مفصلة على شكل <span>PDF</span> ، بحيث يمكنك تحميلها أو طباعتها وتقديمها للجهات المسؤولة</p>
             </div>
             <div className="but" >
               <h3 htmlFor="">أهدافنـــــــــــــــــــــــــــــــــــــــــا</h3>
               <div className="img">
-                <img src="../public/img/refree.jpg" alt="" />
+                <img src={refreeImage} alt="" />
               </div>
               <p>
                 هدفنا هو تسهيل الأعمال الإدارية للحكام التي تأتي بعد كل مباراة , مع تمكينهم من التركيز على اللعبة واتخاذ قراراتهم بطمأنينة
@@ -211,19 +215,18 @@ function Slider() {
             </div>
           </div>
         </div>
+        <div className='info-contact' dir='rtl'>
+        <div>
+            <label htmlFor="">الهاتف</label>
+            <p dir='ltr'>+212 681783861</p>
+          </div>
+          <div>
+            <label htmlFor="">البريد الاكتروني</label>
+            <p>abdessamadaitbella1998@gmail.com</p>
+          </div>
+        </div>
       </div>
     </div>
   )
 }
-
-{/* 
-<div className= about'>
-  <p  dir='ltr' className='text-white'>About</p>
-</div>
-<div  className= services'>
-  <p  dir='ltr' className='text-white'>Services</p>
-</div>
-<div  className= contact'>
-  <p  dir='ltr' className='text-white'>Contact</p>
-</div> */}
 export default Slider
