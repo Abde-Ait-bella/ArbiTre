@@ -22,7 +22,7 @@ function Login() {
 
     useEffect(() => {
         if (window.localStorage.getItem('AUTHENTICATED')) {
-            navigate('/dashboard')
+            navigate('/dashboard/home')
             setLoading(false)
         } else {
             setLoading(false)
@@ -89,7 +89,7 @@ function Login() {
                         setLoadingLogin(false)
                         localStorage.setItem('token', data.authorisation.token)
                         localStorage.setItem('AUTHENTICATED', true)
-                        navigate('/dashboard');
+                        navigate('/dashboard/home');
                     }
                 }
             ).catch(({ response }) => {

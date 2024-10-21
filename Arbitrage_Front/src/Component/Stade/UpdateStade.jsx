@@ -56,7 +56,7 @@ function UpdateStade() {
                     const { status } = response;
                     if (status === 200) {
                         setLoadingUpdate(false)
-                        navigate('/composants/updatedStade');
+                        navigate('/dashboard/composants/updatedStade');
                     }
                 }
             ).catch(
@@ -188,11 +188,11 @@ function UpdateStade() {
                                     <select name="ville_id" onChange={handleUpdateStadeSelect} class="form-select mb-3" aria-label="Default select example">
                                         <option selected disabled>المدينة</option>
                                         {villes?.map((v) =>
-                                            <option selected={parseInt(stades.ville_id) === v.id} key={v.id} value={(v.id)}>{v.nom}</option>
+                                            <option selected={parseInt(stades?.ville_id) === v.id} key={v.id} value={(v.id)}>{v.nom}</option>
                                         )}
                                     </select>
                                     <div className="d-flex justify-content-between mt-4">
-                                        <Link to="/composants/stades" class="btn btn-danger pt-0 px-4 mt-3"> رجوع<i class="fa-solid fa-caret-right pt-2 me-4"></i></Link>
+                                        <Link to="/dashboard/composants/stades" class="btn btn-danger pt-0 px-4 mt-3"> رجوع<i class="fa-solid fa-caret-right pt-2 me-4"></i></Link>
                                         <button type="submit" class="btn btn-danger pt-0 px-4 mt-3">تعديل
                                             {
                                                 loadingUpdate ? (

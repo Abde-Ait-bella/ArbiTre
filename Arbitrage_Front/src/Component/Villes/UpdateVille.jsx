@@ -40,7 +40,7 @@ function UpdateVille() {
                     const { status } = response;
                     if (status === 200) {
                         setLoadingUpdate(false)
-                        navigate('/composants/updatedVille');
+                        navigate('/dashboard/composants/updatedVille');
                     }
                 }
             ).catch(
@@ -156,7 +156,7 @@ function UpdateVille() {
                                             </div>
                                         </div>
                                         <div className="d-flex justify-content-between">
-                                            <Link to="/composants/villes" class="btn btn-danger pt-0 px-4 mt-3"> رجوع<i class="fa-solid fa-caret-right me-2 mt-1 pt-1"></i></Link>
+                                            <Link to="/dashboard/composants/villes" class="btn btn-danger pt-0 px-4 mt-3"> رجوع<i class="fa-solid fa-caret-right me-2 mt-1 pt-1"></i></Link>
                                             <button type="submit" class="btn btn-danger px-4 mt-3">تعديل
                                                 {
                                                     loadingUpdate ? (

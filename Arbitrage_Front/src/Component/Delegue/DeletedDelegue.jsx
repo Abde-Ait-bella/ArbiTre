@@ -14,7 +14,7 @@ function DeletedStade() {
                             <div class="ms-3">
                                 <p class="mb-2 text-warning fs-1 fw-bold">تم الحدف بنجاح</p>
                                 {/* <h6 class="mb-0">$1234</h6> */}
-                                <Link to="/composants/delegue" class="btn btn-danger pt-1 mt-3 px-4"> التالي<i class="fa-solid fa-caret-left me-2 pt-1"></i></Link>
+                                <Link to="/dashboard/composants/delegue" class="btn btn-danger pt-1 mt-3 px-4"> التالي<i class="fa-solid fa-caret-left me-2 pt-1"></i></Link>
                             </div>
                             {/* <i class="fa fa-chart-line fa-3x text-primary"></i> */}
                             <i class="fa-solid fa-check-to-slot fa-3x text-danger"></i>

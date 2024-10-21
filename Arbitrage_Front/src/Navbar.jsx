@@ -17,7 +17,7 @@ function navbar() {
     <>
        <div className='navbar-home' dir='rtl'>
             <div className='nav-left'>
-                <Link to='/dashboard' className="link-logo">
+                <Link to='/dashboard/home' className="link-logo">
                     <i class="fa-solid fa-flag-checkered ms-2 me-3 fs-2 mb-2 text-white"></i>
                     <h1 dir='ltr' ref={logoRef} className="logo">
                         <span>ArbiTre</span>
@@ -38,7 +38,7 @@ function navbar() {
                 </div>
                 <div className='nav-links'>
                     {user ? 
-                      <Link to='/dashboard' className="w-100">
+                      <Link to='/dashboard/home' className="w-100">
                       لوحة التحكم
                     </Link>
                     :

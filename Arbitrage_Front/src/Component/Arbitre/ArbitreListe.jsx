@@ -38,7 +38,7 @@ function ArbiTreListe() {
             (response) => {
                 const { status } = response;
                 if (status === 200) {
-                    navigate('/composants/deletedArbitre');
+                    navigate('/dashboard/composants/deletedArbitre');
                     setLoadingDelete(false)
                 }
             }
@@ -55,7 +55,7 @@ function ArbiTreListe() {
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-start mb-3">
-                        <Link to="/composants/addArbitre" class="btn btn-warning pt-2 px-4">إضافة الحكم <i class="fa-solid fa-circle-plus me-2"></i></Link>
+                        <Link to="/dashboard/composants/addArbitre" class="btn btn-warning pt-2 px-4">إضافة الحكم <i class="fa-solid fa-circle-plus me-2"></i></Link>
 
                     </div>
                     <div class="table-responsive">
@@ -117,7 +117,7 @@ function ArbiTreListe() {
                                                         <td>{a.nom.toUpperCase()}</td>
                                                         <td>{a.type.toUpperCase()}</td>
                                                         <td>{villes?.find(ville => ville.id === parseInt(a.ville_id))?.nom}</td>
-                                                        <td><Link to={`/composants/updateArbitre/${a.id}`}><i class="fa-solid fa-wrench"></i></Link> <Link onClick={() => handleDelete(a.id)} >
+                                                        <td><Link to={`/dashboard/composants/updateArbitre/${a.id}`}><i class="fa-solid fa-wrench"></i></Link> <Link onClick={() => handleDelete(a.id)} >
                                                             {
                                                                 loadingDelete & idArbitre === a.id ? (
                                                                     <div className="spinner-border spinner-border-sm me-3 mb-1 fs-2" role="status">

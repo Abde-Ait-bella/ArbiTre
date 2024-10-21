@@ -47,7 +47,7 @@ function JoueurListe() {
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-start mb-3">
-                        <Link to="/composants/addJoueur" class="btn btn-warning pt-2 px-4">إضافة لاعب <i class="fa-solid fa-circle-plus me-2"></i></Link>
+                        <Link to="/dashboard/composants/addJoueur" class="btn btn-warning pt-2 px-4">إضافة لاعب <i class="fa-solid fa-circle-plus me-2"></i></Link>
 
                     </div>
                     <div class="table-responsive">
@@ -86,7 +86,7 @@ function JoueurListe() {
                                                 <td>{j.nom.toUpperCase()}</td>
                                                 <td>{j.joueur_numero_licence.toUpperCase()}</td>
                                                 <td>{j.joueur_numero}</td>
-                                                <td className='col-3'><Link to={`/composants/updateJoueur/${j.id}`}><i class="fa-solid fa-wrench"></i></Link> <Link onClick={() => handleDelete(j.id)} >
+                                                <td className='col-3'><Link to={`/dashboard/composants/updateJoueur/${j.id}`}><i class="fa-solid fa-wrench"></i></Link> <Link onClick={() => handleDelete(j.id)} >
                                                     {
                                                         loadingDelete & idJoueur === j.id ? (
                                                             <div className="spinner-border spinner-border-sm me-3 mb-1 fs-2" role="status">

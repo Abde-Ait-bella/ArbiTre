@@ -48,7 +48,7 @@ function AddStade() {
                     const { data } = response;
                     if (data.status === true) {
                         setLoadingAdd(false)
-                        navigate('/composants/addedStade');
+                        navigate('/dashboard/composants/addedStade');
                     }
                 }
             ).catch(
@@ -173,7 +173,7 @@ function AddStade() {
                         <div class="col-md-12 col-xl-6 text-center">
                             <div class="bg-secondary rounded h-100 p-4">
                                 <div className="d-flex justify-content-start">
-                                    <Link to="/composants/stades" class="btn btn-warning px-4 mb-3"> رجـــوع<i class="fa-solid fa-caret-right me-3 pt-1"></i></Link>
+                                    <Link to="/dashboard/composants/stades" class="btn btn-warning px-4 mb-3"> رجـــوع<i class="fa-solid fa-caret-right me-3 pt-1"></i></Link>
                                 </div>
                                 <p class="mb-lg-4 fs-2 fw-bold text-white">إضافة الملعب</p>
                                 <form onSubmit={handleSubmit}>

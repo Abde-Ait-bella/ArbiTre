@@ -33,7 +33,7 @@ function VillesListe() {
                 const { status } = response;
                 if (status === 200) {
                     setLoadingDelete(false)
-                    navigate('/composants/deletedVille');
+                    navigate('/dashboard/composants/deletedVille');
                 }
             }
         ).catch((error) => {
@@ -49,7 +49,7 @@ function VillesListe() {
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-start mb-3">
-                        <Link to="/composants/addVille" class="btn btn-warning pt-2 px-4">إضافة مدينة - جماعة <i class="fa-solid fa-circle-plus me-2"></i></Link>
+                        <Link to="/dashboard/composants/addVille" class="btn btn-warning pt-2 px-4">إضافة مدينة - جماعة <i class="fa-solid fa-circle-plus me-2"></i></Link>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-hover mb-0">
@@ -90,7 +90,7 @@ function VillesListe() {
                                                 {villes?.map((v) => (
                                                     <tr className="text-center" key={v.id}>
                                                         <td>{v.nom}</td>
-                                                        <td> <Link to={`/composants/updateVille/${v.id}`}><i class="fa-solid fa-wrench"></i></Link>
+                                                        <td> <Link to={`/dashboard/composants/updateVille/${v.id}`}><i class="fa-solid fa-wrench"></i></Link>
                                                             <Link onClick={() => handleDelete(v.id)} >
                                                                 {
                                                                     loadingDelete & idJoueur === v.id ? (

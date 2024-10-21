@@ -211,7 +211,7 @@ function Slider() {
 
             <div dir='rtl' className='letsgo'>
               <h1 className='letsgo-title'>انضم إلينا</h1>
-              <Link to={'/dashboard'} className='letsgo-button' >لنبدأ</Link>
+              <Link to={'/dashboard/home'} className='letsgo-button' >لنبدأ</Link>
             </div>
           </div>
         </div>

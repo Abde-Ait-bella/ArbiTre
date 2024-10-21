@@ -13,7 +13,7 @@ function AddedVille() {
                         <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
                             <div class="ms-3">
                                 <p class="mb-2 text-warning fs-2 fw-bold">تمة الاضافة بنجاح</p>
-                                <Link to="/composants/villes" class="btn btn-danger pt-1 mt-3 px-4"> التالي<i class="fa-solid fa-caret-left me-2 pt-1"></i></Link>
+                                <Link to="/dashboard/composants/villes" class="btn btn-danger pt-1 mt-3 px-4"> التالي<i class="fa-solid fa-caret-left me-2 pt-1"></i></Link>
                             </div>
                             <i class="fa-solid fa-check-to-slot fa-3x text-danger"></i>
                         </div>

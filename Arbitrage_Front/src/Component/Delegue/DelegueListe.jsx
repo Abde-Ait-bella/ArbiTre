@@ -40,7 +40,7 @@ function DelegueListe() {
                 const { status } = response;
                 if (status === 200) {
                     setLoadingDelete(false)
-                    navigate('/composants/deletedDelegue');
+                    navigate('/dashboard/composants/deletedDelegue');
                 }
             }
         ).catch((error) => {
@@ -56,7 +56,7 @@ function DelegueListe() {
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-start mb-3">
-                        <Link to="/composants/addDelegue" class="btn btn-warning pt-2 px-4">إضافة مندوب <i class="fa-solid fa-circle-plus me-2"></i></Link>
+                        <Link to="/dashboard/composants/addDelegue" class="btn btn-warning pt-2 px-4">إضافة مندوب <i class="fa-solid fa-circle-plus me-2"></i></Link>
 
                     </div>
                     <div class="table-responsive">
@@ -106,7 +106,7 @@ function DelegueListe() {
                                                         <td>{d.prenom.toUpperCase()}</td>
                                                         <td>{d.nom.toUpperCase()}</td>
                                                         <td>{villes?.find(ville => ville.id === parseInt(d.ville_id))?.nom}</td>
-                                                        <td className='col-3'><Link to={`/composants/updateDelegue/${d.id}`}><i class="fa-solid fa-wrench"></i></Link> <Link onClick={() => handleDelete(d.id)} >
+                                                        <td className='col-3'><Link to={`/dashboard/composants/updateDelegue/${d.id}`}><i class="fa-solid fa-wrench"></i></Link> <Link onClick={() => handleDelete(d.id)} >
                                                             {
                                                                 loadingDelete & idDelegue === d.id ? (
                                                                     <div className="spinner-border spinner-border-sm me-3 mb-1 fs-2" role="status">

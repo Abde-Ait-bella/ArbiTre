@@ -44,7 +44,7 @@ function Matches() {
                 (response) => {
                     const { status } = response;
                     if (status === 200) {
-                        navigate('/DeletedMatche');
+                        navigate('/dashboard/DeletedMatche');
                         setLoadingDelete(false)
                     }
                 }).catch((error) => {
