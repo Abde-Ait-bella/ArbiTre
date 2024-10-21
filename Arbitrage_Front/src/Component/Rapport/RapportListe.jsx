@@ -118,7 +118,7 @@ function Matches() {
                                                 <td>{categories?.find(c => c.id === parseInt(m.categorie_id))?.nom}</td>
                                                 <td>{m.result_club_1}-{m.result_club_2}</td>
                                                 <td>{villes?.find(ville => ville.id === parseInt(m.ville_id))?.nom}</td>
-                                                <td><Link to={`/dashboard/updateMatche/${m.id}`}><i class="fa-solid fa-wrench pt-2 me-lg-2 me-3"></i></Link> <Link to={`/dashboard/detailleRapport/${m.id}`} class="btn btn-sm btn-warning me-2 pt-2 px-3">التفاصيل</Link>
+                                                <td><Link to={`/dashboard/updateMatche/${m.id}`}><i class="fa-solid fa-wrench pt-2 me-lg-2 me-3"></i></Link> <Link to={`/dashboard/detailleRapport/${m.id}`} class="btn btn-sm btn-warning me-2 pt-2 px-2">التفاصيل</Link>
                                                     <Link onClick={() => handleDelete(m.id)} >
                                                         {
                                                             loadingDelete & idRapport === m.id ? (
