@@ -87,8 +87,13 @@ function Slider() {
           // end: '+=' + refHome.current.offsetWidth,
           end: '+=' + refHome.current.offsetWidth * (contents.length - 1), 
           pin : true,
-          snap : 1 / (refHome.current - 1),
-          delay: 0.1, // يمكن تزيد هاد الـ delay باش تعطي فرصة للتوقف في كل عنصر
+          // snap : 1 / (refHome.current - 1),
+          // snap: {
+          //   snapTo: 1 / (contents.length - 1), // يعني غادي ينتقل من section لآخر مباشرة
+          //   duration: {min: 0.2, max: 0.5}, // مدة الانتقال، يمكن تعدلها 
+          //   ease: "power1.inOut" // تخلي الحركة سلسة
+          // },
+          // delay: 1, // يمكن تزيد هاد الـ delay باش تعطي فرصة للتوقف في كل عنصر
           pinSpacer: true,
         }
       });
