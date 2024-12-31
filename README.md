@@ -16,6 +16,26 @@ This application is designed to help football referees in managing match-related
 - Other Tools: Git, GitHub, Postman (for API development and testing), Bootstrap, SASS (for design),
 ## For showing web site
   www.arbitre.ma
+  
+## Fonctionnalité d'impression de la page "Rapport"
+
+Cette fonctionnalité est plus important dans l'application, permet d'imprimer le rapport détaillé. Voici les étapes à suivre pour utiliser cette fonctionnalité :
+
+### Étapes pour imprimer le rapport détaillé :
+
+1. Ouvrir la page **التفاصل** dans l'application.
+2. Cliquez sur l'icone **Imprimer** situé dans le coin supérieur de la page.
+3. Sélectionnez l'imprimante souhaitée et ajustez les paramètres d'impression, si nécessaire.
+4. 
+    - **Mise on page** : Paysage.
+      **Plus de paramètres**
+    - **Taille de papier** : Tabloid.
+      
+5. Cliquez sur **Enregitrer** pour générer une version papier du rapport.
+
+### Remarque :
+Assurez-vous que votre navigateur supporte la fonctionnalité d'impression (les navigateurs modernes le font généralement par défaut).
+
 ## Installation and Usage
 1. Clone the GitHub repository to your local machine.
 2. Install dependencies by running `npm install` in the project directory.
