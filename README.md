@@ -28,7 +28,7 @@ Cette fonctionnalité est plus important dans l'application, permet d'imprimer l
 3. Sélectionnez l'imprimante souhaitée et ajustez les paramètres d'impression, si nécessaire.
 4. 
     - **Mise on page** : Paysage.
-      **Plus de paramètres**
+    - <**Plus de paramètres**>
     - **Taille de papier** : Tabloid.
       
 5. Cliquez sur **Enregitrer** pour générer une version papier du rapport.
