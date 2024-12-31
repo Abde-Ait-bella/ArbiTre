@@ -51,7 +51,7 @@ function UpdateStade() {
                     const { status } = response;
                     if (status === 200) {
                         setLoadingUpdate(false)
-                        navigate('/composants/updatedArbitre');
+                        navigate('/dashboard/composants/updatedArbitre');
                     }
                 }
             ).catch(
@@ -258,7 +258,7 @@ function UpdateStade() {
                                     </div>
                                 </fieldset>
                                 <div className="d-flex justify-content-between">
-                                    <Link to="/composants/arbitres" class="btn btn-danger pt-0 px-4 mt-3"> رجوع<i class="fa-solid fa-caret-right pt-2 me-4"></i></Link>
+                                    <Link to="/dashboard/dashboard/composants/arbitres" class="btn btn-danger pt-0 px-4 mt-3"> رجوع<i class="fa-solid fa-caret-right pt-2 me-4"></i></Link>
                                     <button type="submit" class="btn btn-danger pt-0 px-4 mt-3">تعديل
                                         {
                                             loadingUpdate ? (

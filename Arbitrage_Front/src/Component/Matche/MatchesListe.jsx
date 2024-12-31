@@ -44,7 +44,7 @@ function Matches() {
                 (response) => {
                     const { status } = response;
                     if (status === 200) {
-                        navigate('/DeletedMatche');
+                        navigate('/dashboard/DeletedMatche');
                         setLoadingDelete(false)
                     }
                 }).catch((error) => {
@@ -58,7 +58,7 @@ function Matches() {
             <div className="container-fluid pt-4 px-4">
                 < div className="bg-secondary text-center rounded p-4">
                     <div className="d-flex align-items-center justify-content-between mb-3">
-                        <Link to="/addMatche" className="btn btn-warning px-4">إضافة مباراة <i className="fa-solid fa-circle-plus me-2 pt-1"></i></Link>
+                        <Link to="/dashboard/addMatche" className="btn btn-warning px-4">إضافة مباراة <i className="fa-solid fa-circle-plus me-2 pt-1"></i></Link>
                     </div>
                     <div className="table-responsive">
                         {/* {matches.map((m) => ( */}

@@ -1,0 +1,39 @@
+.navbarRes-home{
+    z-index: 22;
+    height: 100px;
+    .nav-top{
+        height: 55%;
+        .link-logo{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #dc3545;
+            height: 100%;
+            h1{
+                margin: 0;
+            }
+        }
+    }
+    .nav-bottom{
+        display: flex;
+        height: 45%;
+        .nav-links{
+            display: flex;
+            align-items: center;
+            width: 100%;
+            a{
+                color: white;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2px 10px;
+                font-weight: bold;
+                font-size:large;
+                &:hover{
+                    background-color: rgb(251, 171, 0); 
+                }
+            }
+        }
+    }
+}

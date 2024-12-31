@@ -30,7 +30,7 @@ function AddVille() {
                     const { data } = response;
                     if (data.status === true) {
                         setLoadingAdd(false)
-                        navigate('/composants/addedVille');
+                        navigate('/dashboard/composants/addedVille');
                     }
                 }
             ).catch(
@@ -50,7 +50,7 @@ function AddVille() {
                 <div class="col-12 col-lg-6 text-center">
                     <div class="bg-secondary rounded h-100 p-4 col-md-12">
                         <div className="d-flex justify-content-start">
-                            <Link to="/composants/villes" class="btn btn-warning px-4 mb-3"> رجـــوع<i class="fa-solid fa-caret-right me-3"></i></Link>
+                            <Link to="/dashboard/composants/villes" class="btn btn-warning px-4 mb-3"> رجـــوع<i class="fa-solid fa-caret-right me-3"></i></Link>
                         </div>
                         <p class="mb-lg-4 fs-2 fw-bold text-white">إضافة مدينة - جماعة</p>
                         <form onSubmit={handleSubmit}>

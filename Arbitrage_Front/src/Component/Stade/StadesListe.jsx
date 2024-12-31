@@ -41,7 +41,7 @@ function StadesListe() {
                 const { status } = response;
                 if (status === 200) {
                     setLoadingDelete(false)
-                    navigate('/composants/DeletedStade');
+                    navigate('/dashboard/composants/DeletedStade');
                 }
             }
         ).catch((error) => {
@@ -58,7 +58,7 @@ function StadesListe() {
             <div className="container-fluid pt-4 px-4">
                 <div className="bg-secondary text-center rounded p-4">
                     <div className="d-flex align-items-center justify-content-start mb-3">
-                        <Link to="/composants/addStade" className="btn btn-warning px-4">إضافة ملعب <i className="fa-solid fa-circle-plus me-2 pt-1"></i></Link>
+                        <Link to="/dashboard/composants/addStade" className="btn btn-warning px-4">إضافة ملعب <i className="fa-solid fa-circle-plus me-2 pt-1"></i></Link>
 
                     </div>
                     <div className="table-responsive">
@@ -103,7 +103,7 @@ function StadesListe() {
                                                     <tr className="text-center" key={s.id}>
                                                         <td>{s.nom}</td>
                                                         <td>{villes?.find(ville => ville.id === parseInt(s.ville_id))?.nom}</td>
-                                                        <td><Link to={`/composants/updateStade/${s.id}`}><i class="fa-solid fa-wrench"></i></Link> <Link onClick={() => handleDelete(s.id)} >
+                                                        <td><Link to={`/dashboard/composants/updateStade/${s.id}`}><i class="fa-solid fa-wrench"></i></Link> <Link onClick={() => handleDelete(s.id)} >
                                                                 {
                                                                     loadingDelete & idStade === s.id ? (
                                                                         <div className="spinner-border spinner-border-sm me-3 mb-lg-1 fs-2" role="status">

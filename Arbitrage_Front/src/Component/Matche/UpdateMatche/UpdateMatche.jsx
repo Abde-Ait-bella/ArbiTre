@@ -27,7 +27,7 @@ function AddMatche() {
                         setLoading(false)
                         club_1_Option_update('')
                         club_2_Option_update('')
-                        navigate('/updatedMatche')
+                        navigate('/dashboard/updatedMatche')
                     }
                 }
                 ).catch((response) => {
@@ -55,7 +55,7 @@ function AddMatche() {
                     const { data } = response;
                     if (data.status == true) {
                         setLoading(false)
-                        navigate('/updatedMatche')
+                        navigate('/dashboard/updatedMatche')
                     }
                 }
             ).catch((response) => {
@@ -69,7 +69,7 @@ function AddMatche() {
                     const { data } = response;
                     if (data.status == true) {
                         setLoading(false)
-                        navigate('/updatedMatche')
+                        navigate('/dashboard/updatedMatche')
                     }
                 }
             ).catch((response) => {

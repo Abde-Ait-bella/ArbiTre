@@ -21,7 +21,7 @@ root.render(
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/dashboard/*' element={<App />} />
-                <Route path='/*' element={<Home />} />
+                <Route path='/' element={<Home />} />
             </Routes>
         </BrowserRouter>
     </AuthProvider>

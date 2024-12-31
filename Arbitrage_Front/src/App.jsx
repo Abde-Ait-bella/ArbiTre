@@ -132,7 +132,7 @@ function App() {
               <div className={`sidebar ps-4 ${isSidebarOpen ? 'open' : ''}`} onClick={(e) => handleSidebarClose(e)}>
                 <nav className="navbar bg-secondary navbar-dark" >
                   <div className='navbar-brand mt-1 me-0 brand d-flex justify-content-center align-items-center top-50 start-0 w-100'>
-                    <Link to='/dashboard' className="">
+                    <Link to='/dashboard/home' className="">
                       <h3 className="logo">
                         <i class="fa-solid fa-flag-checkered ms-2 me-3"></i>
                         ArbiTre</h3>
@@ -150,7 +150,7 @@ function App() {
                   </div>
                   <div class="navbar-nav w-100 nav-part-3">
                     <div className='mb-2'>
-                      <NavLink to='/dashboard' className={({ isActive }) =>
+                      <NavLink to='/dashboard/home' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active pe-3 fw-bold" : "nav-item nav-link pe-3 fw-bold"
                       }><i class="fa-solid fa-house ms-3"></i>الصفحة الرئيسية</NavLink>
                       {/* <i class="fa fa-tachometer-alt me-2"></i> */}
@@ -161,7 +161,7 @@ function App() {
                       }><i class="fa-solid fa-futbol ms-3 me-2"></i>المباريات</NavLink>
                     </div>
                     <div class="nav-item dropdown mt-1 me-2">
-                      <NavLink to={'/composants'} className={({ isActive }) => isActive ? "nav-link dropdown-toggle active show Active fw-bold" : "nav-link dropdown-toggle fw-bold"}
+                      <NavLink to={'/dashboard/composants'} className={({ isActive }) => isActive ? "nav-link dropdown-toggle active show Active fw-bold" : "nav-link dropdown-toggle fw-bold"}
                         data-bs-toggle="dropdown" ><i class="fa-solid fa-screwdriver-wrench me-2 ms-3"></i>المكونات</NavLink>
                       <div class="dropdown-menu bg-transparent border-0"
                       >
@@ -197,7 +197,7 @@ function App() {
                     {isSidebarOpen ? <i class="fa-solid fa-right-long fs-4 d-flex justify-content-center align-items-center h-100"></i> : <i class="fa fa-bars d-flex justify-content-center align-items-center h-100"></i>}
                   </a>
 
-                  <Link to={'/dashboard'} class="navbar-brand d-flex d-lg-none">
+                  <Link to={'/dashboard/home'} class="navbar-brand d-flex d-lg-none">
                     <h2 class="text-primary mb-0"><i class="fa-solid fa-flag-checkered ms-2 me-3"></i>ArbiTre</h2>
                   </Link>
 
@@ -208,7 +208,7 @@ function App() {
                         <span class="d-none d-lg-inline-flex fw-bold ms-2 me-2">{user?.name}</span>
                       </Link>
                       <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0 w-20 select-menu me-4 me-lg-5">
-                        <Link to={"/change_password"} class="dropdown-item d-flex justify-content-around"><span className='d-none d-lg-block'>الاعدادات</span> <i class={`fa-solid fa-gears ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
+                        <Link to={"/dashboard/change_password"} class="dropdown-item d-flex justify-content-around"><span className='d-none d-lg-block'>الاعدادات</span> <i class={`fa-solid fa-gears ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
                         <Link class="dropdown-item d-flex justify-content-around" onClick={logout}><span className='d-none d-lg-block'>تسجيل الخروج</span> <i class={`fa-solid fa-right-from-bracket ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
                       </div>
                     </div>
@@ -222,7 +222,7 @@ function App() {
                 <div onClick={handleSidebarClose}>
                   <Routes>
                     <Route path="/" >
-                      <Route index element={<HomeDashboard />} />
+                      <Route index path="/home" element={<HomeDashboard />} />
                       <Route path="rapport" element={<RapportListe />} />
                       <Route path="detailleRapport/:id" element={<DetailleRapport />} />
                       <Route path='addRapport' element={<AddRapport />} />
@@ -295,7 +295,7 @@ function App() {
                           <br />
                         </div>
                         <div className="col-md-4 d-none d-lg-block">
-                          <Link to='/dashboard' className="navbar-brand mt-1 me-0 brand d-flex justify-content-center w-100">
+                          <Link to='/dashboard/home' className="navbar-brand mt-1 me-0 brand d-flex justify-content-center w-100">
                             <h3 className="logo mb-0">
                               <i class="fa-solid fa-flag-checkered ms-2 me-3"></i>
                               ArbiTre</h3>

@@ -5,6 +5,8 @@ import { AuthUser } from "./AuthContext";
 
 function Login() {
 
+    console.log("innerWidth",window.innerWidth)
+
     const [values, setValues] = useState({
         email: '',
         password: ''
@@ -20,7 +22,7 @@ function Login() {
 
     useEffect(() => {
         if (window.localStorage.getItem('AUTHENTICATED')) {
-            navigate('/dashboard')
+            navigate('/dashboard/home')
             setLoading(false)
         } else {
             setLoading(false)
@@ -87,7 +89,7 @@ function Login() {
                         setLoadingLogin(false)
                         localStorage.setItem('token', data.authorisation.token)
                         localStorage.setItem('AUTHENTICATED', true)
-                        navigate('/dashboard');
+                        navigate('/dashboard/home');
                     }
                 }
             ).catch(({ response }) => {
@@ -112,8 +114,8 @@ function Login() {
                         <form action="" onSubmit={handleSubmit}>
                             <div className="container-fluid">
                                 <div className="row h-100 align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
-                                    <div className="col-md-4">
-                                        <div className="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
+                                    <div className="col-md-5">
+                                        <div className="bg-secondary rounded p-4 p-sm-5 mx-3">
                                             {errorBack && <div dir="rtl" class="p-3 mb-4 bg-danger text-white text-center rounded">{errorBack}</div>}
                                             <div className="d-flex align-items-center justify-content-between mb-3">
                                                 <p className="fs-2 pt-2 fw-bold">ت الدخول</p>

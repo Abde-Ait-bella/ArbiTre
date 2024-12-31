@@ -48,7 +48,7 @@ function AddArbitre() {
                     const { data } = response;
                     if (data.status === true) {
                         setLoadingAdd(false)
-                        navigate('/composants/addedDelegue');
+                        navigate('/dashboard/composants/addedDelegue');
                     }
                 }
             ).catch(
@@ -200,7 +200,7 @@ function AddArbitre() {
                     <div class="col-sm-12 col-xl-6 text-center">
                         <div class="bg-secondary rounded h-100 p-4" >
                             <div className="d-flex justify-content-start">
-                                <Link to="/composants/delegue" class="btn btn-danger px-4 mb-3"> رجـــوع<i class="fa-solid fa-caret-right me-3 pt-1"></i></Link>
+                                <Link to="/dashboard/composants/delegue" class="btn btn-danger px-4 mb-3"> رجـــوع<i class="fa-solid fa-caret-right me-3 pt-1"></i></Link>
                             </div>
                             <p class="mb-lg-4 fs-2 fw-bold text-white">إضافة المندوب</p>
 

@@ -93,7 +93,6 @@ function Register() {
     return (
         <>
             <div class="container-fluid position-relative d-flex p-0">
-                {/* <!-- Sign Up Start --> */}
                 <div className="container-fluid">
                     <div className="row h-100 align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
                         <div className="col-md-4">
