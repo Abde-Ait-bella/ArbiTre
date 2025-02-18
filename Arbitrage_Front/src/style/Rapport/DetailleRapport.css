@@ -3,12 +3,7 @@
   padding: 25px;
   font-family: 'Noto Naskh Arabic', serif;
   color: #000;
-  /* font-family: amiri; */
 }
-
-/* .detailleRapport h1 {
-  font-family: 'El Messiri', sans-serif;
-} */
 
 .detailleRapport .images {
   display: flex;
@@ -429,23 +424,33 @@
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 30px;
   }
 
   .detailleRapport .images .logoLigue {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100px;
-    height: 50px;
+    position: relative;
+    margin: 0 auto;
+    width: 154px;
+    height: 100px;
+    display: flex;
+    margin-bottom: 50px;
+    opacity: 1;
   }
 
   .detailleRapport .images .titleLigue {
-    width: 115px;
+    /* width: 115px;
     height: 17px;
     opacity: 0.5;
     position: absolute;
-    top: 17px;
+    top: 17px; */
+
+    opacity: 1;
+    position: relative;
+    margin: 0 auto;
+    width: 154px;
+    height: 170px;
+    display: flex;
+    margin-top: 25px;
   }
 
   .detailleRapport .images h1 {

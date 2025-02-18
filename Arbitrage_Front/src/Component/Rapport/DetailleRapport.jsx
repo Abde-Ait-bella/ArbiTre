@@ -90,16 +90,17 @@ function DetailleRapport() {
                 .contentP2 {
                     margin-top: 125px; 
                     position: relative;
-                    height: calc(100vh - 150px);
+                    // height: calc(100vh - 125px);
+                    // position: absolute;
+                    // bottom: 0;
+                  }
 
-                }
                 .signature{
                     position: absolute;
-                    // margin-top: 50px;
                     bottom: 0;
                 }
                 .page-break {
-                    page-break-before: always; /* Ajoutez cette ligne */
+                    page-break-before: always;
                     display: block;
                     align-items: center;
                     content: "";
@@ -1304,7 +1305,7 @@ function DetailleRapport() {
               </div>
               <div
                 className={` container ${
-                  skypTable ? "" : "page-break contentP2"
+                  skypTable ? "page-break contentP2" : ""
                 }`}
               >
                 <div className="expl-content02">

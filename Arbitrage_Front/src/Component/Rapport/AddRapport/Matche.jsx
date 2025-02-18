@@ -362,7 +362,7 @@ export function Matche(props) {
 
     const sendData = () => {
         const numberKey = Object.keys(inputValue).length;
-        if (numberKey === 29) {
+        if (numberKey >= 27) {
             props.dataMatche(inputValue);
             setIsValideData(prev => !prev)
             setError("")

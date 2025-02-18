@@ -46,7 +46,7 @@ export function Buts(props) {
                     name: "joueur_numero_licence"
                 }))
 
-                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null && (parseInt(club_1_update) === c.id || parseInt(club_2_update) === c.id));
+                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || club_1_update ? (parseInt(club_1_update) === c.id || parseInt(club_2_update) === c.id) : c.user_id === null );
                 const optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + item.abbr,
@@ -70,7 +70,6 @@ export function Buts(props) {
         fetchData();
     }, [club_1_update, club_2_update]);
 
-
     //--------Sélection joueur
 
     const createOptionJ = (label) => ({
@@ -90,6 +89,8 @@ export function Buts(props) {
             setOptionsJ((prev) => [...prev, newOption]);
         }, 1000);
     };
+
+    console.log('clubs',state.clubs)
 
     const handleChangeSelectJ = (event, index) => {
         let valeur = event
