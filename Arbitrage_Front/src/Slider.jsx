@@ -90,6 +90,15 @@ function Slider() {
           trigger: refHome.current,
           scrub: 0.2,
           // end: '+=' + refHome.current.offsetWidth,
+//           end: '+=' + refHome.current.offsetWidth * (contents.length - 1), 
+//           pin : true,
+//           // snap : 1 / (refHome.current - 1),
+//           // snap: {
+//           //   snapTo: 1 / (contents.length - 1), // يعني غادي ينتقل من section لآخر مباشرة
+//           //   duration: {min: 0.2, max: 0.5}, // مدة الانتقال، يمكن تعدلها 
+//           //   ease: "power1.inOut" // تخلي الحركة سلسة
+//           // },
+//           // delay: 1, // يمكن تزيد هاد الـ delay باش تعطي فرصة للتوقف في كل عنصر
           end: '+=' + refHome.current.offsetWidth * (contents.length - 1),
           pin: true,
           snap: 1 / (refHome.current - 1),
@@ -104,16 +113,16 @@ function Slider() {
     <div ref={refHome} className='sections' style={{ minHeight: "100vh" }} >
       <motion.div className='scroll' style={{ scaleX: scrollYProgress }} />
       <div className={`row section-parent ${window.innerWidth > 992 ? 'row' : ''}`} id='section-parent' >
-        <div className='home-section section p-0 m-0'>
+        <div className='m-0 p-0 home-section section'>
           <p ref={textRefArab} style={{ marginTop: "-40px" }} dir='rtl' className='text-arab text-white'>أول منصة خاصة بالحكام بالمغرب</p>
           <p ref={textRef} style={{ marginTop: "-40px" }} dir='ltr' className='text-white fr'>La première plateforme pour les arbitres au Maroc</p>
           <div className='scroll-down'>
             <p>إ سحب للأسفل</p>
-            <p className='mt-5'><i class="fa-solid fa-arrow-down"></i></p>
+            <p className='mt-5'><i class="fa-arrow-down fa-solid"></i></p>
           </div>
           <div className='blob-home'></div>
         </div>
-        <div ref={ref} className='about-section section m-0'>
+        <div ref={ref} className='m-0 about-section section'>
           <p dir='rtl' className='title'>من نحن</p>
           <p dir='rtl' className='text-arab text-justify'>
             {inView1 & window.innerWidth > 992 ?
@@ -139,7 +148,7 @@ function Slider() {
             <div className="blob_2"></div>
           </div>
         </div>
-        <div ref={ref1} className='services-section section p-0 m-0 '>
+        <div ref={ref1} className='m-0 p-0 section services-section'>
           <div className="cards">
             <div className="data" >
               <label htmlFor="">معلومات جاهزة ومسبقة الإعداد</label>
@@ -204,7 +213,7 @@ function Slider() {
             </div>
           </div>
         </div>
-        <div ref={ref2} className='letsgo-section section p-0 m-0'>
+        <div ref={ref2} className='m-0 p-0 letsgo-section section'>
           <div className='image'>
             <img className='free' src={"../img/pngwing.png"} alt="" />
             <img src={"../img/Yellow-red_card.png"} alt="" />
