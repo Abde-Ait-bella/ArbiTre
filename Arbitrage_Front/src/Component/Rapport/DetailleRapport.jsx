@@ -211,7 +211,7 @@ function DetailleRapport() {
     <>
       {loading ? (
         <div className="bg-white m-4 rounded">
-          <div className="row container-none container-lg-block mb-4 px-lg-4 py-4 d-flex justify-content-center">
+          <div className="container-lg-block d-flex justify-content-center mb-4 px-lg-4 py-4 container-none row">
             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
               <div className="row">
                 <div className="col-1">
@@ -220,27 +220,27 @@ function DetailleRapport() {
               </div>
 
               <div className="row">
-                <div className="col-4 mt-4">
+                <div className="mt-4 col-4">
                   <Skeleton height={60} />
                 </div>
-                <div className="col-4 mt-4">
+                <div className="mt-4 col-4">
                   <Skeleton height={60} />
                 </div>
-                <div className="col-4 mt-4">
+                <div className="mt-4 col-4">
                   <Skeleton height={60} />
                 </div>
               </div>
 
-              <div className="row mt-4">
+              <div className="mt-4 row">
                 <div className="col-3 ps-1">
                   <Skeleton height={35} />
                   <Skeleton height={35} />
                 </div>
-                <div className="col-3 px-1">
+                <div className="px-1 col-3">
                   <Skeleton height={35} />
                   <Skeleton height={35} />
                 </div>
-                <div className="col-3 px-1">
+                <div className="px-1 col-3">
                   <Skeleton height={35} />
                   <Skeleton height={35} />
                 </div>
@@ -252,11 +252,11 @@ function DetailleRapport() {
                   <Skeleton height={35} />
                   <Skeleton height={35} />
                 </div>
-                <div className="col-3 px-1">
+                <div className="px-1 col-3">
                   <Skeleton height={35} />
                   <Skeleton height={35} />
                 </div>
-                <div className="col-3 px-1">
+                <div className="px-1 col-3">
                   <Skeleton height={35} />
                   <Skeleton height={35} />
                 </div>
@@ -266,11 +266,11 @@ function DetailleRapport() {
                 </div>
               </div>
 
-              <div className="row mt-4">
+              <div className="mt-4 row">
                 <div className="col-6">
                   <Skeleton height={80} />
                 </div>
-                <div className="col-3 ">
+                <div className="col-3">
                   <Skeleton height={80} />
                 </div>
                 <div className="col-3">
@@ -278,7 +278,7 @@ function DetailleRapport() {
                 </div>
               </div>
 
-              <div className="row mt-4">
+              <div className="mt-4 row">
                 <div className="col-6">
                   <Skeleton height={150} />
                 </div>
@@ -287,7 +287,7 @@ function DetailleRapport() {
                 </div>
               </div>
 
-              <div className="row mt-4">
+              <div className="mt-4 row">
                 <div className="col-2 ps-1">
                   <Skeleton height={35} />
                   <Skeleton height={35} />
@@ -300,37 +300,37 @@ function DetailleRapport() {
         <div>
           <div
             dir="rtl"
-            className="detailleRapport bg-white m-4 rounded"
+            className="bg-white m-4 rounded detailleRapport"
             ref={componentRef}
           >
             <div className="print-content">
               <button
-                className="p-2 pb-1 btn_print ps-3 pe-3"
+                className="p-2 pb-1 btn_print pe-3 ps-3"
                 onClick={handlePrint}
               >
-                <i class="fa-solid fa-print"></i>
+                <i class="fa-print fa-solid"></i>
               </button>
               <Header />
               <div className="rapport-title">
                 <h3>تقريـــــــر الحكـــــم</h3>
               </div>
-              <div className="container table-responsive contentP">
-                <table className="table table-bordered text-dark">
+              <div className="container contentP table-responsive">
+                <table className="table-bordered text-dark table">
                   <thead>
                     <tr>
-                      <th className="th p-0 px-3">المنافسة/الفئة : </th>
-                      <th class="p-0 px-2">{rapports?.competition?.nom}</th>
-                      <th class="p-0 px-2">
+                      <th className="px-3 p-0 th">المنافسة/الفئة : </th>
+                      <th class="px-2 p-0">{rapports?.competition?.nom}</th>
+                      <th class="px-2 p-0">
                         {
                           categories?.find(
                             (a) => a.id === rapports?.categorie_id
                           )?.nom
                         }
                       </th>
-                      <th class="th p-0 px-3">الساعة</th>
-                      <th class="p-1 px-3">{rapports?.temps}</th>
-                      <th class="th p-0 px-2">حكم الساحة</th>
-                      <th class="p-0 px-2">
+                      <th class="px-3 p-0 th">الساعة</th>
+                      <th class="px-3 p-1">{rapports?.temps}</th>
+                      <th class="px-2 p-0 th">حكم الساحة</th>
+                      <th class="px-2 p-0">
                         {arbitre
                           ?.find(
                             (a) => a.id === parseInt(rapports?.arbitre_c_id)
@@ -342,8 +342,8 @@ function DetailleRapport() {
                           )
                           ?.nom.toUpperCase()}
                       </th>
-                      <th class="th p-0 px-3">المدينة</th>
-                      <th class="p-1 px-3">
+                      <th class="px-3 p-0 th">المدينة</th>
+                      <th class="px-3 p-1">
                         {
                           ville?.find(
                             (a) => a.id === parseInt(rapports?.centre_ville)
@@ -352,8 +352,8 @@ function DetailleRapport() {
                       </th>
                     </tr>
                     <tr>
-                      <th className="th p-0 px-3">المباراة</th>
-                      <th className="p-0 px-2" colSpan={2}>
+                      <th className="px-3 p-0 th">المباراة</th>
+                      <th className="px-2 p-0" colSpan={2}>
                         {
                           club?.find(
                             (c) => c.id === parseInt(rapports?.club_id_1)
@@ -366,10 +366,10 @@ function DetailleRapport() {
                           )?.abbr
                         }
                       </th>
-                      <th className="th p-0 px-2">الملعب</th>
-                      <th className="p-0 px-2">{rapports?.stade?.nom}</th>
-                      <th className="th p-0 px-2">الحكم المساعد 1</th>
-                      <th className="p-0 px-2">
+                      <th className="px-2 p-0 th">الملعب</th>
+                      <th className="px-2 p-0">{rapports?.stade?.nom}</th>
+                      <th className="px-2 p-0 th">الحكم المساعد 1</th>
+                      <th className="px-2 p-0">
                         {arbitre
                           ?.find(
                             (a) => a.id === parseInt(rapports?.arbitre_a1_id)
@@ -381,8 +381,8 @@ function DetailleRapport() {
                           )
                           ?.nom.toUpperCase()}
                       </th>
-                      <th className="th p-0 px-2">المدينة</th>
-                      <th className="p-0 px-2">
+                      <th className="px-2 p-0 th">المدينة</th>
+                      <th className="px-2 p-0">
                         {
                           ville?.find(
                             (a) =>
@@ -398,14 +398,14 @@ function DetailleRapport() {
                       </th>
                     </tr>
                     <tr>
-                      <th className="th p-0 px-2">النتيجة النهائية</th>
-                      <th class="p-1 px-2" colSpan={2}>
+                      <th className="px-2 p-0 th">النتيجة النهائية</th>
+                      <th class="px-2 p-1" colSpan={2}>
                         {rapports?.result_club_1} - {rapports?.result_club_2}
                       </th>
-                      <th class="th p-0 px-2">المدينة</th>
-                      <th class="p-0 px-2">{rapports?.ville?.nom}</th>
-                      <th class="th p-0 px-2">الحكم المساعد 2</th>
-                      <th class="p-0 px-3">
+                      <th class="px-2 p-0 th">المدينة</th>
+                      <th class="px-2 p-0">{rapports?.ville?.nom}</th>
+                      <th class="px-2 p-0 th">الحكم المساعد 2</th>
+                      <th class="px-3 p-0">
                         {arbitre
                           ?.find(
                             (a) => a.id === parseInt(rapports?.arbitre_a2_id)
@@ -418,8 +418,8 @@ function DetailleRapport() {
                           ?.nom.toUpperCase()}
                       </th>
 
-                      <th className="th p-0 px-2">المدينة</th>
-                      <th class="p-0 px-2">
+                      <th className="px-2 p-0 th">المدينة</th>
+                      <th class="px-2 p-0">
                         {
                           ville?.find(
                             (a) =>
@@ -429,17 +429,17 @@ function DetailleRapport() {
                       </th>
                     </tr>
                     <tr>
-                      <th class="th p-0 px-2">التاريخ</th>
-                      <th className="p-0 px-2" colSpan={2}>
+                      <th class="px-2 p-0 th">التاريخ</th>
+                      <th className="px-2 p-0" colSpan={2}>
                         {rapports?.date}
                       </th>
-                      <th class="th p-0 px-2">المندوب</th>
-                      <th className="p-0 px-2">
+                      <th class="px-2 p-0 th">المندوب</th>
+                      <th className="px-2 p-0">
                         {rapports?.delegue?.prenom.toUpperCase()}{" "}
                         {rapports?.delegue?.nom.toUpperCase()}
                       </th>
-                      <th class="th p-0 px-2">الحكم الرابع</th>
-                      <th class="p-0 px-3">
+                      <th class="px-2 p-0 th">الحكم الرابع</th>
+                      <th class="px-3 p-0">
                         {arbitre
                           ?.find(
                             (a) => a.id === parseInt(rapports?.arbitre_4_id)
@@ -451,8 +451,8 @@ function DetailleRapport() {
                           )
                           ?.nom.toUpperCase()}
                       </th>
-                      <th class="th p-0 px-2">المدينة</th>
-                      <th class="p-0 px-2">
+                      <th class="px-2 p-0 th">المدينة</th>
+                      <th class="px-2 p-0">
                         {
                           ville?.find(
                             (a) => a.id === parseInt(rapports?.arbitre_4_ville)
@@ -478,17 +478,17 @@ function DetailleRapport() {
                             <tr>
                               <th
                                 colSpan={5}
-                                className="th text-dark text-center p-1 px-3"
+                                className="px-3 p-1 text-center text-dark th"
                               >
                                 الانذارات
                               </th>
                             </tr>
                             <tr className="text-center">
-                              <th className="p-1 px-3">الفريق</th>
-                              <th className="p-1 px-3">إسم اللاعب</th>
-                              <th className="p-1 px-3">الرخصة</th>
-                              <th className="p-1 px-3">سبب الإنذار</th>
-                              <th className="p-1 px-3">الدقيقة</th>
+                              <th className="px-3 p-1">الفريق</th>
+                              <th className="px-3 p-1">إسم اللاعب</th>
+                              <th className="px-3 p-1">الرخصة</th>
+                              <th className="px-3 p-1">سبب الإنذار</th>
+                              <th className="px-3 p-1">الدقيقة</th>
                             </tr>
                           </thead>
                           <tbody className="text-center">
@@ -503,21 +503,21 @@ function DetailleRapport() {
                             ) : (
                               avertissemetG?.map((a) => (
                                 <tr>
-                                  <th className="p-1 px-3">
+                                  <th className="px-3 p-1">
                                     {
                                       club?.find(
                                         (c) => c.id === parseInt(a.club_id)
                                       )?.abbr
                                     }
                                   </th>
-                                  <th className="p-1 px-3">
+                                  <th className="px-3 p-1">
                                     {a?.nom.toUpperCase()}
                                   </th>
-                                  <th className="p-1 px-3">
+                                  <th className="px-3 p-1">
                                     {a.joueur_numero_licence}
                                   </th>
-                                  <th className="p-1 px-3">{a.cause}</th>
-                                  <th className="p-1 px-3">{a.minute}</th>
+                                  <th className="px-3 p-1">{a.cause}</th>
+                                  <th className="px-3 p-1">{a.minute}</th>
                                 </tr>
                               ))
                             )}
@@ -525,22 +525,22 @@ function DetailleRapport() {
                         </table>
                       </div>
                       <div className="table-responsive">
-                        <table className="table table-bordered">
+                        <table className="table-bordered table">
                           <thead>
                             <tr>
                               <th
                                 colSpan={5}
-                                className="th text-dark text-center p-1 px-3"
+                                className="px-3 p-1 text-center text-dark th"
                               >
                                 الطرد
                               </th>
                             </tr>
                             <tr className="text-center">
-                              <th className="p-1 px-3">الفريق</th>
-                              <th className="p-1 px-3">إسم اللاعب</th>
-                              <th className="p-1 px-3">الرخصة</th>
-                              <th className="p-1 px-3">سبب الطرد</th>
-                              <th className="p-1 px-3">الدقيقة</th>
+                              <th className="px-3 p-1">الفريق</th>
+                              <th className="px-3 p-1">إسم اللاعب</th>
+                              <th className="px-3 p-1">الرخصة</th>
+                              <th className="px-3 p-1">سبب الطرد</th>
+                              <th className="px-3 p-1">الدقيقة</th>
                             </tr>
                           </thead>
                           <tbody className="text-center">
@@ -555,21 +555,21 @@ function DetailleRapport() {
                             ) : (
                               avertissemetR?.map((a) => (
                                 <tr>
-                                  <th className="p-1 px-3">
+                                  <th className="px-3 p-1">
                                     {
                                       club?.find(
                                         (c) => c.id === parseInt(a.club_id)
                                       )?.abbr
                                     }
                                   </th>
-                                  <th className="p-1 px-3">
+                                  <th className="px-3 p-1">
                                     {a?.nom.toUpperCase()}
                                   </th>
-                                  <th className="p-1 px-3">
+                                  <th className="px-3 p-1">
                                     {a.joueur_numero_licence}
                                   </th>
-                                  <th className="p-1 px-3">{a.cause}</th>
-                                  <th className="p-1 px-3">{a.minute}</th>
+                                  <th className="px-3 p-1">{a.cause}</th>
+                                  <th className="px-3 p-1">{a.minute}</th>
                                 </tr>
                               ))
                             )}
@@ -584,21 +584,21 @@ function DetailleRapport() {
                       {/* Changement table */}
                       <div className="col-md">
                         <div className="table-responsive">
-                          <div className="row col-md-12 me-0">
+                          <div className="col-md-12 me-0 row">
                             <div className="p-0 sub-table-1">
-                              <table className="table table-bordered">
+                              <table className="table-bordered table">
                                 <thead>
                                   <tr>
                                     <th
                                       colSpan={3}
-                                      className="th text-dark text-center p-1 px-3 th-border"
+                                      className="px-3 p-1 th-border text-center text-dark th"
                                     >
                                       التغييرات
                                     </th>
                                   </tr>
                                   <tr>
                                     <th
-                                      className="p-1 px-0 text-center"
+                                      className="px-0 p-1 text-center"
                                       colSpan={3}
                                     >
                                       الفريق(أ) :{" "}
@@ -611,7 +611,7 @@ function DetailleRapport() {
                                       }
                                     </th>
                                   </tr>
-                                  <tr className="text-center border-top-0">
+                                  <tr className="border-top-0 text-center">
                                     <th className="p-1">خروج</th>
                                     <th className="p-1">دخول</th>
                                     <th className="p-1">الدقيقة</th>
@@ -641,7 +641,7 @@ function DetailleRapport() {
                                   {RestCH1
                                     ? restCH_1.map((index) => (
                                         <tr
-                                          className="text-center borderd"
+                                          className="borderd text-center"
                                           key={index}
                                         >
                                           <td className="py-1">-</td>
@@ -654,19 +654,19 @@ function DetailleRapport() {
                               </table>
                             </div>
                             <div className="p-0 sub-table-2">
-                              <table className="table table-bordered">
+                              <table className="table-bordered table">
                                 <thead>
                                   <tr>
                                     <th
                                       colSpan={3}
-                                      className="th text-center p-1 px-3 th-border"
+                                      className="px-3 p-1 th-border text-center th"
                                     >
                                       -
                                     </th>
                                   </tr>
                                   <tr>
                                     <th
-                                      className="p-1 px-0 text-center"
+                                      className="px-0 p-1 text-center"
                                       colSpan={3}
                                     >
                                       الفريق (ب) :{" "}
@@ -679,7 +679,7 @@ function DetailleRapport() {
                                       }
                                     </th>
                                   </tr>
-                                  <tr className="text-center border-top-0">
+                                  <tr className="border-top-0 text-center">
                                     <th className="p-1">خروج</th>
                                     <th className="p-1">دخول</th>
                                     <th className="p-1">الدقيقة</th>
@@ -709,7 +709,7 @@ function DetailleRapport() {
                                   {RestCH2
                                     ? restCH_2.map((index) => (
                                         <tr
-                                          className="text-center borderd"
+                                          className="borderd text-center"
                                           key={index}
                                         >
                                           <td className="py-1">-</td>
@@ -727,21 +727,21 @@ function DetailleRapport() {
                       {/* penalty table */}
                       <div className="col-md">
                         <div className="table-responsive">
-                          <div className="row col-md-12 me-0">
+                          <div className="col-md-12 me-0 row">
                             <div className="p-0 sub-table-1">
-                              <table className="table table-bordered">
+                              <table className="table-bordered table">
                                 <thead>
                                   <tr>
                                     <th
                                       colSpan={6}
-                                      className="th text-dark text-center p-1 px-3 th-border"
+                                      className="px-3 p-1 th-border text-center text-dark th"
                                     >
                                       ضربات الترجيح
                                     </th>
                                   </tr>
                                   <tr>
                                     <th
-                                      className="p-1 px-0 text-center"
+                                      className="px-0 p-1 text-center"
                                       colSpan={6}
                                     >
                                       الفريق(أ) :{" "}
@@ -754,7 +754,7 @@ function DetailleRapport() {
                                       } 
                                     </th>
                                   </tr>
-                                  <tr className="text-center border-top-0">
+                                  <tr className="border-top-0 text-center">
                                     <td className="p-1">
                                     { penalty?.find(
                                       (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 1
@@ -829,7 +829,7 @@ function DetailleRapport() {
                                     penalty?.find(
                                       (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 11
                                     ) ?
-                                    <tr className="text-center border-top-0">
+                                    <tr className="border-top-0 text-center">
                                         <td className="p-1">{ penalty?.find(
                                           (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_1) && p.opportunity === 11
                                         )?.result }
@@ -879,7 +879,7 @@ function DetailleRapport() {
                                   {/* {RestBUT1
                                     ? restBUT_1.map((index) => (
                                         <tr
-                                          className="text-center borderd"
+                                          className="borderd text-center"
                                           key={index}
                                         >
                                           <td className="p-1">-</td>
@@ -897,19 +897,19 @@ function DetailleRapport() {
                               </table>
                             </div>
                             <div className="p-0 sub-table-2">
-                              <table className="table table-bordered">
+                              <table className="table-bordered table">
                                 <thead>
                                   <tr>
                                     <th
                                       colSpan={6}
-                                      className="th text-center p-1 px-3 th-border"
+                                      className="px-3 p-1 th-border text-center th"
                                     >
                                       -
                                     </th>
                                   </tr>
                                   <tr>
                                     <th
-                                      className="p-1 px-0 text-center"
+                                      className="px-0 p-1 text-center"
                                       colSpan={6}
                                     >
                                       الفريق(ب) :{" "}
@@ -922,7 +922,7 @@ function DetailleRapport() {
                                       }
                                     </th>
                                   </tr>
-                                  <tr className="text-center border-top-0">
+                                  <tr className="border-top-0 text-center">
                                       <td className="p-1">
                                         { penalty?.find(
                                           (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 1
@@ -1000,7 +1000,7 @@ function DetailleRapport() {
                                     penalty?.find(
                                       (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 11
                                     ) ?
-                                    <tr className="text-center border-top-0">
+                                    <tr className="border-top-0 text-center">
                                         <td className="p-1">{ penalty?.find(
                                           (p) => p.matche_id === parseInt(id) && p.club_id === parseInt(rapports.club_id_2) && p.opportunity === 11
                                         )?.result }
@@ -1050,7 +1050,7 @@ function DetailleRapport() {
                                   {RestBUT2
                                     ? restBUT_2.map((index) => (
                                         <tr
-                                          className="text-center borderd"
+                                          className="borderd text-center"
                                           key={index}
                                         >
                                           <td className="py-1">-</td>
@@ -1068,21 +1068,21 @@ function DetailleRapport() {
                       {/* Buts table */}
                       <div className="col-md">
                         <div className="table-responsive">
-                          <div className="row col-md-12 me-0">
+                          <div className="col-md-12 me-0 row">
                             <div className="p-0 sub-table-1">
-                              <table className="table table-bordered">
+                              <table className="table-bordered table">
                                 <thead>
                                   <tr>
                                     <th
                                       colSpan={3}
-                                      className="th text-dark text-center p-1 px-3 th-border"
+                                      className="px-3 p-1 th-border text-center text-dark th"
                                     >
                                       الأهداف
                                     </th>
                                   </tr>
                                   <tr>
                                     <th
-                                      className="p-1 px-0 text-center"
+                                      className="px-0 p-1 text-center"
                                       colSpan={3}
                                     >
                                       الفريق(أ) :{" "}
@@ -1095,7 +1095,7 @@ function DetailleRapport() {
                                       }
                                     </th>
                                   </tr>
-                                  <tr className="text-center border-top-0">
+                                  <tr className="border-top-0 text-center">
                                     <th className="p-1">الرقم</th>
                                     <th className="p-1">اسم الاعب</th>
                                     <th className="p-1">الدقيقة</th>
@@ -1123,7 +1123,7 @@ function DetailleRapport() {
                                   {RestBUT1
                                     ? restBUT_1.map((index) => (
                                         <tr
-                                          className="text-center borderd"
+                                          className="borderd text-center"
                                           key={index}
                                         >
                                           <td className="py-1">-</td>
@@ -1136,19 +1136,19 @@ function DetailleRapport() {
                               </table>
                             </div>
                             <div className="p-0 sub-table-2">
-                              <table className="table table-bordered">
+                              <table className="table-bordered table">
                                 <thead>
                                   <tr>
                                     <th
                                       colSpan={3}
-                                      className="th text-center p-1 px-3 th-border"
+                                      className="px-3 p-1 th-border text-center th"
                                     >
                                       -
                                     </th>
                                   </tr>
                                   <tr>
                                     <th
-                                      className="p-1 px-0 text-center"
+                                      className="px-0 p-1 text-center"
                                       colSpan={3}
                                     >
                                       الفريق(ب) :{" "}
@@ -1161,7 +1161,7 @@ function DetailleRapport() {
                                       }
                                     </th>
                                   </tr>
-                                  <tr className="text-center border-top-0">
+                                  <tr className="border-top-0 text-center">
                                     <th className="p-1">الرقم</th>
                                     <th className="p-1">اسم الاعب</th>
                                     <th className="p-1">الدقيقة</th>
@@ -1188,7 +1188,7 @@ function DetailleRapport() {
                                   {RestBUT2
                                     ? restBUT_2.map((index) => (
                                         <tr
-                                          className="text-center borderd"
+                                          className="borderd text-center"
                                           key={index}
                                         >
                                           <td className="py-1">-</td>
@@ -1203,26 +1203,26 @@ function DetailleRapport() {
                         </div>
                       </div>
                     </div>
-                    {/* <div className="row ">
+                    {/* <div className="row">
                                                 <div className={`col-md-12 ${skypTable ? "page-break" : ""}`}>
                                                     <table className={`table ${skypTable ? "contentP2" : ""}`}>
                                                         <thead>
-                                                            <tr className="text-center text-dark text-center">
+                                                            <tr className="text-center text-center text-dark">
                                                                 <th scope="col" className="p-1">الأحداث المسجلة قبل, أثناء و بعد المباراة : </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr className="text-dark">
-                                                                <th scope="row">1.	توقيت حضور مراقب المباراة : <p className="text-center mb-0">{rapports?.temp_presence_delegue}</p></th>
+                                                                <th scope="row">1.	توقيت حضور مراقب المباراة : <p className="mb-0 text-center">{rapports?.temp_presence_delegue}</p></th>
                                                             </tr>
                                                             <tr className="text-dark">
-                                                                <th>2. توقيت حضور رجال الأمن مع الإشارة الى العدد : <p className="text-center mb-0 mt-2"><span>التوقيت : {rapports?.temp_presence_agents_sécurité}</span> <span className="me-2">العدد : {rapports?.nombre_agents_sécurité}</span></p></th>
+                                                                <th>2. توقيت حضور رجال الأمن مع الإشارة الى العدد : <p className="mt-2 mb-0 text-center"><span>التوقيت : {rapports?.temp_presence_agents_sécurité}</span> <span className="me-2">العدد : {rapports?.nombre_agents_sécurité}</span></p></th>
                                                             </tr>
                                                             <tr className="text-dark">
-                                                                <th>3. أرضية الملعب : <p className="text-center mb-0">{rapports?.etat_stade}</p></th>
+                                                                <th>3. أرضية الملعب : <p className="mb-0 text-center">{rapports?.etat_stade}</p></th>
                                                             </tr>
                                                             <tr className="text-dark">
-                                                                <th>4. مستودع  ملابس الحكام : <p className="text-center mb-0">{rapports?.etat_vestiaire}</p></th>
+                                                                <th>4. مستودع  ملابس الحكام : <p className="mb-0 text-center">{rapports?.etat_vestiaire}</p></th>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -1234,13 +1234,13 @@ function DetailleRapport() {
                   </div>
                 </div>
                 <div
-                  className="expl-content01 mt-5"
+                  className="mt-5 expl-content01"
                   style={{ fontSize: "11px" }}
                 >
                   <p className="d-flex d-flex align-items-center">
                     (*) في حالة ركلات الترجيحية , يتم تعبئة الخانة كالآتي :
                     تسجيل الركلة :
-                    <table className="table table-bordered w-auto me-2 ms-2">
+                    <table className="table-bordered w-auto me-2 ms-2 table">
                       <thead>
                         <tr>
                           <th
@@ -1270,7 +1270,7 @@ function DetailleRapport() {
                       </tbody>
                     </table>
                     ضياع الركلة الترجيحية :
-                    <table className="table table-bordered w-auto me-2">
+                    <table className="table-bordered w-auto me-2 table">
                       <thead>
                         <tr>
                           <th
@@ -1315,19 +1315,19 @@ function DetailleRapport() {
                 </div>
                 <div>
                   <label>
-                    <p className="ligne mt-3 text-dark fs-5">
+                    <p className="mt-3 text-dark fs-5 ligne">
                       {rapports?.rapport_supp}
                     </p>
                   </label>
                 </div>
                 <div className="ligne signature">
-                  <label htmlFor="" className="fs-6 text-dark">
+                  <label htmlFor="" className="text-dark fs-6">
                     حرر في مدينة :{" "}
                   </label>
-                  <label htmlFor="" className="fs-6 text-dark">
+                  <label htmlFor="" className="text-dark fs-6">
                     بتاريخ :{" "}
                   </label>
-                  <label htmlFor="" className="fs-6 text-dark">
+                  <label htmlFor="" className="text-dark fs-6">
                     إمضاء الحكم :{" "}
                   </label>
                 </div>

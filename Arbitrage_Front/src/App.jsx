@@ -118,10 +118,10 @@ function App() {
     <>
       <motion.div className='scroll' style={{ scaleX: scrollYProgress }} />  
 
-      <div class="container-fluid position-relative p-0" ref={pageRef} id='myDIV' >
+      <div class="position-relative p-0 container-fluid" ref={pageRef} id='myDIV' >
         {
           loading ?
-            < div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            < div id="spinner" class="top-50 position-fixed d-flex align-items-center justify-content-center bg-dark w-100 vh-100 translate-middle show start-50">
               <div class="spinner-border border-none text-primary" style={{ width: '3rem', height: '3rem' }} role="status">
                 <span class="sr-only">Loading...</span>
               </div>
@@ -130,53 +130,53 @@ function App() {
             <div>
               {/* <!-- Sidebar Start --> */}
               <div className={`sidebar ps-4 ${isSidebarOpen ? 'open' : ''}`} onClick={(e) => handleSidebarClose(e)}>
-                <nav className="navbar bg-secondary navbar-dark" >
-                  <div className='navbar-brand mt-1 me-0 brand d-flex justify-content-center align-items-center top-50 start-0 w-100'>
+                <nav className="bg-secondary navbar navbar-dark" >
+                  <div className='top-50 d-flex align-items-center justify-content-center me-0 mt-1 w-100 navbar-brand brand start-0'>
                     <Link to='/dashboard/home' className="">
                       <h3 className="logo">
-                        <i class="fa-solid fa-flag-checkered ms-2 me-3"></i>
+                        <i class="ms-2 me-3 fa-solid fa-flag-checkered"></i>
                         ArbiTre</h3>
                     </Link>
                   </div>
                   <div class="w-100">
                     <div class="position-relative me-3 mb-1">
                       <img class="rounded-circle" src="img/arbitre.png" alt="" style={{ width: '35px', height: '35px' }} />
-                      <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                      <div class="bottom-0 position-absolute bg-success p-1 border border-2 border-white rounded-circle end-0"></div>
                     </div>
                     <div class="me-4">
-                      <p class="mb-0 text-center fs-4 text-white d-flex justify-content-center">{user?.name}</p>
-                      <span className="badge badge-primary text-wrap" style={{ width: '13rem'}}>{user?.email}</span>
+                      <p class="d-flex justify-content-center mb-0 text-white text-center fs-4">{user?.name}</p>
+                      <span className="w-100 text-truncate text-wrap badge badge-primary" dir='ltr' style={{ width: '13rem'}}>{user?.email}</span>
                     </div>
                   </div>
-                  <div class="navbar-nav w-100 nav-part-3">
+                  <div class="w-100 navbar-nav nav-part-3">
                     <div className='mb-2'>
                       <NavLink to='/dashboard/home' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active pe-3 fw-bold" : "nav-item nav-link pe-3 fw-bold"
-                      }><i class="fa-solid fa-house ms-3"></i>الصفحة الرئيسية</NavLink>
-                      {/* <i class="fa fa-tachometer-alt me-2"></i> */}
+                      }><i class="ms-3 fa-solid fa-house"></i>الصفحة الرئيسية</NavLink>
+                      {/* <i class="me-2 fa fa-tachometer-alt"></i> */}
                     </div>
                     <div className="me-2">
                       <NavLink to='matches' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active fw-bold" : "nav-item nav-link fw-bold"
-                      }><i class="fa-solid fa-futbol ms-3 me-2"></i>المباريات</NavLink>
+                      }><i class="ms-3 me-2 fa-solid fa-futbol"></i>المباريات</NavLink>
                     </div>
-                    <div class="nav-item dropdown mt-1 me-2">
+                    <div class="me-2 mt-1 nav-item dropdown">
                       <NavLink to={'/dashboard/composants'} className={({ isActive }) => isActive ? "nav-link dropdown-toggle active show Active fw-bold" : "nav-link dropdown-toggle fw-bold"}
-                        data-bs-toggle="dropdown" ><i class="fa-solid fa-screwdriver-wrench me-2 ms-3"></i>المكونات</NavLink>
-                      <div class="dropdown-menu bg-transparent border-0"
+                        data-bs-toggle="dropdown" ><i class="ms-3 me-2 fa-solid fa-screwdriver-wrench"></i>المكونات</NavLink>
+                      <div class="bg-transparent border-0 dropdown-menu"
                       >
-                        <NavLink to={"composants/stades"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الملاعب<i class="fa-solid fa-ring me-3 mt-1"></i></NavLink>
-                        <NavLink to={"composants/clubs"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الأندية<i class="fa-solid fa-shield me-4 mt-1"></i></NavLink>
-                        <NavLink to={"composants/arbitres"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الحكام <i class="fa-solid fa-clone me-4 mt-1"></i></NavLink>
-                        <NavLink to={'composants/delegue'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المناديب <i class="fa-solid fa-user-tie me-2 mt-1"></i></NavLink>
-                        <NavLink to={'composants/joueur'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الاعبون <i class="fa-solid fa-person-running me-3 mt-1"></i></NavLink>
-                        <NavLink to={'composants/villes'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المدن <i class="fa-solid fa-city me-4 mt-1"></i></NavLink>
+                        <NavLink to={"composants/stades"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الملاعب<i class="me-3 mt-1 fa-ring fa-solid"></i></NavLink>
+                        <NavLink to={"composants/clubs"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الأندية<i class="me-4 mt-1 fa-solid fa-shield"></i></NavLink>
+                        <NavLink to={"composants/arbitres"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الحكام <i class="me-4 mt-1 fa-solid fa-clone"></i></NavLink>
+                        <NavLink to={'composants/delegue'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المناديب <i class="me-2 mt-1 fa-solid fa-user-tie"></i></NavLink>
+                        <NavLink to={'composants/joueur'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الاعبون <i class="me-3 mt-1 fa-solid fa-person-running"></i></NavLink>
+                        <NavLink to={'composants/villes'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المدن <i class="me-4 mt-1 fa-solid fa-city"></i></NavLink>
                       </div>
                     </div>
-                    <div className='mt-1 me-2'>
+                    <div className='me-2 mt-1'>
                       <NavLink to='rapport' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active fw-bold " : "nav-item nav-link fw-bold"
-                      }><i class="fa-solid fa-book ms-3 me-2"></i> التقارير</NavLink>
+                      }><i class="ms-3 me-2 fa-solid fa-book"></i> التقارير</NavLink>
                     </div>
                   </div>
                 </nav>
@@ -188,33 +188,33 @@ function App() {
 
               <div className={`content bg-dark ${isSidebarOpen ? 'open' : ''}`} >
                 {/* <!-- Navbar Start --> */}
-                <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0 navbar-top justify-content-around">
+                <nav class="navbar-top sticky-top justify-content-around bg-secondary px-4 py-0 navbar navbar-expand navbar-dark">
 
-                  <a class="sidebar-toggler flex-shrink-0 me-4 d-none d-lg-block justify-cotent-center" onClick={handleSidebarToggle}>
-                    {isSidebarOpen ? <i class="fa fa-bars d-flex justify-content-center align-items-center h-100"></i> : <i class="fa-solid fa-right-long fs-4 d-flex justify-content-center align-items-center h-100"></i>}
+                  <a class="d-lg-block flex-shrink-0 justify-cotent-center me-4 sidebar-toggler d-none" onClick={handleSidebarToggle}>
+                    {isSidebarOpen ? <i class="d-flex align-items-center justify-content-center h-100 fa fa-bars"></i> : <i class="fa-right-long d-flex align-items-center justify-content-center h-100 fa-solid fs-4"></i>}
                   </a>
-                  <a class="sidebar-toggler flex-shrink-0 me-4 d-block d-lg-none justify-cotent-center" onClick={handleSidebarToggle}>
-                    {isSidebarOpen ? <i class="fa-solid fa-right-long fs-4 d-flex justify-content-center align-items-center h-100"></i> : <i class="fa fa-bars d-flex justify-content-center align-items-center h-100"></i>}
+                  <a class="d-block flex-shrink-0 justify-cotent-center me-4 sidebar-toggler d-lg-none" onClick={handleSidebarToggle}>
+                    {isSidebarOpen ? <i class="fa-right-long d-flex align-items-center justify-content-center h-100 fa-solid fs-4"></i> : <i class="d-flex align-items-center justify-content-center h-100 fa fa-bars"></i>}
                   </a>
 
-                  <Link to={'/dashboard/home'} class="navbar-brand d-flex d-lg-none">
-                    <h2 class="text-primary mb-0"><i class="fa-solid fa-flag-checkered ms-2 me-3"></i>ArbiTre</h2>
+                  <Link to={'/dashboard/home'} class="d-flex navbar-brand d-lg-none">
+                    <h2 class="mb-0 text-primary"><i class="ms-2 me-3 fa-solid fa-flag-checkered"></i>ArbiTre</h2>
                   </Link>
 
-                  <div class="navbar-nav align-items-center me-auto">
-                    <div class="nav-item dropdown ms-lg-5">
+                  <div class="align-items-center me-auto navbar-nav">
+                    <div class="ms-lg-5 nav-item dropdown">
                       <Link href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2 ms-2" src="img/arbitre.png" alt="" style={{ width: '35px', height: '35px' }} />
-                        <span class="d-none d-lg-inline-flex fw-bold ms-2 me-2">{user?.name}</span>
+                        <img class="ms-2 me-lg-2 rounded-circle" src="img/arbitre.png" alt="" style={{ width: '35px', height: '35px' }} />
+                        <span class="d-lg-inline-flex ms-2 me-2 fw-bold d-none">{user?.name}</span>
                       </Link>
-                      <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0 w-20 select-menu me-4 me-lg-5">
-                        <Link to={"/dashboard/change_password"} class="dropdown-item d-flex justify-content-around"><span className='d-none d-lg-block'>الاعدادات</span> <i class={`fa-solid fa-gears ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
-                        <Link class="dropdown-item d-flex justify-content-around" onClick={logout}><span className='d-none d-lg-block'>تسجيل الخروج</span> <i class={`fa-solid fa-right-from-bracket ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
+                      <div class="bg-secondary m-0 me-4 me-lg-5 border-0 rounded-0 rounded-bottom w-20 select-menu dropdown-menu dropdown-menu-end">
+                        <Link to={"/dashboard/change_password"} class="d-flex justify-content-around dropdown-item"><span className='d-lg-block d-none'>الاعدادات</span> <i class={`fa-solid fa-gears ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
+                        <Link class="d-flex justify-content-around dropdown-item" onClick={logout}><span className='d-lg-block d-none'>تسجيل الخروج</span> <i class={`fa-solid fa-right-from-bracket ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
                       </div>
                     </div>
                   </div>
-                  {/* <form class="d-none d-md-flex me-5">
-              <input class="form-control bg-dark border-0" type="search" placeholder="بحت" />
+                  {/* <form class="d-md-flex me-5 d-none">
+              <input class="bg-dark form-control border-0" type="search" placeholder="بحت" />
             </form> */}
                 </nav>
                 {/* <!-- Navbar End --> */}
@@ -284,20 +284,20 @@ function App() {
                 </div>
                 {/* Footer Start */}
                 <div className="footer">
-                  <div class="container-fluid pt-4 px-4">
-                    <div class="bg-secondary rounded-top p-3">
-                      <div class="row d-flex justify-content-around align-items-center">
-                        <div dir="ltr" class="col-md-4 text-center">
+                  <div class="px-4 pt-4 container-fluid">
+                    <div class="bg-secondary p-3 rounded-top">
+                      <div class="d-flex align-items-center justify-content-around row">
+                        <div dir="ltr" class="text-center col-md-4">
                           &copy; <a className='text-warning' href="#">Arbitrage</a>, All Right Reserved.
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="text-center col-md-4">
                           Created By <a target="_blank" className='text-warning' href="https://www.linkedin.com/in/abde-ssamad-ait-bella-92481a249/">AbdeSsamad Ait-bella</a>
                           <br />
                         </div>
-                        <div className="col-md-4 d-none d-lg-block">
-                          <Link to='/dashboard/home' className="navbar-brand mt-1 me-0 brand d-flex justify-content-center w-100">
-                            <h3 className="logo mb-0">
-                              <i class="fa-solid fa-flag-checkered ms-2 me-3"></i>
+                        <div className="d-lg-block col-md-4 d-none">
+                          <Link to='/dashboard/home' className="d-flex justify-content-center me-0 mt-1 w-100 navbar-brand brand">
+                            <h3 className="mb-0 logo">
+                              <i class="ms-2 me-3 fa-solid fa-flag-checkered"></i>
                               ArbiTre</h3>
                           </Link>
                         </div>
@@ -311,7 +311,7 @@ function App() {
         }
         {/* // Back to Top */}
         <div>
-          <ScrollToTop smooth top="100" id={`${isSidebarOpen ? 'back-up_to_right' : 'back-up_to_lft'}`} className='fa-solid fa-arrow-up text-white back-to-top ' style={{ backgroundColor: '#fbab00' }} svgPath />
+          <ScrollToTop smooth top="100" id={`${isSidebarOpen ? 'back-up_to_right' : 'back-up_to_lft'}`} className='back-to-top fa-arrow-up text-white fa-solid' style={{ backgroundColor: '#fbab00' }} svgPath />
         </div>
         {/* // Content End */}
       </div >
