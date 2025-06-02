@@ -95,7 +95,7 @@ function Register() {
             <div class="container-fluid position-relative d-flex p-0">
                 <div className="container-fluid">
                     <div className="row h-100 align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
-                        <div className="col-md-4">
+                        <div className="col-md-5">
                             <div className="bg-secondary rounded px-5 py-4 my-4 mx-3">
                                 {errorBack && <div dir="rtl" class="p-3 mb-4 bg-danger text-white text-center rounded">{errorBack}</div>}
                                 <div className="d-flex align-items-center justify-content-between mb-3">
