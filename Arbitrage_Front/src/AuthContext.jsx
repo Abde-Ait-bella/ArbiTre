@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
 
-
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -39,18 +38,38 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(dataUser));
     }
 
+    const updateUserData = (updatedUserData) => {
+        const updatedUser = { ...user, ...updatedUserData };
+        setUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        return updatedUser;
+    }
+
     const userDataLogout = () => {
         setUser(null)
         localStorage.removeItem('user');
         localStorage.removeItem('AUTHENTICATED');
         localStorage.removeItem('token');
-        navigate('/')
+        
+        return true;
     }
-
 
     return (
         <>
-            <AuthContext.Provider value={{ userDataLogin, user, userDataLogout, club_1_Option, club_2_Option, club_1, club_2 , club_1_Option_update, club_2_Option_update, club_1_update, club_2_update }}>
+            <AuthContext.Provider value={{ 
+                userDataLogin, 
+                user, 
+                userDataLogout, 
+                updateUserData,
+                club_1_Option, 
+                club_2_Option, 
+                club_1, 
+                club_2, 
+                club_1_Option_update, 
+                club_2_Option_update, 
+                club_1_update, 
+                club_2_update 
+            }}>
                 {children}
             </AuthContext.Provider>
         </>
@@ -59,4 +78,4 @@ export const AuthProvider = ({ children }) => {
 
 export const AuthUser = () => {
     return useContext(AuthContext);
-};
+}

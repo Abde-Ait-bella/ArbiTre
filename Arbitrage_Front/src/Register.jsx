@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { axiosClinet } from "./Api/axios";
+import { AuthUser } from "./AuthContext";
 
 function Register() {
     const [values, setValues] = useState({
@@ -15,6 +16,7 @@ function Register() {
     const [errorBack, setErrorBack] = useState();
     const [loading, setLoading] = useState();
     const navigate = useNavigate();
+    const { userDataLogin } = AuthUser();
 
     const handelCHange = (e) => {
         const newObject = { ...values, [e.target.name]: e.target.value };
@@ -75,15 +77,22 @@ function Register() {
             await axiosClinet.post('/register', values).then(
                 (response) => {
                     setLoading(false);
-                                        
-                    const {status} = response;
+                    
+                    const {status, data} = response;
                     
                     if (status === 200) {
+                        // Stocker les données utilisateur
+                        localStorage.setItem('token', data.authorisation.token);
+                        localStorage.setItem('AUTHENTICATED', true);
                         
-                        navigate('/login');
+                        // Utiliser la méthode existante pour connecter l'utilisateur
+                        userDataLogin(data.user);
+                        
+                        // Rediriger vers le tableau de bord
+                        navigate('/dashboard/home');
                     }
                 }
-                ).catch(({ response }) => {
+            ).catch(({ response }) => {
                 setLoading(false);
                 setErrorBack(response?.data?.message === "The email has already been taken." ? "البريد الالكتروني تم استعماله من قبل" : response?.data?.message)
             })
