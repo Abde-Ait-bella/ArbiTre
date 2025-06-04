@@ -100,7 +100,7 @@
         }
 
         .title {
-            font-size: xxx-large;
+            font-size: 2.9rem;
             font-weight: 900;
             margin-bottom: 45px;
             font-family: 'El Messiri';
@@ -457,8 +457,8 @@
                     display: flex;
                     flex-wrap: nowrap;
                     font-family: 'El Messiri';
-                    font-size: 60px;
-                    width: 243px;
+                    font-size: 2rem;
+                        width: 100%;
                     transition: font-size 0.5s ease 3s, width 0.5s ease 3s;
                 }
 
@@ -499,8 +499,8 @@
                     transition: right 1s ease, opacity 1s ease;
 
                     .letsgo-title {
-                        font-size: 70px;
-                        width: 284px;
+                        font-size: 3rem;
+                        width: 100%;
                         transition: font-size 0.5s ease, width 0.5s ease;
 
                     }

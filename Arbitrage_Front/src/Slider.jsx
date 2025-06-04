@@ -115,7 +115,7 @@ function Slider() {
       <div className={`row section-parent ${window.innerWidth > 992 ? 'row' : ''}`} id='section-parent' >
         <div className='m-0 p-0 home-section section'>
           <p ref={textRefArab} style={{ marginTop: "-40px" }} dir='rtl' className='text-arab text-white'>أول منصة خاصة بالحكام بالمغرب</p>
-          <p ref={textRef} style={{ marginTop: "-40px" }} dir='ltr' className='text-white fr'>La première plateforme pour les arbitres au Maroc</p>
+          <p ref={textRef} style={{ marginTop: "-40px", whiteSpace: "nowrap" }} dir='ltr' className='text-white fr'>La première plateforme pour les arbitres au Maroc</p>
           <div className='scroll-down'>
             <p>إ سحب للأسفل</p>
             <p className='mt-5'><i class="fa-arrow-down fa-solid"></i></p>
