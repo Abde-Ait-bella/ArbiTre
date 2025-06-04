@@ -123,5 +123,13 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('resetPassword', 'App\Http\Controllers\ChangePasswordController@passwordResetProcess');
 });
 
+Route::get('/users', function (Request $request) {
+    $users = \App\Models\User::all();
+    return response()->json([
+        'status' => 'success',
+        'data' => $users,
+    ]); 
+})->middleware('auth:api');
+
 require __DIR__.'/auth.php';
 
