@@ -61,6 +61,9 @@ import { axiosClinet } from './Api/axios';
 import { AuthUser } from './AuthContext';
 import ScrollToTop from 'react-scroll-to-top';
 import { motion, useScroll } from "framer-motion"
+import SuperAdminDashboard from './Admin/SuperAdminDashboard';
+import UserManagement from './Admin/UserManagement';
+import GlobalStatistics from './Admin/GlobalStatistics';
 
 
 function App() {
@@ -75,20 +78,21 @@ function App() {
   const { user, userDataLogout } = AuthUser();
 
   useEffect(() => {
-
-
     if (user) {
-      setLoading(false)
+      // Check if the user is trying to access admin routes
+      if (window.location.pathname.includes('/dashboard/admin') && user.role !== 'super_admin') {
+        navigate('/dashboard/home');
+      }
+      setLoading(false);
     } else {
-      navigate('/login')
-      localStorage.removeItem('AUTHENTICATED')
-      localStorage.removeItem('token')
-      setLoading(false)
+      navigate('/login');
+      localStorage.removeItem('AUTHENTICATED');
+      localStorage.removeItem('token');
+      setLoading(false);
     }
 
-    setMobile(window.innerWidth <= 390)
-
-  }, [window.innerWidth])
+    setMobile(window.innerWidth <= 390);
+  }, [window.innerWidth, user])
 
 
   const logout = async () => {
@@ -153,8 +157,23 @@ function App() {
                       <NavLink to='/dashboard/home' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active pe-3 fw-bold" : "nav-item nav-link pe-3 fw-bold"
                       }><i class="ms-3 fa-solid fa-house"></i>الصفحة الرئيسية</NavLink>
-                      {/* <i class="me-2 fa fa-tachometer-alt"></i> */}
                     </div>
+                    
+                    {/* Super Admin Menu - Only visible to super_admin role */}
+                    {user?.role === 'super_admin' && (
+                      <div class="me-2 mt-1 nav-item dropdown">
+                        <NavLink to={'/dashboard/admin'} className={({ isActive }) => isActive ? "nav-link dropdown-toggle active show Active fw-bold" : "nav-link dropdown-toggle fw-bold"}
+                          data-bs-toggle="dropdown"><i class="ms-3 me-2 fa-solid fa-user-shield"></i>المشرف</NavLink>
+                        <div class="bg-transparent border-0 dropdown-menu">
+                          <NavLink to={"admin"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>لوحة التحكم<i class="me-3 mt-1 fa-solid fa-gauge"></i></NavLink>
+                          <NavLink to={"admin/users"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المستخدمين<i class="me-3 mt-1 fa-solid fa-users"></i></NavLink>
+                          <NavLink to={"admin/statistics"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الإحصائيات<i class="me-3 mt-1 fa-solid fa-chart-line"></i></NavLink>
+                        </div>
+                      </div>
+                    )
+                    
+                    }
+                    
                     <div className="me-2">
                       <NavLink to='matches' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active fw-bold" : "nav-item nav-link fw-bold"
@@ -277,6 +296,15 @@ function App() {
                       <Route path='composants/deletedVille' element={<DeletedVille />} />
                       <Route path='composants/updatedVille' element={<UpdatedVille />} />
 
+                      {/* Super Admin Routes - Only accessible to super_admin role */}
+                      {user?.role === 'super_admin' && (
+                        <>
+                          <Route path="admin" element={<SuperAdminDashboard />} />
+                          <Route path="admin/users" element={<UserManagement />} />
+                          <Route path="admin/statistics" element={<GlobalStatistics />} />
+                        </>
+                      )}
+
                       <Route path='change_password' element={<Settings />} />
                     </ Route>
                   </Routes>
@@ -291,7 +319,7 @@ function App() {
                           &copy; <a className='text-warning' href="#">Arbitrage</a>, All Right Reserved.
                         </div>
                         <div class="text-center col-md-4">
-                          Created By <a target="_blank" className='text-warning' href="https://www.linkedin.com/in/abde-ssamad-ait-bella-92481a249/">AbdeSsamad Ait-bella</a>
+                          Created By <a target="_blank" className='text-warning' href="https://aitbella.digital/">AbdeSsamad Ait-bella</a>
                           <br />
                         </div>
                         <div className="d-lg-block col-md-4 d-none">
