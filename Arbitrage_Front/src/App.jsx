@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Route, Link, NavLink, Routes, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'; // Add this import
 
 import Matches from './Component/Matche/MatchesListe';
 import UpdateMatche from './Component/Matche/UpdateMatche/UpdateMatche';
@@ -26,6 +27,7 @@ import AddedRapport from './Component/Rapport/AddRapport/AddedRapport';
 import HomeDashboard from './Component/HomeDashboard';
 import './css/style.css'
 import './css/bootstrap.min.css'
+import './index.css'
 import ArbiTreListe from './Component/Arbitre/ArbitreListe';
 import AddArbitre from './Component/Arbitre/AddArbitre';
 import AddedArbitre from './Component/Arbitre/AddedArbitre';
@@ -67,7 +69,6 @@ import GlobalStatistics from './Admin/GlobalStatistics';
 
 
 function App() {
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [mobile, setMobile] = useState();
@@ -84,6 +85,9 @@ function App() {
         navigate('/dashboard/home');
       }
       setLoading(false);
+      
+      // Show development notice
+      showDevelopmentNotice();
     } else {
       navigate('/login');
       localStorage.removeItem('AUTHENTICATED');
@@ -92,8 +96,37 @@ function App() {
     }
 
     setMobile(window.innerWidth <= 390);
-  }, [window.innerWidth, user])
-
+  }, [user]);
+  
+  // Function to show the development notice
+  const showDevelopmentNotice = () => {
+    // Check if we've shown this already in this session
+    const noticeShown = sessionStorage.getItem('devNoticeShown');
+    if (!noticeShown) {
+      Swal.fire({
+        title: 'تنبيه!',
+        html: `
+          <p> أخي الحكم العصبوي المنصة قيد التطوير ونرحب بكل .</p>
+           <p> هذه المنصة غير تجارية, بحكم الممارسة فالميدان كانت فقط فكرة تم تحقيقها يعني ماعندها تامعنى ايلا ماستافدتي منها "داكشي علاش أي ملاحضة مهمة بالنسبة لينا وأي حاجة مامفهومة ماتبخلش علينا بيها ".</p>
+          <p dir="ltr" style="text-align: center; margin-top: 10px;">
+            <span dir="ltr">+212 681783861</span> <strong">  : للتواصل</strong> 
+          </p>
+        `,
+        icon: 'info',
+        confirmButtonText: 'فهمت',
+        confirmButtonColor: '#fbab00',
+        showClass: {
+          popup: 'animate__animated animate__fadeIn'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOut'
+        }
+      });
+      
+      // Mark as shown for this session
+      sessionStorage.setItem('devNoticeShown', 'true');
+    }
+  };
 
   const logout = async () => {
     await axiosClinet.post('/logout').then((Response) => {

@@ -119,13 +119,13 @@ function Register() {
                                 </div>
                                 {errors?.name && <p className="text-danger me-3">{errors?.name}</p>}
                                 <div className="form-floating mb-3">
-                                    <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" name="email" onChange={handelCHange} />
-                                    <label style={{right: "0"}} for="floatingInput">البريد الالكتروني</label>
+                                    <input type="email" className="form-control" dir="ltr" id="floatingInput" placeholder="name@example.com" name="email" onChange={handelCHange} />
+                                    <label style={{right: "0"}}  for="floatingInput">البريد الالكتروني</label>
                                 </div>
                                 {errors?.email && <p className="text-danger me-3">{errors?.email}</p>}
                                 <div className="form-floating d-flex align-items-center justify-content-between mb-4">
                                     <div className="form-floating col-11">
-                                        <input type={inputType} name="password" className="form-control" id="floatingPassword" placeholder="password" onChange={handelCHange} />
+                                        <input type={inputType} name="password" dir="ltr" className="form-control" id="floatingPassword" placeholder="password" onChange={handelCHange} />
                                         <label style={{right: "0"}} for="floatingPassword">الرمز السري</label>
                                     </div>
                                     <i className={`${iconType} me-2`} onClick={togglePassword} ></i>
@@ -133,7 +133,7 @@ function Register() {
                                 {errors?.password && <p className="text-danger me-3">{errors?.password}</p>}
                                 <div className="form-floating d-flex align-items-center justify-content-between mb-4">
                                     <div className="form-floating col-12">
-                                        <input type={inputType} name="password_confirmation" className="form-control" id="floatingPassword" placeholder="password" onChange={handelCHange} />
+                                        <input type={inputType} dir="ltr" name="password_confirmation" className="form-control" id="floatingPassword" placeholder="password" onChange={handelCHange} />
                                         <label style={{right: "0"}} for="floatingPassword">تأكيد الرمز السري </label>
                                     </div>
                                 </div>
