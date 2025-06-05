@@ -20,37 +20,38 @@
 
 
 .detailleRapport .images div:nth-of-type(1) {
-  margin-left:  10px;
+  margin-left: 10px;
   margin-right: 20px;
 }
 
 .detailleRapport .images div:nth-of-type(2) {
-  margin-right:  10px;
+  margin-right: 10px;
   margin-left: 20px;
   font-family: "Inria Sans", sans-serif;
 }
 
-.detailleRapport .images p{
+.detailleRapport .images p {
   margin: 0;
 }
 
-.detailleRapport .images p:nth-child(1){
+.detailleRapport .images p:nth-child(1) {
   font-size: larger;
   line-height: 19px;
 }
 
-.detailleRapport .images p:nth-child(2){
+.detailleRapport .images p:nth-child(2) {
   font-size: 17px;
 }
-.detailleRapport .images p:nth-child(3){
+
+.detailleRapport .images p:nth-child(3) {
   font-size: 11px;
 }
 
-.detailleRapport .images img{
+.detailleRapport .images img {
   height: 100px;
 }
 
-.detailleRapport .rapport-title{
+.detailleRapport .rapport-title {
   background-color: rgba(50%, 50%, 50%, 0.5);
   width: 100%;
   display: flex;
@@ -60,9 +61,9 @@
   font-family: amiri;
 }
 
-.detailleRapport .rapport-title h3{
+.detailleRapport .rapport-title h3 {
   margin: 0;
-  font-family: 'Noto Naskh Arabic', serif; 
+  font-family: 'Noto Naskh Arabic', serif;
 }
 
 .detailleRapport .table {
@@ -70,7 +71,7 @@
   color: #000;
 }
 
-.detailleRapport .table .th{
+.detailleRapport .table .th {
   background-color: rgb(203 203 203 / 50%);
   text-align: center;
 }
@@ -96,23 +97,23 @@
   display: flex;
 }
 
-.expl-content02 p{
+.expl-content02 p {
   font-size: 12px;
-    padding: 5px 15px;
-    background-color: rgb(203 203 203 / 50%);
-    border-radius: 14px;
+  padding: 5px 15px;
+  background-color: rgb(203 203 203 / 50%);
+  border-radius: 14px;
 }
 
-.ligne{
-    border-bottom: 1.5px solid rgb(203 203 203 / 50%);
-    width: 100%;
-    margin-bottom: 25px;
+.ligne {
+  border-bottom: 1.5px solid rgb(203 203 203 / 50%);
+  width: 100%;
+  margin-bottom: 25px;
 }
 
-.signature{
+.signature {
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 10px ;
+  margin-bottom: 10px;
 }
 
 @media screen and (max-width: 815px) {
@@ -120,13 +121,13 @@
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: -1rem;
     width: 100px;
     height: 50px;
   }
@@ -157,27 +158,28 @@
   }
 }
 
-  .btn_print{
-    border-radius: 5px;
-    border: solid 3px;
-    background-color: #fff;
-    border-color: #6C7293;
-  }
-  .btn_print:hover{
-    background-color: #c0c0c0;
-    border: solid 3px;
-  }
+.btn_print {
+  border-radius: 5px;
+  border: solid 3px;
+  background-color: #fff;
+  border-color: #6C7293;
+}
 
-  .btn_print i:hover{
-    color: #000;
-  }
+.btn_print:hover {
+  background-color: #c0c0c0;
+  border: solid 3px;
+}
+
+.btn_print i:hover {
+  color: #000;
+}
 
 @media screen and (max-width: 800px) {
   .detailleRapport .images {
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
@@ -189,11 +191,11 @@
   }
 
   .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
+    width: 4rem;
+    height: 5rem;
     opacity: 0.5;
     position: absolute;
-    top: 17px;
+    top: 4px;
   }
 
   .detailleRapport .images h1 {
@@ -206,11 +208,11 @@
   }
 
   .detailleRapport .sub-table-1 {
-    width: 73.5px;
+    width: 9rem;
   }
 
   .detailleRapport .sub-table-2 {
-    width: 78px;
+    width: 9rem;
   }
 }
 
@@ -219,15 +221,15 @@
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
+    width: 4rem;
+    height: 5rem;
+    opacity: 0.5;
     position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100px;
-    height: 50px;
+    top: 4px;
   }
 
   .detailleRapport .images .titleLigue {
@@ -261,23 +263,32 @@
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: -6rem;
     width: 100px;
     height: 50px;
   }
 
   .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
-    opacity: 0.5;
-    position: absolute;
-    top: 17px;
+    width: 4rem;
+        height: 5rem;
+        opacity: 0.5;
+        position: absolute;
+        top: -6rem;
+  }
+
+  .detailleRapport .images .title_rapport {
+    margin-top: 7rem !important;
+  }
+
+
+  .detailleRapport .images .title_rapport_fr {
+    margin-top: 1rem !important;
   }
 
   .detailleRapport .images h1 {
@@ -303,23 +314,32 @@
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: -6rem;
     width: 100px;
     height: 50px;
   }
 
   .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
+    width: 3rem;
+    height: 4rem;
     opacity: 0.5;
     position: absolute;
-    top: 17px;
+    top: -6rem;
+  }
+
+  .detailleRapport .images .title_rapport {
+    margin-top: 7rem !important;
+  }
+
+
+  .detailleRapport .images .title_rapport_fr {
+    margin-top: 1rem !important;
   }
 
   .detailleRapport .images h1 {
@@ -332,11 +352,11 @@
   }
 
   .detailleRapport .sub-table-1 {
-    width: 152px;
+    width: 151px;
   }
 
   .detailleRapport .sub-table-2 {
-    width: 156px;
+    width: 139px;
   }
 }
 
@@ -345,23 +365,32 @@
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: -6rem;
     width: 100px;
     height: 50px;
   }
 
   .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
+    width: 3rem;
+    height: 4rem;
     opacity: 0.5;
     position: absolute;
-    top: 17px;
+    top: -6rem;
+  }
+
+  .detailleRapport .images .title_rapport {
+    margin-top: 7rem !important;
+  }
+
+
+  .detailleRapport .images .title_rapport_fr {
+    margin-top: 1rem !important;
   }
 
   .detailleRapport .images h1 {
@@ -387,23 +416,32 @@
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: -6rem;
     width: 100px;
     height: 50px;
   }
 
   .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
+    width: 3rem;
+    height: 4rem;
     opacity: 0.5;
     position: absolute;
-    top: 17px;
+    top: -6rem;
+  }
+
+  .detailleRapport .images .title_rapport {
+    margin-top: 7rem !important;
+  }
+
+
+  .detailleRapport .images .title_rapport_fr {
+    margin-top: 1rem !important;
   }
 
   .detailleRapport .images h1 {
@@ -429,23 +467,32 @@
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: -6rem;
     width: 100px;
     height: 50px;
   }
 
   .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
+    width: 3rem;
+    height: 4rem;
     opacity: 0.5;
     position: absolute;
-    top: 17px;
+    top: -6rem;
+  }
+
+  .detailleRapport .images .title_rapport {
+    margin-top: 7rem !important;
+  }
+
+
+  .detailleRapport .images .title_rapport_fr {
+    margin-top: 1rem !important;
   }
 
   .detailleRapport .images h1 {
@@ -462,7 +509,7 @@
   }
 
   .detailleRapport .sub-table-2 {
-    width: 136px;
+    width: 124px;
   }
 }
 
@@ -471,23 +518,32 @@
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: -6rem;
     width: 100px;
     height: 50px;
   }
 
   .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
+    width: 3rem;
+    height: 4rem;
     opacity: 0.5;
     position: absolute;
-    top: 17px;
+    top: -6rem;
+  }
+
+  .detailleRapport .images .title_rapport {
+    margin-top: 7rem !important;
+  }
+
+
+  .detailleRapport .images .title_rapport_fr {
+    margin-top: 1rem !important;
   }
 
   .detailleRapport .images h1 {
@@ -500,11 +556,11 @@
   }
 
   .detailleRapport .sub-table-1 {
-    width: 125px;
+    width: 129px;
   }
 
   .detailleRapport .sub-table-2 {
-    width: 128.5px;
+    width: 112px;
   }
 }
 
@@ -513,23 +569,32 @@
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: -6rem;
     width: 100px;
     height: 50px;
   }
 
   .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
+    width: 3rem;
+    height: 4rem;
     opacity: 0.5;
     position: absolute;
-    top: 17px;
+    top: -6rem;
+  }
+
+  .detailleRapport .images .title_rapport {
+    margin-top: 7rem !important;
+  }
+
+
+  .detailleRapport .images .title_rapport_fr {
+    margin-top: 1rem !important;
   }
 
   .detailleRapport .images h1 {
@@ -555,23 +620,32 @@
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: -6rem;
     width: 100px;
     height: 50px;
   }
 
   .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
+    width: 3rem;
+    height: 4rem;
     opacity: 0.5;
     position: absolute;
-    top: 17px;
+    top: -6rem;
+  }
+
+  .detailleRapport .images .title_rapport {
+    margin-top: 7rem !important;
+  }
+
+
+  .detailleRapport .images .title_rapport_fr {
+    margin-top: 1rem !important;
   }
 
   .detailleRapport .images h1 {
@@ -584,10 +658,10 @@
   }
 
   .detailleRapport .sub-table-1 {
-    width: 97.5px;
+    width: 123px;
   }
 
   .detailleRapport .sub-table-2 {
-    width: 101px;
+    width: 63px;
   }
 }
