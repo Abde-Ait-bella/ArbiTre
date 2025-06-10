@@ -36,7 +36,7 @@ Route::get('/matche' , [matcheController::class, 'index'])->middleware(['auth.ap
 Route::post('/matche' , [matcheController::class, 'store'])->middleware(['auth.api']);
 Route::put('/matche/{id}' , [matcheController::class, 'update'])->middleware(['auth.api']);
 Route::delete('/matche/{id}' , [matcheController::class, 'destroy'])->middleware(['auth.api']);
-
+    
 
 // Route::apiResource('avertissemet', AvertissementCotroller::class);
 
