@@ -123,5 +123,13 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('resetPassword', 'App\Http\Controllers\ChangePasswordController@passwordResetProcess');
 });
 
+// Reports routes
+Route::prefix('reports')->group(function () {
+    Route::get('/match/{id}', [App\Http\Controllers\ReportController::class, 'matchReport']);
+    Route::get('/team/{id}', [App\Http\Controllers\ReportController::class, 'teamReport']);
+    Route::get('/player/{id}', [App\Http\Controllers\ReportController::class, 'playerReport']);
+    Route::get('/competition/{id}', [App\Http\Controllers\ReportController::class, 'competitionReport']);
+});
+
 require __DIR__.'/auth.php';
 

@@ -41,40 +41,74 @@ class Matche extends Model
         'user_id',
     ];
 
-    public function saison()
+    public function arbitre()
     {
-        return $this->belongsTo(Saison::class);
+        return $this->belongsTo(Arbitre::class, );
     }
-    public function club()
+
+    public function equipeA()
     {
-        return $this->hasMany(Club::class);
+        return $this->belongsTo(Club::class);
     }
-    public function competition()
+
+    
+    public function equipeB()
     {
-        return $this->belongsTo(Competition::class);
+        return $this->belongsTo(Club::class);
     }
-    public function ville()
-    {
-        return $this->belongsTo(Ville::class);
-    }
+
     public function stade()
     {
         return $this->belongsTo(Stade::class);
     }
-    public function category()
+
+      public function arbitreAssistant1()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Arbitre::class);
     }
-    public function arbitre()
+
+    public function arbitreAssistant2()
     {
-        return $this->belongsToMany(Arbitre::class);
+        return $this->belongsTo(Arbitre::class);
     }
+
+    public function quatriemeArbitre()
+    {
+        return $this->belongsTo(Arbitre::class);
+    }
+
     public function delegue()
     {
         return $this->belongsTo(Delegue::class);
     }
-    public function penlty()
+
+    public function competition()
     {
-        return $this->belongsToMany(Penalty::class);
+        return $this->belongsTo(Competition::class);
+    }
+
+    public function buts()
+    {
+        return $this->hasMany(But::class, 'matche_id');
+    }
+
+    public function changements()
+    {
+        return $this->hasMany(Changement::class, 'matche_id');
+    }
+
+    public function avertissements()
+    {
+        return $this->hasMany(Avertissement::class, 'matche_id');
+    }
+
+    public function penalties()
+    {
+        return $this->hasMany(Penalty::class, 'matche_id');
+    }
+
+    public function saison()
+    {
+        return $this->belongsTo(Saison::class, 'saison_id');
     }
 }
