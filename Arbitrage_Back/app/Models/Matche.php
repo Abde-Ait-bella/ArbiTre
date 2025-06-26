@@ -51,7 +51,6 @@ class Matche extends Model
         return $this->belongsTo(Club::class);
     }
 
-    
     public function equipeB()
     {
         return $this->belongsTo(Club::class);
@@ -110,5 +109,15 @@ class Matche extends Model
     public function saison()
     {
         return $this->belongsTo(Saison::class, 'saison_id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Category::class, 'categorie_id');
+    }
+
+    public function ville()
+    {
+        return $this->belongsTo(Ville::class, 'ville_id');
     }
 }

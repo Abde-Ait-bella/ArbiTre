@@ -125,7 +125,7 @@ Route::controller(AuthController::class)->group(function () {
 
 // Reports routes
 Route::prefix('reports')->group(function () {
-    Route::get('/match/{id}', [App\Http\Controllers\ReportController::class, 'matchReport']);
+    Route::get('/match/{id}', [App\Http\Controllers\ReportController::class, 'generatePDF']);
     Route::get('/team/{id}', [App\Http\Controllers\ReportController::class, 'teamReport']);
     Route::get('/player/{id}', [App\Http\Controllers\ReportController::class, 'playerReport']);
     Route::get('/competition/{id}', [App\Http\Controllers\ReportController::class, 'competitionReport']);
