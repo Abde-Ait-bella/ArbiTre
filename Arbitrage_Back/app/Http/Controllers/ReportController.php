@@ -144,7 +144,7 @@ class ReportController extends Controller
         $pdf->setOption('enable-local-file-access', true);
 
         // return $pdf->inline('match_report_' . $id . '.pdf');
-    return $pdf->inline("match_report_{$id}.pdf");
+        return $pdf->inline("match_report_{$id}.pdf");
 
 
         // return $pdf->download('rapport-' . $rapport->id . '.pdf');
