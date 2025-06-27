@@ -110,6 +110,7 @@ class Matche extends Model
     {
         return $this->belongsTo(Saison::class, 'saison_id');
     }
+    
 
     public function categories()
     {
