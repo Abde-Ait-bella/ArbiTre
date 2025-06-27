@@ -7,9 +7,10 @@ import { Header } from "./AddRapport/HeaderRapport";
 import { axiosClinet } from "../../Api/axios";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { FontFamilyIcon, PaddingIcon } from "@radix-ui/react-icons";
 
 function DetailleRapport() {
+  // Ajouter un nouvel état pour le chargement du PDF
+  const [isPdfLoading, setIsPdfLoading] = useState(false);
   const [rapports, setRapports] = useState();
   const [arbitre, setArbitre] = useState();
   const [club, setClub] = useState();
@@ -66,14 +67,20 @@ function DetailleRapport() {
   const componentRef = useRef();
 
   const handlePrint = () => {
+    // Activer l'indicateur de chargement
+    setIsPdfLoading(true);
+
     axiosClinet
       .get(`reports/match/${id}`, {
-        responseType: 'blob', // Crucial pour les données binaires
+        responseType: 'blob',
         headers: {
           'Accept': 'application/pdf'
         }
       })
       .then((response) => {
+        // Désactiver l'indicateur de chargement
+        setIsPdfLoading(false);
+
         // Vérifier que la réponse contient des données
         if (response.data.size === 0) {
           console.error("Le PDF reçu est vide");
@@ -83,14 +90,16 @@ function DetailleRapport() {
         // Créer un URL pour le blob
         const blob = new Blob([response.data], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
-        
-        // Ouvrir le PDF dans un nouvel onglet (méthode recommandée)
+
+        // Ouvrir le PDF dans un nouvel onglet
         window.open(url, '_blank');
-        
+
         // Nettoyer l'URL créée après un délai
         setTimeout(() => URL.revokeObjectURL(url), 3000);
       })
       .catch((error) => {
+        // Désactiver l'indicateur de chargement en cas d'erreur
+        setIsPdfLoading(false);
         console.error("Erreur lors de la récupération du PDF:", error);
         alert("Impossible de générer le rapport PDF");
       });
@@ -338,8 +347,15 @@ function DetailleRapport() {
               <button
                 className="p-2 pb-1 btn_print pe-3 ps-3"
                 onClick={handlePrint}
+                disabled={isPdfLoading} // Désactiver le bouton pendant le chargement
               >
-                <i class="fa-print fa-solid"></i>
+                {isPdfLoading ? (
+                  <span>
+                    <i className="fa-solid fa-spinner fa-spin"></i>
+                  </span>
+                ) : (
+                  <i className="fa-print fa-solid"></i>
+                )}
               </button>
               <Header />
               <div className="rapport-title">
