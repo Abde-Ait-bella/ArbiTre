@@ -58,7 +58,6 @@ export function Matche(props) {
                 const centre = transformedOption.filter(item => item.type === 'centre')
                 const assistant = transformedOption.filter(item => item.type === 'assistant')
 
-
                 const arbireAssistant_1 = assistant.map(item => ({
                     value: item.value,
                     label: item.label,
@@ -234,7 +233,7 @@ export function Matche(props) {
                 const matcheUser = res.data?.filter((c) => parseInt(c.user_id) === user?.id)
                 const dernierId = Math.max(...matcheUser.map(match => match.id), 0);
                 setMatcheUpdate({ ...matcheUser?.find((m) => m.id === parseInt(id)) });
-            
+                
                 setState(prevData => ({
                     ...prevData,
                     dernierIdMatche: dernierId + 1,
@@ -248,6 +247,8 @@ export function Matche(props) {
             
         }, [])
 
+        club_1_Option_update(matcheUpdate?.club_id_1);
+        club_2_Option_update(matcheUpdate?.club_id_2);
 
     const handleInputChange = (event) => {
 
@@ -334,7 +335,7 @@ export function Matche(props) {
             {
                 loading ?
                     <>
-                        <div className='d-none d-lg-block'>
+                        <div className='mb-4 d-none d-lg-block'>
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
                                 <div className="row mx-2 mt-4">
                                     <div className="col-3">

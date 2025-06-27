@@ -1360,7 +1360,7 @@ function DetailleRapport() {
                 </div>
                 <div>
                   <label>
-                    <p className="mt-3 text-dark fs-5 ligne">
+                    <p className="mt-3 text-dark fs-6 ligne">
                       {rapports?.rapport_supp}
                     </p>
                   </label>

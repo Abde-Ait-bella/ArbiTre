@@ -77,7 +77,7 @@ function Matches() {
                                     <th scope="col" className="text-center">الفئة</th>
                                     <th scope="col" className="text-center">النتيجة</th>
                                     <th scope="col" className="text-center">المدينة</th>
-                                    <th scope="col" className="text-center col-2">ت / و.ر.ق التقرير / ح</th>
+                                    <th scope="col" className="text-center col-2">الإجراءات</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -118,13 +118,13 @@ function Matches() {
                                                 <td>{categories?.find(c => c.id === parseInt(m.categorie_id))?.nom}</td>
                                                 <td>{m.result_club_1}-{m.result_club_2}</td>
                                                 <td>{villes?.find(ville => ville.id === parseInt(m.ville_id))?.nom}</td>
-                                                <td><Link to={`/dashboard/updateMatche/${m.id}`}><i class="fa-solid fa-wrench pt-2 me-lg-2 me-3"></i></Link> <Link to={`/dashboard/detailleRapport/${m.id}`} class="btn btn-sm btn-warning me-2 pt-2 px-2">التفاصيل</Link>
+                                                <td><Link to={`/dashboard/updateMatche/${m.id}`}><i class="fa-solid fa-wrench pt-2 me-lg-2 me-3"></i></Link> <Link to={`/dashboard/detailleRapport/${m.id}`} class="btn btn-sm btn-warning me-1 pt-2 px-2">التفاصيل</Link>
                                                     <Link onClick={() => handleDelete(m.id)} >
                                                         {
                                                             loadingDelete & idRapport === m.id ? (
-                                                                <div className="spinner-border spinner-border-sm me-3 mb-1 fs-2 mt-lg-0 mt-2" role="status">
+                                                                <div className="spinner-border spinner-border-sm me-2 mb-1 fs-2 mt-lg-0 mt-2" role="status">
                                                                     <span className="sr-only">Loading...</span>
-                                                                </div>) : <i className="fa-solid fa-trash me-3 mt-lg-0 mt-2"></i>
+                                                                </div>) : <i className="fa-solid fa-trash me-2 mt-lg-0 mt-2"></i>
                                                         }
                                                     </Link>
                                                 </td>

@@ -48,7 +48,15 @@ export function Avert(props) {
                     name: "joueur_numero_licence"
                 }))
 
-                const dataClubs = clubResponse.data?.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null && (c.id === parseInt(club_1_update) || c.id === parseInt(club_2_update)));
+                const club1 = parseInt(club_1_update);
+                const club2 = parseInt(club_2_update);
+                const hasClubs = !!club1 || !!club2;
+
+                const dataClubs = clubResponse.data?.filter((c) => {
+                    const isMine = parseInt(c.user_id) === user?.id || c.user_id === null;
+                    return isMine && (!hasClubs || c.id === club1 || c.id === club2);
+                });
+
                 const optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + item.abbr,
@@ -63,8 +71,6 @@ export function Avert(props) {
                     joueurs: optionJoueurs,
                     joueursLicence: optionJoueursLicence,
                 }))
-                setOptionsJ(optionJoueurs)
-                setOptionsLicence(optionJoueursLicence)
                 setLoading(false)
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -84,15 +90,34 @@ export function Avert(props) {
     });
 
     const [isLoadingJ, setIsLoadingJ] = useState(false);
-    const [optionsJ, setOptionsJ] = useState();
 
     const handleCreate = (inputValue) => {
+        if (currentEditingIndex === null) return;
+
         setIsLoadingJ(true);
-        setTimeout(() => {
-            const newOption = createOptionJ(inputValue);
-            setIsLoadingJ(false);
-            setOptionsJ((prev) => [...prev, newOption]);
-        }, 1000);
+
+        // Créer la nouvelle option
+        const newOption = createOptionJ(inputValue);
+
+        // IMPORTANT: Vérifier si l'option existe déjà avant de l'ajouter
+        const optionExists = state.joueurs.some(
+            option => option.value === newOption.value
+        );
+
+        if (!optionExists) {
+            // Mettre à jour state.joueurs uniquement si l'option n'existe pas
+            setState(prevState => ({
+                ...prevState,
+                joueurs: [...prevState.joueurs, newOption]
+            }));
+        }
+
+        // Mettre à jour l'avertissement avec le nouveau nom
+        const newAverts = [...avertUpdate];
+        newAverts[currentEditingIndex].nom = newOption.value;
+        setAvertUpdate(newAverts);
+
+        setIsLoadingJ(false);
     };
 
     const handleAvertSelectChangeJ = (event, index) => {
@@ -117,17 +142,35 @@ export function Avert(props) {
     });
 
 
-    const [isLoadingLicence, setIsLoadingLicence] = useState(false);
-    const [optionsLicence, setOptionsLicence] = useState();
+    const [isLoadingLicence, setIsLoadingLicence] = useState();
 
 
     const handleCreateLicence = (inputValue) => {
+        if (currentEditingIndex === null) return;
+
         setIsLoadingLicence(true);
-        setTimeout(() => {
-            const newOption = createOptionLicence(inputValue);
-            setIsLoadingLicence(false);
-            setOptionsLicence((prev) => [...prev, newOption]);
-        }, 1000);
+
+        const newOption = createOptionLicence(inputValue);
+
+        // Vérifier si l'option existe déjà
+        const optionExists = state.joueursLicence.some(
+            option => option.value === newOption.value
+        );
+
+        if (!optionExists) {
+            // Mettre à jour uniquement si l'option n'existe pas déjà
+            setState(prevState => ({
+                ...prevState,
+                joueursLicence: [...prevState.joueursLicence, newOption]
+            }));
+        }
+
+        // Mettre à jour l'avertissement avec la nouvelle licence
+        const newAverts = [...avertUpdate];
+        newAverts[currentEditingIndex].joueur_numero_licence = newOption.value;
+        setAvertUpdate(newAverts);
+
+        setIsLoadingLicence(false);
     };
 
     const handleAvertSelectChangeLicence = (event, index) => {
@@ -185,7 +228,7 @@ export function Avert(props) {
         if (numberOfAttributes === 8 || numberOfAttributes === 12 || numberOfAttributes == null) {
             setAvertUpdate([...avertUpdate, {}])
             setError("")
-        }else {
+        } else {
             setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
 
@@ -214,97 +257,34 @@ export function Avert(props) {
         }
     };
 
+    // 1. Ajoutez un state pour suivre l'index actuel de l'avertissement en cours d'édition
+    const [currentEditingIndex, setCurrentEditingIndex] = useState(null);
+
+    // 3. Ajoutez un gestionnaire pour suivre quel champ est en cours d'édition
+    const handleFocusField = (index) => {
+        setCurrentEditingIndex(index);
+    };
+
+    // Ajouter cet état pour contrôler l'ouverture/fermeture 
+    const [isOpen, setIsOpen] = useState(false); // Par défaut ouvert
+
+    // Ajouter cette fonction pour basculer l'état
+    const toggleOpen = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
         <>
             {
                 loading ?
                     <>
-                        <div className='mt-4 mb-3 d-none d-lg-block'>
+                        <div className='mb-4 d-none d-lg-block'>
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
                                 <div className="row">
                                     <Skeleton height={40} />
                                 </div>
-
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-4">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-1 d-flex align-items-center justify-content-center p-0">
-                                        <div className="mt-2">
-                                            <Skeleton height={20} width={20} circle={true} />
-                                        </div>
-                                    </div>
-                                    <div className="col-1 d-flex align-items-center justify-content-center p-0">
-                                        <div className="mt-2">
-                                            <Skeleton height={20} width={20} circle={true} />
-                                        </div>
-                                    </div>
-                                    <div className="col-4">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-2">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-7">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-2">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </SkeletonTheme>
-                        </div>
-
-                        <div className='mb-3 d-lg-none'>
-                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-5 mx-1">
-                                    <Skeleton height={40} />
-                                </div>
-
-                                <div className="row mt-3 mx-2">
-                                    <div className="col-12">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-6 d-flex align-items-center justify-content-center p-0 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={20} width={20} circle={true} />
-                                        </div>
-                                    </div>
-                                    <div className="col-6 d-flex align-items-center justify-content-center p-0 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={20} width={20} circle={true} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
+                                <div className="row mt-1">
+                                    <Skeleton height={30} />
                                 </div>
                             </SkeletonTheme>
                         </div>
@@ -313,10 +293,21 @@ export function Avert(props) {
                     <div className="row my-2 avert-update">
                         <div className="col-md-12">
                             <div class=" card text-center bg-light text-white mx-1">
-                                <div class="card-header bg-secondary fw-bold">
-                                    العقوبــات الانضباطيـة
+                                <div class="card-header bg-secondary fw-bold d-flex justify-content-between align-items-center"
+                                    onClick={toggleOpen}
+                                    style={{ cursor: 'pointer' }}>
+                                    <span>العقوبــات الانضباطيـة</span>
+                                    <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                                 </div>
-                                <div class="card-body">
+                                <div
+                                    className="card-body overflow-hidden transition-max-height"
+                                    style={{
+                                        maxHeight: isOpen ? '5000px' : '0',
+                                        opacity: isOpen ? 1 : 0,
+                                        transform: isOpen ? 'translateY(0)' : 'translateY(-20px)',
+                                        transformOrigin: 'top',
+                                    }}
+                                >
                                     {avertUpdate == [] ?
                                         (<h2>لاشيء</h2>)
                                         :
@@ -373,9 +364,10 @@ export function Avert(props) {
                                                                     isLoading={isLoadingJ}
                                                                     onChange={(event) => handleAvertSelectChangeJ(event, index)}
                                                                     onCreateOption={handleCreate}
-                                                                    options={optionsJ}
+                                                                    options={state.joueurs}
                                                                     value={state?.joueurs.find((j) => (j.value === item?.nom))}
                                                                     placeholder="أكتب او اختر"
+                                                                    onFocus={() => handleFocusField(index)} // Ajout de l'événement onFocus
                                                                 />
                                                             </div>
                                                         </div>
@@ -394,9 +386,10 @@ export function Avert(props) {
                                                                     isLoading={isLoadingLicence}
                                                                     onChange={(event) => handleAvertSelectChangeLicence(event, index)}
                                                                     onCreateOption={handleCreateLicence}
-                                                                    options={optionsLicence}
+                                                                    options={state.joueursLicence}
                                                                     value={state?.joueursLicence.find((j) => j.value === item?.joueur_numero_licence)}
                                                                     placeholder='أكتب واختر'
+                                                                    onFocus={() => handleFocusField(index)} // Ajout de l'événement onFocus manquant
                                                                 />
                                                             </div>
                                                         </div>
@@ -413,7 +406,7 @@ export function Avert(props) {
                                                             </div>
                                                         </div>
                                                         <div className='mt-2'>
-                                                            <button className='btn btn-danger moin rounded-pill' onClick={() => SuppRow(index)}><i class="fa-solid fa-xmark mt-1 px-3"></i></button>
+                                                            <button className='btn btn-danger moin rounded-pill' onClick={() => SuppRow(index)}><i class="fa-solid fa-xmark px-3 ms-1"></i></button>
                                                         </div>
                                                     </div>
                                                 )}
@@ -422,7 +415,7 @@ export function Avert(props) {
                                     }
                                     <div className='d-flex justify-content-center mt-3'>
                                         <div>
-                                            <button className='btn btn-warning rounded-pill' onClick={addRow}><i class="fa-solid fa-plus mt-1 px-4"></i></button>
+                                            <button className='btn btn-warning rounded-pill' onClick={addRow}><i class="fa-solid fa-plus px-4"></i></button>
                                         </div>
                                     </div>
                                     <div className='mt-3'>

@@ -376,186 +376,183 @@ export function Matche(props) {
             {
                 loading ?
                     <>
-                        <div className="d-none d-lg-break">
-                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-3">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-3">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-3">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-3">
-                                        <Skeleton height={40} />
-                                    </div>
-                                </div>
-
-                                <div className="row mt-4">
-                                    <Skeleton height={40} />
-                                </div>
-
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-3">
-                                        <Skeleton height={40} />
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-3">
-                                        <Skeleton height={40} />
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-3">
-                                        <Skeleton height={40} />
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-3">
-                                        <Skeleton height={40} />
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="row mt-4">
-                                    <div className="col-6">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-6">
-                                        <Skeleton height={40} />
-                                    </div>
-                                </div>
-
-
-                                <div className="row mt-4 mx-1">
-                                    <div className="col-3">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-3 ">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-3">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-3">
-                                        <Skeleton height={40} />
-                                    </div>
-                                </div>
-
-                                <div className="row mt-4">
-                                    <div className="col-4">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-4">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-4">
-                                        <Skeleton height={40} />
-                                    </div>
-                                </div>
-                                <div className="row mt-4">
-                                    <Skeleton height={40} />
-                                </div>
-
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-4">
-                                        <div>
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-4">
-                                        <div>
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-4">
-                                        <div>
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-
-                                    <div className="col-6">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-6">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="row mt-4">
-                                    <Skeleton height={40} />
-                                </div>
-
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-12 ">
-                                        <div>
-                                            <Skeleton height={85} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </SkeletonTheme>
-                        </div>
-
-                        <div className="d-lg-none">
-                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-12 mt-3">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-12 mt-4">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-12 mt-4">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-12 mt-4">
-                                        <Skeleton height={40} />
-                                    </div>
-                                </div>
-
-                                <div className="row mt-4 mx-1">
-                                    <Skeleton height={40} />
-                                </div>
-
-                                <div className="row mt-4 mx-2">
-                                    {/* <div className="col-12 mt-3">
-                                        <Skeleton height={40} />
-                                    </div> */}
-                                    <div className="col-12 mt-4">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-12 mt-4">
-                                        <Skeleton height={40} />
-                                    </div>
-                                    <div className="col-12 mt-4">
-                                        <Skeleton height={40} />
-                                    </div>
-                                </div>
-
-                                <div className="row mt-4 mx-1">
-                                    <Skeleton height={40} />
-                                </div>
-
-                                <div className="row mt-4 mx-2 pb-2">
-                                    <div className="col-12 ">
-                                        <div>
-                                            <Skeleton height={85} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </SkeletonTheme>
-                        </div>
+                             <div className='mb-4 d-none d-lg-block'>
+                                                   <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                                                       <div className="row mx-2 mt-4">
+                                                           <div className="col-3">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-3">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-3">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-3">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                       </div>
+                       
+                                                       <div className="row mt-4">
+                                                           <Skeleton height={40} />
+                                                       </div>
+                       
+                                                       <div className="row mt-4 mx-2">
+                                                           <div className="col-3">
+                                                               <Skeleton height={40} />
+                                                               <div className="mt-2">
+                                                                   <Skeleton height={40} />
+                                                               </div>
+                                                           </div>
+                                                           <div className="col-3">
+                                                               <Skeleton height={40} />
+                                                               <div className="mt-2">
+                                                                   <Skeleton height={40} />
+                                                               </div>
+                                                           </div>
+                                                           <div className="col-3">
+                                                               <Skeleton height={40} />
+                                                               <div className="mt-2">
+                                                                   <Skeleton height={40} />
+                                                               </div>
+                                                           </div>
+                                                           <div className="col-3">
+                                                               <Skeleton height={40} />
+                                                               <div className="mt-2">
+                                                                   <Skeleton height={40} />
+                                                               </div>
+                                                           </div>
+                                                       </div>
+                       
+                                                       <div className="row mt-4">
+                                                           <div className="col-6">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-6">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                       </div>
+                       
+                       
+                                                       <div className="row mt-4 mx-1">
+                                                           <div className="col-3">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-3 ">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-3">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-3">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                       </div>
+                       
+                                                       <div className="row mt-4">
+                                                           <div className="col-4">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-4">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-4">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                       </div>
+                                                       <div className="row mt-4">
+                                                           <Skeleton height={40} />
+                                                       </div>
+                       
+                                                       <div className="row mt-4 mx-2">
+                                                           <div className="col-4">
+                                                               <div>
+                                                                   <Skeleton height={40} />
+                                                               </div>
+                                                           </div>
+                                                           <div className="col-4">
+                                                               <div>
+                                                                   <Skeleton height={40} />
+                                                               </div>
+                                                           </div>
+                                                           <div className="col-4">
+                                                               <div>
+                                                                   <Skeleton height={40} />
+                                                               </div>
+                                                           </div>
+                       
+                                                           <div className="col-6">
+                                                               <div className="mt-2">
+                                                                   <Skeleton height={40} />
+                                                               </div>
+                                                           </div>
+                                                           <div className="col-6">
+                                                               <div className="mt-2">
+                                                                   <Skeleton height={40} />
+                                                               </div>
+                                                           </div>
+                                                       </div>
+                       
+                                                       <div className="row mt-4">
+                                                           <Skeleton height={40} />
+                                                       </div>
+                       
+                                                       <div className="row mt-4 mx-2">
+                                                           <div className="col-12 ">
+                                                               <div>
+                                                                   <Skeleton height={85} />
+                                                               </div>
+                                                           </div>
+                                                       </div>
+                                                   </SkeletonTheme>
+                                               </div>
+                       
+                                               <div className="d-lg-none">
+                                                   <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                                                       <div className="row mt-4 mx-2">
+                                                           <div className="col-12 mt-3">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-12 mt-4">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-12 mt-4">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-12 mt-4">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                       </div>
+                       
+                                                       <div className="row mt-4 mx-1">
+                                                           <Skeleton height={40} />
+                                                       </div>
+                       
+                                                       <div className="row mt-4 mx-2">
+                                                           <div className="col-12 mt-4">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-12 mt-4">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                           <div className="col-12 mt-4">
+                                                               <Skeleton height={40} />
+                                                           </div>
+                                                       </div>
+                       
+                                                       <div className="row mt-4 mx-1">
+                                                           <Skeleton height={40} />
+                                                       </div>
+                       
+                                                       <div className="row mt-4 mx-2 pb-2">
+                                                           <div className="col-12 ">
+                                                               <div>
+                                                                   <Skeleton height={85} />
+                                                               </div>
+                                                           </div>
+                                                       </div>
+                                                   </SkeletonTheme>
+                                               </div>
                     </>
                     :
                     <div >

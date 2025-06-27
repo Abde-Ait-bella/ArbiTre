@@ -97,7 +97,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 1rem;
             margin-bottom: 15px;
             color: #000;
         }
