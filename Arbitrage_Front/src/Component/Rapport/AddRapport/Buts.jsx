@@ -86,12 +86,22 @@ export function Buts(props) {
     const [optionsJ, setOptionsJ] = useState();
 
     const handleCreateJ = (inputValue) => {
+        if (currentEditingIndex === null) return;
+        
         setIsLoadingJ(true);
-        setTimeout(() => {
-            const newOption = createOptionJ(inputValue);
-            setIsLoadingJ(false);
-            setOptionsJ((prev) => [...prev, newOption]);
-        }, 1000);
+        
+        // Créer la nouvelle option
+        const newOption = createOptionJ(inputValue);
+        
+        // Ajouter l'option sans vérification - permet les doublons
+        setOptionsJ((prev) => [...prev, newOption]);
+        
+        // Mettre à jour le but avec le nouveau nom
+        const newButs = [...buts];
+        newButs[currentEditingIndex].joueur_nom = newOption.value;
+        setButs(newButs);
+        
+        setIsLoadingJ(false);
     };
 
     const handleChangeSelectJ = (event, index) => {
@@ -131,12 +141,22 @@ export function Buts(props) {
 
 
     const handleCreateLicence = (inputValue) => {
+        if (currentEditingIndex === null) return;
+        
         setIsLoadingLicence(true);
-        setTimeout(() => {
-            const newOption = createOptionLicence(inputValue);
-            setIsLoadingLicence(false);
-            setOptionsLicence((prev) => [...prev, newOption]);
-        }, 1000);
+        
+        // Créer la nouvelle option
+        const newOption = createOptionLicence(inputValue);
+        
+        // Ajouter l'option sans vérification - permet les doublons
+        setOptionsLicence((prev) => [...prev, newOption]);
+        
+        // Mettre à jour le but avec la nouvelle licence
+        const newButs = [...buts];
+        newButs[currentEditingIndex].joueur_numero_licence = newOption.value;
+        setButs(newButs);
+        
+        setIsLoadingLicence(false);
     };
 
     const handleChangeSelectLicence = (event, index) => {
@@ -221,6 +241,12 @@ export function Buts(props) {
         setIsOpen(!isOpen);
     };
 
+    const [currentEditingIndex, setCurrentEditingIndex] = useState(null);
+
+    const handleFocusField = (index) => {
+        setCurrentEditingIndex(index);
+    };
+
     return (
         <>
             {
@@ -275,7 +301,9 @@ export function Buts(props) {
                                                         onChange={(event) => handleChangeSelectJ(event, index)}
                                                         onCreateOption={handleCreateJ}
                                                         options={optionsJ}
+                                                        value={buts[index]?.joueur_nom ? optionsJ?.find((j) => j.value === buts[index]?.joueur_nom) : null}
                                                         placeholder="أكتب و اختر"
+                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>
@@ -289,8 +317,9 @@ export function Buts(props) {
                                                         onChange={(event) => handleChangeSelectLicence(event, index)}
                                                         onCreateOption={handleCreateLicence}
                                                         options={optionsLicence}
-                                                        value={valueLicence}
+                                                        value={buts[index]?.joueur_numero_licence ? optionsLicence?.find((l) => l.value === buts[index]?.joueur_numero_licence) : null}
                                                         placeholder='أكتب و اختر'
+                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>

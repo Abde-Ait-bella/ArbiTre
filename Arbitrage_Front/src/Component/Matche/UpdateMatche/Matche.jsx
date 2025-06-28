@@ -1,6 +1,5 @@
-import { React, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import CreatableSelect from 'react-select/creatable';
 import { useParams } from 'react-router-dom';
 import { axiosClinet } from '../../../Api/axios';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
@@ -233,7 +232,7 @@ export function Matche(props) {
                 const matcheUser = res.data?.filter((c) => parseInt(c.user_id) === user?.id)
                 const dernierId = Math.max(...matcheUser.map(match => match.id), 0);
                 setMatcheUpdate({ ...matcheUser?.find((m) => m.id === parseInt(id)) });
-                
+
                 setState(prevData => ({
                     ...prevData,
                     dernierIdMatche: dernierId + 1,
@@ -244,11 +243,11 @@ export function Matche(props) {
             .catch((error) => {
                 console.error("Une erreur s'est produite lors de la récupération des données de Matches : " + error);
             })
-            
-        }, [])
 
-        club_1_Option_update(matcheUpdate?.club_id_1);
-        club_2_Option_update(matcheUpdate?.club_id_2);
+    }, [])
+
+    club_1_Option_update(matcheUpdate?.club_id_1);
+    club_2_Option_update(matcheUpdate?.club_id_2);
 
     const handleInputChange = (event) => {
 
@@ -270,7 +269,7 @@ export function Matche(props) {
             stadeClub_1 = state.stades.find((s) => stadeClub_1?.id === parseInt(s.value))
         } else if (event?.name === "stade_id") {
             stadeClub_1 = event
-        }else if (event?.name === "club_id_2") {
+        } else if (event?.name === "club_id_2") {
             club_2_Option_update(value)
         }
         var villeStade = state?.villes?.find((v) => parseInt(v.value) === parseInt(stadeClub_1?.ville?.id))
@@ -278,35 +277,35 @@ export function Matche(props) {
         var arbitreVille_4 = event?.name === "arbitre_4_id" ? event.ville : matcheUpdate.arbitre_4_ville
         if (event?.name === "arbitre_4_id") {
             arbitreVille_4 = state.villes.find((v) => arbitreVille_4?.id === v.value)
-        }else if(event?.name === "arbitre_4_ville"){
+        } else if (event?.name === "arbitre_4_ville") {
             arbitreVille_4 = event
         }
 
         var villeAssistant_1 = event?.name === "arbitre_a1_id" ? event.ville : matcheUpdate.assistant_1_ville
         if (event?.name === "arbitre_a1_id") {
             villeAssistant_1 = state.villes.find((v) => villeAssistant_1?.id === v.value)
-        }else if(event?.name === "assistant_1_ville"){
+        } else if (event?.name === "assistant_1_ville") {
             villeAssistant_1 = event
         }
 
         var villeAssistant_2 = event?.name === "arbitre_a2_id" ? event.ville : matcheUpdate.assistant_2_ville
         if (event?.name === "arbitre_a2_id") {
             villeAssistant_2 = state.villes.find((v) => villeAssistant_2?.id === v.value)
-        }else if(event?.name === "assistant_2_ville"){
+        } else if (event?.name === "assistant_2_ville") {
             villeAssistant_2 = event
         }
 
         var villeDelegue = event?.name === "delegue_id" ? event.ville : matcheUpdate.delegue_ville
         if (event?.name === "delegue_id") {
             villeDelegue = state.villes.find((v) => villeDelegue?.id === v.value)
-        }else if(event?.name === "delegue_ville"){
+        } else if (event?.name === "delegue_ville") {
             villeDelegue = event
         }
 
         var villeCentre = event?.name === "arbitre_c_id" ? event.ville : matcheUpdate.centre_ville
         if (event?.name === "arbitre_c_id") {
             villeCentre = state.villes.find((v) => villeCentre?.id === v.value)
-        }else if(event?.name === "centre_ville"){
+        } else if (event?.name === "centre_ville") {
             villeCentre = event
         }
 
@@ -314,12 +313,12 @@ export function Matche(props) {
         newObject[name] = value;
         newObject.stade_id = stadeClub_1?.value ? stadeClub_1?.value : stadeClub_1;
         newObject.ville_id = villeStade?.value ? villeStade?.value : villeStade;
-        newObject.centre_ville  = villeCentre?.value ? villeCentre?.value : villeCentre,
-        newObject.assistant_1_ville = villeAssistant_1?.value ? villeAssistant_1?.value : villeAssistant_1,
-        newObject.assistant_2_ville = villeAssistant_2?.value ? villeAssistant_2?.value : villeAssistant_2,
-        newObject.arbitre_4_ville = arbitreVille_4?.value ? arbitreVille_4?.value : arbitreVille_4,
-        newObject.delegue_ville = villeDelegue?.value ? villeDelegue?.value : villeDelegue,
-        setMatcheUpdate(newObject);
+        newObject.centre_ville = villeCentre?.value ? villeCentre?.value : villeCentre,
+            newObject.assistant_1_ville = villeAssistant_1?.value ? villeAssistant_1?.value : villeAssistant_1,
+            newObject.assistant_2_ville = villeAssistant_2?.value ? villeAssistant_2?.value : villeAssistant_2,
+            newObject.arbitre_4_ville = arbitreVille_4?.value ? arbitreVille_4?.value : arbitreVille_4,
+            newObject.delegue_ville = villeDelegue?.value ? villeDelegue?.value : villeDelegue,
+            setMatcheUpdate(newObject);
 
     };
 
@@ -513,14 +512,16 @@ export function Matche(props) {
                             </SkeletonTheme>
                         </div>
                     </>
-
                     :
                     <div className='matche-update'>
                         <div className="row my-2 mx-2">
                             <div className="form-group col-md-3">
                                 <label className='text-white' htmlFor="inputEmail4">الموسم الرياضي</label>
                                 <div className='my-2'>
-                                    <Select isClearable className='text-light' value={state.saison?.find((s) => s.value === parseInt(matcheUpdate?.saison_id))} onChange={handleSelectChange} options={state.saison} placeholder="أكتب..." />
+                                    <Select isClearable className='text-light text-center' value={state.saison?.find((s) => s.value === parseInt(matcheUpdate?.saison_id))} onChange={handleSelectChange} options={state.saison} placeholder="أكتب..."
+                                        menuPortalTarget={document.body}
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                    />
                                 </div>
                             </div>
                             <div className="form-group col-md-3">
@@ -530,13 +531,19 @@ export function Matche(props) {
                             <div className="form-group col-md-3">
                                 <label className='text-white' htmlFor="inputPassword4">المنافسة</label>
                                 <div className='my-2'>
-                                    <Select isClearable className='text-light' value={state.competition?.find((c) => parseInt(c.value) === parseInt(matcheUpdate?.competition_id))} onChange={handleSelectChange} options={state.competition} placeholder="أكتب..." />
+                                    <Select isClearable className='text-light' value={state.competition?.find((c) => parseInt(c.value) === parseInt(matcheUpdate?.competition_id))} onChange={handleSelectChange} options={state.competition} placeholder="أكتب..."
+                                        menuPortalTarget={document.body}
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                    />
                                 </div>
                             </div>
                             <div className="form-group col-md-3 text-white">
                                 <label htmlFor="inputEmail4">الفئة</label>
                                 <div className='my-2'>
-                                    <Select className='text-light' value={state.category?.find((c) => c.value === parseInt(matcheUpdate?.categorie_id))} isClearable onChange={handleSelectChange} options={state.category} placeholder="أكتب..." />
+                                    <Select className='text-light' value={state.category?.find((c) => c.value === parseInt(matcheUpdate?.categorie_id))} isClearable onChange={handleSelectChange} options={state.category} placeholder="أكتب..."
+                                        menuPortalTarget={document.body}
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -551,25 +558,37 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">الحكم</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' value={state.centre?.find((c) => c.value === parseInt(matcheUpdate?.arbitre_c_id))} options={state.centre} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' value={state.centre?.find((c) => c.value === parseInt(matcheUpdate?.arbitre_c_id))} options={state.centre} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">الحكم المساعد 1</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' value={state.assistant_1?.find((c) => c.value === parseInt(matcheUpdate?.arbitre_a1_id))} options={state.assistant_1} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' value={state.assistant_1?.find((c) => c.value === parseInt(matcheUpdate?.arbitre_a1_id))} options={state.assistant_1} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">الحكم المساعد 2</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' value={state.assistant_2?.find((c) => c.value === parseInt(matcheUpdate?.arbitre_a2_id))} options={state.assistant_2} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' value={state.assistant_2?.find((c) => c.value === parseInt(matcheUpdate?.arbitre_a2_id))} options={state.assistant_2} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المراقب</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' value={state.delegue?.find((c) => c.value === parseInt(matcheUpdate?.delegue_id))} options={state.delegue} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' value={state.delegue?.find((c) => c.value === parseInt(matcheUpdate?.delegue_id))} options={state.delegue} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -577,25 +596,37 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.centre_ville))} options={state.centreVille} onChange={handleSelectChange} placeholder="..." />
+                                                    <Select className='text-light' value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.centre_ville))} options={state.centreVille} onChange={handleSelectChange} placeholder="..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.assistant_1_Ville} value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.assistant_1_ville))} onChange={handleSelectChange} placeholder="..." />
+                                                    <Select className='text-light' options={state.assistant_1_Ville} value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.assistant_1_ville))} onChange={handleSelectChange} placeholder="..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.assistant_2_Ville} value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.assistant_2_ville))} onChange={handleSelectChange} placeholder="..." />
+                                                    <Select className='text-light' options={state.assistant_2_Ville} value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.assistant_2_ville))} onChange={handleSelectChange} placeholder="..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.delegueVille} value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.delegue_ville))} onChange={handleSelectChange} placeholder="..." />
+                                                    <Select className='text-light' options={state.delegueVille} value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.delegue_ville))} onChange={handleSelectChange} placeholder="..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -603,13 +634,19 @@ export function Matche(props) {
                                             <div className="form-group col-md-3 ">
                                                 <label htmlFor="inputEmail4">الحكم الرابع</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.arbitre_4} value={state.arbitre_4?.find((c) => c.value === parseInt(matcheUpdate?.arbitre_4_id))} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' options={state.arbitre_4} value={state.arbitre_4?.find((c) => c.value === parseInt(matcheUpdate?.arbitre_4_id))} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                                    />
                                                 </div>
                                             </div>
-                                        <div className="form-group col-md-3">
+                                            <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.arbitre_4_ville} value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.arbitre_4_ville))} onChange={handleSelectChange} placeholder="..." />
+                                                    <Select className='text-light' options={state.arbitre_4_ville} value={state.villes?.find((v) => v.value === parseInt(matcheUpdate?.arbitre_4_ville))} onChange={handleSelectChange} placeholder="..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -628,13 +665,19 @@ export function Matche(props) {
                                             <div className="form-group col-md-6">
                                                 <label htmlFor="inputEmail4">الفريق المستقبل</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' value={state.clubs?.find((c) => c.value === parseInt(matcheUpdate?.club_id_1))} options={state.clubs_1} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' value={state.clubs?.find((c) => c.value === parseInt(matcheUpdate?.club_id_1))} options={state.clubs_1} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group  col-md-6">
                                                 <label htmlFor="inputEmail4">الفريق الزائر</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' value={state.clubs?.find((c) => c.value === parseInt(matcheUpdate?.club_id_2))} options={state.clubs_2} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' value={state.clubs?.find((c) => c.value === parseInt(matcheUpdate?.club_id_2))} options={state.clubs_2} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -669,13 +712,16 @@ export function Matche(props) {
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputEmail4">الملعب</label>
                                 <div className="my-2">
-                                    <Select className='text-light' value={state?.stades?.find((s) => s.value === parseInt(matcheUpdate?.stade_id))} options={state.stades} onChange={handleSelectChange} placeholder="اكتب" />
+                                    <Select className='text-light' value={state?.stades?.find((s) => s.value === parseInt(matcheUpdate?.stade_id))} options={state.stades} onChange={handleSelectChange} placeholder="اكتب"
+                                        menuPortalTarget={document.body}
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                    />
                                 </div>
                             </div>
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputEmail4">المدينة</label>
                                 <div className="my-2">
-                                    <CreatableSelect className='text-light' php isDisabled value={state?.villes?.find((s) => s.value === parseInt(matcheUpdate?.ville_id))} options={state.villes} onChange={handleSelectChange} placeholder="اكتب" />
+                                    <Select className='text-light' php isDisabled value={state?.villes?.find((s) => s.value === parseInt(matcheUpdate?.ville_id))} options={state.villes} onChange={handleSelectChange} placeholder="اكتب" />
                                 </div>
                             </div>
                         </div>

@@ -93,12 +93,26 @@ export function Avert(props) {
     const [optionsJ, setOptionsJ] = useState();
 
     const handleCreate = (inputValue) => {
+        if (currentEditingIndex === null) return;
+        
         setIsLoadingJ(true);
-        setTimeout(() => {
-            const newOption = createOptionJ(inputValue);
-            setIsLoadingJ(false);
-            setOptionsJ((prev) => [...prev, newOption]);
-        }, 1000);
+        
+        // Créer la nouvelle option
+        const newOption = createOptionJ(inputValue);
+        
+        // Ajouter l'option sans vérification - permet les doublons
+        setState(prevState => ({
+            ...prevState,
+            joueurs: [...prevState.joueurs, newOption]
+        }));
+        setOptionsJ(prevOptions => [...prevOptions, newOption]);
+        
+        // Mettre à jour l'avertissement avec le nouveau nom
+        const newAverts = [...avert];
+        newAverts[currentEditingIndex].nom = newOption.value;
+        setAvert(newAverts);
+        
+        setIsLoadingJ(false);
     };
 
     const handleAvertSelectChangeJ = (event, index) => {
@@ -136,12 +150,22 @@ export function Avert(props) {
 
 
     const handleCreateLicence = (inputValue) => {
+        if (currentEditingIndex === null) return;
+        
         setIsLoadingLicence(true);
-        setTimeout(() => {
-            const newOption = createOptionLicence(inputValue);
-            setIsLoadingLicence(false);
-            setOptionsLicence((prev) => [...prev, newOption]);
-        }, 1000);
+        
+        // Créer la nouvelle option
+        const newOption = createOptionLicence(inputValue);
+        
+        // Ajouter l'option sans vérification - permet les doublons
+        setOptionsLicence(prevOptions => [...prevOptions, newOption]);
+        
+        // Mettre à jour l'avertissement avec la nouvelle licence
+        const newAverts = [...avert];
+        newAverts[currentEditingIndex].joueur_numero_licence = newOption.value;
+        setAvert(newAverts);
+        
+        setIsLoadingLicence(false);
     };
 
     const handleAvertSelectChangeLicence = (event, index) => {
@@ -197,7 +221,7 @@ export function Avert(props) {
         avert.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 8 || numberOfAttributes == null) {
+        if (numberOfAttributes <= 8 || numberOfAttributes == null) {
             setAvert([...avert, {}])
             setError("")
         } else {
@@ -219,7 +243,7 @@ export function Avert(props) {
         avert.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 8) {
+        if (numberOfAttributes <= 8) {
             setError("")
             props.dataAvert(avert);
             setIsValide(prev => !prev);
@@ -232,6 +256,12 @@ export function Avert(props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = () => {
         setIsOpen(!isOpen);
+    };
+
+    const [currentEditingIndex, setCurrentEditingIndex] = useState(null);
+
+    const handleFocusField = (index) => {
+        setCurrentEditingIndex(index);
     };
 
     return (
@@ -306,8 +336,9 @@ export function Avert(props) {
                                                         onChange={(event) => handleAvertSelectChangeJ(event, index)}
                                                         onCreateOption={handleCreate}
                                                         options={optionsJ}
-                                                        value={avert[index]?.nom ? optionsJ?.find((j) => j.nom === avert[index]?.nom) : ""}
+                                                        value={avert[index]?.nom ? optionsJ?.find((j) => j.value === avert[index]?.nom) : ""}
                                                         placeholder="أكتب و اختر"
+                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>
@@ -329,6 +360,7 @@ export function Avert(props) {
                                                         options={optionsLicence}
                                                         value={avert[index]?.joueur_numero_licence ? optionsLicence?.find((l) => l.value === avert[index]?.joueur_numero_licence) : ""}
                                                         placeholder='أكتب و اختر'
+                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>

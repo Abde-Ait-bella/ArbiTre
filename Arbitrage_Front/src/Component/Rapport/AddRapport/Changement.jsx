@@ -20,6 +20,12 @@ export function Changement(props) {
     const [error, setError] = useState()
     const { user, club_1, club_2 } = AuthUser();
 
+        // 1. Initialiser tous les états d'options comme des tableaux vides
+const [optionsJEntr, setOptionsJEntr] = useState([]);
+const [optionsJSort, setOptionsJSort] = useState([]);
+const [optionsLicenceE, setOptionsLicenceE] = useState([]);
+const [optionsLicenceS, setOptionsLicenceS] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -97,15 +103,32 @@ export function Changement(props) {
     });
 
     const [isLoadingJEntr, setIsLoadingJEntr] = useState(false);
-    const [optionsJEntr, setOptionsJEntr] = useState();
+
+
 
     const handleCreateJEntr = (inputValue) => {
+        if (currentEditingIndex === null) return;
+        
         setIsLoadingJEntr(true);
-        setTimeout(() => {
-            const newOption = createOptionJEntr(inputValue);
-            setIsLoadingJEntr(false);
-            setOptionsJEntr((prev) => [...prev, newOption]);
-        }, 1000);
+        
+        // Créer la nouvelle option
+        const newOption = createOptionJEntr(inputValue);
+        
+        // Important: créer la nouvelle liste d'options avant de mettre à jour l'état
+        const updatedOptions = [...optionsJEntr, newOption];
+        
+        // Mettre à jour les options disponibles
+        setOptionsJEntr(updatedOptions);
+        
+        // Mettre à jour le changement avec le nouveau nom
+        const newChanges = [...change];
+        newChanges[currentEditingIndex].joueur_nom_entr = newOption.value;
+        
+        // Stocker aussi la référence à l'option complète pour un affichage immédiat
+        newChanges[currentEditingIndex]._activeOption = newOption;
+        
+        setChange(newChanges);
+        setIsLoadingJEntr(false);
     };
 
     const handleChangeSelectJEntr = (event, index) => {
@@ -137,16 +160,25 @@ export function Changement(props) {
     });
 
     const [isLoadingJSort, setIsLoadingJSort] = useState(false);
-    const [optionsJSort, setOptionsJSort] = useState();
     const [valueJSort, setValueJSort] = useState();
 
     const handleCreateSort = (inputValue) => {
+        if (currentEditingIndex === null) return;
+        
         setIsLoadingJSort(true);
-        setTimeout(() => {
-            const newOption = createOptionJSort(inputValue);
-            setIsLoadingJSort(false);
-            setOptionsJSort((prev) => [...prev, newOption]);
-        }, 1000);
+        
+        // Créer la nouvelle option
+        const newOption = createOptionJSort(inputValue);
+        
+        // Ajouter l'option aux joueurs disponibles
+        setOptionsJSort(prevOptions => [...prevOptions, newOption]);
+        
+        // Mettre à jour immédiatement le changement avec le nouveau nom
+        const newChanges = [...change];
+        newChanges[currentEditingIndex].joueur_nom_sort = newOption.value;
+        setChange(newChanges);
+        
+        setIsLoadingJSort(false);
     };
 
     const handleChangeSelectJSort = (event, index) => {
@@ -174,23 +206,32 @@ export function Changement(props) {
     //-----Sélection licence de joueur entrant
 
     const createOptionLicenceE = (label) => ({
-        label: label.toUpperCase(),
+        label: label.toUpperCase(), // Assurer que tous les labels sont en majuscules
         value: label.toLowerCase().replace(/\W/g, ''),
         name: "joueur_licence_entr"
     });
 
 
     const [isLoadingLicenceE, setIsLoadingLicenceE] = useState(false);
-    const [optionsLicenceE, setOptionsLicenceE] = useState();
 
 
     const handleCreateLicenceE = (inputValue) => {
+        if (currentEditingIndex === null) return;
+        
         setIsLoadingLicenceE(true);
-        setTimeout(() => {
-            const newOption = createOptionLicenceE(inputValue);
-            setIsLoadingLicenceE(false);
-            setOptionsLicenceE((prev) => [...prev, newOption]);
-        }, 1000);
+        
+        // Créer la nouvelle option
+        const newOption = createOptionLicenceE(inputValue);
+        
+        // Ajouter l'option aux licences disponibles
+        setOptionsLicenceE(prevOptions => [...prevOptions, newOption]);
+        
+        // Mettre à jour immédiatement le changement avec la nouvelle licence
+        const newChanges = [...change];
+        newChanges[currentEditingIndex].joueur_licence_entr = newOption.value;
+        setChange(newChanges);
+        
+        setIsLoadingLicenceE(false);
     };
 
     const handleChangeSelectLicenceE = (event, index) => {
@@ -198,41 +239,45 @@ export function Changement(props) {
         if (valeur === null) {
             valeur = {
                 value: "",
-                name: "joueur_numero_licence"
+                name: "joueur_licence_entr" // Utiliser ce nom systématiquement
             }
-            const { name, value } = valeur;
-            const newChange = [...change];
-            newChange[index][name] = value;
-            setChange(newChange)
-        } else {
-            const { name, value } = valeur;
-            const newChange = [...change];
-            newChange[index][name] = value;
-            setChange(newChange)
         }
+        const { name, value } = valeur;
+        const newChange = [...change];
+        newChange[index][name] = value;
+        setChange(newChange)
     }
 
 
     //-----Sélection licence de joueur sortant
 
     const createOptionLicenceS = (label) => ({
-        label,
+        label: label.toUpperCase(), // Ajout de toUpperCase()
         value: label.toLowerCase().replace(/\W/g, ''),
         name: "joueur_licence_sort"
     });
 
 
     const [isLoadingLicenceS, setIsLoadingLicenceS] = useState(false);
-    const [optionsLicenceS, setOptionsLicenceS] = useState();
 
 
     const handleCreateLicenceS = (inputValue) => {
+        if (currentEditingIndex === null) return;
+        
         setIsLoadingLicenceS(true);
-        setTimeout(() => {
-            const newOption = createOptionLicenceS(inputValue);
-            setIsLoadingLicenceS(false);
-            setOptionsLicenceS((prev) => [...prev, newOption]);
-        }, 1000);
+        
+        // Créer la nouvelle option
+        const newOption = createOptionLicenceS(inputValue);
+        
+        // Ajouter l'option aux licences disponibles
+        setOptionsLicenceS(prevOptions => [...prevOptions, newOption]);
+        
+        // Mettre à jour immédiatement le changement avec la nouvelle licence
+        const newChanges = [...change];
+        newChanges[currentEditingIndex].joueur_licence_sort = newOption.value;
+        setChange(newChanges);
+        
+        setIsLoadingLicenceS(false);
     };
 
     const handleChangeSelectLicenceS = (event, index) => {
@@ -254,6 +299,7 @@ export function Changement(props) {
         }
     }
 
+    console.log("data", change);
 
     const handleChangeSelect = (event, index) => {
 
@@ -273,15 +319,12 @@ export function Changement(props) {
     }
 
     const addRow = () => {
-        let numberOfAttributes;
-        change.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes === 9 || numberOfAttributes == null) {
-            setChange([...change, {}])
-            setError("")
+        // Si c'est le premier élément vide ou si tous les champs nécessaires sont remplis
+        if (change.length === 1 && Object.keys(change[0]).length === 0 ||  change.every(item => Object.keys(item).length >= 9)) {
+            setChange([...change, {}]);
+            setError("");
         } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم");
         }
     };
 
@@ -298,8 +341,9 @@ export function Changement(props) {
         let numberOfAttributes;
         change.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
+            console.log("obj", numberOfAttributes);
         });
-        if (numberOfAttributes === 9) {
+        if (numberOfAttributes <= 9) {
             setError("")
             props.dataChangement(change);
             setIsValide(prev => !prev);
@@ -311,6 +355,12 @@ export function Changement(props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = () => {
         setIsOpen(!isOpen);
+    };
+
+    const [currentEditingIndex, setCurrentEditingIndex] = useState(null);
+
+    const handleFocusField = (index) => {
+        setCurrentEditingIndex(index);
     };
 
     return (
@@ -366,8 +416,14 @@ export function Changement(props) {
                                                         onChange={(event) => handleChangeSelectJEntr(event, index)}
                                                         onCreateOption={handleCreateJEntr}
                                                         options={optionsJEntr}
-                                                        value={change[index]?.joueur_nom_entr ? optionsJEntr?.find((l) => l.value === change[index]?.joueur_nom_entr) : ""}
+                                                        value={
+                                                            change[index]?._activeOption || 
+                                                            (change[index]?.joueur_nom_entr ? 
+                                                                optionsJEntr?.find((l) => l.value === change[index]?.joueur_nom_entr) : 
+                                                                null)
+                                                        }
                                                         placeholder="أكتب و اختر"
+                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>
@@ -389,6 +445,7 @@ export function Changement(props) {
                                                         options={optionsLicenceE}
                                                         value={change[index]?.joueur_licence_entr ? optionsLicenceE?.find((l) => l.value === change[index]?.joueur_licence_entr) : ""}
                                                         placeholder="أكتب و اختر"
+                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>
@@ -404,6 +461,7 @@ export function Changement(props) {
                                                         options={optionsJSort}
                                                         value={change[index]?.joueur_nom_sort ? optionsJSort?.find((l) => l.value === change[index]?.joueur_nom_sort) : ""}
                                                         placeholder="أكتب و اختر"
+                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>
@@ -419,6 +477,7 @@ export function Changement(props) {
                                                         options={optionsLicenceS}
                                                         value={change[index]?.joueur_licence_sort ? optionsLicenceS?.find((l) => l.value === change[index]?.joueur_licence_sort) : ""}
                                                         placeholder='أكتب و اختر'
+                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>

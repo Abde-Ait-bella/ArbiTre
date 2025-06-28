@@ -262,7 +262,7 @@ export function Changement(props) {
         changeUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 9 || numberOfAttributes === 12 || numberOfAttributes == null) {
+        if (numberOfAttributes <= 9 || numberOfAttributes === 12 || numberOfAttributes == null) {
             setChangeUpdate([...changeUpdate, {}])
             setError("")
         } else {

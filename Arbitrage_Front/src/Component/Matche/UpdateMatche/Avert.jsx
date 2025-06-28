@@ -225,7 +225,7 @@ export function Avert(props) {
         avertUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 8 || numberOfAttributes === 12 || numberOfAttributes == null) {
+        if (numberOfAttributes <= 8 || numberOfAttributes === 12 || numberOfAttributes == null) {
             setAvertUpdate([...avertUpdate, {}])
             setError("")
         } else {
@@ -248,7 +248,7 @@ export function Avert(props) {
         avertUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 8 || numberOfAttributes === 12) {
+        if (numberOfAttributes <= 9 || numberOfAttributes <= 13) {
             setError("")
             props.dataAvert(avertUpdate);
             setIsValide(prev => !prev);

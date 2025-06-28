@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Avert } from "./Avert";
-import { Changement } from "./Changment";
+import { Changement } from "./Changement";
 import { Matche } from "./Matche"
 import { Buts } from "./Buts";
 import { Penalty } from "./Penalty";

@@ -210,7 +210,7 @@ export function Buts(props) {
         butUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 6 || numberOfAttributes === 9 || numberOfAttributes == null) {
+        if (numberOfAttributes <= 6 || numberOfAttributes === 9 || numberOfAttributes == null) {
             setError("")
             setButUpdate([...butUpdate, {},]);
             setValueLicence()
@@ -233,7 +233,7 @@ export function Buts(props) {
         butUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 6 || numberOfAttributes === 9) {
+        if (numberOfAttributes <= 6 || numberOfAttributes === 9) {
             setError("")
             props.dataButs(butUpdate);
             setIsValide(prev => !prev)
