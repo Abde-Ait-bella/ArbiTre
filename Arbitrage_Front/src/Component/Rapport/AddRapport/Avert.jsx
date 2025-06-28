@@ -221,7 +221,7 @@ export function Avert(props) {
         avert.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes <= 8 || numberOfAttributes == null) {
+        if (numberOfAttributes === 8 || numberOfAttributes == null) {
             setAvert([...avert, {}])
             setError("")
         } else {
@@ -243,7 +243,8 @@ export function Avert(props) {
         avert.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes <= 8) {
+        console.log('numberOfAttributes', avert)
+        if (numberOfAttributes === 8) {
             setError("")
             props.dataAvert(avert);
             setIsValide(prev => !prev);

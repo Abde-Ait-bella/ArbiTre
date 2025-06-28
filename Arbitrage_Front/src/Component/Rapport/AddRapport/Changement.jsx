@@ -320,7 +320,7 @@ const [optionsLicenceS, setOptionsLicenceS] = useState([]);
 
     const addRow = () => {
         // Si c'est le premier élément vide ou si tous les champs nécessaires sont remplis
-        if (change.length === 1 && Object.keys(change[0]).length === 0 ||  change.every(item => Object.keys(item).length >= 9)) {
+        if (change.length === 1 && Object.keys(change[0]).length === 0 ||  change.every(item => Object.keys(item).length === 10)) {
             setChange([...change, {}]);
             setError("");
         } else {
@@ -341,9 +341,8 @@ const [optionsLicenceS, setOptionsLicenceS] = useState([]);
         let numberOfAttributes;
         change.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
-            console.log("obj", numberOfAttributes);
         });
-        if (numberOfAttributes <= 9) {
+        if (numberOfAttributes === 10) {
             setError("")
             props.dataChangement(change);
             setIsValide(prev => !prev);

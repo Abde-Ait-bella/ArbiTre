@@ -74,7 +74,15 @@ export function Changement(props) {
                 setOptionsJSort(optionJoueursSort);
                 setOptionsLicenceS(optionJoueursLicenceS);
 
-                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null && (parseInt(club_1_update) === c.id || parseInt(club_2_update) === c.id));
+                const club1 = parseInt(club_1_update);
+                const club2 = parseInt(club_2_update);
+                const hasClubs = !!club1 || !!club2;
+
+                const dataClubs = clubResponse.data?.filter((c) => {
+                    const isMine = parseInt(c.user_id) === user?.id || c.user_id === null;
+                    return isMine && (!hasClubs || c.id === club1 || c.id === club2);
+                });
+
                 const optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + " " + item.abbr,

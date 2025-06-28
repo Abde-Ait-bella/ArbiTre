@@ -26,14 +26,14 @@ class ChangementCotroller extends Controller
     public function store(Request $request)
     {
 
-        $user = 11;
+        $user_id = Auth::user()->id;
         $changements = $request->all();
 
         foreach ($changements as $chang) {
             Changement::create($chang);
 
             if (isset($chang['joueur_licence_entr'])) {
-                $joueur_1 = Joueur::where('joueur_numero_licence', $chang['joueur_licence_entr'])->first();
+                $joueur_1 = Joueur::where('joueur_numero_licence', $chang['joueur_licence_entr'])->where('user_id', $user_id)->first();
                 if ($joueur_1) {
                     $joueur_1->nom = $chang['joueur_nom_entr'];
                     $joueur_1->joueur_numero_licence = $chang['joueur_licence_entr'];
@@ -44,12 +44,13 @@ class ChangementCotroller extends Controller
                     $j->nom = $chang['joueur_nom_entr'];
                     $j->joueur_numero_licence = $chang['joueur_licence_entr'];
                     $j->joueur_numero = $chang['joueur_num_entr'];
-                    $j->user_id = $user;
+                    $j->user_id = $user_id;
                     $j->save();
                 }
             }
             if (isset($chang['joueur_licence_sort'])) {
-                $joueur_2 = Joueur::where('joueur_numero_licence', $chang['joueur_licence_sort'])->first();
+                $joueur_2 = Joueur::where('joueur_numero_licence', $chang['joueur_licence_sort'])
+                ->where('user_id', $user_id)->first();
                 if ($joueur_2) {
                     $joueur_2->nom = $chang['joueur_nom_sort'];
                     $joueur_2->joueur_numero_licence = $chang['joueur_licence_sort'];
@@ -60,7 +61,7 @@ class ChangementCotroller extends Controller
                     $j->nom = $chang['joueur_nom_sort'];
                     $j->joueur_numero_licence = $chang['joueur_licence_sort'];
                     $j->joueur_numero = $chang['joueur_num_sort'];
-                    $j->user_id = 11;
+                    $j->user_id = $user_id;
                     $j->save();
                 }
             }
@@ -79,7 +80,7 @@ class ChangementCotroller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = Auth::user()->id;
+        $user_id = Auth::user()->id;
         $updatedChangements = $request->all();
         $ids = collect($updatedChangements)->pluck('id');
 
@@ -109,7 +110,8 @@ class ChangementCotroller extends Controller
             }
 
             if (isset($updatedChangement['joueur_licence_entr'])) {
-                $joueur_1 = Joueur::where('joueur_numero_licence', $updatedChangement['joueur_licence_entr'])->first();
+                $joueur_1 = Joueur::where('joueur_numero_licence', $updatedChangement['joueur_licence_entr'])
+                ->where('user_id', $user_id)->first();
                 if ($joueur_1) {
                     $joueur_1->nom = $updatedChangement['joueur_nom_entr'];
                     $joueur_1->joueur_numero_licence = $updatedChangement['joueur_licence_entr'];
@@ -120,12 +122,12 @@ class ChangementCotroller extends Controller
                     $j->nom = $updatedChangement['joueur_nom_entr'];
                     $j->joueur_numero_licence = $updatedChangement['joueur_licence_entr'];
                     $j->joueur_numero = $updatedChangement['joueur_num_entr'];
-                    $j->user_id = $user;
+                    $j->user_id = $user_id;
                     $j->save();
                 }
             }
             if (isset($updatedChangement['joueur_licence_sort'])) {
-                $joueur_2 = Joueur::where('joueur_numero_licence', $updatedChangement['joueur_licence_sort'])->first();
+                $joueur_2 = Joueur::where('joueur_numero_licence', $updatedChangement['joueur_licence_sort'])->where('user_id', $user_id)->first();
 
                 if ($joueur_2) {
                     $joueur_2->nom = $updatedChangement['joueur_nom_sort'];
@@ -137,7 +139,7 @@ class ChangementCotroller extends Controller
                     $j->nom = $updatedChangement['joueur_nom_sort'];
                     $j->joueur_numero_licence = $updatedChangement['joueur_licence_sort'];
                     $j->joueur_numero = $updatedChangement['joueur_num_sort'];
-                    $j->user_id = $user;
+                    $j->user_id = $user_id;
                     $j->save();
                 }
             }
@@ -156,7 +158,6 @@ class ChangementCotroller extends Controller
     {
         $changement = Changement::find($id);
         $changement->delete();
-
 
         return [
             "status" => true
