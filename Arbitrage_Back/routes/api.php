@@ -13,6 +13,7 @@ use App\Http\Controllers\delegueController;
 use App\Http\Controllers\JoueurController;
 use App\Http\Controllers\matcheController;
 use App\Http\Controllers\PenaltyController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaisonController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StadeController;
@@ -122,6 +123,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('sendPasswordResetLink', 'App\Http\Controllers\PasswordResetRequestController@sendEmail');
     Route::post('resetPassword', 'App\Http\Controllers\ChangePasswordController@passwordResetProcess');
 });
+
+Route::get('/rapport/{id}', [ReportController::class, 'generatePDF']);
 
 require __DIR__.'/auth.php';
 
