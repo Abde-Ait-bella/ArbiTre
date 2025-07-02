@@ -946,7 +946,7 @@
                     </tr>
                 </table>
 
-                @if ($skipButs && $skipPinalties && $butsCount > 16)
+                @if ($skipButs && $skipPinalties && $butsCount > 15)
                     
                 @else
                      <table style="width:100%; border:none;">
@@ -1310,22 +1310,17 @@
     </table>
 
     <!-- Pour fait un espace entre les sections -->
-                <!-- <table style="width:100%; border:none;">
+                <table style="width:100%; border:none;">
                             <tr>
                                 <td style="border:none; height:20px;"></td>
                             </tr>
-                    </table> -->
+                    </table>
     
     <!-- Signature -->
     <table style="width: 100%; border: none;">
         <tr>
             <td style="width: 33%; text-align: right; border: none;">
                 حرر في مدينة : 
-                @foreach($villes as $ville)
-                    @if($ville->id == $rapport->centre_ville)
-                        {{ $ville->nom }}
-                    @endif
-                @endforeach
             </td>
             <td style="width: 33%; text-align: center; border: none;">
                 بتاريخ : {{ date('d-m-Y', strtotime($rapport->date)) }}
