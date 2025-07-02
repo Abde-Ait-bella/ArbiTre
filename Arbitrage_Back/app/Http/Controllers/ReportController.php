@@ -74,8 +74,17 @@ class ReportController extends Controller
             $restBUT1 = abs($restBUT);
         }
 
-        $skipTable = true;
-        //  $butsClub1->count() >= 5 || $butsClub2->count() >= 5 || $changementsClub1->count() >= 5 || $changementsClub2->count() >= 5;
+
+
+        $skipSignature = $butsClub1->count() >= 5 || $butsClub2->count() >= 5 || $changementsClub1->count() >= 5 || $changementsClub2->count() >= 5;
+        $skipPinalties = $avertissements->count() >= 12;
+
+        $b1 = $butsClub1->count();
+        $b2 = $butsClub2->count();
+        $c1 = $changementsClub1->count();
+        $c2 = $changementsClub2->count();
+
+        $skipButs = ($b1 + $c1 > 15) || ($b2 + $c2 > 15) || ($b1 + $c2 > 15) || ($b2 + $c1 > 15);
 
         // Prepare view data
         $data = [
@@ -95,7 +104,10 @@ class ReportController extends Controller
             'restCH2' => $restCH2,
             'restBUT1' => $restBUT1,
             'restBUT2' => $restBUT2,
-            'skipTable' => $skipTable
+            'skipSignature' => $skipSignature,
+            'skipPinalties' => $skipPinalties,
+            'skipButs' => $skipButs,
+            'butsCount' => $buts->count(),
         ];
 
         // ===== ENHANCED TCPDF CONFIGURATION =====

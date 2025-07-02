@@ -264,34 +264,34 @@
                         <td colspan="5" style="background-color: #cccccc; font-weight: bold; border: solid #000 2px">الطرد</td>
                     </tr>
                     <tr>
-                        <td style="border: solid #000 2px font-weight: bold; width: 59px">الفريق</td>
-                        <td style="border: solid #000 2px font-weight: bold; width: 212px">إسم اللاعب</td>
-                        <td style="border: solid #000 2px font-weight: bold; width: 212px">الرخصة</td>
-                        <td style="border: solid #000 2px font-weight: bold; width: 212px">سبب الطرد</td>
-                        <td style="border: solid #000 2px font-weight: bold; width: 46px">الدقيقة</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 59px">الفريق</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 212px">إسم اللاعب</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 212px">الرخصة</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 212px">سبب الطرد</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 46px">الدقيقة</td>
                     </tr>
                     @if(empty($avertissementsR) || count($avertissementsR) == 0)
                         <tr>
-                            <td style="border: solid #000 2px color: #999;">-</td>
-                            <td style="border: solid #000 2px color: #999;">-</td>
-                            <td style="border: solid #000 2px color: #999;">-</td>
-                            <td style="border: solid #000 2px color: #999;">-</td>
-                            <td style="border: solid #000 2px color: #999;">-</td>
+                            <td style="border: solid #000 2px; color: #999;">-</td>
+                            <td style="border: solid #000 2px; color: #999;">-</td>
+                            <td style="border: solid #000 2px; color: #999;">-</td>
+                            <td style="border: solid #000 2px; color: #999;">-</td>
+                            <td style="border: solid #000 2px; color: #999;">-</td>
                         </tr>
                     @else
                         @foreach($avertissementsR as $a)
                             <tr>
-                                <td>
+                                <td style="border: solid #000 2px">
                                     @foreach($clubs as $c)
                                         @if($c->id == $a->club_id)
                                             {{ $c->abbr }}
                                         @endif
                                     @endforeach
                                 </td>
-                                <td>{{ $a->nom }}</td>
-                                <td>{{ $a->joueur_numero_licence }}</td>
-                                <td>{{ $a->cause }}</td>
-                                <td>{{ $a->minute }}</td>
+                                <td style="border: solid #000 2px">{{ $a->nom }}</td>
+                                <td style="border: solid #000 2px">{{ $a->joueur_numero_licence }}</td>
+                                <td style="border: solid #000 2px">{{ $a->cause }}</td>
+                                <td style="border: solid #000 2px">{{ $a->minute }}</td>
                             </tr>
                         @endforeach
                     @endif
@@ -304,6 +304,7 @@
                             </tr>
                     </table>
 
+    @if (!$skipPinalties)
 
                       <!-- PUIS nouvelle rangée pour les penalties -->
 <table style="width: 100%; border: none;">
@@ -319,7 +320,7 @@
                 </tr>
                 <tr >
                     <!-- Cellule pour l'équipe A - SUPPRESSION DE L'ESPACE à droite -->
-                    <td style="width: 50%; padding: 0; border: solid #000 2px; background-color: red;">
+                    <td style="width: 50%; padding: 0; border: solid #000 2px;">
                         
                         <table style="width: 100%;">
                             <tr>
@@ -632,7 +633,7 @@
         </td>
     </tr>
 </table>
-                
+       @endif         
             </td>
             
             <!-- Colonne droite avec changements et buts -->
@@ -736,9 +737,11 @@
                 </table>
                 
                 <!-- Espacement entre tableaux -->
-                <!-- <table style="width:100%; border:none;">
+                <table style="width:100%; border:none;">
                     <tr><td style="border:none; height:10px;"></td></tr>
-                </table> -->
+                </table>
+                
+                @if (!$skipButs)
                 
                 <!-- Tableau des buts -->
                 <table style="width: 100%; border-collapse: collapse;">
@@ -832,19 +835,464 @@
                         </td>
                     </tr>
                 </table>
+                @endif
             </td>
         </tr>
     </table>
     
     
-    @if(isset($skipTable) && $skipTable)
+    @if(isset($skipSignature) && $skipSignature)
         <div style="page-break-before: always;"></div>
     @endif
 
                       <!-- Pour fait un espace entre les sections -->
     <table style="width:100%; border:none;">
         <tr>
-            <td style="border:none; {{ $skipTable ? 'height:130px;' : '20px'}}"></td>
+            <td style="border:none; {{ $skipSignature ? 'height:130px;' : '20px'}}"></td>
+        </tr>
+    </table>
+
+     @if ($skipButs)
+                <!-- Tableau des buts -->
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td colspan="2" style="background-color: #cccccc; font-weight: bold; text-align: center; border: solid #000 2px">
+                            الأهداف
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; padding: 0; border: none; vertical-align: top;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td colspan="3" style="background-color: #f0f0f0; font-weight: bold; border: solid #000 2px; text-align: center;">
+                                        الفريق(أ) :
+                                        @foreach($clubs as $c)
+                                            @if($c->id == $rapport->club_id_1)
+                                                {{ $c->abbr }}
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; border: solid #000 2px; width: 22%">رقم اللاعب</td>
+                                    <td style="font-weight: bold; border: solid #000 2px; width: 58%">إسم اللاعب</td>
+                                    <td style="font-weight: bold; border: solid #000 2px;  width: 20%">الدقيقة</td>
+                                </tr>
+                                @if(empty($butsClub1) || count($butsClub1) == 0 && $restBUT1 == 0)
+                                    <tr>
+                                        <td style="color: #999; border: solid #000 2px;">-</td>
+                                        <td style="color: #999; border: solid #000 2px;">-</td>
+                                        <td style="color: #999; border: solid #000 2px;">-</td>
+                                    </tr>
+                                @else
+                                    @foreach($butsClub1 as $but)
+                                        <tr>
+                                            <td style="border: solid #000 2px;">{{ $but->joueur_numero }}</td>
+                                            <td style="border: solid #000 2px;">{{ $but->joueur_nom }}</td>
+                                            <td style="border: solid #000 2px;">{{ $but->minute }}</td>
+                                        </tr>
+                                    @endforeach
+                                    @for($i = 0; $i < $restBUT1; $i++)
+                                        <tr>
+                                            <td style="color: #999; border: solid #000 2px;">-</td>
+                                            <td style="color: #999; border: solid #000 2px;">-</td>
+                                            <td style="color: #999; border: solid #000 2px;">-</td>
+                                        </tr>
+                                    @endfor
+                                @endif
+                            </table>
+                        </td>
+                        <td style="width: 50%; padding: 0; border: none; vertical-align: top;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td colspan="3" style="background-color: #f0f0f0; font-weight: bold; border: solid #000 2px; text-align: center;">
+                                        الفريق (ب) :
+                                        @foreach($clubs as $c)
+                                            @if($c->id == $rapport->club_id_2)
+                                                {{ $c->abbr }}
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; border: solid #000 2px; width: 22%">رقم اللاعب</td>
+                                    <td style="font-weight: bold; border: solid #000 2px; width: 58%">إسم اللاعب</td>
+                                    <td style="font-weight: bold; border: solid #000 2px; width: 20%">الدقيقة</td>
+                                </tr>
+                                @if(empty($butsClub2) || count($butsClub2) == 0 && $restBUT2 == 0)
+                                    <tr>
+                                        <td style="color: #999; border: solid #000 2px;">-</td>
+                                        <td style="color: #999; border: solid #000 2px;">-</td>
+                                        <td style="color: #999; border: solid #000 2px;">-</td>
+                                    </tr>
+                                @else
+                                    @foreach($butsClub2 as $but)
+                                        <tr>
+                                            <td style="border: solid #000 2px;">{{ $but->joueur_numero }}</td>
+                                            <td style="border: solid #000 2px;">{{ $but->joueur_nom }}</td>
+                                            <td style="border: solid #000 2px;">{{ $but->minute }}</td>
+                                        </tr>
+                                    @endforeach
+                                    @for($i = 0; $i < $restBUT2; $i++)
+                                        <tr>
+                                            <td style="color: #999; border: solid #000 2px;">-</td>
+                                            <td style="color: #999; border: solid #000 2px;">-</td>
+                                            <td style="color: #999; border: solid #000 2px;">-</td>
+                                        </tr>
+                                    @endfor
+                                @endif
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                @if ($skipButs && $skipPinalties && $butsCount > 16)
+                    
+                @else
+                     <table style="width:100%; border:none;">
+                        <tr>
+                            <td style="border:none; height: 20px"></td>
+                        </tr>
+                    </table>           
+                @endif
+
+@endif
+
+
+
+    @if (isset($skipPinalties) && $skipPinalties)
+                   <!-- PUIS nouvelle rangée pour les penalties -->
+<table style="width: 100%; border: none;">
+    <tr>
+        <td style="width: 100%; vertical-align: top; border: none; padding-left: 5px;">
+            <!-- Section des penalties avec 2 tableaux côte à côte -->
+            <table style="width: 100%; border: none; border-spacing: 0; border-collapse: collapse;">
+                <tr>
+                    <!-- En-tête commune aux deux tableaux -->
+                    <td colspan="2" style="background-color: #cccccc; font-weight: bold; text-align: center; border: solid #000 2px">
+                        ضربات الترجيح
+                    </td>
+                </tr>
+                <tr >
+                    <!-- Cellule pour l'équipe A - SUPPRESSION DE L'ESPACE à droite -->
+                    <td style="width: 50%; padding: 0; border: solid #000 2px;">
+                        
+                        <table style="width: 100%;">
+                            <tr>
+                                <td colspan="6" style="background-color: #f0f0f0; font-weight: bold; text-align: center; border: solid #000 2px;">
+                                    الفريق(أ) : 
+                                    @foreach($clubs as $c)
+                                        @if($c->id == $rapport->club_id_1)
+                                            {{ $c->abbr }}
+                                        @endif
+                                    @endforeach
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="border: solid #000 2px;  width: 13%; ">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_1 && $p->opportunity == 1) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px;  width: 13%; ">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_1 && $p->opportunity == 2) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px;  width: 13%; ">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_1 && $p->opportunity == 3) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px;  width: 13%; ">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_1 && $p->opportunity == 4) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px;  width: 13%; ">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_1 && $p->opportunity == 5) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px;  width: auto;">مجموع الأهداف</td>
+                            </tr>
+
+                            <tr>
+                                <td style="border: solid #000 2px">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_1 && $p->opportunity == 6) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_1 && $p->opportunity == 7) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_1 && $p->opportunity == 8) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px; ">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_1 && $p->opportunity == 9) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_1 && $p->opportunity == 10) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                      <td rowspan="2" style="border: solid #000 2px; width: auto;">
+                                    @php 
+                                        $count = 0;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_1 && $p->result == 1) {
+                                                $count++;
+                                            }
+                                        }
+                                        if($count < 10) echo "0";
+                                        echo $count;
+                                    @endphp
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                    <!-- Cellule pour l'équipe B -->
+                    <td style="width: 50%; padding: 0; border: none; vertical-align: top;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td colspan="6" style="background-color: #f0f0f0; font-weight: bold; text-align: center; border: solid #000 2px">
+                                    الفريق(ب) : 
+                                    @foreach($clubs as $c)
+                                        @if($c->id == $rapport->club_id_2)
+                                            {{ $c->abbr }}
+                                        @endif
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: solid #000 2px ; width: 13%;">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_2 && $p->opportunity == 1) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px ; width: 13%;">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_2 && $p->opportunity == 2) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px ; width: 13%;">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_2 && $p->opportunity == 3) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px ; width: 13%;">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_2 && $p->opportunity == 4) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px ; width: 13%;">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_2 && $p->opportunity == 5) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px; width: auto;">مجموع الأهداف</td>
+                              
+                            </tr>
+                            <tr>
+                                <td style="border: solid #000 2px ; width: 13%;">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_2 && $p->opportunity == 6) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px ; width: 13%;">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_2 && $p->opportunity == 7) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px ; width: 13%;">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_2 && $p->opportunity == 8) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px ; width: 13%;">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_2 && $p->opportunity == 9) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                <td style="border: solid #000 2px ; width: 13%;">
+                                    @php 
+                                        $found = false;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_2 && $p->opportunity == 10) {
+                                                echo $p->result;
+                                                $found = true;
+                                            }
+                                        }
+                                        if(!$found) echo "-";
+                                    @endphp
+                                </td>
+                                  <td rowspan="2" style="border: solid #000 2px; width: auto;">
+                                    @php 
+                                        $count = 0;
+                                        foreach($penalties as $p) {
+                                            if($p->matche_id == $rapport->id && $p->club_id == $rapport->club_id_2 && $p->result == 1) {
+                                                $count++;
+                                            }
+                                        }
+                                        if($count < 10) echo "0";
+                                        echo $count;
+                                    @endphp
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>       
+@endif
+
+<table style="width:100%; border:none;">
+        <tr>
+            <td style="border:none; height: 20px"></td>
         </tr>
     </table>
     
@@ -862,11 +1310,11 @@
     </table>
 
     <!-- Pour fait un espace entre les sections -->
-                <table style="width:100%; border:none;">
+                <!-- <table style="width:100%; border:none;">
                             <tr>
                                 <td style="border:none; height:20px;"></td>
                             </tr>
-                    </table>
+                    </table> -->
     
     <!-- Signature -->
     <table style="width: 100%; border: none;">
@@ -884,11 +1332,6 @@
             </td>
             <td style="width: 33%; text-align: center; border: none;">
                 إمضاء الحكم : 
-                @foreach($arbitres as $arb)
-                    @if($arb->id == $rapport->arbitre_c_id)
-                        {{ $arb->nom }}
-                    @endif
-                @endforeach
             </td>
         </tr>
     </table>
