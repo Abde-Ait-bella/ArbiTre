@@ -71,7 +71,8 @@ function DetailleRapport() {
     setIsPdfLoading(true);
 
     axiosClinet
-      .get(`reports/match/${id}`, {
+
+      .get(`rapport/${id}`, {
         responseType: 'blob',
         headers: {
           'Accept': 'application/pdf'
@@ -104,58 +105,6 @@ function DetailleRapport() {
         alert("Impossible de générer le rapport PDF");
       });
   }
-
-  // const handlePrint = useReactToPrint({
-  // content: () => componentRef.current,
-  // pageStyle: `
-  //         @media print {
-  //             @page {
-  //                 size: auto; /* Utilisez la taille automatique pour permettre le positionnement absolu */
-  //             }
-
-  //             .print-header {
-  //                 position: fixed;
-  //                 top: 0;
-  //                 left: 0;
-  //                 width: 100%;
-  //             }
-
-  //             .rapport-title{
-  //                 margin-top: 75px; 
-  //             }
-
-  //             .contentP {
-  //                 margin-top: 25px; 
-  //             }
-  //             .contentP2 {
-  //                 margin-top: 125px; 
-  //                 position: relative;
-  //                 height: calc(100vh - 150px);
-
-  //             }
-  //             .signature{
-  //                 position: absolute;
-  //                 // margin-top: 50px;
-  //                 bottom: 0;
-  //             }
-  //             .page-break {
-  //                 page-break-before: always; /* Ajoutez cette ligne */
-  //                 display: block;
-  //                 align-items: center;
-  //                 content: "";
-  //             }
-
-  //             .btn_print {
-  //                 display: none;
-  //               }
-
-  //             body {
-  //                 -webkit-print-color-adjust: exact;
-  //                 color-adjust: exact;
-  //             }
-  //         }
-  //     `,
-  // });
 
   const avertissemetG = avertissemets?.filter(
     (a) => parseInt(a.matche_id) === parseInt(id) && a.type === "G"
@@ -344,7 +293,7 @@ function DetailleRapport() {
             ref={componentRef}
           >
             <div className="print-content">
-              <button
+                      <button
                 className="p-2 pb-1 btn_print pe-3 ps-3"
                 onClick={handlePrint}
                 disabled={isPdfLoading} // Désactiver le bouton pendant le chargement
