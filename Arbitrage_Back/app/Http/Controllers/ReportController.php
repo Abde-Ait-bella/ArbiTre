@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Matche;
 use App\Models\Arbitre;
 use App\Models\Club;

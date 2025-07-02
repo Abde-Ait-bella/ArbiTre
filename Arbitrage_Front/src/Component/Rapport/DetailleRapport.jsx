@@ -64,58 +64,46 @@ function DetailleRapport() {
   }, []);
 
   const componentRef = useRef();
+     const [isPdfLoading, setIsPdfLoading] = useState(false);
 
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-    pageStyle: `
-            @media print {
-                @page {
-                    size: auto; /* Utilisez la taille automatique pour permettre le positionnement absolu */
-                }
-                
-                .print-header {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                }
+  const handlePrint = () => {
+    // Activer l'indicateur de chargement
+    setIsPdfLoading(true);
 
-                .rapport-title{
-                    margin-top: 75px; 
-                }
-            
-                .contentP {
-                    margin-top: 25px; 
-                }
-                .contentP2 {
-                    margin-top: 125px; 
-                    position: relative;
-                    height: calc(100vh - 150px);
+    axiosClinet
+      .get(`rapport/${id}`, {
+        responseType: 'blob',
+        headers: {
+          'Accept': 'application/pdf'
+        }
+      })
+      .then((response) => {
+        // Désactiver l'indicateur de chargement
+        setIsPdfLoading(false);
 
-                }
-                .signature{
-                    position: absolute;
-                    // margin-top: 50px;
-                    bottom: 0;
-                }
-                .page-break {
-                    page-break-before: always; /* Ajoutez cette ligne */
-                    display: block;
-                    align-items: center;
-                    content: "";
-                }
+        // Vérifier que la réponse contient des données
+        if (response.data.size === 0) {
+          console.error("Le PDF reçu est vide");
+          return;
+        }
 
-                .btn_print {
-                    display: none;
-                  }
-            
-                body {
-                    -webkit-print-color-adjust: exact;
-                    color-adjust: exact;
-                }
-            }
-        `,
-  });
+        // Créer un URL pour le blob
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+
+        // Ouvrir le PDF dans un nouvel onglet
+        window.open(url, '_blank');
+
+        // Nettoyer l'URL créée après un délai
+        setTimeout(() => URL.revokeObjectURL(url), 3000);
+      })
+      .catch((error) => {
+        // Désactiver l'indicateur de chargement en cas d'erreur
+        setIsPdfLoading(false);
+        console.error("Erreur lors de la récupération du PDF:", error);
+        alert("Impossible de générer le rapport PDF");
+      });
+  }
 
   const avertissemetG = avertissemets?.filter(
     (a) => parseInt(a.matche_id) === parseInt(id) && a.type === "G"
@@ -304,11 +292,18 @@ function DetailleRapport() {
             ref={componentRef}
           >
             <div className="print-content">
-              <button
+                      <button
                 className="p-2 pb-1 btn_print pe-3 ps-3"
                 onClick={handlePrint}
+                disabled={isPdfLoading} // Désactiver le bouton pendant le chargement
               >
-                <i class="fa-print fa-solid"></i>
+                {isPdfLoading ? (
+                  <span>
+                    <i className="fa-solid fa-spinner fa-spin"></i>
+                  </span>
+                ) : (
+                  <i className="fa-print fa-solid"></i>
+                )}
               </button>
               <Header />
               <div className="rapport-title">
