@@ -46,7 +46,14 @@ export function Buts(props) {
                     name: "joueur_numero_licence"
                 }))
 
-                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null && (parseInt(club_1_update) === c.id || parseInt(club_2_update) === c.id));
+                const club1 = parseInt(club_1_update);
+                const club2 = parseInt(club_2_update);
+                const hasClubs = !!club1 || !!club2;
+
+                const dataClubs = clubResponse.data?.filter((c) => {
+                    const isMine = parseInt(c.user_id) === user?.id || c.user_id === null;
+                    return isMine && (!hasClubs || c.id === club1 || c.id === club2);
+                });
                 const optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + item.abbr,
@@ -83,12 +90,30 @@ export function Buts(props) {
     const [optionsJ, setOptionsJ] = useState();
 
     const handleCreateJ = (inputValue) => {
+        if (currentEditingIndex === null) return;
+
         setIsLoadingJ(true);
-        setTimeout(() => {
-            const newOption = createOptionJ(inputValue);
-            setIsLoadingJ(false);
-            setOptionsJ((prev) => [...prev, newOption]);
-        }, 1000);
+
+        const newOption = createOptionJ(inputValue);
+
+        // Vérifier si l'option existe déjà
+        const optionExists = state.joueurs.some(
+            option => option.value === newOption.value
+        );
+
+        if (!optionExists) {
+            setState(prevState => ({
+                ...prevState,
+                joueurs: [...prevState.joueurs, newOption]
+            }));
+        }
+
+        // Mettre à jour avec la nouvelle valeur
+        const newButs = [...butUpdate];
+        newButs[currentEditingIndex].joueur_nom = newOption.value;
+        setButUpdate(newButs);
+
+        setIsLoadingJ(false);
     };
 
     const handleChangeSelectJ = (event, index) => {
@@ -120,12 +145,32 @@ export function Buts(props) {
 
 
     const handleCreateLicence = (inputValue) => {
+        if (currentEditingIndex === null) return;
+
         setIsLoadingLicence(true);
-        setTimeout(() => {
-            const newOption = createOptionLicence(inputValue);
-            setIsLoadingLicence(false);
-            setOptionsLicence((prev) => [...prev, newOption]);
-        }, 1000);
+
+        // Créer la nouvelle option
+        const newOption = createOptionLicence(inputValue);
+
+        // Vérifier si l'option existe déjà
+        const optionExists = state.licences.some(
+            option => option.value === newOption.value
+        );
+
+        if (!optionExists) {
+            // Mettre à jour uniquement si l'option n'existe pas déjà
+            setState(prevState => ({
+                ...prevState,
+                licences: [...prevState.licences, newOption]
+            }));
+        }
+
+        // Mettre à jour le but avec la nouvelle licence
+        const newButs = [...butUpdate];
+        newButs[currentEditingIndex].joueur_numero_licence = newOption.value;
+        setButUpdate(newButs);
+
+        setIsLoadingLicence(false);
     };
 
     const handleChangeSelectLicence = (event, index) => {
@@ -165,7 +210,7 @@ export function Buts(props) {
         butUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 6 || numberOfAttributes === 9 || numberOfAttributes == null) {
+        if (numberOfAttributes <= 6 || numberOfAttributes === 9 || numberOfAttributes == null) {
             setError("")
             setButUpdate([...butUpdate, {},]);
             setValueLicence()
@@ -188,7 +233,7 @@ export function Buts(props) {
         butUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 6 || numberOfAttributes === 9) {
+        if (numberOfAttributes <= 6 || numberOfAttributes === 9) {
             setError("")
             props.dataButs(butUpdate);
             setIsValide(prev => !prev)
@@ -198,82 +243,31 @@ export function Buts(props) {
 
     };
 
+    const [currentEditingIndex, setCurrentEditingIndex] = useState(null);
+
+    const handleFocusField = (index) => {
+        setCurrentEditingIndex(index);
+    };
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleOpen = () => {
+        setIsOpen(!isOpen);
+    };
+
 
     return (
         <>
             {
                 loading ?
                     <>
-                        <div className='mt-4 mb-3 d-none d-lg-block'>
+                        <div className='mb-4 d-none d-lg-block'>
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-4">
+                                <div className="row">
                                     <Skeleton height={40} />
                                 </div>
-
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-4">
-                                        <div>
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-3">
-                                        <div>
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-3">
-                                        <div>
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-
-                                    <div className="col-2">
-                                        <div>
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-
-                                    <div className="col-2">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </SkeletonTheme>
-                        </div>
-
-                        <div className='mt-4 mb-3 d-lg-none'>
-                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-5 mx-1">
-                                    <Skeleton height={40} />
-                                </div>
-
-                                <div className="row mt-3 mx-2">
-                                    <div className="col-12">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3 mb-2">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
+                                <div className="row mt-1">
+                                    <Skeleton height={30} />
                                 </div>
                             </SkeletonTheme>
                         </div>
@@ -283,10 +277,21 @@ export function Buts(props) {
                     <div className="row my-2 but-update">
                         <div className="col-md-12">
                             <div class=" card text-center bg-light text-white mx-1">
-                                <div class="card-header bg-secondary fw-bold">
-                                    الهدافــون
+                                <div class="card-header bg-secondary fw-bold d-flex justify-content-between align-items-center"
+                                    onClick={toggleOpen}
+                                    style={{ cursor: 'pointer' }}>
+                                    <span>الأهـــــداف</span>
+                                    <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                                 </div>
-                                <div class="card-body">
+                                <div
+                                    className="card-body overflow-hidden transition-max-height"
+                                    style={{
+                                        maxHeight: isOpen ? '5000px' : '0',
+                                        opacity: isOpen ? 1 : 0,
+                                        transform: isOpen ? 'translateY(0)' : 'translateY(-20px)',
+                                        transformOrigin: 'top',
+                                    }}
+                                >
                                     {butUpdate?.map((item, index) => (
                                         <div className="row border border-secondary border-4 rounded py-3 px-2 my-1 mt-3" key={index}>
                                             <div className="form-group col-md-4">
@@ -322,6 +327,7 @@ export function Buts(props) {
                                                         options={optionsLicence}
                                                         value={state?.licences.find((l) => l.value === item?.joueur_numero_licence)}
                                                         placeholder='أكتب واختر'
+                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>
@@ -338,13 +344,13 @@ export function Buts(props) {
                                                 </div>
                                             </div>
                                             <div>
-                                                <button className='btn btn-danger moin rounded-pill' onClick={() => SuppRow(index)}><i class="fa-solid fa-xmark mt-1 px-3"></i></button>
+                                                <button className='btn btn-danger moin rounded-pill' onClick={() => SuppRow(index)}><i class="fa-solid fa-xmark px-3 ms-1"></i></button>
                                             </div>
                                         </div>
                                     ))}
                                     <div className='d-flex justify-content-center mt-3'>
                                         <div>
-                                            <button className='btn btn-warning rounded-pill' onClick={addRow}><i class="fa-solid fa-plus mt-1 px-4"></i></button>
+                                            <button className='btn btn-warning rounded-pill' onClick={addRow}><i class="fa-solid fa-plus px-4"></i></button>
                                         </div>
                                     </div>
                                     <div className='mt-3'>

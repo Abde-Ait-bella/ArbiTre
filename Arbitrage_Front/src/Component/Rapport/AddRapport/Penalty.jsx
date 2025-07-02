@@ -212,7 +212,7 @@ export function Penalty(props) {
                                         <div className="row border border-secondary border-4 rounded py-3 px-2 my-1 mt-3">
          
                                             <div className='d-flex justify-content-end'>
-                                                <button className='btn btn-primary rounded-pill' onClick={addPenalty}><i class="fa-solid fa-plus mt-1 px-4"></i></button>
+                                                <button className='btn btn-primary rounded-pill' onClick={addPenalty}><i class="fa-solid fa-plus px-4"></i></button>
                                             </div>
                                             
                                             <div className="penalty row mb-4 mt-4">
@@ -273,7 +273,7 @@ export function Penalty(props) {
                                             </div>
 
                                             <div className='d-flex justify-content-end'>
-                                                <button className='btn btn-danger moin rounded-pill' onClick={SuppRow}><i class="fa-solid fa-minus mt-1 px-4"></i></button>
+                                                <button className='btn btn-danger moin rounded-pill' onClick={SuppRow}><i class="fa-solid fa-minus px-4"></i></button>
                                             </div>
                                    
                                         </div>

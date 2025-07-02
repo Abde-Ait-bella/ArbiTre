@@ -93,12 +93,26 @@ export function Avert(props) {
     const [optionsJ, setOptionsJ] = useState();
 
     const handleCreate = (inputValue) => {
+        if (currentEditingIndex === null) return;
+        
         setIsLoadingJ(true);
-        setTimeout(() => {
-            const newOption = createOptionJ(inputValue);
-            setIsLoadingJ(false);
-            setOptionsJ((prev) => [...prev, newOption]);
-        }, 1000);
+        
+        // Créer la nouvelle option
+        const newOption = createOptionJ(inputValue);
+        
+        // Ajouter l'option sans vérification - permet les doublons
+        setState(prevState => ({
+            ...prevState,
+            joueurs: [...prevState.joueurs, newOption]
+        }));
+        setOptionsJ(prevOptions => [...prevOptions, newOption]);
+        
+        // Mettre à jour l'avertissement avec le nouveau nom
+        const newAverts = [...avert];
+        newAverts[currentEditingIndex].nom = newOption.value;
+        setAvert(newAverts);
+        
+        setIsLoadingJ(false);
     };
 
     const handleAvertSelectChangeJ = (event, index) => {
@@ -136,12 +150,22 @@ export function Avert(props) {
 
 
     const handleCreateLicence = (inputValue) => {
+        if (currentEditingIndex === null) return;
+        
         setIsLoadingLicence(true);
-        setTimeout(() => {
-            const newOption = createOptionLicence(inputValue);
-            setIsLoadingLicence(false);
-            setOptionsLicence((prev) => [...prev, newOption]);
-        }, 1000);
+        
+        // Créer la nouvelle option
+        const newOption = createOptionLicence(inputValue);
+        
+        // Ajouter l'option sans vérification - permet les doublons
+        setOptionsLicence(prevOptions => [...prevOptions, newOption]);
+        
+        // Mettre à jour l'avertissement avec la nouvelle licence
+        const newAverts = [...avert];
+        newAverts[currentEditingIndex].joueur_numero_licence = newOption.value;
+        setAvert(newAverts);
+        
+        setIsLoadingLicence(false);
     };
 
     const handleAvertSelectChangeLicence = (event, index) => {
@@ -219,6 +243,7 @@ export function Avert(props) {
         avert.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
+        console.log('numberOfAttributes', avert)
         if (numberOfAttributes === 8) {
             setError("")
             props.dataAvert(avert);
@@ -228,110 +253,54 @@ export function Avert(props) {
         }
     };
 
+    // Ajouter l'état et la fonction
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleOpen = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const [currentEditingIndex, setCurrentEditingIndex] = useState(null);
+
+    const handleFocusField = (index) => {
+        setCurrentEditingIndex(index);
+    };
+
     return (
         <>
             {
                 loading ?
                     <>
-                        <div className='mt-4 mb-3 d-none d-lg-block'>
-                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row">
-                                    <Skeleton height={40} />
-                                </div>
-
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-4">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-1 d-flex align-items-center justify-content-center p-0">
-                                        <div className="mt-2">
-                                            <Skeleton height={20} width={20} circle={true} />
-                                        </div>
-                                    </div>
-                                    <div className="col-1 d-flex align-items-center justify-content-center p-0">
-                                        <div className="mt-2">
-                                            <Skeleton height={20} width={20} circle={true} />
-                                        </div>
-                                    </div>
-                                    <div className="col-4">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-2">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-7">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-2">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </SkeletonTheme>
-                        </div>
-
-                        <div className='mb-3 d-lg-none'>
-                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-5 mx-1">
-                                    <Skeleton height={40} />
-                                </div>
-
-                                <div className="row mt-3 mx-2">
-                                    <div className="col-12">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-6 d-flex align-items-center justify-content-center p-0 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={20} width={20} circle={true} />
-                                        </div>
-                                    </div>
-                                    <div className="col-6 d-flex align-items-center justify-content-center p-0 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={20} width={20} circle={true} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </SkeletonTheme>
-                        </div>
+                            <div className='mb-4 d-none d-lg-block'>
+                                                  <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                                                      <div className="row">
+                                                          <Skeleton height={40} />
+                                                      </div>
+                                                      <div className="row mt-1">
+                                                          <Skeleton height={30} />
+                                                      </div>
+                                                  </SkeletonTheme>
+                                              </div>
                     </>
 
                     :
                     <div className="row my-2">
                         <div className="col-md-12">
                             <div class=" card text-center bg-light text-white mx-1">
-                                <div class="card-header bg-secondary fw-bold">
-                                    العقوبــات الانضباطيـة
+                                <div class="card-header bg-secondary fw-bold d-flex justify-content-between align-items-center"
+                                    onClick={toggleOpen} 
+                                    style={{ cursor: 'pointer' }}>
+                                    <span>العقوبــات الانضباطيـة</span>
+                                    <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                                 </div>
-                                <div class="card-body">
+                                <div 
+                                    className="card-body overflow-hidden transition-max-height"
+                                    style={{
+                                        maxHeight: isOpen ? '5000px' : '0',
+                                        opacity: isOpen ? 1 : 0,
+                                        transform: isOpen ? 'translateY(0)' : 'translateY(-20px)',
+                                        transformOrigin: 'top',
+                                    }}
+                                >
                                     {avert?.map((item, index) =>
                                     (
                                         <div className="row  border border-secondary border-4 rounded py-3 px-2 my-1 mt-3" key={index}>
@@ -368,8 +337,9 @@ export function Avert(props) {
                                                         onChange={(event) => handleAvertSelectChangeJ(event, index)}
                                                         onCreateOption={handleCreate}
                                                         options={optionsJ}
-                                                        value={avert[index]?.nom ? optionsJ?.find((j) => j.nom === avert[index]?.nom) : ""}
+                                                        value={avert[index]?.nom ? optionsJ?.find((j) => j.value === avert[index]?.nom) : ""}
                                                         placeholder="أكتب و اختر"
+                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>
@@ -391,6 +361,7 @@ export function Avert(props) {
                                                         options={optionsLicence}
                                                         value={avert[index]?.joueur_numero_licence ? optionsLicence?.find((l) => l.value === avert[index]?.joueur_numero_licence) : ""}
                                                         placeholder='أكتب و اختر'
+                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>
@@ -407,13 +378,13 @@ export function Avert(props) {
                                                 </div>
                                             </div>
                                             <div className='mt-2'>
-                                                <button className='btn btn-danger moin rounded-pill' onClick={() => SuppRow(index)}><i class="fa-solid fa-xmark mt-1 px-3"></i></button>
+                                                <button className='btn btn-danger moin rounded-pill' onClick={() => SuppRow(index)}><i class="fa-solid fa-xmark px-3 ms-1"></i></button>
                                             </div>
                                         </div>
                                     ))}
                                     <div className='d-flex justify-content-center mt-3'>
                                         <div>
-                                            <button className='btn btn-warning rounded-pill' onClick={addRow}><i class="fa-solid fa-plus mt-1 px-4"></i></button>
+                                            <button className='btn btn-warning rounded-pill' onClick={addRow}><i class="fa-solid fa-plus px-4"></i></button>
                                         </div>
                                     </div>
                                     <div className='mt-3'>

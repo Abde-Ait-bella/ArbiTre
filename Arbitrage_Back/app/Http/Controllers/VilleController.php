@@ -19,15 +19,11 @@ class VilleController extends Controller
      */
     public function store(Request $request)
     {
-        // $user = auth()->user();
-        // echo($user);
-
         $ville = new Ville;
 
         $ville->nom = $request->nom;
         $ville->user_id = $request->user_id;
         $ville->save();
-        // $ville = Ville::create($request->all());
 
         return [
             "status" => true,

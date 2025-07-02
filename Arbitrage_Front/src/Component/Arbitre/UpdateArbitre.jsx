@@ -258,7 +258,7 @@ function UpdateStade() {
                                     </div>
                                 </fieldset>
                                 <div className="d-flex justify-content-between">
-                                    <Link to="/dashboard/dashboard/composants/arbitres" class="btn btn-danger pt-0 px-4 mt-3"> رجوع<i class="fa-solid fa-caret-right pt-2 me-4"></i></Link>
+                                    <Link to="/dashboard/composants/arbitres" class="btn btn-danger pt-0 px-4 mt-3"> رجوع<i class="fa-solid fa-caret-right pt-2 me-4"></i></Link>
                                     <button type="submit" class="btn btn-danger pt-0 px-4 mt-3">تعديل
                                         {
                                             loadingUpdate ? (

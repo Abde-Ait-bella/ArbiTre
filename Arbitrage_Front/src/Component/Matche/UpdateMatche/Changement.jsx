@@ -26,6 +26,11 @@ export function Changement(props) {
     const [error, setError] = useState();
     const { user, club_1_update, club_2_update } = AuthUser();
 
+    const [isLoadingEntree, setIsLoadingEntree] = useState(false);
+    const [isLoadingSortie, setIsLoadingSortie] = useState(false);
+    const [isLoadingLicenceEntree, setIsLoadingLicenceEntree] = useState(false);
+    const [isLoadingLicenceSortie, setIsLoadingLicenceSortie] = useState(false);
+
     const { id } = useParams();
 
     useEffect(() => {
@@ -69,7 +74,15 @@ export function Changement(props) {
                 setOptionsJSort(optionJoueursSort);
                 setOptionsLicenceS(optionJoueursLicenceS);
 
-                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null && (parseInt(club_1_update) === c.id || parseInt(club_2_update) === c.id));
+                const club1 = parseInt(club_1_update);
+                const club2 = parseInt(club_2_update);
+                const hasClubs = !!club1 || !!club2;
+
+                const dataClubs = clubResponse.data?.filter((c) => {
+                    const isMine = parseInt(c.user_id) === user?.id || c.user_id === null;
+                    return isMine && (!hasClubs || c.id === club1 || c.id === club2);
+                });
+
                 const optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + " " + item.abbr,
@@ -257,7 +270,7 @@ export function Changement(props) {
         changeUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 9 || numberOfAttributes === 12 || numberOfAttributes == null) {
+        if (numberOfAttributes <= 9 || numberOfAttributes === 12 || numberOfAttributes == null) {
             setChangeUpdate([...changeUpdate, {}])
             setError("")
         } else {
@@ -289,6 +302,137 @@ export function Changement(props) {
         }
     };
 
+    // 1. Ajoutez ces états pour suivre l'index d'édition actuel
+    const [currentEditingIndex, setCurrentEditingIndex] = useState(null);
+
+    const handleFocusField = (index) => {
+        setCurrentEditingIndex(index);
+    };
+
+    // 2. Améliorez la fonction handleCreateEntree pour les joueurs entrants
+    const handleCreateEntree = (inputValue) => {
+        if (currentEditingIndex === null) return;
+
+        setIsLoadingEntree(true);
+
+        // Créer la nouvelle option
+        const newOption = createOptionJEntr(inputValue);
+
+        // Vérifier si l'option existe déjà
+        const optionExists = state.joueursEntre.some(
+            option => option.value === newOption.value
+        );
+
+        if (!optionExists) {
+            setState(prevState => ({
+                ...prevState,
+                joueursEntre: [...prevState.joueursEntre, newOption]
+            }));
+        }
+
+        // Mettre à jour le changement avec le nouveau nom
+        const newChangements = [...changeUpdate];
+        newChangements[currentEditingIndex].joueur_nom_entr = newOption.value;
+        setChangeUpdate(newChangements);
+
+        setIsLoadingEntree(false);
+    };
+
+    // 3. Améliorez la fonction handleCreateSortie pour les joueurs sortants
+    const handleCreateSortie = (inputValue) => {
+        if (currentEditingIndex === null) return;
+
+        setIsLoadingSortie(true);
+
+        // Créer la nouvelle option
+        const newOption = createOptionJSort(inputValue);
+
+        // Vérifier si l'option existe déjà
+        const optionExists = state.joueursSort.some(
+            option => option.value === newOption.value
+        );
+
+        if (!optionExists) {
+            setState(prevState => ({
+                ...prevState,
+                joueursSort: [...prevState.joueursSort, newOption]
+            }));
+        }
+
+        // Mettre à jour le changement avec le nouveau nom
+        const newChangements = [...changeUpdate];
+        newChangements[currentEditingIndex].joueur_nom_sort = newOption.value;
+        setChangeUpdate(newChangements);
+
+        setIsLoadingSortie(false);
+    };
+
+    // 4. Améliorez la fonction handleCreateLicenceEntree pour les licences des joueurs entrants
+    const handleCreateLicenceEntree = (inputValue) => {
+        if (currentEditingIndex === null) return;
+
+        setIsLoadingLicenceEntree(true);
+
+        // Créer la nouvelle option
+        const newOption = createOptionLicenceE(inputValue);
+
+        // Vérifier si l'option existe déjà
+        const optionExists = state.JoueursLicenceE.some(
+            option => option.value === newOption.value
+        );
+
+        if (!optionExists) {
+            setState(prevState => ({
+                ...prevState,
+                JoueursLicenceE: [...prevState.JoueursLicenceE, newOption]
+            }));
+        }
+
+        // Mettre à jour le changement avec la nouvelle licence
+        const newChangements = [...changeUpdate];
+        newChangements[currentEditingIndex].joueur_licence_entr = newOption.value;
+        setChangeUpdate(newChangements);
+
+        setIsLoadingLicenceEntree(false);
+    };
+
+    // 5. Améliorez la fonction handleCreateLicenceSortie pour les licences des joueurs sortants
+    const handleCreateLicenceSortie = (inputValue) => {
+        if (currentEditingIndex === null) return;
+
+        setIsLoadingLicenceSortie(true);
+
+        // Créer la nouvelle option
+        const newOption = createOptionLicenceS(inputValue);
+
+        // Vérifier si l'option existe déjà
+        const optionExists = state.JoueursLicenceS.some(
+            option => option.value === newOption.value
+        );
+
+        if (!optionExists) {
+            setState(prevState => ({
+                ...prevState,
+                JoueursLicenceS: [...prevState.JoueursLicenceS, newOption]
+            }));
+        }
+
+        // Mettre à jour le changement avec la nouvelle licence
+        const newChangements = [...changeUpdate];
+        newChangements[currentEditingIndex].joueur_licence_sort = newOption.value;
+        setChangeUpdate(newChangements);
+
+        setIsLoadingLicenceSortie(false);
+    };
+
+    // 1. Ajouter un état pour contrôler l'ouverture/fermeture
+    const [isOpen, setIsOpen] = useState(false); // Par défaut ouvert
+
+    // 2. Ajouter une fonction pour basculer l'état
+    const toggleOpen = () => {
+        setIsOpen(!isOpen);
+    };
+
 
 
     return (
@@ -296,91 +440,13 @@ export function Changement(props) {
             {
                 loading ?
                     <>
-                        <div className='mt-4 mb-3 d-none d-lg-block'>
+                        <div className='mb-4 d-none d-lg-block'>
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-4">
+                                <div className="row">
                                     <Skeleton height={40} />
                                 </div>
-
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-3">
-                                        <div>
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-4">
-                                        <div>
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-2">
-                                        <div>
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-
-                                    <div className="col-3">
-                                        <div>
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-
-                                    <div className="col-4">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-4">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-2">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-2">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </SkeletonTheme>
-                        </div>
-
-                        <div className='mt-4 mb-3 d-lg-none'>
-                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-5 mx-1">
-                                    <Skeleton height={40} />
-                                </div>
-
-                                <div className="row mt-3 mx-2">
-                                    <div className="col-12">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
+                                <div className="row mt-1">
+                                    <Skeleton height={30} />
                                 </div>
                             </SkeletonTheme>
                         </div>
@@ -390,10 +456,22 @@ export function Changement(props) {
                     <div className="row my-2 changement-update">
                         <div className="col-md-12">
                             <div class=" card text-center bg-light text-white mx-1">
-                                <div class="card-header bg-secondary fw-bold">
-                                    التغييــرات
+                                <div class="card-header bg-secondary fw-bold d-flex justify-content-between align-items-center"
+                                    onClick={toggleOpen}
+                                    style={{ cursor: 'pointer' }}>
+                                    <span>التغييــرات</span>
+                                    <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                                 </div>
-                                <div class="card-body">
+                                <div
+                                    className="card-body overflow-hidden transition-max-height"
+                                    style={{
+                                        maxHeight: isOpen ? '5000px' : '0',
+                                        opacity: isOpen ? 1 : 0,
+                                        transform: isOpen ? 'translateY(0)' : 'translateY(-20px)',
+                                        transformOrigin: 'top',
+                                        // padding: isOpen ? '1.25rem' : '0' // Conserver une petite transition de padding
+                                    }}
+                                >
                                     {changeUpdate ?
                                         (
                                             <div>
@@ -405,22 +483,23 @@ export function Changement(props) {
                                                                 <CreatableSelect className='text-light' value={state?.clubs.find((c) => c.value === parseInt(item?.club_id))} options={state.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب" />
                                                             </div>
                                                         </div>
-                                                        <div className="form-group col-md-4">
+                                                        <div className="form-group col-md-3">
                                                             <label>اسم الاعب الداخل</label>
                                                             <div className='my-2'>
                                                                 <CreatableSelect className='text-light'
                                                                     isClearable
-                                                                    isDisabled={isLoadingJEntr}
-                                                                    isLoading={isLoadingJEntr}
+                                                                    isDisabled={isLoadingEntree}
+                                                                    isLoading={isLoadingEntree}
                                                                     onChange={(event) => handleChangeSelectJEntr(event, index)}
-                                                                    onCreateOption={handleCreateJEntr}
-                                                                    options={optionsJEntr}
+                                                                    onCreateOption={handleCreateEntree}  // Utiliser la nouvelle fonction
+                                                                    options={state.joueursEntre}         // Utiliser state au lieu de optionsJEntr
                                                                     value={state?.joueursEntre.find((j) => (j.value === item?.joueur_nom_entr))}
                                                                     placeholder="أكتب او اختر"
+                                                                    onFocus={() => handleFocusField(index)}  // Ajouter ceci
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="form-group col-md-2">
+                                                        <div className="form-group col-md-3">
                                                             <label >رقم الاعب الداخل</label>
                                                             <div className='my-2'>
                                                                 <input type="text" name='joueur_num_entr' value={item?.joueur_num_entr} className="form-control bg-white border-light my-2" onChange={(event) => handleChangeInput(event, index)} id="inputPassword4" />
@@ -435,14 +514,15 @@ export function Changement(props) {
                                                                     isDisabled={isLoadingLicenceE}
                                                                     isLoading={isLoadingLicenceE}
                                                                     onChange={(event) => handleChangeSelectLicenceE(event, index)}
-                                                                    onCreateOption={handleCreateLicenceE}
-                                                                    options={optionsLicenceE}
+                                                                    onCreateOption={handleCreateLicenceEntree}  // Utiliser la nouvelle fonction
+                                                                    options={state.JoueursLicenceE}             // Utiliser state au lieu de optionsLicenceE
                                                                     value={state?.JoueursLicenceE.find((j) => j.value === item?.joueur_licence_entr)}
                                                                     placeholder='أكتب واختر'
+                                                                    onFocus={() => handleFocusField(index)}     // Ajouter l'événement onFocus
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="form-group col-md-4">
+                                                        <div className="form-group col-md-3">
                                                             <label >اسم الاعب الخارج</label>
                                                             <div className='my-2'>
                                                                 <CreatableSelect className='text-light'
@@ -450,14 +530,15 @@ export function Changement(props) {
                                                                     isDisabled={isLoadingJSort}
                                                                     isLoading={isLoadingJSort}
                                                                     onChange={(event) => handleChangeSelectJSort(event, index)}
-                                                                    onCreateOption={handleCreateJSort}
-                                                                    options={optionsJSort}
+                                                                    onCreateOption={handleCreateSortie}       // Utiliser la nouvelle fonction
+                                                                    options={state.joueursSort}               // Utiliser state au lieu de optionsJSort
                                                                     value={state?.joueursSort.find((j) => (j.value === item?.joueur_nom_sort))}
                                                                     placeholder="أكتب او اختر"
+                                                                    onFocus={() => handleFocusField(index)}   // Ajouter l'événement onFocus
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="form-group col-md-4">
+                                                        <div className="form-group col-md-3">
                                                             <label >رقم رخصة الخارج</label>
                                                             <div className='my-2'>
                                                                 <CreatableSelect className='text-light'
@@ -465,14 +546,15 @@ export function Changement(props) {
                                                                     isDisabled={isLoadingLicenceS}
                                                                     isLoading={isLoadingLicenceS}
                                                                     onChange={(event) => handleChangeSelectLicenceS(event, index)}
-                                                                    onCreateOption={handleCreateLicenceS}
-                                                                    options={optionsLicenceS}
+                                                                    onCreateOption={handleCreateLicenceSortie}  // Utiliser la nouvelle fonction
+                                                                    options={state.JoueursLicenceS}             // Utiliser state au lieu de optionsLicenceS
                                                                     value={state?.JoueursLicenceS.find((j) => j.value === item?.joueur_licence_sort)}
                                                                     placeholder='أكتب واختر'
+                                                                    onFocus={() => handleFocusField(index)}     // Ajouter l'événement onFocus
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="form-group col-md-2">
+                                                        <div className="form-group col-md-3">
                                                             <label >رقم الاعب الخارج</label>
                                                             <div className='my-2'>
                                                                 <input type="text" name='joueur_num_sort' value={item?.joueur_num_sort} onChange={(event) => handleChangeInput(event, index)} className="form-control bg-white border-light my-2" id="inputPassword4" />
@@ -485,7 +567,7 @@ export function Changement(props) {
                                                             </div>
                                                         </div>
                                                         <div className='mt-2'>
-                                                            <button className='btn btn-danger moin rounded-pill' onClick={() => SuppRow(index)}><i class="fa-solid fa-xmark mt-1 px-3"></i></button>
+                                                            <button className='btn btn-danger moin rounded-pill' onClick={() => SuppRow(index)}><i class="fa-solid fa-xmark px-3 ms-1"></i></button>
                                                         </div>
                                                     </div>
                                                 )}
@@ -496,7 +578,7 @@ export function Changement(props) {
                                     }
                                     <div className='d-flex justify-content-center mt-3'>
                                         <div>
-                                            <button className='btn btn-warning rounded-pill' onClick={addRow}><i class="fa-solid fa-plus mt-1 px-4"></i></button>
+                                            <button className='btn btn-warning rounded-pill' onClick={addRow}><i class="fa-solid fa-plus px-4"></i></button>
                                         </div>
                                     </div>
                                     <div className='mt-3'>

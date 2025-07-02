@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -170,6 +169,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        // Barryvdh\DomPDF\ServiceProvider::class,
+        Elibyy\TCPDF\ServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -185,6 +187,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        // 'Pdf' => Barryvdh\DomPDF\Facade\Pdf::class,
+        'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
     ])->toArray(),
-
 ];
