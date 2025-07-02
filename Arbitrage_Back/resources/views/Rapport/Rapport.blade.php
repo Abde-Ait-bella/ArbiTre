@@ -1315,7 +1315,6 @@
                                 <td style="border:none; height:20px;"></td>
                             </tr>
                     </table>
-    
     <!-- Signature -->
     <table style="width: 100%; border: none;">
         <tr>
