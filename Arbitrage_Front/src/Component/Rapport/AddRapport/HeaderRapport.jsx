@@ -21,7 +21,7 @@ export function Header() {
       <div className="images print-header">
         <img
           className="logoLigue"
-          src="../img/image0004.png"
+          src="/img/image0004.png"
           alt="ligue souss"
         />
         <div className="title_rapport text-center mb-0">
@@ -34,9 +34,8 @@ export function Header() {
           <p>Ligue Régionale de Souss Massa de football</p>
           <p>Comité Régional d'Arbitrage - Direction Régionale de l'Arbitrage</p>
         </div>
-        <img className="titleLigue" src="../img/frmf.png" alt="ligue souss" />
+        <img className="titleLigue" src="/img/frmf.png" alt="ligue souss" />
       </div>
-    
     </>
   );
 }

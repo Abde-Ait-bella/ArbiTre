@@ -42,7 +42,7 @@ export function Buts(props) {
                 }))
                 const optionJoueursLicence = dataJoueurs?.map(item => ({
                     value: item.joueur_numero_licence,
-                    label: item.joueur_numero_licence.toUpperCase(),
+                        label: item.joueur_numero_licence?.toUpperCase(),
                     name: "joueur_numero_licence"
                 }))
 
@@ -61,8 +61,6 @@ export function Buts(props) {
                 }))
 
                 setButUpdate([...butsResponse.data?.filter((b) => parseInt(b.matche_id) === parseInt(id))]);
-                setOptionsJ(optionJoueurs)
-                setOptionsLicence(optionJoueursLicence)
                 setState(prevData => ({
                     ...prevData,
                     clubs: optionClubs,
@@ -82,12 +80,11 @@ export function Buts(props) {
 
     const createOptionJ = (label) => ({
         label: label.toUpperCase(),
-        value: label.toLowerCase(),
+        value: label, // <-- garder la casse originale
         name: "joueur_nom"
     });
 
     const [isLoadingJ, setIsLoadingJ] = useState(false);
-    const [optionsJ, setOptionsJ] = useState();
 
     const handleCreateJ = (inputValue) => {
         if (currentEditingIndex === null) return;
@@ -309,9 +306,10 @@ export function Buts(props) {
                                                         isLoading={isLoadingJ}
                                                         onChange={(event) => handleChangeSelectJ(event, index)}
                                                         onCreateOption={handleCreateJ}
-                                                        options={optionsJ}
-                                                        value={state?.joueurs.find((j) => (j.value === item?.joueur_nom))}
+                                                        options={state.joueurs}
+                                                        value={state?.joueurs.find((j) => j.value === item?.joueur_nom)}
                                                         placeholder="أكتب او اختر"
+                                                        onFocus={() => handleFocusField(index)} // <-- AJOUTE CETTE LIGNE
                                                     />
                                                 </div>
                                             </div>
@@ -324,7 +322,7 @@ export function Buts(props) {
                                                         isLoading={isLoadingLicence}
                                                         onChange={(event) => handleChangeSelectLicence(event, index)}
                                                         onCreateOption={handleCreateLicence}
-                                                        options={optionsLicence}
+                                                        options={state.licences}
                                                         value={state?.licences.find((l) => l.value === item?.joueur_numero_licence)}
                                                         placeholder='أكتب واختر'
                                                         onFocus={() => handleFocusField(index)}

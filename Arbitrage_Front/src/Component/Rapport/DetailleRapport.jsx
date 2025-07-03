@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "../../style/Rapport/DetailleRapport.css";
 import { useState } from "react";
-import { useReactToPrint } from "react-to-print";
 import { Header } from "./AddRapport/HeaderRapport";
 import { axiosClinet } from "../../Api/axios";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
