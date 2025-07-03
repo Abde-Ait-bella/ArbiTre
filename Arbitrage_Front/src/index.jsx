@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -9,8 +8,8 @@ import ForgotPassword from './forgotPassword';
 import ResetPassword from './ResetPassword';
 import { AuthProvider } from './AuthContext';
 import Home from './Home';
-import AdminDashboard from './Admin/AdminDashboard';
-
+import './index.css';
+// import './style/main.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,7 +22,6 @@ root.render(
                 <Route path='/login' element={<Login />} />
                 <Route path='/dashboard/*' element={<App />} />
                 <Route path='/' element={<Home />} />
-                <Route path='/admin' element={<AdminDashboard />} />
             </Routes>
         </BrowserRouter>
     </AuthProvider>

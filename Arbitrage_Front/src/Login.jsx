@@ -124,14 +124,14 @@ function Login() {
                                                 </Link>
                                             </div>
                                             <div className="form-floating mb-3">
-                                                <input type="email" name="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={handelCHange} />
+                                                <input type="email" name="email" className="form-control" dir="ltr" id="floatingInput" placeholder="name@example.com" onChange={handelCHange} />
                                                 <label style={{right: "0"}} for="floatingInput">البريد الالكتروني</label>
                                             </div>
                                             {errors?.email && <p className="text-danger me-3 text-center">{errors?.email}</p>}
 
                                             <div className="form-floating d-flex align-items-center justify-content-around mb-4">
                                                 <div className="form-floating col-10">
-                                                    <input type={inputType} name="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={handelCHange} />
+                                                    <input type={inputType} name="password" className="form-control" dir="ltr" id="floatingPassword" placeholder="Password" onChange={handelCHange} />
                                                     <label style={{right: "0"}}  for="floatingPassword">الرمز السري</label>
                                                 </div>
                                                 <i className={`${iconType} me-2`} onClick={togglePassword} ></i>

@@ -95,7 +95,7 @@ function ResetPassword() {
                                 </div>
                                 <div className="form-floating d-flex align-items-center justify-content-between mb-4">
                                     <div className="form-floating col-11">
-                                        <input type={inputType} name="password" className="form-control" id="floatingPassword1" placeholder="password" onChange={handelCHange} />
+                                        <input type={inputType} name="password" className="form-control" dir="ltr" id="floatingPassword1" placeholder="password" onChange={handelCHange} />
                                         <label for="floatingPassword1">الرمز السري</label>
                                     </div>
                                     <i className={`${iconType} me-2`} onClick={togglePassword} ></i>
@@ -103,7 +103,7 @@ function ResetPassword() {
                                 {errors?.password && <p className="text-danger me-3">{errors?.password}</p>}
                                 <div className="form-floating d-flex align-items-center justify-content-between mb-4">
                                     <div className="form-floating col-12">
-                                        <input type={inputType} name="password_confirmation" className="form-control" id="floatingPassword2" placeholder="password" onChange={handelCHange} />
+                                        <input type={inputType} name="password_confirmation" className="form-control" dir="ltr" id="floatingPassword2" placeholder="password" onChange={handelCHange} />
                                         <label for="floatingPassword2">تأكيد الرمز السري </label>
                                     </div>
                                 </div>
