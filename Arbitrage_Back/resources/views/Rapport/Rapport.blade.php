@@ -182,7 +182,7 @@
             <td style="background-color: #cccccc; font-weight: bold; border: solid #000 2px;">المندوب</td>
             <td style="border: solid #000 2px;">{{ $rapport->delegue->prenom ?? '-' }} {{ $rapport->delegue->nom ?? '-' }}</td>
             <td style="background-color: #cccccc; font-weight: bold; border: solid #000 2px;">الحكم الرابع</td>
-            <td style="width: 22.7 border: solid #000 2px;">
+            <td style="border: solid #000 2px;">
                 @foreach($arbitres as $arbitre)
                     @if($arbitre->id == $rapport->arbitre_4_id)
                         {{ strtoupper($arbitre->prenom) }} {{ strtoupper($arbitre->nom) }}

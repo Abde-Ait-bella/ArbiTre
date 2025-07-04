@@ -1187,6 +1187,7 @@ function DetailleRapport() {
                                       >
                                         <td className="py-1">-</td>
                                         <td className="py-1">-</td>
+                                        <td className="py-1">-</td>
                                       </tr>
                                     ))
                                     : ""}
