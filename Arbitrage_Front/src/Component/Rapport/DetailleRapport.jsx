@@ -310,15 +310,16 @@ function DetailleRapport() {
                 <h3>تقريـــــــر الحكـــــم</h3>
               </div>
               <div className="container contentP table-responsive">
-                <table className="table table-bordered text-dark">
+                <table className="table text-center table-bordered text-dark">
                   <thead>
                     <tr>
                       <th className="p-0 px-3 th">المنافسة/الفئة : </th>
                       <th class="px-2 p-0">{rapports?.competition?.nom}</th>
+                      {console.log(rapports?.categorie_id)}
                       <th class="px-2 p-0">
                         {
                           categories?.find(
-                            (a) => a.id === rapports?.categorie_id
+                            (a) => a.id == rapports?.categorie_id
                           )?.nom
                         }
                       </th>
