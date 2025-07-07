@@ -246,7 +246,7 @@ function Slider() {
               <div 
                 className="unmute-overlay"
                 // style={`${videoMuted ? '' : {right: 'calc(50% - 30%)'}}`}
-                  style={videoMuted ? {} : { right: 'calc(50% - 27%)' }}
+                  style={videoMuted ? {} : { right: 'calc(50% - 28%)' }}
                 onClick={() => {
                   if (videoRef.current) {
                     // Toggle muted state
