@@ -113,8 +113,8 @@ function Slider() {
     <div ref={refHome} className='sections' style={{ minHeight: "100vh" }} >
       <motion.div className='scroll' style={{ scaleX: scrollYProgress }} />
       <div className={`row section-parent ${window.innerWidth > 992 ? 'row' : ''}`} id='section-parent' >
-        <div className='m-0 p-0 home-section section'>
-          <p ref={textRefArab} style={{ marginTop: "-40px" }} dir='rtl' className='text-arab text-white'>أول منصة خاصة بالحكام بالمغرب</p>
+        <div className='p-0 m-0 home-section section'>
+          <p ref={textRefArab} style={{ marginTop: "-40px" }} dir='rtl' className='text-white text-arab'>أول منصة خاصة بالحكام بالمغرب</p>
           <p ref={textRef} style={{ marginTop: "-40px", whiteSpace: "nowrap" }} dir='ltr' className='text-white fr'>La première plateforme pour les arbitres au Maroc</p>
           <div className='scroll-down'>
             <p>إ سحب للأسفل</p>
@@ -124,7 +124,7 @@ function Slider() {
         </div>
         <div ref={ref} className='m-0 about-section section'>
           <p dir='rtl' className='title'>من نحن</p>
-          <p dir='rtl' className='text-arab text-justify'>
+          <p dir='rtl' className='text-justify text-arab'>
             {inView1 & window.innerWidth > 992 ?
               <span >
                 <Typewriter
@@ -148,7 +148,7 @@ function Slider() {
             <div className="blob_2"></div>
           </div>
         </div>
-        <div ref={ref1} className='m-0 p-0 section services-section'>
+        <div ref={ref1} className='p-0 m-0 section services-section'>
           <div className="cards">
             <div className="data" >
               <label htmlFor="">معلومات جاهزة ومسبقة الإعداد</label>
@@ -213,7 +213,7 @@ function Slider() {
             </div>
           </div>
         </div>
-        <div ref={ref2} className='m-0 p-0 letsgo-section section'>
+        <div ref={ref2} className='p-0 m-0 letsgo-section section'>
           <div className='image'>
             <img className='free' src={"../img/pngwing.png"} alt="" />
             <img src={"../img/Yellow-red_card.png"} alt="" />
