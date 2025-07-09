@@ -3,4 +3,4 @@
 //       "@tailwindcss/postcss": {},
 //     },
 //   };
-  // export default config;
+//   export default config;

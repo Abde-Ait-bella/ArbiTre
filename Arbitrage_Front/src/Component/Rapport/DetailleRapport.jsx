@@ -288,7 +288,7 @@ function DetailleRapport() {
         <div>
           <div
             dir="rtl"
-            className="m-4 bg-white rounded detailleRapport"
+            className="bg-white rounded sm:m-0 detailleRapport" 
             ref={componentRef}
           >
             <div className="print-content">
@@ -299,10 +299,10 @@ function DetailleRapport() {
               >
                 {isPdfLoading ? (
                   <span>
-                    <i className="fa-solid fa-spinner fa-spin"></i>
+                    <i className="fa-solid fa-spinner fa-spin text-secondary"></i>
                   </span>
                 ) : (
-                  <i className="fa-print fa-solid"></i>
+                  <i className="fa-print fa-solid text-secondary"></i>
                 )}
               </button>
               <Header />
@@ -1310,7 +1310,7 @@ function DetailleRapport() {
                 </div>
                 <div>
                   <label>
-                    <p className="mt-3 text-dark fs-6 ligne">
+                    <p className="mt-3 text-dark ligne">
                       {rapports?.rapport_supp}
                     </p>
                   </label>

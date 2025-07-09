@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -10,6 +11,16 @@ import { AuthProvider } from './AuthContext';
 import Home from './Home';
 import './index.css';
 // import './style/main.css'
+import { setupArabicLocale } from './i18n/primeReactLocale';
+
+// Configurer la locale arabe pour PrimeReact
+setupArabicLocale();
+
+// Importer les styles PrimeReact
+import "primereact/resources/themes/lara-dark-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+import "primeflex/primeflex.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

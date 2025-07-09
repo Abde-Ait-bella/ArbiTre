@@ -168,7 +168,7 @@ function App() {
               {/* <!-- Sidebar Start --> */}
               <div className={`sidebar ps-4 ${isSidebarOpen ? 'open' : ''}`} onClick={(e) => handleSidebarClose(e)}>
                 <nav className="bg-secondary navbar navbar-dark" >
-                  <div className='top-50 d-flex align-items-center justify-content-center me-0 mt-1 w-100 navbar-brand brand start-0'>
+                  <div className='mt-1 top-50 d-flex align-items-center justify-content-center me-0 w-100 navbar-brand brand start-0'>
                     <Link to='/dashboard/home' className="">
                       <h3 className="logo">
                         <i class="ms-2 me-3 fa-solid fa-flag-checkered"></i>
@@ -225,8 +225,8 @@ function App() {
                         <NavLink to={'composants/villes'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المدن <i class="me-4 mt-1 fa-solid fa-city"></i></NavLink>
                       </div>
                     </div>
-                    <div className='me-2 mt-1'>
-                      <NavLink to='rapport' className={({ isActive }) =>
+                    <div className='mt-1 me-2'>
+                      <NavLink to='rapport ' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active fw-bold " : "nav-item nav-link fw-bold"
                       }><i class="ms-3 me-2 fa-solid fa-book"></i> التقارير</NavLink>
                     </div>
@@ -356,7 +356,7 @@ function App() {
                           <br />
                         </div>
                         <div className="d-lg-block col-md-4 d-none">
-                          <Link to='/dashboard/home' className="d-flex justify-content-center me-0 mt-1 w-100 navbar-brand brand">
+                          <Link to='/dashboard/home' className="mt-1 d-flex justify-content-center me-0 w-100 navbar-brand brand">
                             <h3 className="mb-0 logo">
                               <i class="ms-2 me-3 fa-solid fa-flag-checkered"></i>
                               ArbiTre</h3>
@@ -372,7 +372,7 @@ function App() {
         }
         {/* // Back to Top */}
         <div>
-          <ScrollToTop smooth top="100" id={`${isSidebarOpen ? 'back-up_to_right' : 'back-up_to_lft'}`} className='back-to-top fa-arrow-up text-white fa-solid' style={{ backgroundColor: '#fbab00' }} svgPath />
+          <ScrollToTop smooth top="100" id={`${isSidebarOpen ? 'back-up_to_right' : 'back-up_to_lft'}`} className='text-white back-to-top fa-arrow-up fa-solid' style={{ backgroundColor: '#fbab00' }} svgPath />
         </div>
         {/* // Content End */}
       </div >
