@@ -113,7 +113,12 @@ class ReportController extends Controller
 
         // Use custom TCPDF class for header
         $pdf = new CustomTcpdf('L', 'mm', 'LEGAL', true, 'UTF-8', false);
-        $pdf->SetTitle('تقرير الحكم');
+        // Récupérer les noms des clubs
+        $club1Name = $clubs->where('id', $rapport->club_id_1)->first()->nom ?? 'Club 1';
+        $club2Name = $clubs->where('id', $rapport->club_id_2)->first()->nom ?? 'Club 2';
+
+        // Modifier le titre pour inclure les noms des clubs
+        $pdf->SetTitle("تقرير الحكم - {$club1Name} ضد {$club2Name}");
         $pdf->SetAuthor('ArbiTre System');
         $pdf->SetSubject('Match Report');
         $pdf->setRTL(true);
@@ -142,10 +147,22 @@ class ReportController extends Controller
         $data['fontname'] = $fontname;
         $html = view('Rapport.Rapport', $data)->render();
         $pdf->writeHTML($html, true, false, true, false, '');
-        $filename = "match_report_{$rapport->id}_{$rapport->date_match}.pdf";
-        // Output PDF as a Laravel response
-        return response($pdf->Output($filename, 'S'))
+        // Récupérer les abréviations des clubs
+        $club1Abbr = $clubs->where('id', $rapport->club_id_1)->first()->abbr ?? 'C1';
+        $club2Abbr = $clubs->where('id', $rapport->club_id_2)->first()->abbr ?? 'C2';
+
+        // Créer le nom de fichier avec les abréviations des clubs
+        $filename = "rapport_arbitre_{$club1Abbr}_vs_{$club2Abbr}_{$rapport->date}.pdf";
+
+        // CHANGEMENT: Utiliser '' au lieu de $filename dans Output() avec 'S'
+        $pdfContent = $pdf->Output('', 'S'); // Récupérer le contenu PDF
+
+        // Utiliser le $filename dans les headers de la response
+        return response($pdfContent)
             ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'inline; filename="' . $filename . '"');
+            ->header('Content-Disposition', 'inline; filename="' . $filename . '"')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 }
