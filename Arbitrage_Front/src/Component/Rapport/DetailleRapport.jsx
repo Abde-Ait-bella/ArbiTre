@@ -6,10 +6,11 @@ import { Header } from "./AddRapport/HeaderRapport";
 import { axiosClinet } from "../../Api/axios";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import PdfPrintButton from '../Utils/PdfPrintButton';
 
 function DetailleRapport() {
-  // Ajouter un nouvel état pour le chargement du PDF
-  const [isPdfLoading, setIsPdfLoading] = useState(false);
+  // Supprimer l'import du hook usePdfPrinter car il est maintenant dans le composant
+  
   const [rapports, setRapports] = useState();
   const [arbitre, setArbitre] = useState();
   const [club, setClub] = useState();
@@ -65,266 +66,7 @@ function DetailleRapport() {
 
   const componentRef = useRef();
 
-  const handlePrint = () => {
-    // Activer l'indicateur de chargement
-    setIsPdfLoading(true);
-
-    // Créer un nom de fichier unique avec les clubs et la date en arabe
-    const createPdfFileName = () => {
-      const clubHome = club?.find(c => c.id === parseInt(rapports?.club_id_1));
-      const clubAway = club?.find(c => c.id === parseInt(rapports?.club_id_2));
-      const homeClubName = clubHome?.nom || 'النادي الأول';
-      const awayClubName = clubAway?.nom || 'النادي الثاني';
-
-      // Format en arabe: تقرير الحكم - CLUB1 ضد CLUB2 
-      return `تقرير مبارة - ${homeClubName} ضد ${awayClubName}`;
-    };
-
-    axiosClinet
-      .get(`rapport/${id}`, {
-        responseType: 'blob',
-        headers: {
-          'Accept': 'application/pdf'
-        }
-      })
-      .then((response) => {
-        // Désactiver l'indicateur de chargement
-        setIsPdfLoading(false);
-
-        // Vérifier que la réponse contient des données
-        if (response.data.size === 0) {
-          console.error("Le PDF reçu est vide");
-          return;
-        }
-
-        // Créer un nom de fichier unique
-        const fileName = createPdfFileName();
-
-        // Créer un blob avec un nom personnalisé
-        const blob = new Blob([response.data], {
-          type: 'application/pdf'
-        });
-
-        // Créer l'URL avec le nom de fichier
-        const url = URL.createObjectURL(blob);
-
-        // Ouvrir dans une nouvelle fenêtre avec design personnalisé
-        const newWindow = window.open('', '_blank');
-        if (newWindow) {
-          newWindow.document.write(`
-            <!DOCTYPE html>
-            <html dir="rtl" lang="ar">
-            <head>
-              <title>${fileName}</title>
-              <meta charset="utf-8">
-              <link rel="preconnect" href="https://fonts.googleapis.com">
-              <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-              <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-              <style>
-                @font-face {
-                  font-family: 'Cairo';
-                  src: url('./Fonts/Cairo-VariableFont_slntwght.ttf') format('truetype');
-                  font-weight: 100 900;
-                  font-style: normal;
-                }
-                
-                * {
-                  margin: 0;
-                  padding: 0;
-                  box-sizing: border-box;
-                }
-                
-                body { 
-                  margin: 0; 
-                  padding: 0; 
-                  font-family: 'Cairo', Arial, sans-serif;
-                  background-color: #dc3545;
-                  color: white;
-                  direction: rtl;
-                }
-                
-                .header {
-                  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-                  padding: 15px 25px;
-                  border-bottom: 3px solid #ffffff20;
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-                }
-                
-                .logo-section {
-                  display: flex;
-                  align-items: center;
-                  gap: 15px;
-                }
-                
-                .logo {
-                  width: 50px;
-                  height: 50px;
-                  background: white;
-                  border-radius: 8px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  font-weight: bold;
-                  color: #dc3545;
-                  font-size: 18px;
-                  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                }
-                
-                .site-info {
-                  display: flex;
-                  flex-direction: column;
-                  align-items: flex-start;
-                }
-                
-                .site-name {
-                  font-size: 20px;
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 2px;
-                }
-                
-                .site-subtitle {
-                  font-size: 12px;
-                  color: #ffffff90;
-                  font-weight: 400;
-                }
-                
-                .file-info {
-                  display: flex;
-                  flex-direction: column;
-                  align-items: flex-end;
-                  text-align: right;
-                }
-                
-                .filename {
-                  font-weight: 600;
-                  font-size: 16px;
-                  color: white;
-                  margin-bottom: 5px;
-                  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-                }
-                
-                .file-date {
-                  font-size: 12px;
-                  color: #ffffff80;
-                  font-weight: 400;
-                }
-                
-                .download-btn {
-                  background: white;
-                  color: #dc3545;
-                  border: none;
-                  padding: 10px 20px;
-                  border-radius: 25px;
-                  cursor: pointer;
-                  text-decoration: none;
-                  font-size: 14px;
-                  font-weight: 600;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-                  display: flex;
-                  align-items: center;
-                  gap: 8px;
-                }
-                
-                .download-btn:hover {
-                  background: #f8f9fa;
-                  transform: translateY(-1px);
-                  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                }
-                
-                .pdf-container {
-                  background-color: #dc3545;
-                  height: calc(100vh - 80px);
-                  padding: 10px;
-                }
-                
-                iframe { 
-                  width: 100%; 
-                  height: 100%; 
-                  border: none; 
-                  border-radius: 8px;
-                  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-                }
-                
-                .loading {
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  height: 200px;
-                  color: white;
-                  font-size: 18px;
-                }
-                
-                @media (max-width: 768px) {
-                  .header {
-                    flex-direction: column;
-                    gap: 15px;
-                    padding: 20px 15px;
-                  }
-                  
-                  .logo-section {
-                    order: 2;
-                  }
-                  
-                  .file-info {
-                    order: 1;
-                    align-items: center;
-                    text-align: center;
-                  }
-                  
-                  .download-btn {
-                    order: 3;
-                  }
-                }
-              </style>
-            </head>
-            <body>
-              <div class="header">
-              
-              <a href="${url}" download="${fileName}.pdf" class="download-btn">
-                💾 تحميل التقرير
-              </a>
-                
-                <div class="file-info">
-                  <div class="filename">📄 ${fileName}</div>
-                  <div class="file-date">${new Date().toLocaleDateString('fr')}</div>
-                </div>
-
-                <div class="logo-section">
-                  <div class="site-info">
-                    <h1 style="font-family: Roboto, sans-serif;" dir='ltr' ref={logoRef} className="logo">
-                        <span>ArbiTre</span>
-                    </h1>
-                    <div class="site-subtitle">Arbitre Platform</div>
-                  </div>
-                </div>
-                  
-
-                </div>
-              </div>
-              
-              <div class="pdf-container">
-<iframe src="${url}#toolbar=1&navpanes=0&scrollbar=1&view=FitH" type="application/pdf" onload="document.querySelector('.loading').style.display='none'"></iframe>              </div>
-            </body>
-            </html>
-          `);
-          newWindow.document.close();
-        }
-
-        // Nettoyer l'URL créée après un délai
-        setTimeout(() => URL.revokeObjectURL(url), 10000);
-      })
-      .catch((error) => {
-        // Désactiver l'indicateur de chargement en cas d'erreur
-        setIsPdfLoading(false);
-        console.error("Erreur lors de la récupération du PDF:", error);
-        alert("فشل في إنشاء تقرير PDF");
-      });
-  }
+  // Supprimer l'ancienne fonction handlePrint, elle n'est plus nécessaire
 
   const avertissemetG = avertissemets?.filter(
     (a) => parseInt(a.matche_id) === parseInt(id) && a.type === "G"
@@ -513,30 +255,33 @@ function DetailleRapport() {
             ref={componentRef}
           >
             <div className="print-content">
-              <button
-                className="p-2 pb-1 btn_print pe-3 ps-3"
-                onClick={handlePrint}
-                disabled={isPdfLoading} // Désactiver le bouton pendant le chargement
-              >
-                {isPdfLoading ? (
-                  <span>
-                    <i className="fa-solid fa-spinner fa-spin text-secondary"></i>
-                  </span>
-                ) : (
-                  <i className="fa-print fa-solid text-secondary"></i>
-                )}
-              </button>
+              {/* Remplacer l'ancien bouton par le composant PdfPrintButton */}
+              <div className="p-2 pb-1 pe-3 ps-3" style={{ display: 'inline-block' }}>
+                <PdfPrintButton
+                  matchId={id}
+                  homeClubName={club?.find(c => c.id === parseInt(rapports?.club_id_1))?.nom || 'النادي الأول'}
+                  awayClubName={club?.find(c => c.id === parseInt(rapports?.club_id_2))?.nom || 'النادي الثاني'}
+                  matchDate={rapports?.date ? new Date(rapports.date).toISOString().split('T')[0] : 'no-date'}
+                  className="p-2 btn_print"
+                  icon="fa-print fa-solid text-secondary"
+                  tooltip="طباعة التقرير"
+                >
+                  {/* Pas de texte, juste l'icône */}
+                </PdfPrintButton>
+              </div>
+              
               <Header />
               <div className="rapport-title">
                 <h3>تقريـــــــر الحكـــــم</h3>
               </div>
+              
+              {/* Garder tout le reste du contenu inchangé */}
               <div className="container contentP table-responsive">
                 <table className="table text-center table-bordered text-dark">
                   <thead>
                     <tr>
                       <th className="p-0 px-3 th">المنافسة/الفئة : </th>
                       <th class="px-2 p-0">{rapports?.competition?.nom}</th>
-                      {console.log(rapports?.categorie_id)}
                       <th class="px-2 p-0">
                         {
                           categories?.find(
@@ -621,8 +366,8 @@ function DetailleRapport() {
                       </th>
                       <th class="px-2 p-0 th">المدينة</th>
                       <th class="px-2 p-0">{rapports?.ville?.nom}</th>
-                      <th class="px-2 p-0 th">الحكم المساعد 2</th>
-                      <th className="p-0 px-3">
+                      <th className="p-0 px-3 th">الحكم المساعد 2</th>
+                      <th className="p-0 px-2">
                         {arbitre
                           ?.find(
                             (a) => a.id === parseInt(rapports?.arbitre_a2_id)
@@ -656,7 +401,7 @@ function DetailleRapport() {
                         {rapports?.delegue?.nom.toUpperCase()}
                       </th>
                       <th class="px-2 p-0 th">الحكم الرابع</th>
-                      <th class="px-3 p-0">
+                      <th className="p-0 px-3">
                         {arbitre
                           ?.find(
                             (a) => a.id === parseInt(rapports?.arbitre_4_id)
@@ -1220,7 +965,6 @@ function DetailleRapport() {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {console.log("penalty", penalty)}
                                   {(But_1?.length === 0) & (RestBUT1 === 0) ? (
                                     <tr className="text-center">
                                       <td className="p-1">-</td>
@@ -1457,4 +1201,5 @@ function DetailleRapport() {
     </>
   );
 }
+
 export default DetailleRapport;

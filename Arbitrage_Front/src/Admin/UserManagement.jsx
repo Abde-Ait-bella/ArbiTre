@@ -103,16 +103,14 @@ function UserManagement() {
     }
   };
 
-  console.log('users', users);   
-
   return (
-    <div className="container-fluid pt-4 px-4">
+    <div className="px-4 pt-4 container-fluid">
       <div className="row g-4">
         <div className="col-12">
-          <div className="bg-secondary rounded p-4">
+          <div className="p-4 rounded bg-secondary">
             <h6 className="mb-4">إدارة المستخدمين</h6>
             <div className="table-responsive">
-              <table className="table text-start align-middle table-hover mb-0">
+              <table className="table mb-0 align-middle text-start table-hover">
                 <thead>
                   <tr className="text-white">
                     <th scope="col">الاسم</th>

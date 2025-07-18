@@ -5,6 +5,8 @@ import { useDataFetching, useDeleteItem } from '../Utils/hooks';
 import DataTableTemplate from '../Utils/DataTableTemplate';
 import { TextFilterComponent, DropdownFilterComponent } from '../Utils/FilterComponents';
 import { AuthUser } from '../../AuthContext';
+import UpdateButton from '../Utils/UpdateButton';
+import DeleteButton from '../Utils/DeleteButton';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'primereact/resources/themes/lara-dark-indigo/theme.css';
@@ -22,7 +24,7 @@ function StadesListe() {
     // Gérer la suppression avec le hook personnalisé
     const { handleDelete, loadingDelete, itemIdToDelete } = useDeleteItem(
         '/stade',
-        '/dashboard/composants/DeletedStade'
+        '/dashboard/composants/deletedStade'
     );
 
     // Préparer les données: combiner les stades par défaut et ceux de l'utilisateur
@@ -44,15 +46,21 @@ function StadesListe() {
             <div className="flex gap-2 justify-content-center">
                 {!isDefault ? (
                     <>
-                        <Link to={`/dashboard/composants/updateStade/${rowData.id}`} className="p-button p-button-icon-only p-button-rounded p-button-text">
-                            <i className="pi pi-wrench"></i>
-                        </Link>
+                        {/* Utiliser le composant UpdateButton */}
+                        <UpdateButton
+                            itemId={rowData.id}
+                            updatePath="/dashboard/composants/updateStade"
+                            tooltip="تعديل الملعب"
+                        />
                         
-                        <Button
-                            icon={loadingDelete && itemIdToDelete === rowData.id ? 'pi pi-spin pi-spinner' : 'pi pi-trash'}
-                            className="p-button-danger p-button-text p-button-rounded"
-                            onClick={() => handleDelete(rowData.id)}
-                            disabled={loadingDelete && itemIdToDelete === rowData.id}
+                        {/* Utiliser le composant DeleteButton avec loader Font Awesome */}
+                        <DeleteButton
+                            itemId={rowData.id}
+                            onDelete={handleDelete}
+                            loading={loadingDelete}
+                            loadingItemId={itemIdToDelete}
+                            loadingIcon="fa-solid fa-spinner fa-spin text-danger"
+                            tooltip="حذف الملعب"
                         />
                     </>
                 ) : (

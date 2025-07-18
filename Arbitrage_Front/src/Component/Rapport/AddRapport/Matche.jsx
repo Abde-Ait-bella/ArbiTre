@@ -343,9 +343,6 @@ export function Matche(props) {
             delegue_ville: villeDelegue?.value,
         }));
 
-        console.log('InputValue', inputValue);
-
-
         setSelectedSelect(prevValues => ({
             ...prevValues,
             name: event?.name,
@@ -378,7 +375,7 @@ export function Matche(props) {
                     <>
                         <div className='mb-4 d-none d-lg-block'>
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mx-2 mt-4">
+                                <div className="mx-2 mt-4 row">
                                     <div className="col-3">
                                         <Skeleton height={40} />
                                     </div>
@@ -393,11 +390,11 @@ export function Matche(props) {
                                     </div>
                                 </div>
 
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-4 mx-2">
+                                <div className="mx-2 mt-4 row">
                                     <div className="col-3">
                                         <Skeleton height={40} />
                                         <div className="mt-2">
@@ -424,7 +421,7 @@ export function Matche(props) {
                                     </div>
                                 </div>
 
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <div className="col-6">
                                         <Skeleton height={40} />
                                     </div>
@@ -434,7 +431,7 @@ export function Matche(props) {
                                 </div>
 
 
-                                <div className="row mt-4 mx-1">
+                                <div className="mx-1 mt-4 row">
                                     <div className="col-3">
                                         <Skeleton height={40} />
                                     </div>
@@ -449,7 +446,7 @@ export function Matche(props) {
                                     </div>
                                 </div>
 
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <div className="col-4">
                                         <Skeleton height={40} />
                                     </div>
@@ -460,11 +457,11 @@ export function Matche(props) {
                                         <Skeleton height={40} />
                                     </div>
                                 </div>
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-4 mx-2">
+                                <div className="mx-2 mt-4 row">
                                     <div className="col-4">
                                         <div>
                                             <Skeleton height={40} />
@@ -493,11 +490,11 @@ export function Matche(props) {
                                     </div>
                                 </div>
 
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-4 mx-2">
+                                <div className="mx-2 mt-4 row">
                                     <div className="col-12 ">
                                         <div>
                                             <Skeleton height={85} />
@@ -509,42 +506,42 @@ export function Matche(props) {
 
                         <div className="d-lg-none">
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-12 mt-3">
+                                <div className="mx-2 mt-4 row">
+                                    <div className="mt-3 col-12">
                                         <Skeleton height={40} />
                                     </div>
-                                    <div className="col-12 mt-4">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
-                                    <div className="col-12 mt-4">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
-                                    <div className="col-12 mt-4">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
                                 </div>
 
-                                <div className="row mt-4 mx-1">
+                                <div className="mx-1 mt-4 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-12 mt-4">
+                                <div className="mx-2 mt-4 row">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
-                                    <div className="col-12 mt-4">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
-                                    <div className="col-12 mt-4">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
                                 </div>
 
-                                <div className="row mt-4 mx-1">
+                                <div className="mx-1 mt-4 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-4 mx-2 pb-2">
+                                <div className="pb-2 mx-2 mt-4 row">
                                     <div className="col-12 ">
                                         <div>
                                             <Skeleton height={85} />
@@ -556,7 +553,7 @@ export function Matche(props) {
                     </>
                     :
                     <div >
-                        <div className="row my-2 mx-2">
+                        <div className="mx-2 my-2 row">
                             <div className="form-group col-md-3">
                                 <label className='text-white' htmlFor="inputEmail4">الموسم الرياضي</label>
                                 <div className='my-2'>
@@ -574,7 +571,7 @@ export function Matche(props) {
                             </div>
                             <div className="form-group col-md-3">
                                 <label className='text-white' htmlFor="inputPassword4">التاريخ</label>
-                                <input type="date" name='date' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" required />
+                                <input type="date" name='date' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" required />
                             </div>
                             <div className="form-group col-md-3">
                                 <label className='text-white' htmlFor="inputPassword4">المنافسة</label>
@@ -591,7 +588,7 @@ export function Matche(props) {
                                     />
                                 </div>
                             </div>
-                            <div className="form-group col-md-3 text-white">
+                            <div className="text-white form-group col-md-3">
                                 <label htmlFor="inputEmail4">الفئة</label>
                                 <div className='my-2'>
                                     <Select
@@ -608,7 +605,7 @@ export function Matche(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-2">
+                        <div className="my-2 row">
                             <div className="col-md-12">
                                 <div class=" card text-center bg-light text-white mx-1">
                                     <div class="card-header bg-secondary">
@@ -715,7 +712,7 @@ export function Matche(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-2">
+                        <div className="my-2 row">
                             <div className="col-md-6">
                                 <div class=" card text-center bg-light text-white mx-1">
                                     <div class="card-header bg-secondary">
@@ -732,7 +729,7 @@ export function Matche(props) {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="form-group  col-md-6">
+                                            <div className="form-group col-md-6">
                                                 <label htmlFor="inputEmail4">الفريق الزائر</label>
                                                 <div className='my-2'>
                                                     <Select className='text-light' options={state.clubs_2} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
@@ -754,21 +751,21 @@ export function Matche(props) {
                                         <div className="row">
                                             <div className="form-group col-md-6">
                                                 <label htmlFor="inputEmail4">الفريق المستقبل</label>
-                                                <input type="namber" name='result_club_1' onChange={handleInputChange} className="form-control bg-white border-0 mt-2 mb-2" id="inputPassword4" placeholder='' />
+                                                <input type="namber" name='result_club_1' onChange={handleInputChange} className="mt-2 mb-2 bg-white border-0 form-control" id="inputPassword4" placeholder='' />
                                             </div>
-                                            <div className="form-group  col-md-6">
+                                            <div className="form-group col-md-6">
                                                 <label htmlFor="inputEmail4">الفريق الزائر</label>
-                                                <input type="namber" name='result_club_2' onChange={handleInputChange} className="form-control bg-white border-0 mt-2 mb-2" id="inputPassword4" />
+                                                <input type="namber" name='result_club_2' onChange={handleInputChange} className="mt-2 mb-2 bg-white border-0 form-control" id="inputPassword4" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-2 mx-2">
+                        <div className="mx-2 my-2 row">
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputPassword4">التوقيت</label>
-                                <input type="time" name='temps' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputTime" />
+                                <input type="time" name='temps' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputTime" />
                             </div>
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputEmail4">الملعب</label>
@@ -797,7 +794,7 @@ export function Matche(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-2">
+                        <div className="my-2 row">
                             <div className="col-md-12">
                                 <div class="card text-center bg-light text-white mx-1">
                                     <div class="card-header bg-secondary">
@@ -807,30 +804,30 @@ export function Matche(props) {
                                         <div className="row">
                                             <div className="form-group col-md-4">
                                                 <label htmlFor="inputPassword4">1.	توقيت حضور مراقب المباراة : </label>
-                                                <input type="time" name='temp_presence_delegue' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputTime" />
+                                                <input type="time" name='temp_presence_delegue' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputTime" />
                                             </div>
                                             <div className="form-group col-md-4">
                                                 <label htmlFor="inputPassword4">2.  توقيت حضور رجال الأمن :</label>
-                                                <input type="time" name='temp_presence_agents_sécurité' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputTime" />
+                                                <input type="time" name='temp_presence_agents_sécurité' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputTime" />
                                             </div>
                                             <div className="form-group col-md-4">
                                                 <label htmlFor="inputPassword4">3.	عدد رجال الامن</label>
-                                                <input type="nember" name='nombre_agents_sécurité' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                <input type="nember" name='nombre_agents_sécurité' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                             </div>
                                             <div className="form-group col-md-6">
                                                 <label htmlFor="inputPassword4">4.	ارضية الملعب</label>
-                                                <input type="text" name='etat_stade' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                <input type="text" name='etat_stade' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                             </div>
                                             <div className="form-group col-md-6">
                                                 <label htmlFor="inputPassword4">5.	مستودع ملابس الحكام </label>
-                                                <input type="text" name='etat_vestiaire' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                <input type="text" name='etat_vestiaire' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-2">
+                        <div className="my-2 row">
                             <div className="col-md-12">
                                 <div class="card text-center bg-light text-white mx-1">
                                     <div class="card-header bg-secondary">
@@ -846,7 +843,7 @@ export function Matche(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className='text-center mx-4 mt-3'>
+                        <div className='mx-4 mt-3 text-center'>
                             {error && <span className='text-warning'>{error}<span className='text-warning me-2'>!!</span></span>}
                         </div>
                         <button className={`btn me-3 my-2 px-4 fw-bold ${isValideData ? 'btn-warning text-danger' : 'btn-secondary'}`} onClick={sendData}>حفـــــظ</button>

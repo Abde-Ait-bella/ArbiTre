@@ -6,6 +6,10 @@ import { useDataFetching, useDeleteItem } from '../Utils/hooks';
 import DataTableTemplate from '../Utils/DataTableTemplate';
 import { TextFilterComponent, DateFilterComponent, DropdownFilterComponent } from '../Utils/FilterComponents';
 import { AuthUser } from '../../AuthContext';
+import PdfPrintButton from '../Utils/PdfPrintButton';
+import DetailsButton from '../Utils/DetailsButton';
+import UpdateButton from '../Utils/UpdateButton';
+import DeleteButton from '../Utils/DeleteButton';
 import 'primereact/resources/themes/lara-dark-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -62,7 +66,11 @@ function Matches() {
             category: cat ? cat.nom : '',
             result: `${match.result_club_1}-${match.result_club_2}`,
             ville: ville ? ville.nom : '',
-            originalData: match
+            originalData: match,
+            // Ajouter les données nécessaires pour le bouton PDF
+            homeClubName: clubHome?.nom || 'النادي الأول',
+            awayClubName: clubAway?.nom || 'النادي الثاني',
+            matchDate: formattedDate ? formattedDate.toISOString().split('T')[0] : 'no-date'
         };
     });
 
@@ -85,23 +93,46 @@ function Matches() {
         return <Tag value={rowData.result} severity="info" />;
     };
     
-    // Template pour les actions
+    // Template pour les actions - Utilisation des composants réutilisables
     const actionBodyTemplate = (rowData) => {
         return (
             <div className="flex gap-2 justify-content-center">
-                <Link to={`/dashboard/updateMatche/${rowData.id}`} className="p-button p-button-icon-only p-button-rounded p-button-text">
-                    <i className="pi pi-wrench"></i>
-                </Link>
+                {/* Utiliser le composant UpdateButton */}
+                <UpdateButton
+                    itemId={rowData.id}
+                    updatePath="/dashboard/updateMatche"
+                    tooltip="تعديل المباراة"
+                />
 
-                <Link to={`/dashboard/detailleRapport/${rowData.id}`} className="p-button btn-warning p-button-sm">
+                {/* Utiliser le composant DetailsButton */}
+                <DetailsButton
+                    matchId={rowData.id}
+                    className="rounded p-button btn-warning p-button-sm"
+                    tooltip="عرض تفاصيل التقرير"
+                >
                     التفاصيل
-                </Link>
+                </DetailsButton>
+
+                {/* Utiliser le composant PdfPrintButton */}
+                <PdfPrintButton
+                    matchId={rowData.id}
+                    homeClubName={rowData.homeClubName}
+                    awayClubName={rowData.awayClubName}
+                    matchDate={rowData.matchDate}
+                    className="rounded p-button-success p-button-sm"
+                    tooltip="طباعة التقرير"
+                >
+                    طباعة
+                </PdfPrintButton>
                 
-                <Button
-                    icon={loadingDelete && itemIdToDelete === rowData.id ? 'pi pi-spin pi-spinner' : 'pi pi-trash'}
-                    className="p-button-danger p-button-text p-button-rounded"
-                    onClick={() => handleDelete(rowData.id)}
-                    disabled={loadingDelete && itemIdToDelete === rowData.id}
+                {/* Utiliser le composant DeleteButton avec loader Font Awesome */}
+                <DeleteButton
+                    itemId={rowData.id}
+                    onDelete={handleDelete}
+                    loading={loadingDelete}
+                    loadingItemId={itemIdToDelete}
+                    loadingIcon="fa-solid fa-spinner fa-spin text-danger"
+                    tooltip="حذف المباراة"
                 />
             </div>
         );
@@ -184,7 +215,7 @@ function Matches() {
             field: 'actions',
             header: 'الإجراءات',
             body: actionBodyTemplate,
-            style: { minWidth: '200px', textAlign: 'center' }
+            style: { minWidth: '250px', textAlign: 'center' }
         }
     ];
 

@@ -4,6 +4,8 @@ import { Button } from 'primereact/button';
 import { useDataFetching, useDeleteItem } from '../Utils/hooks';
 import DataTableTemplate from '../Utils/DataTableTemplate';
 import { TextFilterComponent } from '../Utils/FilterComponents';
+import UpdateButton from '../Utils/UpdateButton';
+import DeleteButton from '../Utils/DeleteButton';
 
 function VillesListe() {
     // Utiliser nos hooks personnalisés
@@ -25,18 +27,24 @@ function VillesListe() {
         return (
             <div className="flex gap-2 justify-content-center">
                 {canDelete && (
-                    <Link to={`/dashboard/composants/updateVille/${rowData.id}`} className="p-button p-button-icon-only p-button-rounded p-button-text">
-                        <i className="pi pi-wrench"></i>
-                    </Link>
-                )}
-                
-                {canDelete && (
-                    <Button
-                        icon={loadingDelete && itemIdToDelete === rowData.id ? 'pi pi-spin pi-spinner' : 'pi pi-trash'}
-                        className="p-button-danger p-button-text p-button-rounded"
-                        onClick={() => handleDelete(rowData.id)}
-                        disabled={loadingDelete && itemIdToDelete === rowData.id}
-                    />
+                    <>
+                        {/* Utiliser le composant UpdateButton */}
+                        <UpdateButton
+                            itemId={rowData.id}
+                            updatePath="/dashboard/composants/updateVille"
+                            tooltip="تعديل المدينة"
+                        />
+                        
+                        {/* Utiliser le composant DeleteButton avec loader Font Awesome */}
+                        <DeleteButton
+                            itemId={rowData.id}
+                            onDelete={handleDelete}
+                            loading={loadingDelete}
+                            loadingItemId={itemIdToDelete}
+                            loadingIcon="fa-solid fa-spinner fa-spin text-danger"
+                            tooltip="حذف المدينة"
+                        />
+                    </>
                 )}
                 
                 {!canDelete && <span className="text-muted">مدينة افتراضية</span>}
