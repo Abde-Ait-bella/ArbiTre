@@ -1,0 +1,393 @@
+/* Styles de base pour les champs */
+.modern-input,
+.modern-select {
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.modern-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.modern-input:focus,
+.modern-select:focus {
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+    background-color: rgba(255, 255, 255, 0.08);
+    outline: none;
+}
+
+/* États de validation */
+.modern-input.is-invalid,
+.modern-select.is-invalid {
+    border-color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.1);
+    animation: shake 0.4s ease-in-out;
+}
+
+.modern-input.is-valid,
+.modern-select.is-valid {
+    border-color: #28a745;
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+/* Message d'erreur moderne */
+.modern-error {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #ff6b6b;
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(220, 53, 69, 0.05));
+    padding: 10px 15px;
+    border-radius: 6px;
+    border-left: 4px solid #dc3545;
+    backdrop-filter: blur(10px);
+    animation: fadeInUp 0.3s ease;
+    font-weight: 500;
+    text-align: right;
+    direction: rtl;
+}
+
+/* Labels */
+.form-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #fff;
+    font-size: 14px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Bouton moderne */
+.modern-btn {
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    font-weight: 600;
+    padding: 12px 30px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.modern-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+    color: white;
+}
+
+.modern-btn:active {
+    transform: translateY(0);
+}
+
+.modern-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.modern-btn.loading {
+    position: relative;
+}
+
+/* Styles pour les alertes modernes */
+.modern-alert {
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: right;
+    direction: rtl;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.alert-danger.modern-alert {
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.15), rgba(220, 53, 69, 0.1));
+    color: #dc3545;
+    border-left: 4px solid #dc3545;
+}
+
+.alert-success.modern-alert {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.15), rgba(40, 167, 69, 0.1));
+    color: #28a745;
+    border-left: 4px solid #28a745;
+}
+
+/* Animation pour les alertes */
+.animate__fadeIn {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover effect pour les alertes */
+.modern-alert:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+/* Styles pour les radio buttons */
+.form-check-input {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background-color: transparent;
+    margin-top: 0.25rem;
+}
+
+.form-check-input:checked {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.25);
+}
+
+.form-check-input:focus {
+    border-color: #e74c3c;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.25);
+}
+
+.form-check-input.is-invalid {
+    border-color: #dc3545;
+    animation: shake 0.4s ease-in-out;
+}
+
+.form-check-label {
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.form-check-label:hover {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Fieldset moderne */
+fieldset {
+    border: none;
+    padding: 0;
+}
+
+fieldset legend {
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    padding: 0;
+    margin-bottom: 0.5rem;
+    width: auto;
+}
+
+/* Animation pour les radio buttons */
+.form-check {
+    padding-left: 0;
+    margin-bottom: 0.5rem;
+}
+
+.form-check-input {
+    margin-left: 0;
+    margin-right: 0.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.form-check-input:checked::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background-color: white;
+    border-radius: 50%;
+    animation: radioCheck 0.3s ease;
+}
+
+@keyframes radioCheck {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Spinner personnalisé */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modern-input,
+    .modern-select {
+        padding: 10px 14px;
+        font-size: 16px; /* Évite le zoom sur iOS */
+    }
+    
+    .modern-btn {
+        padding: 10px 24px;
+        font-size: 14px;
+    }
+    
+    fieldset .col-sm-3 {
+        margin-bottom: 1rem;
+    }
+    
+    fieldset legend {
+        font-size: 0.9rem;
+    }
+}
+
+/* Styles pour les options des select */
+.modern-select option {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 10px;
+}
+
+/* États hover pour les champs */
+.modern-input:hover:not(:focus),
+.modern-select:hover:not(:focus) {
+    border-color: rgba(231, 76, 60, 0.5);
+    background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Styles spéciaux pour les champs numériques */
+input[type="number"].modern-input {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+input[type="number"].modern-input::-webkit-outer-spin-button,
+input[type="number"].modern-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"].modern-input {
+    -moz-appearance: textfield;
+}
+
+/* Effet spécial pour le numéro du joueur */
+input[name="joueur_numero"] {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05));
+    border: 2px solid rgba(231, 76, 60, 0.3);
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+input[name="joueur_numero"]:focus {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.08));
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25);
+    color: #fff;
+}
+
+/* Style pour champ invalide avec animation shake */
+input[name="joueur_numero"].is-invalid {
+    border-color: #dc3545 !important;
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.15), rgba(220, 53, 69, 0.08));
+    color: #dc3545;
+    animation: shake 0.4s ease-in-out, errorGlow 0.6s ease;
+}
+
+@keyframes errorGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+}
+
+/* Animation pour les champs validés */
+.is-valid {
+    animation: successGlow 0.6s ease;
+}
+
+@keyframes successGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+/* Styles pour les champs numériques avec placeholder en arabe */
+input[type="number"].modern-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    font-weight: normal;
+}
+
+/* Message de validation réussite pour les nombres */
+input[name="joueur_numero"].is-valid {
+    border-color: #28a745 !important;
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.15), rgba(40, 167, 69, 0.08));
+    color: #28a745;
+}
+
+input[name="joueur_numero"].is-valid:focus {
+    color: #fff;
+    border-color: #28a745;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
+}

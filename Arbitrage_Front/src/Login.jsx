@@ -5,8 +5,6 @@ import { AuthUser } from "./AuthContext";
 
 function Login() {
 
-    console.log("innerWidth",window.innerWidth)
-
     const [values, setValues] = useState({
         email: '',
         password: ''
@@ -115,41 +113,41 @@ function Login() {
                             <div className="container-fluid">
                                 <div className="row h-100 align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
                                     <div className="col-md-5">
-                                        <div className="bg-secondary rounded p-4 p-sm-5 mx-3">
+                                        <div className="p-4 mx-3 rounded bg-secondary p-sm-5">
                                             {errorBack && <div dir="rtl" class="p-3 mb-4 bg-danger text-white text-center rounded">{errorBack}</div>}
-                                            <div className="d-flex align-items-center justify-content-between mb-3">
-                                                <p className="fs-2 pt-2 fw-bold">ت الدخول</p>
+                                            <div className="mb-3 d-flex align-items-center justify-content-between">
+                                                <p className="pt-2 fs-2 fw-bold">ت الدخول</p>
                                                 <Link to="/" className="logo">
                                                     <h3 className="text-primary"><i class="text-primary fa-solid fa-flag-checkered ms-2 me-3"></i> ArbiTre</h3>
                                                 </Link>
                                             </div>
-                                            <div className="form-floating mb-3">
-                                                <input type="email" name="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={handelCHange} />
+                                            <div className="mb-3 form-floating">
+                                                <input type="email" name="email" className="form-control" dir="ltr" id="floatingInput" placeholder="name@example.com" onChange={handelCHange} />
                                                 <label style={{right: "0"}} for="floatingInput">البريد الالكتروني</label>
                                             </div>
-                                            {errors?.email && <p className="text-danger me-3 text-center">{errors?.email}</p>}
+                                            {errors?.email && <p className="text-center text-danger me-3">{errors?.email}</p>}
 
-                                            <div className="form-floating d-flex align-items-center justify-content-around mb-4">
+                                            <div className="mb-4 form-floating d-flex align-items-center justify-content-around">
                                                 <div className="form-floating col-10">
-                                                    <input type={inputType} name="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={handelCHange} />
+                                                    <input type={inputType} name="password" className="form-control" dir="ltr" id="floatingPassword" placeholder="Password" onChange={handelCHange} />
                                                     <label style={{right: "0"}}  for="floatingPassword">الرمز السري</label>
                                                 </div>
                                                 <i className={`${iconType} me-2`} onClick={togglePassword} ></i>
                                             </div>
                                             
-                                            {errors?.password && <p className="text-danger me-3 text-center">{errors?.password}</p>}
-                                            <div className="d-flex align-items-center justify-content-center mb-4">
+                                            {errors?.password && <p className="text-center text-danger me-3">{errors?.password}</p>}
+                                            <div className="mb-4 d-flex align-items-center justify-content-center">
                                                 <div className="form-check">
                                                 </div>
                                                 <a href="/forgot-password">نسيت الرمز السري !</a>
                                             </div>
-                                            <button type="submit" className="btn btn-danger py-3 w-100 mb-4 fw-bold">تسجيل الدخول
+                                            <button type="submit" className="py-3 mb-4 btn btn-danger w-100 fw-bold">تسجيل الدخول
                                                 {loadingLogin ? (
                                                     <div className="spinner-border spinner-border-sm me-3 fs-2" role="status">
                                                         <span className="sr-only">Loading...</span>
                                                     </div>) : ''}
                                             </button>
-                                            <p className="text-center mb-0 fw-bold pb-1">ليس لديك حساب ؟ <a href="/register">إنشاء الحساب</a></p>
+                                            <p className="pb-1 mb-0 text-center fw-bold">ليس لديك حساب ؟ <a href="/register">إنشاء الحساب</a></p>
                                         </div>
                                     </div>
                                 </div>

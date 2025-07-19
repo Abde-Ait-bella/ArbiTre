@@ -83,7 +83,7 @@ class AvertissementCotroller extends Controller
             }
 
             if (isset($updatedAvertissement['joueur_numero_licence'])) {
-                $joueur = Joueur::where('joueur_numero_licence', $updatedAvertissement['joueur_numero_licence'])->first();
+                $joueur = Joueur::where('joueur_numero_licence', $updatedAvertissement['joueur_numero_licence'])->where('user')->first();
                 if ($joueur) {
                     $joueur->nom = $updatedAvertissement['nom'];
                     $joueur->joueur_numero_licence = $updatedAvertissement['joueur_numero_licence'];

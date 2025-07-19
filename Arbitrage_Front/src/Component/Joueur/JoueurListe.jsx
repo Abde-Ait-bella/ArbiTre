@@ -1,111 +1,100 @@
-import React, { useEffect, useState } from 'react';
-import axios from "axios";
-import { Link, useNavigate } from 'react-router-dom';
-import { axiosClinet } from '../../Api/axios';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
-import { AuthUser } from '../../AuthContext';
+import { Link } from 'react-router-dom';
+import { FilterMatchMode } from 'primereact/api';
+import { Button } from 'primereact/button';
+import { useDataFetching, useDeleteItem } from '../Utils/hooks';
+import DataTableTemplate from '../Utils/DataTableTemplate';
+import { TextFilterComponent } from '../Utils/FilterComponents';
+import UpdateButton from '../Utils/UpdateButton';
+import DeleteButton from '../Utils/DeleteButton';
+import 'primereact/resources/themes/lara-dark-indigo/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
 
 function JoueurListe() {
+    // Utiliser nos hooks personnalisés
+    const { data: joueurs, loading } = useDataFetching(
+        '/joueur', 
+        (data, user) => data.filter(j => parseInt(j.user_id) === user?.id)
+    );
+    
+    const { handleDelete, loadingDelete, itemIdToDelete } = useDeleteItem(
+        '/joueur', 
+        '/dashboard/composants/deletedJoueur'
+    );
 
-    const [joueurs, setJoueurs] = useState();
-    const [idJoueur, setIdJoueur] = useState();
-    const [loadingDelete, setLoadingDelete] = useState(false);
-    const { user } = AuthUser();
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        axiosClinet.get('/joueur')
-            .then((res) => {
-                setJoueurs(res.data.filter((j) => parseInt(j.user_id) === user?.id))
-                setLoading(false)
-            })
-    }, [])
-
-    const handleDelete = (id) => {
-        setLoadingDelete(true)
-        setIdJoueur(id)
-        axiosClinet.delete(`/joueur/${id}`).then(
-            (response) => {
-                const { status } = response;
-                if (status === 200) {
-                    setLoadingDelete(false)
-                    navigate('/composants/deletedJoueur');
-                }
-            }
-        ).catch((error) => {
-            setLoadingDelete(false)
-            console.error(`Error deleting stade with id ${id}:`, error);
-        });
+    // Template pour les actions (modifier, supprimer)
+    const actionBodyTemplate = (rowData) => {
+        return (
+            <div className="flex gap-2 justify-content-center">
+                {/* Utiliser le composant UpdateButton */}
+                <UpdateButton
+                    itemId={rowData.id}
+                    updatePath="/dashboard/composants/updateJoueur"
+                    tooltip="تعديل اللاعب"
+                />
+                
+                {/* Utiliser le composant DeleteButton avec loader Font Awesome */}
+                <DeleteButton
+                    itemId={rowData.id}
+                    onDelete={handleDelete}
+                    loading={loadingDelete}
+                    loadingItemId={itemIdToDelete}
+                    loadingIcon="fa-solid fa-spinner fa-spin text-danger"
+                    tooltip="حذف اللاعب"
+                />
+            </div>
+        );
     };
 
+    // Définir les colonnes pour notre DataTable
+    const columns = [
+        {
+            field: 'nom',
+            header: 'الاسم',
+            sortable: true,
+            filterable: true,
+            filterPlaceholder: 'بحث بالاسم',
+            filterElement: options => <TextFilterComponent options={options} placeholder="بحث بالاسم" />,
+            body: rowData => rowData.nom.toUpperCase()
+        },
+        {
+            field: 'joueur_numero_licence',
+            header: 'رقم الرخصة',
+            filterable: true,
+            filterPlaceholder: 'بحث برقم الرخصة',
+            filterElement: options => <TextFilterComponent options={options} placeholder="بحث برقم الرخصة" />,
+            body: rowData => rowData.joueur_numero_licence.toUpperCase()
+        },
+        {
+            field: 'joueur_numero',
+            header: 'رقم الاعب',
+            filterable: true,
+            filterPlaceholder: 'بحث برقم الاعب',
+            filterElement: options => <TextFilterComponent options={options} placeholder="بحث برقم الاعب" />
+        },
+        {
+            field: 'actions',
+            header: 'الإجراءات',
+            body: actionBodyTemplate,
+            style: { width: '10rem', textAlign: 'center' }
+        }
+    ];
+
+    // Utiliser notre composant DataTable générique
     return (
-        <>
-            {/* <!-- Table matches --> */}
-
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-secondary text-center rounded p-4">
-                    <div class="d-flex align-items-center justify-content-start mb-3">
-                        <Link to="/dashboard/composants/addJoueur" class="btn btn-warning pt-2 px-4">إضافة لاعب <i class="fa-solid fa-circle-plus me-2"></i></Link>
-
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table text-start align-middle table-hover mb-0">
-                            <thead>
-                                <tr class="text-white">
-                                    <th scope="col" className="text-center">الاسم</th>
-                                    <th scope="col" className="text-center">رقم الرخصة</th>
-                                    <th scope="col" className="text-center">رقم الاعب</th>
-                                    <th scope="col" className="text-center">الحدف / التعديل</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    loading ?
-
-                                        <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                            <tr className="text-center">
-                                                <th><Skeleton height={30} /></th>
-                                                <th><Skeleton height={30} /></th>
-                                                <th><Skeleton height={30} /></th>
-                                                <th><Skeleton height={30} /></th>
-                                            </tr>
-                                            <tr className="text-center">
-                                                <th className='col-3'><Skeleton height={30} /></th>
-                                                <th><Skeleton height={30} /></th>
-                                                <th><Skeleton height={30} /></th>
-                                                <th className='col-3'><Skeleton height={30} /></th>
-                                            </tr>
-                                        </SkeletonTheme>
-
-                                        :
-
-                                        joueurs?.map((j) => (
-                                            <tr className="text-center" key={j.id}>
-                                                <td>{j.nom.toUpperCase()}</td>
-                                                <td>{j.joueur_numero_licence.toUpperCase()}</td>
-                                                <td>{j.joueur_numero}</td>
-                                                <td className='col-3'><Link to={`/dashboard/composants/updateJoueur/${j.id}`}><i class="fa-solid fa-wrench"></i></Link> <Link onClick={() => handleDelete(j.id)} >
-                                                    {
-                                                        loadingDelete & idJoueur === j.id ? (
-                                                            <div className="spinner-border spinner-border-sm me-3 mb-1 fs-2" role="status">
-                                                                <span className="sr-only">Loading...</span>
-                                                            </div>) : <i className="fa-solid fa-trash me-3"></i>
-                                                    }
-                                                </Link></td>
-                                            </tr>
-                                        ))}
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            {/* <!-- End table matches --> */}
-        </>
-    )
+        <DataTableTemplate
+            title="قائمة اللاعبين"
+            data={joueurs}
+            columns={columns}
+            loading={loading}
+            addButtonLabel="إضافة لاعب"
+            addButtonPath="/dashboard/composants/addJoueur"
+            globalSearchFields={['nom', 'joueur_numero_licence', 'joueur_numero']}
+            emptyMessage="لا توجد لاعبين متاحة"
+            onDelete={handleDelete}
+        />
+    );
 }
 
 export default JoueurListe;

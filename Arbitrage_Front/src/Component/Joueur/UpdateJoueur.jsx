@@ -1,123 +1,70 @@
-import React, { useEffect, useState } from "react";
+
 import { Link } from "react-router-dom";
-import { useNavigate, useParams } from 'react-router-dom';
-import { axiosClinet } from "../../Api/axios";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useUpdateHandler } from '../Utils/useUpdateHandler';
+import { validationSchemas } from '../Utils/validationSchemas';
+import { FormInput, FormNumber, SubmitButton, ErrorAlert } from '../Utils/FormComponents';
+import '../../style/forms.css';
 
-function UpdateStade() {
+function UpdateJoueur() {
+    const {
+        register,
+        handleSubmit,
+        errors,
+        loading,
+        submitLoading,
+        submitError,
+        initialData
+    } = useUpdateHandler(
+        validationSchemas.joueur,
+        '/joueur',
+        '/dashboard/composants/updatedJoueur'
+    );
 
-    const [joueurs, setJoueur] = useState();
-    const [updateJoueur, setUpdateJoueur] = useState();
-    const [loading, setLoading] = useState(true);
-    const [loadingUpdate, setLoadingUpdate] = useState(false);
-    const navigate = useNavigate();
-    const { id } = useParams();
-
-    useEffect(() => {
-        axiosClinet.get('/joueur')
-            .then((res) => {
-                setJoueur(res.data.find((a) => a.id === parseInt(id)))
-                setLoading(false)
-            })
-    }, [])
-
-
-    const handleUpdateJoueur = (event) => {
-        const { name, value } = event.target;
-        setUpdateJoueur(prevValues => ({
-            ...prevValues,
-            [name]: value,
-        }))
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setLoadingUpdate(true)
-        if (updateJoueur) {
-            await axiosClinet.put(`/joueur/${id}`, updateJoueur).then(
-                (response) => {
-                    const { status } = response;
-                    if (status === 200) {
-                        setLoadingUpdate(false)
-                        navigate('/dashboard/composants/updatedJoueur');
-                    }
-                }
-            ).catch(
-                (error) => {
-                    setLoadingUpdate(false)
-                }
-            )
-        } else {
-            setLoadingUpdate(false)
-        }
-    }
-
-
-
-
-    return (
-        <>{
-            loading ?
-                <>
-                <div className="d-flex justify-content-center my-4">
-                    <div class="col-sm-12 col-xl-6 text-center d-none d-lg-block">
-                        <div class="bg-secondary rounded h-100 p-4">
+    if (loading) {
+        return (
+            <>
+                {/* Desktop Skeleton */}
+                <div className="my-4 d-flex justify-content-center">
+                    <div className="text-center col-sm-12 col-xl-6 d-none d-lg-block">
+                        <div className="p-4 rounded bg-secondary h-100">
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
                                 <div className="row d-flex align-items-center justify-content-center">
                                     <div className="col-md-5">
                                         <Skeleton height={40} />
                                     </div>
                                 </div>
-
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <div className="col-2">
-                                        <div className="mt-2">
-                                            <Skeleton height={30} />
-                                        </div>
+                                        <Skeleton height={30} />
                                     </div>
                                     <div className="col-10">
-                                        <div className="mt-2">
-                                            <Skeleton height={30} />
-                                        </div>
+                                        <Skeleton height={30} />
                                     </div>
                                 </div>
-
-                                <div className="row mt-2">
+                                <div className="mt-2 row">
                                     <div className="col-md-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={35} />
-                                        </div>
+                                        <Skeleton height={35} />
                                     </div>
                                     <div className="col-md-9">
-                                        <div className="mt-2">
-                                            <Skeleton height={35} />
-                                        </div>
+                                        <Skeleton height={35} />
                                     </div>
                                 </div>
-                                <div className="row mt-2">
+                                <div className="mt-2 row">
                                     <div className="col-md-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={35} />
-                                        </div>
+                                        <Skeleton height={35} />
                                     </div>
                                     <div className="col-md-9">
-                                        <div className="mt-2">
-                                            <Skeleton height={35} />
-                                        </div>
+                                        <Skeleton height={35} />
                                     </div>
                                 </div>
-
-                                <div className="row mt-3 d-flex justify-content-between">
+                                <div className="mt-3 row d-flex justify-content-between">
                                     <div className="col-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={36} />
-                                        </div>
+                                        <Skeleton height={36} />
                                     </div>
                                     <div className="col-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={36} />
-                                        </div>
+                                        <Skeleton height={36} />
                                     </div>
                                 </div>
                             </SkeletonTheme>
@@ -125,127 +72,138 @@ function UpdateStade() {
                     </div>
                 </div>
 
-                
-                <div className="d-lg-none mx-4">
-                    <div class="col-sm-12 col-xl-6 text-center">
-                        <div class="bg-secondary rounded h-100 p-4">
+                {/* Mobile Skeleton */}
+                <div className="mx-4 d-lg-none">
+                    <div className="text-center col-sm-12 col-xl-6">
+                        <div className="p-4 rounded bg-secondary h-100">
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-
                                 <div className="row d-flex align-items-center justify-content-center">
                                     <div className="col-7">
                                         <Skeleton height={35} />
                                     </div>
                                 </div>
-
-                                <div className="row mt-4 d-flex align-items-center justify-content-center">
+                                <div className="mt-4 row d-flex align-items-center justify-content-center">
                                     <div className="col-5">
-                                        <div className="mt-2">
-                                            <Skeleton height={25} />
-                                        </div>
+                                        <Skeleton height={25} />
                                     </div>
                                 </div>
-
                                 <div className="row">
                                     <div className="col-md-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={30} />
-                                        </div>
+                                        <Skeleton height={30} />
                                     </div>
                                 </div>
-
-                                
-                                <div className="row d-flex align-items-center mt-2 justify-content-center">
+                                <div className="mt-2 row d-flex align-items-center justify-content-center">
                                     <div className="col-5">
-                                        <div className="mt-2">
-                                            <Skeleton height={25} />
-                                        </div>
+                                        <Skeleton height={25} />
                                     </div>
                                 </div>
-
-                                <div className="row ">
+                                <div className="row">
                                     <div className="col-md-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={30} />
-                                        </div>
+                                        <Skeleton height={30} />
                                     </div>
                                 </div>
-                                        
-                                <div className="row d-flex align-items-center mt-2 justify-content-center">
+                                <div className="mt-2 row d-flex align-items-center justify-content-center">
                                     <div className="col-5">
-                                        <div className="mt-2">
-                                            <Skeleton height={25} />
-                                        </div>
+                                        <Skeleton height={25} />
                                     </div>
                                 </div>
-
-                                <div className="row ">
+                                <div className="row">
                                     <div className="col-md-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={30} />
-                                        </div>
+                                        <Skeleton height={30} />
                                     </div>
                                 </div>
-
-                                <div className="row mt-3 d-flex justify-content-between">
+                                <div className="mt-3 row d-flex justify-content-between">
                                     <div className="col-5">
-                                        <div className="mt-2">
-                                            <Skeleton height={36} />
-                                        </div>
+                                        <Skeleton height={36} />
                                     </div>
                                     <div className="col-5">
-                                        <div className="mt-2">
-                                            <Skeleton height={36} />
-                                        </div>
+                                        <Skeleton height={36} />
                                     </div>
                                 </div>
                             </SkeletonTheme>
                         </div>
                     </div>
                 </div>
-                </>
+            </>
+        );
+    }
 
-                :
-                <div className="d-flex justify-content-center my-4">
-                    <div class="col-sm-12 col-xl-6 text-center">
-                        <div class="bg-secondary rounded h-100 p-4 p-4 mx-4 mx-lg-0">
-                            <p class="mb-lg-4 fs-2 fw-bold text-white">تعديل اللاعب</p>
-                            <form onSubmit={handleSubmit}>
-                                <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> الاسم</label>
-                                    <div class="col-sm-10">
-                                        <input name="nom" value={updateJoueur ? updateJoueur?.nom?.toUpperCase() : joueurs?.nom?.toUpperCase()} onChange={handleUpdateJoueur} type="text" class="form-control" id="inputEmail3" />
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-3 col-form-label"> رقم الرخصة</label>
-                                    <div class="col-sm-9">
-                                        <input name="joueur_numero_licence" value={updateJoueur ? updateJoueur?.joueur_numero_licence?.toUpperCase() : joueurs?.joueur_numero_licence?.toUpperCase()} onChange={handleUpdateJoueur} type="text" class="form-control" id="inputEmail3" />
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-3 col-form-label"> رقم اللاعب</label>
-                                    <div class="col-sm-9">
-                                        <input name="joueur_numero" value={updateJoueur ? updateJoueur?.joueur_numero : joueurs?.joueur_numero} onChange={handleUpdateJoueur} type="text" class="form-control" id="inputEmail3" />
-                                    </div>
-                                </div>
-                                <div className="d-flex justify-content-between">
-                                    <Link to="/dashboard/composants/joueur" class="btn btn-danger pt-0 px-4 mt-3"> رجوع<i class="fa-solid fa-caret-right me-2 mt-1 pt-1"></i></Link>
-                                    <button type="submit" class="btn btn-danger px-4 mt-3">تعديل
-                                        {
-                                            loadingUpdate ? (
-                                                <div className="spinner-border spinner-border-sm fs-2 mt-1 me-3" role="status">
-                                                    <span className="sr-only">Loading...</span>
-                                                </div>)
-                                                : <i class="fa-solid fa-circle-check me-3"></i>
-                                        }
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+    return (
+        <div className="my-4 d-flex justify-content-center">
+            <div className="text-center col-sm-12 col-xl-6">
+                <div className="p-4 mx-4 rounded bg-secondary h-100 mx-lg-0">
+                    <div className="mb-3 d-flex justify-content-start">
+                        <Link to="/dashboard/composants/joueur" className="px-4 mb-3 btn btn-danger">
+                            <i className="fa-solid fa-arrow-right ms-2"></i>
+                            رجـــوع
+                        </Link>
                     </div>
+                    
+                    <div className="mb-4">
+                        <h2 className="text-white fw-bold">
+                            <i className="fas fa-edit ms-3"></i>
+                            تعديل اللاعب
+                        </h2>
+                        <p className="mb-0 text-white-50">عدّل بيانات اللاعب</p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} noValidate>
+                        <ErrorAlert error={submitError} />
+
+                        <div className="row">
+                            <div className="col-12">
+                                <FormInput
+                                    label="اسم اللاعب"
+                                    name="nom"
+                                    placeholder="أدخل الاسم الكامل للاعب"
+                                    register={register}
+                                    error={errors.nom}
+                                    icon="fas fa-user"
+                                    maxLength={30}
+                                    showCharCount={true}
+                                />
+                            </div>
+
+                            <div className="col-md-6">
+                                <FormInput
+                                    label="رقم الرخصة"
+                                    name="joueur_numero_licence"
+                                    placeholder="رقم الرخصة (15 حرف كحد أقصى)"
+                                    register={register}
+                                    error={errors.joueur_numero_licence}
+                                    icon="fas fa-id-card"
+                                    maxLength={15}
+                                    showCharCount={true}
+                                />
+                            </div>
+
+                            <div className="col-md-6">
+                                <FormNumber
+                                    label="رقم اللاعب"
+                                    name="joueur_numero"
+                                    placeholder="رقم من 1 إلى 99"
+                                    register={register}
+                                    error={errors.joueur_numero}
+                                    icon="fas fa-hashtag"
+                                    min={1}
+                                    max={99}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="mt-4">
+                            <SubmitButton
+                                loading={submitLoading}
+                                text="تعديـــل اللاعب"
+                                loadingText="جاري تعديل اللاعب..."
+                                icon="fas fa-save"
+                            />
+                        </div>
+                    </form>
                 </div>
-                }
-        </>
-    )
+            </div>
+        </div>
+    );
 }
-export default UpdateStade;
+
+export default UpdateJoueur;

@@ -87,8 +87,6 @@ export function Penalty(props) {
             newPenalty[indexPenalty].matche_id = state.matchNamber;
             setPenaltyData_2(newPenalty);
         }
-
-        console.log('penaltyData_1', penaltyData_1, 'penaltyData_2', penaltyData_2 );
     }
 
 
@@ -127,11 +125,11 @@ export function Penalty(props) {
                     <>
                         <div className='mt-4 mb-3 d-none d-lg-block'>
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-4 mx-2">
+                                <div className="mx-2 mt-4 row">
                                     <div className="col-4">
                                         <div>
                                             <Skeleton height={40} />
@@ -165,32 +163,32 @@ export function Penalty(props) {
                         
                         <div className='mt-4 mb-3 d-lg-none'>
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-5 mx-1">
+                                <div className="mx-1 mt-5 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-3 mx-2">
+                                <div className="mx-2 mt-3 row">
                                     <div className="col-12">
                                         <div className="mt-2">
                                             <Skeleton height={40} />
                                         </div>
                                     </div>
-                                    <div className="col-12 mt-3">
+                                    <div className="mt-3 col-12">
                                         <div className="mt-2">
                                             <Skeleton height={40} />
                                         </div>
                                     </div>
-                                    <div className="col-12 mt-3">
+                                    <div className="mt-3 col-12">
                                         <div className="mt-2">
                                             <Skeleton height={40} />
                                         </div>
                                     </div>
-                                    <div className="col-12 mt-3">
+                                    <div className="mt-3 col-12">
                                         <div className="mt-2">
                                             <Skeleton height={40} />
                                         </div>
                                     </div>
-                                    <div className="col-12 mt-3 mb-2">
+                                    <div className="mt-3 mb-2 col-12">
                                         <div className="mt-2">
                                             <Skeleton height={40} />
                                         </div>
@@ -200,7 +198,7 @@ export function Penalty(props) {
                         </div>
                     </>
                     :
-                    <div className="row my-2">
+                    <div className="my-2 row">
                         <div className="col-md-12">
                             <div class=" card text-center bg-light text-white mx-1">
                                 <div class="card-header bg-secondary fw-bold">
@@ -209,13 +207,13 @@ export function Penalty(props) {
                                 <div class="card-body">
                                 {
                                     open ?
-                                        <div className="row border border-secondary border-4 rounded py-3 px-2 my-1 mt-3">
+                                        <div className="px-2 py-3 my-1 mt-3 border border-4 rounded row border-secondary">
          
                                             <div className='d-flex justify-content-end'>
-                                                <button className='btn btn-primary rounded-pill' onClick={addPenalty}><i class="fa-solid fa-plus mt-1 px-4"></i></button>
+                                                <button className='btn btn-primary rounded-pill' onClick={addPenalty}><i class="fa-solid fa-plus px-4"></i></button>
                                             </div>
                                             
-                                            <div className="penalty row mb-4 mt-4">
+                                            <div className="mt-4 mb-4 penalty row">
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
@@ -225,7 +223,7 @@ export function Penalty(props) {
                                                 {club_1 ? penaltyData_1.map((_, index) => (
                                                     <div className={`form-group col-md-3 mb-2 ${(index != (penaltyData_1.length - 1)) ? " border-left" : ""}`} key={index}>
                                                         <label>الفرصة {index + 1}</label>
-                                                        <div className="d-flex justify-content-center pt-3 ">
+                                                        <div className="pt-3 d-flex justify-content-center ">
                                                             <div class="form-check mx-2">
                                                                 <input class="form-check-input bg-success border-0" type="radio" value={1} checked={penaltyData_1[index].result == 1 ? 1 : 0} name={`penelty${index}`} onChange={(event) => handleChange(event, 0, index)} id={`penaltyRadio${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio${index}`}>
@@ -244,7 +242,7 @@ export function Penalty(props) {
                                                             
                                             </div>
 
-                                            <div className="penalty row mb-4">
+                                            <div className="mb-4 penalty row">
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
@@ -254,7 +252,7 @@ export function Penalty(props) {
                                                 {club_2 ? penaltyData_2.map((_, index) => (
                                                     <div className={`form-group col-md-3 mb-2 ${(index != (penaltyData_2.length - 1)) ? " border-left" : ""}`} key={index}>
                                                         <label>الفرصة {index + 1}</label>
-                                                        <div className="d-flex justify-content-center pt-3 ">
+                                                        <div className="pt-3 d-flex justify-content-center ">
                                                             <div class="form-check mx-2">
                                                                 <input class="form-check-input bg-success border-0" type="radio" value={1} name={`penelty_2${index}`} checked={penaltyData_2[index].result == 1 ? 1 : 0} onChange={(event) => handleChange(event, 1, index)} id={`penaltyRadio_2${index}`} />
                                                                 <label class="form-check-label" for={`penaltyRadio_2${index}`}>
@@ -273,21 +271,21 @@ export function Penalty(props) {
                                             </div>
 
                                             <div className='d-flex justify-content-end'>
-                                                <button className='btn btn-danger moin rounded-pill' onClick={SuppRow}><i class="fa-solid fa-minus mt-1 px-4"></i></button>
+                                                <button className='btn btn-danger moin rounded-pill' onClick={SuppRow}><i class="fa-solid fa-minus px-4"></i></button>
                                             </div>
                                    
                                         </div>
                                         : ""
                                 }
 
-                                        <div className='d-flex justify-content-center mt-2'>
+                                        <div className='mt-2 d-flex justify-content-center'>
                                                 <button className={`btn ${!open ? "btn-success" : "btn-danger"} border-white rounded-pill px-5 `} onClick={Open}>{`${!open ? "فتح" : "إغلق"}`}</button>
                                         </div> 
                                     
                                         <div className='mt-3'>
                                             {error && <span className='text-warning'>{error}<span className='text-warning me-2'>!!</span></span>}
                                         </div>
-                                        <div className='d-flex justify-content-right pt-2'>
+                                        <div className='pt-2 d-flex justify-content-right'>
                                             <button className={`btn me-3 my-2 px-4 fw-bold  ${isValide ? 'bg-warning text-danger' : 'bg-secondary text-white'}`} onClick={sendData}>حفـــــظ</button>
                                         </div>
                                 </div>

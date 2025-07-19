@@ -1,133 +1,154 @@
-import React, { useEffect, useState } from 'react';
-import axios from "axios";
-import { Link, useNavigate } from 'react-router-dom';
-import { axiosClinet } from '../../Api/axios';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from 'primereact/button';
+import { useDataFetching, useDeleteItem } from '../Utils/hooks';
+import DataTableTemplate from '../Utils/DataTableTemplate';
+import { TextFilterComponent, DropdownFilterComponent } from '../Utils/FilterComponents';
+import { AuthUser } from '../../AuthContext';
+import UpdateButton from '../Utils/UpdateButton';
+import DeleteButton from '../Utils/DeleteButton';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { AuthUser } from '../../AuthContext';
+import 'primereact/resources/themes/lara-dark-indigo/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
 
 function DelegueListe() {
-
-    const [delegues, setDelegues] = useState();
-    const [villes, setVilles] = useState();
-    const [delegueDefault, setDelegueDefault] = useState();
-    const [loadingDelete, setLoadingDelete] = useState();
-    const [idDelegue, setIdDelegue] = useState();
     const { user } = AuthUser();
-    const navigate = useNavigate();
+    
+    // Récupérer les données des délégués et des villes avec nos hooks personnalisés
+    const { data: allDelegues, loading: deleguesLoading } = useDataFetching('/delegue');
+    const { data: villes, loading: villesLoading } = useDataFetching('/ville');
+    
+    // Gérer la suppression avec le hook personnalisé
+    const { handleDelete, loadingDelete, itemIdToDelete } = useDeleteItem(
+        '/delegue',
+        '/dashboard/composants/deletedDelegue'
+    );
 
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        axiosClinet.get('/delegue')
-            .then((res) => {
-                setDelegues(res.data.filter((d) => parseInt(d.user_id) === user?.id))
-                setDelegueDefault(res.data.filter((d) => d.user_id === null))
-            })
-        axiosClinet.get('/ville')
-            .then((res) => {
-                setVilles(res.data)
-                setLoading(false)
-            })
-    }, [])
-
-
-    const handleDelete = (id) => {
-        setLoadingDelete(true)
-        setIdDelegue(id)
-        axiosClinet.delete(`/delegue/${id}`).then(
-            (response) => {
-                const { status } = response;
-                if (status === 200) {
-                    setLoadingDelete(false)
-                    navigate('/dashboard/composants/deletedDelegue');
-                }
-            }
-        ).catch((error) => {
-            setLoadingDelete(false)
-            console.error(`Error deleting stade with id ${id}:`, error);
-        });
+    // Préparer les données: combiner les délégués par défaut et ceux de l'utilisateur
+    const deleguesDefault = allDelegues?.filter(d => d.user_id === null) || [];
+    const userDelegues = allDelegues?.filter(d => parseInt(d.user_id) === user?.id) || [];
+    const delegues = [...deleguesDefault, ...userDelegues];
+    
+    // Template pour afficher le nom de la ville
+    const villeBodyTemplate = (rowData) => {
+        const ville = villes?.find(v => v.id === parseInt(rowData.ville_id));
+        return ville ? ville.nom : '';
+    };
+    
+    // Template pour les actions (modifier/supprimer)
+    const actionBodyTemplate = (rowData) => {
+        const isDefault = rowData.user_id === null;
+        
+        return (
+            <div className="flex gap-2 justify-content-center">
+                {!isDefault ? (
+                    <>
+                        {/* Utiliser le composant UpdateButton */}
+                        <UpdateButton
+                            itemId={rowData.id}
+                            updatePath="/dashboard/composants/updateDelegue"
+                            tooltip="تعديل المندوب"
+                        />
+                        
+                        {/* Utiliser le composant DeleteButton avec loader Font Awesome */}
+                        <DeleteButton
+                            itemId={rowData.id}
+                            onDelete={handleDelete}
+                            loading={loadingDelete}
+                            loadingItemId={itemIdToDelete}
+                            loadingIcon="fa-solid fa-spinner fa-spin text-danger"
+                            tooltip="حذف المندوب"
+                        />
+                    </>
+                ) : (
+                    <span className="text-muted">مندوب افتراضي</span>
+                )}
+            </div>
+        );
     };
 
-    return (
-        <>
-            {/* <!-- Table matches --> */}
-
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-secondary text-center rounded p-4">
-                    <div class="d-flex align-items-center justify-content-start mb-3">
-                        <Link to="/dashboard/composants/addDelegue" class="btn btn-warning pt-2 px-4">إضافة مندوب <i class="fa-solid fa-circle-plus me-2"></i></Link>
-
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table text-start align-middle table-hover mb-0">
-                            <thead>
-                                <tr class="text-white">
-                                    <th scope="col" className="text-center">الاسم</th>
-                                    <th scope="col" className="text-center">النسب</th>
-                                    <th scope="col" className="text-center">المدينة</th>
-                                    <th scope="col" className="text-center">التعديل / الحدف</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    loading ?
-
-                                        <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                            <tr className="text-center">
-                                                <td><Skeleton height={30} /></td>
-                                                <td><Skeleton height={30} /></td>
-                                                <td><Skeleton height={30} /></td>
-                                                <td><Skeleton height={30} /></td>
-                                            </tr>
-                                            <tr className="text-center">
-                                                <td><Skeleton height={30} /></td>
-                                                <td><Skeleton height={30} /></td>
-                                                <td><Skeleton height={30} /></td>
-                                                <td className='col-3'><Skeleton height={30} /></td>
-                                            </tr>
-                                        </SkeletonTheme>
-
-                                        :
-                                        <>
-                                            <>
-                                                {delegueDefault?.map((d) => (
-                                                    <tr className="text-center" key={d.id}>
-                                                        <td>{d.prenom.toUpperCase()}</td>
-                                                        <td>{d.nom.toUpperCase()}</td>
-                                                        <td>{villes?.find(ville => ville.id === parseInt(d.ville_id))?.nom}</td>
-                                                        <td><i class="fa-solid fa-wrench text-dark"></i> <i class="fa-solid fa-trash text-dark me-3"></i></td>
-                                                    </tr>
-                                                ))}
-                                            </>
-                                            <>
-                                                {delegues?.map((d) => (
-                                                    <tr className="text-center" key={d.id}>
-                                                        <td>{d.prenom.toUpperCase()}</td>
-                                                        <td>{d.nom.toUpperCase()}</td>
-                                                        <td>{villes?.find(ville => ville.id === parseInt(d.ville_id))?.nom}</td>
-                                                        <td className='col-3'><Link to={`/dashboard/composants/updateDelegue/${d.id}`}><i class="fa-solid fa-wrench"></i></Link> <Link onClick={() => handleDelete(d.id)} >
-                                                            {
-                                                                loadingDelete & idDelegue === d.id ? (
-                                                                    <div className="spinner-border spinner-border-sm me-3 mb-1 fs-2" role="status">
-                                                                        <span className="sr-only">Loading...</span>
-                                                                    </div>) : <i className="fa-solid fa-trash me-3"></i>
-                                                            }
-                                                        </Link></td>
-                                                    </tr>
-                                                ))}
-                                            </>
-                                        </>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+    // Template pour le skeleton loading
+    const loadingTemplate = () => {
+        return (
+            <div className="px-4 pt-4 container-fluid">
+                <div className="p-4 text-center rounded" style={{ backgroundColor: '#1f2937' }}>
+                    <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                        <Skeleton height={60} count={1} className="mb-4" />
+                        <Skeleton height={40} count={5} />
+                    </SkeletonTheme>
                 </div>
             </div>
+        );
+    };
 
-            {/* <!-- End table matches --> */}
-        </>
-    )
+    // Définition des colonnes pour le DataTable
+    const columns = [
+        {
+            field: 'prenom',
+            header: 'الاسم',
+            sortable: true,
+            filterable: true,
+            filterPlaceholder: 'بحث بالاسم',
+            filterElement: options => <TextFilterComponent options={options} placeholder="بحث بالاسم" />,
+            body: rowData => rowData.prenom.toUpperCase(),
+            style: { minWidth: '150px', textAlign: 'center' }
+        },
+        {
+            field: 'nom',
+            header: 'النسب',
+            filterable: true,
+            filterPlaceholder: 'بحث بالنسب',
+            filterElement: options => <TextFilterComponent options={options} placeholder="بحث بالنسب" />,
+            body: rowData => rowData.nom.toUpperCase(),
+            style: { minWidth: '150px', textAlign: 'center' }
+        },
+        {
+            field: 'ville_id',
+            header: 'المدينة',
+            sortable: true,
+            filterable: true,
+            filterPlaceholder: 'بحث بالمدينة',
+            filterElement: options => <DropdownFilterComponent 
+                options={options} 
+                items={villes?.map(v => ({ label: v.nom, value: v.id.toString() }))}
+                placeholder="بحث بالمدينة" 
+            />,
+            body: villeBodyTemplate,
+            style: { minWidth: '150px', textAlign: 'center' }
+        },
+        {
+            field: 'actions',
+            header: 'الإجراءات',
+            body: actionBodyTemplate,
+            style: { width: '15rem', textAlign: 'center' }
+        }
+    ];
+
+    // État de chargement combiné
+    const loading = deleguesLoading || villesLoading;
+
+    // Rendu du composant avec le template
+    if (loading && !delegues.length) {
+        return loadingTemplate();
+    }
+
+    return (
+        <DataTableTemplate
+            title="قائمة المندوبين"
+            data={delegues}
+            columns={columns}
+            loading={loading}
+            addButtonLabel="إضافة مندوب"
+            addButtonPath="/dashboard/composants/addDelegue"
+            globalSearchFields={['prenom', 'nom']}
+            emptyMessage="لا توجد مندوبين متاحة"
+            onDelete={handleDelete}
+            loadingTemplate={loadingTemplate}
+        />
+    );
 }
 
 export default DelegueListe;

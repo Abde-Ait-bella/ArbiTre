@@ -7,13 +7,13 @@ function AddedClub() {
 
     return (
         <>
-            <div className="d-flex justify-content-center mt-5">
+            <div className="mt-5 d-flex justify-content-center">
                 <div class="row col-md-12 d-flex d-flex justify-content-center">
                     <div class="col-lg-6 col-md-12 col-xl-6">
                         <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
                             <div class="ms-3">
                                 <p class="mb-2 text-warning fs-2 fw-bold">تمة الاضافة بنجاح</p>
-                                <Link to="/composants/clubs" class="btn btn-danger pt-1 mt-3 px-4"> التالي<i class="fa-solid fa-caret-left me-2 pt-1"></i></Link>
+                                <Link to="/dashboard/composants/clubs" class="btn btn-danger pt-1 mt-3 px-4"> التالي<i class="fa-solid fa-caret-left me-2 pt-1"></i></Link>
                             </div>
                             <i class="fa-solid fa-check-to-slot fa-3x text-danger"></i>
                         </div>

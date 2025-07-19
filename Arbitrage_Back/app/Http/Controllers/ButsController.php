@@ -33,18 +33,21 @@ class ButsController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user()->id;
+        $user_id = Auth::user()->id;
         $buts = $request->all();
 
         foreach ($buts as $but) {
             But::create($but);
-            $joueur = Joueur::where('joueur_numero_licence', $but['joueur_numero_licence'])->get()->all();
+            $joueur = Joueur::where('joueur_numero_licence', $but['joueur_numero_licence'])
+                ->where('user_id', $user_id)
+                ->first();
+
             if (!$joueur) {
                 $j = new Joueur();
                 $j->nom = $but['joueur_nom'];
                 $j->joueur_numero_licence = $but['joueur_numero_licence'];
                 $j->joueur_numero = $but['joueur_numero'];
-                $j->user_id = $user;
+                $j->user_id = $user_id;
                 $j->save();
             }
         }

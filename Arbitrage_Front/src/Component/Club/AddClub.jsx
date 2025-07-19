@@ -1,252 +1,180 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { axiosClinet } from "../../Api/axios";
 import { AuthUser } from "../../AuthContext";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useFormHandler } from '../Utils/useFormHandler';
+import { validationSchemas } from '../Utils/validationSchemas';
+import { FormInput, FormSelect, SubmitButton, ErrorAlert } from '../Utils/FormComponents';
+import '../../style/forms.css';
 
-function AddStade() {
-
-    const [villes, setVilles] = useState();
-    const [addClub, setAddClub] = useState();
-    const [stades, setStades] = useState();
+function AddClub() {
+    const [villes, setVilles] = useState([]);
+    const [stades, setStades] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [loadingAdd, setLoadingAdd] = useState(false);
     const { user } = AuthUser();
 
-
-    const navigate = useNavigate();
+    const {
+        register,
+        handleSubmit,
+        errors,
+        loading: submitLoading,
+        submitError
+    } = useFormHandler(
+        validationSchemas.club,
+        '/club',
+        '/dashboard/composants/addedClub',
+        (data) => ({
+            ...data,
+            nom: data.nom.toUpperCase(),
+            abbr: data.abbr.toUpperCase()
+        })
+    );
 
     useEffect(() => {
-        axiosClinet.get('/ville')
-            .then((res) => setVilles(res.data.filter((v) => parseInt(v.user_id) === user?.id || v.user_id === null)))
-        axiosClinet.get('/stade')
-            .then((res) => setStades(res.data.filter((v) => parseInt(v.user_id) === user?.id || v.user_id === null)))
-        setLoading(false)
-    }, [])
+        const fetchData = async () => {
+            try {
+                const [villesRes, stadesRes] = await Promise.all([
+                    axiosClinet.get('/ville'),
+                    axiosClinet.get('/stade')
+                ]);
 
-    const handleAddClub = (event) => {
-        const { name, value } = event.target;
-        setAddClub(prevValues => ({
-            ...prevValues,
-            [name]: value.toUpperCase(),
-            user_id: parseInt(user?.id)
-        }))
-    }
-    const handleAddClubSelect = (event) => {
-        const { name, value } = event.target;
-        setAddClub(prevValues => ({
-            ...prevValues,
-            [name]: parseInt(value),
-        }))
-    }
+                const filteredVilles = villesRes.data.filter(
+                    (v) => parseInt(v.user_id) === user?.id || v.user_id === null
+                );
+                const filteredStades = stadesRes.data.filter(
+                    (s) => parseInt(s.user_id) === user?.id || s.user_id === null
+                );
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setLoadingAdd(true)
-        if (addClub) {
-            await axiosClinet.post('/club', addClub).then(
-                (response) => {
-                    const { data } = response;
-                    if (data.status === true) {
-                        setLoadingAdd(false)
-                        navigate('/composants/addedClub');
-                    }
-                }
-            ).catch(
-                (error) => {
-                    setLoadingAdd(false)
-                    console.error('Error:', error)
-                }
-            )
-        } else {
-            setLoadingAdd(false)
-        }
-    }
+                setVilles(filteredVilles);
+                setStades(filteredStades);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
+        fetchData();
+    }, [user?.id]);
+
+    if (loading) {
+        return (
+            <div className="my-4 d-flex justify-content-center">
+                <div className="text-center col-sm-12 col-xl-6 d-none d-lg-block">
+                    <div className="p-4 rounded bg-secondary h-100">
+                        <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                            <div className="row d-flex align-items-center justify-content-start">
+                                <div className="col-md-3">
+                                    <Skeleton height={40} />
+                                </div>
+                            </div>
+                            <div className="mt-4 row d-flex align-items-center justify-content-center">
+                                <div className="col-md-5">
+                                    <Skeleton height={40} />
+                                </div>
+                            </div>
+                            <div className="mt-2 row">
+                                <div className="col-12">
+                                    <Skeleton height={35} count={4} className="mt-2" />
+                                </div>
+                            </div>
+                            <div className="mt-4 row d-flex justify-content-center">
+                                <div className="col-4">
+                                    <Skeleton height={40} width={135} />
+                                </div>
+                            </div>
+                        </SkeletonTheme>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <>
-            {
-                loading ?
-                    <>
-                        <div className="d-flex justify-content-center my-4">
-                            <div class="col-sm-12 col-xl-6 text-center d-none d-lg-block">
-                                <div class="bg-secondary rounded h-100 p-4">
-                                    <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                        <div className="row d-flex align-items-center justify-content-start">
-                                            <div className="col-md-3">
-                                                <Skeleton height={40} />
-                                            </div>
-                                        </div>
-
-                                        <div className="row d-flex align-items-center justify-content-center mt-4">
-                                            <div className="col-md-5">
-                                                <Skeleton height={40} />
-                                            </div>
-                                        </div>
-
-                                        <div className="row mt-2">
-                                            <div className="col-2">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                            <div className="col-10">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="row mt-2">
-                                            <div className="col-2">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                            <div className="col-10">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="row mt-2">
-                                            <div className="col-12">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="row mt-2">
-                                            <div className="col-12">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="row mt-4 d-flex justify-content-center">
-                                            <div className="col-4">
-                                                <div className="mt-2">
-                                                    <Skeleton height={40} width={135} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </SkeletonTheme>
-                                </div>
+        <div className="my-4 d-flex justify-content-center">
+            <div className="text-center col-sm-12 col-xl-6">
+                <div className="p-4 rounded bg-secondary h-100">
+                    <div className="mb-3 d-flex justify-content-start">
+                        <Link to="/dashboard/composants/clubs" className="px-4 mb-3 btn btn-danger">
+                            <i className="fa-solid fa-arrow-right ms-2"></i>
+                            رجـــوع
+                        </Link>
+                    </div>
+                    
+                    <div className="mb-4">
+                        <h2 className="text-white fw-bold" >
+                            <i className="fas fa-shield-alt ms-3"></i>
+                            إضافة النادي
+                        </h2>
+                        <p className="mb-0 text-white-50">أضف نادي جديد إلى قاعدة البيانات</p>
+                    </div>
+                    
+                    <form onSubmit={handleSubmit} noValidate>
+                        <ErrorAlert error={submitError} />
+                        
+                        <div className="row">
+                            <div className="col-12">
+                                <FormInput
+                                    label="اسم النادي"
+                                    name="nom"
+                                    placeholder="أدخل الاسم الكامل للنادي"
+                                    register={register}
+                                    error={errors.nom}
+                                    icon="fas fa-shield-alt"
+                                />
+                            </div>
+                            
+                            <div className="col-12">
+                                <FormInput
+                                    label="التسمية المختصرة"
+                                    name="abbr"
+                                    placeholder="التسمية الملخصة (مثال: OCA)"
+                                    register={register}
+                                    error={errors.abbr}
+                                    icon="fas fa-code"
+                                />
+                            </div>
+                            
+                            <div className="col-md-6">
+                                <FormSelect
+                                    label="المدينة"
+                                    name="ville_id"
+                                    options={villes}
+                                    register={register}
+                                    error={errors.ville_id}
+                                    placeholder="اختر المدينة"
+                                    icon="fas fa-map-marker-alt"
+                                />
+                            </div>
+                            
+                            <div className="col-md-6">
+                                <FormSelect
+                                    label="الملعب"
+                                    name="stade_id"
+                                    options={stades}
+                                    register={register}
+                                    error={errors.stade_id}
+                                    placeholder="اختر الملعب"
+                                    icon="fas fa-futbol"
+                                />
                             </div>
                         </div>
-
-                        <div className="my-2 mx-4 d-lg-none">
-                            <div class="col-md-6 col-xl-6 text-center">
-                                <div class="bg-secondary rounded h-100 p-4">
-                                    <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-
-                                        <div className="row d-flex align-items-center justify-content-start">
-                                            <div className="col-6">
-                                                <Skeleton height={40} />
-                                            </div>
-                                        </div>
-
-                                        <div className="row d-flex align-items-center justify-content-center mt-4">
-                                            <div className="col-7">
-                                                <Skeleton height={40} />
-                                            </div>
-                                        </div>
-
-                                        <div className="row mt-2">
-                                            <div className="col-12">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="row mt-2">
-                                            <div className="col-12">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="row mt-2">
-                                            <div className="col-12">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="row mt-2 mb-lg-3 mb-5">
-                                            <div className="col-12">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="row mt-4 d-flex justify-content-center">
-                                            <div className="col-12">
-                                                <div className="mt-2">
-                                                    <Skeleton height={40} width={135} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </SkeletonTheme>
-                                </div>
-                            </div>
+                        
+                        <div className="mt-4">
+                            <SubmitButton 
+                                loading={submitLoading}
+                                text="إضــــافة النادي"
+                                loadingText="جاري إضافة النادي..."
+                                icon="fas fa-plus-circle"
+                            />
                         </div>
-                    </>
-
-                    :
-
-                    <div className="d-flex justify-content-center my-4">
-                        <div class="col-sm-12 col-xl-6 text-center">
-                            <div class="bg-secondary rounded h-100 p-4">
-                                <div className="d-flex justify-content-start">
-                                    <Link to="/composants/clubs" class="btn btn-danger px-4 mb-3"> رجـــوع<i class="fa-solid fa-caret-right me-3 pt-1"></i></Link>
-                                </div>
-                                <p class="mb-lg-4 fs-2 fw-bold text-white">إضافة النادي</p>
-                                <form onSubmit={handleSubmit}>
-                                    <div class="row mb-3">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label"> الاسم</label>
-                                        <div class="col-sm-10">
-                                            <input name="nom" onChange={handleAddClub} type="text" class="form-control" id="inputEmail3" placeholder="الاسم الكامل" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-10">
-                                            <input name="abbr" onChange={handleAddClub} type="text" class="form-control" id="inputEmail3" placeholder="التسمية الملخصة  (ABBR)" />
-                                        </div>
-                                    </div>
-                                    <select name="ville_id" onChange={handleAddClubSelect} class="form-select mb-3" aria-label="Default select example">
-                                        <option selected disabled>المدينة</option>
-                                        {villes?.map((v) =>
-                                            <option key={v.id} value={v.id}>{v.nom}</option>
-                                        )}
-                                    </select>
-                                    <select name="stade_id" onChange={handleAddClubSelect} class="form-select mb-3" aria-label="Default select example">
-                                        <option selected disabled>الملعب</option>
-                                        {stades?.map((s) =>
-                                            <option key={s.id} value={s.id}>{s.nom}</option>
-                                        )}
-                                    </select>
-                                    <div className="mt-5">
-                                        <button type="submit" class="btn btn-danger px-5 py-2 fw-bold">إضــــافة
-                                            {
-                                                loadingAdd ? (
-                                                    <div className="spinner-border spinner-border-sm fs-2 me-2" role="status">
-                                                        <span className="sr-only">Loading...</span>
-                                                    </div>)
-                                                    : ""
-                                            }
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>}
-        </>
-    )
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
 }
-export default AddStade;
+
+export default AddClub;

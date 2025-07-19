@@ -89,7 +89,7 @@ function ForgotPassword() {
                                         </a>
                                     </div>
                                     <div className="form-floating mb-3">
-                                        <input type="email" name="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={handelCHange} />
+                                        <input type="email" dir="ltr" name="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={handelCHange} />
                                         <label for="floatingInput">البريد الالكتروني</label>
                                     </div>
                                     {errors?.email && <p className="text-danger me-3">{errors?.email}</p>}

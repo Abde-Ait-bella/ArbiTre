@@ -13,6 +13,7 @@ use App\Http\Controllers\delegueController;
 use App\Http\Controllers\JoueurController;
 use App\Http\Controllers\matcheController;
 use App\Http\Controllers\PenaltyController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaisonController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StadeController;
@@ -36,7 +37,7 @@ Route::get('/matche' , [matcheController::class, 'index'])->middleware(['auth.ap
 Route::post('/matche' , [matcheController::class, 'store'])->middleware(['auth.api']);
 Route::put('/matche/{id}' , [matcheController::class, 'update'])->middleware(['auth.api']);
 Route::delete('/matche/{id}' , [matcheController::class, 'destroy'])->middleware(['auth.api']);
-
+    
 
 // Route::apiResource('avertissemet', AvertissementCotroller::class);
 
@@ -122,6 +123,16 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('sendPasswordResetLink', 'App\Http\Controllers\PasswordResetRequestController@sendEmail');
     Route::post('resetPassword', 'App\Http\Controllers\ChangePasswordController@passwordResetProcess');
 });
+
+Route::get('/users', function (Request $request) {
+    $users = \App\Models\User::all();
+    return response()->json([
+        'status' => 'success',
+        'data' => $users,
+    ]); 
+})->middleware('auth:api');
+
+Route::get('/rapport/{id}', [ReportController::class, 'generatePDF']);
 
 require __DIR__.'/auth.php';
 

@@ -1,9 +1,33 @@
 .detailleRapport {
   margin-top: 50px;
+  margin: 1.5rem;
   padding: 25px;
   font-family: 'Noto Naskh Arabic', serif;
   color: #000;
 }
+
+.ligne{
+  font-size: 1rem;
+}
+
+/* .detailleRapport h1 {
+  font-family: 'El Messiri', sans-serif;
+} */
+
+  .btn_print{
+    border-radius: 5px;
+    border: solid 3px;
+    background-color: #fff;
+    border-color: #6C7293;
+  }
+  .btn_print:hover{
+    background-color: #cfcfcf;
+    border: solid 3px #a8a8a890;
+  }
+
+  .btn_print i:hover{
+    color: #000;
+  }
 
 .detailleRapport .images {
   display: flex;
@@ -15,37 +39,38 @@
 
 
 .detailleRapport .images div:nth-of-type(1) {
-  margin-left:  10px;
+  margin-left: 10px;
   margin-right: 20px;
 }
 
 .detailleRapport .images div:nth-of-type(2) {
-  margin-right:  10px;
+  margin-right: 10px;
   margin-left: 20px;
   font-family: "Inria Sans", sans-serif;
 }
 
-.detailleRapport .images p{
+.detailleRapport .images p {
   margin: 0;
 }
 
-.detailleRapport .images p:nth-child(1){
+.detailleRapport .images p:nth-child(1) {
   font-size: larger;
   line-height: 19px;
 }
 
-.detailleRapport .images p:nth-child(2){
+.detailleRapport .images p:nth-child(2) {
   font-size: 17px;
 }
-.detailleRapport .images p:nth-child(3){
+
+.detailleRapport .images p:nth-child(3) {
   font-size: 11px;
 }
 
-.detailleRapport .images img{
+.detailleRapport .images img {
   height: 100px;
 }
 
-.detailleRapport .rapport-title{
+.detailleRapport .rapport-title {
   background-color: rgba(50%, 50%, 50%, 0.5);
   width: 100%;
   display: flex;
@@ -55,17 +80,17 @@
   font-family: amiri;
 }
 
-.detailleRapport .rapport-title h3{
+.detailleRapport .rapport-title h3 {
   margin: 0;
-  font-family: 'Noto Naskh Arabic', serif; 
+  font-family: 'Noto Naskh Arabic', serif;
 }
 
 .detailleRapport .table {
-  font-size: 14px;
+  font-size: 13px;
   color: #000;
 }
 
-.detailleRapport .table .th{
+.detailleRapport .table .th {
   background-color: rgb(203 203 203 / 50%);
   text-align: center;
 }
@@ -91,508 +116,350 @@
   display: flex;
 }
 
-.expl-content02 p{
+.expl-content02 p {
   font-size: 12px;
-    padding: 5px 15px;
-    background-color: rgb(203 203 203 / 50%);
-    border-radius: 14px;
+  padding: 5px 15px;
+  background-color: rgb(203 203 203 / 50%);
+  border-radius: 14px;
 }
 
-.ligne{
-    border-bottom: 1.5px solid rgb(203 203 203 / 50%);
-    width: 100%;
-    margin-bottom: 25px;
+.ligne {
+  border-bottom: 1.5px solid rgb(203 203 203 / 50%);
+  width: 100%;
+  margin-bottom: 25px;
 }
 
-.signature{
+.signature {
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 10px ;
+  margin-bottom: 10px;
 }
 
-@media screen and (max-width: 815px) {
-  .detailleRapport .images {
-    display: block;
-    position: relative;
-    justify-content: center;
-    padding-bottom: 95px;
+/* Remplacer toutes les media queries pour les petits écrans */
+
+/* Styles communs pour tous les écrans mobiles */
+@media screen and (max-width: 576px) {
+
+    .detailleRapport{
+    padding: 10px 0;
+    margin: 1.5rem 0; 
   }
 
-  .detailleRapport .images .logoLigue {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100px;
-    height: 50px;
+    .btn_print{
+    margin: 1rem 1.5rem;
   }
-
-  .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
-    opacity: 0.5;
-    position: absolute;
-    top: 17px;
+  /* Maintenir la disposition originale mais avec défilement */
+  .detailleRapport .table-responsive {
+    overflow-x: auto !important;  /* Activer le défilement horizontal */
+    margin-bottom: 1rem;
   }
-
-  .detailleRapport .images h1 {
-    font-family: "El Messiri", sans-serif;
-    position: absolute;
-    top: 67px;
-    font-size: small;
-    right: 53px;
-    width: 111px;
+  
+  /* Conserver la structure originale des tables côte à côte */
+  .detailleRapport .col-md-12.me-0.row {
+    flex-direction: row;
+    width: 100%;
   }
-
-  .detailleRapport .sub-table-1 {
-    width: 74.01px;
-  }
-
+  
+  /* Assurer que les largeurs des sous-tables restent relatives */
+  .detailleRapport .sub-table-1,
   .detailleRapport .sub-table-2 {
-    width: 78.5px;
+    width: 50% !important;  /* Maintenir le ratio 50/50 */
   }
-}
-
-  .btn_print{
-    border-radius: 5px;
-    border: solid 3px;
-    background-color: #fff;
-    border-color: #6C7293;
+  
+  /* Ajuster la taille de police pour une meilleure lisibilité */
+  .detailleRapport .table {
+    font-size: 12px;
   }
-  .btn_print:hover{
-    background-color: #c0c0c0;
-    border: solid 3px;
+  
+  /* Réduire les paddings des cellules */
+  .detailleRapport .table td,
+  .detailleRapport .table th {
+    padding: 0.25rem !important;
+    white-space: nowrap; /* Empêcher le texte de passer à la ligne */
   }
-
-  .btn_print i:hover{
-    color: #000;
-  }
-
-@media screen and (max-width: 800px) {
-  .detailleRapport .images {
-    display: block;
+  
+  /* Indicateur visuel de défilement pour les tableaux */
+  .detailleRapport .table-responsive {
     position: relative;
-    justify-content: center;
-    padding-bottom: 95px;
   }
-
-  .detailleRapport .images .logoLigue {
+  
+  .detailleRapport .table-responsive::after {
+    content: "";
     position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100px;
-    height: 50px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 10px;
+    background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.1));
+    pointer-events: none;
+    opacity: 0.7;
   }
-
-  .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
-    opacity: 0.5;
-    position: absolute;
-    top: 17px;
+  
+  /* Styles pour les autres éléments responsifs */
+  .expl-content01,
+  .expl-content02 {
+    font-size: 10px !important;
+    overflow-x: auto;
+    white-space: nowrap;
   }
-
-  .detailleRapport .images h1 {
-    font-family: "El Messiri", sans-serif;
-    position: absolute;
-    top: 67px;
-    font-size: small;
-    right: 53px;
-    width: 111px;
+  
+  .ligne.signature {
+    flex-direction: column;
+    align-items: flex-start;
   }
-
-  .detailleRapport .sub-table-1 {
-    width: 73.5px;
-  }
-
-  .detailleRapport .sub-table-2 {
-    width: 78px;
+  
+  .ligne.signature label {
+    margin-bottom: 0.5rem;
   }
 }
 
-@media screen and (max-width: 766px) {
-  .detailleRapport .images {
-    display: block;
-    position: relative;
-    justify-content: center;
-    padding-bottom: 95px;
-  }
-
-  .detailleRapport .images .logoLigue {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100px;
-    height: 50px;
-  }
-
-  .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
-    opacity: 0.5;
-    position: absolute;
-    top: 17px;
-  }
-
-  /* .detailleRapport .images h1 {
-    font-family: "El Messiri", sans-serif;
-    position: absolute;
-    top: 67px;
-    font-size: small;
-    left: 53px;
-    width: 111px;
-  } */
-
-  .detailleRapport .sub-table-1 {
-    width: 255px;
-  }
-
-  .detailleRapport .sub-table-2 {
-    width: 261px;
-  }
-}
-
+/* Appliquer les règles spécifiques à chaque taille d'écran */
 @media screen and (max-width: 574px) {
+
+    .detailleRapport{
+    padding: 10px 0;
+    margin: 1.5rem 0; 
+  }
+
+    .btn_print{
+    margin: 1rem 1.5rem;
+  }
+
+  /* Conserver les positionnements spécifiques des éléments d'en-tête */
   .detailleRapport .images {
     display: block;
     position: relative;
     justify-content: center;
-    padding-bottom: 95px;
+    padding-bottom: 1rem;
   }
 
   .detailleRapport .images .logoLigue {
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 20px;
+    top: -6rem;
     width: 100px;
     height: 50px;
   }
 
   .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
+    width: 4rem;
+    height: 5rem;
     opacity: 0.5;
     position: absolute;
-    top: 17px;
+    top: -6rem;
+    right: 20px;
   }
 
-  .detailleRapport .images h1 {
-    font-family: "El Messiri", sans-serif;
-    position: absolute;
-    top: 67px;
-    font-size: small;
-    left: 53px;
-    width: 111px;
+  .detailleRapport .images .title_rapport {
+    margin-top: 7rem !important;
   }
 
-  .detailleRapport .sub-table-1 {
-    width: 221px;
+  .detailleRapport .images .title_rapport_fr {
+    margin-top: 1rem !important;
   }
 
-  .detailleRapport .sub-table-2 {
-    width: 225px;
+  /* Ajouter les règles de défilement horizontal */
+  .detailleRapport .table-responsive {
+    overflow-x: auto !important;
+  }
+  
+  .detailleRapport .table td,
+  .detailleRapport .table th {
+    white-space: nowrap;
   }
 }
 
 @media screen and (max-width: 430px) {
-  .detailleRapport .images {
-    display: block;
-    position: relative;
-    justify-content: center;
-    padding-bottom: 95px;
+    .detailleRapport{
+    padding: 10px 0;
+    margin: 1.5rem 0; 
   }
 
-  .detailleRapport .images .logoLigue {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100px;
-    height: 50px;
+    .btn_print{
+    margin: 1rem 1.5rem;
   }
 
-  .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
-    opacity: 0.5;
-    position: absolute;
-    top: 17px;
-  }
-
+  /* Conserver les styles spécifiques */
   .detailleRapport .images h1 {
-    font-family: "El Messiri", sans-serif;
-    position: absolute;
-    top: 67px;
-    font-size: small;
     right: 108px;
-    width: 111px;
   }
-
-  .detailleRapport .sub-table-1 {
-    width: 152px;
-  }
-
+  
+  /* Maintenir les proportions tout en assurant le défilement */
+  .detailleRapport .sub-table-1,
   .detailleRapport .sub-table-2 {
-    width: 156px;
+    width: 50% !important;
+  }
+  
+  /* Optimiser davantage la taille de police */
+  .detailleRapport .table {
+    font-size: 7px;
+  }
+
+  .ligne{
+    font-size: 11px !important;
   }
 }
 
 @media screen and (max-width: 415px) {
-  .detailleRapport .images {
-    display: block;
-    position: relative;
-    justify-content: center;
-    padding-bottom: 95px;
+
+    .detailleRapport{
+    padding: 10px 0;
+    margin: 1.5rem 0; 
   }
 
-  .detailleRapport .images .logoLigue {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100px;
-    height: 50px;
-  }
-
-  .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
-    opacity: 0.5;
-    position: absolute;
-    top: 17px;
+    .btn_print{
+    margin: 1rem 1.5rem;
   }
 
   .detailleRapport .images h1 {
-    font-family: "El Messiri", sans-serif;
-    position: absolute;
-    top: 67px;
-    font-size: small;
     right: 97px;
-    width: 111px;
   }
-
-  .detailleRapport .sub-table-1 {
-    width: 145px;
-  }
-
+  
+  /* Maintenir les proportions tout en assurant le défilement */
+  .detailleRapport .sub-table-1,
   .detailleRapport .sub-table-2 {
-    width: 147px;
+    width: 50% !important;
   }
 }
 
 @media screen and (max-width: 412px) {
-  .detailleRapport .images {
-    display: block;
-    position: relative;
-    justify-content: center;
-    padding-bottom: 95px;
+
+    .detailleRapport{
+    padding: 10px 0;
+    margin: 1.5rem 0; 
   }
 
-  .detailleRapport .images .logoLigue {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100px;
-    height: 50px;
-  }
-
-  .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
-    opacity: 0.5;
-    position: absolute;
-    top: 17px;
+    .btn_print{
+    margin: 1rem 1.5rem;
   }
 
   .detailleRapport .images h1 {
-    font-family: "El Messiri", sans-serif;
-    position: absolute;
-    top: 67px;
-    font-size: small;
     left: 53px;
-    width: 111px;
   }
-
-  .detailleRapport .sub-table-1 {
-    width: 143px;
-  }
-
+  
+  /* Maintenir les proportions tout en assurant le défilement */
+  .detailleRapport .sub-table-1,
   .detailleRapport .sub-table-2 {
-    width: 147px;
+    width: 50% !important;
   }
 }
 
 @media screen and (max-width: 391px) {
-  .detailleRapport .images {
-    display: block;
-    position: relative;
-    justify-content: center;
-    padding-bottom: 30px;
+
+    .detailleRapport{
+    padding: 10px 0;
+    margin: 1.5rem 0; 
   }
 
-  .detailleRapport .images .logoLigue {
-    position: relative;
-    margin: 0 auto;
-    width: 154px;
-    height: 100px;
-    display: flex;
-    margin-bottom: 50px;
-    opacity: 1;
+    .btn_print{
+    margin: 1rem 1.5rem;
   }
 
-  .detailleRapport .images .titleLigue {
-    /* width: 115px;
-    height: 17px;
-    opacity: 0.5;
-    position: absolute;
-    top: 17px; */
-
-    opacity: 1;
-    position: relative;
-    margin: 0 auto;
-    width: 154px;
-    height: 170px;
-    display: flex;
-    margin-top: 25px;
-  }
-
-  .detailleRapport .images h1 {
-    font-family: "El Messiri", sans-serif;
-    position: absolute;
-    top: 67px;
-    font-size: small;
-    left: 53px;
-    width: 111px;
-  }
-
-  .detailleRapport .sub-table-1 {
-    width: 132px;
-  }
-
+  /* Maintenir les proportions tout en assurant le défilement */
+  .detailleRapport .sub-table-1,
   .detailleRapport .sub-table-2 {
-    width: 136px;
+    width: 50% !important;
   }
 }
 
 @media screen and (max-width: 376px) {
-  .detailleRapport .images {
-    display: block;
-    position: relative;
-    justify-content: center;
-    padding-bottom: 95px;
+  .detailleRapport{
+    padding: 20px 10px;
+    margin: 1.5rem 0;
   }
 
-  .detailleRapport .images .logoLigue {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100px;
-    height: 50px;
-  }
-
-  .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
-    opacity: 0.5;
-    position: absolute;
-    top: 17px;
+    .btn_print{
+    margin: 1rem 1.5rem;
   }
 
   .detailleRapport .images h1 {
-    font-family: "El Messiri", sans-serif;
-    position: absolute;
-    top: 67px;
-    font-size: small;
     right: 90px;
-    width: 111px;
   }
-
-  .detailleRapport .sub-table-1 {
-    width: 125px;
-  }
-
+  
+  /* Maintenir les proportions tout en assurant le défilement */
+  .detailleRapport .sub-table-1,
   .detailleRapport .sub-table-2 {
-    width: 128.5px;
+    width: 50% !important;
   }
 }
 
 @media screen and (max-width: 360px) {
-  .detailleRapport .images {
-    display: block;
-    position: relative;
-    justify-content: center;
-    padding-bottom: 95px;
+  /* Optimiser davantage la taille de police */
+  .detailleRapport .table {
+    font-size: 9px;
   }
 
-  .detailleRapport .images .logoLigue {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100px;
-    height: 50px;
+    .btn_print{
+    margin: 1rem 1.5rem;
   }
 
-  .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
-    opacity: 0.5;
-    position: absolute;
-    top: 17px;
+  .btn_print{
+    margin: 1rem 1.5rem;
   }
-
+  
+  /* Réduire les marges et paddings */
+  .detailleRapport {
+    padding: 15px 5px;
+    margin: 1.5rem 0;
+  }
+  
+  /* Ajustements du positionnement de l'en-tête */
   .detailleRapport .images h1 {
-    font-family: "El Messiri", sans-serif;
-    position: absolute;
-    top: 67px;
-    font-size: small;
     right: 70px;
-    width: 111px;
   }
-
-  .detailleRapport .sub-table-1 {
-    width: 117.5px;
+  
+  /* Assurer que le conteneur de défilement est visible */
+  .detailleRapport .table-responsive {
+    margin: 0 -5px; /* Étendre légèrement au-delà des marges du conteneur */
   }
-
+  
+  /* Assurer un affichage compact mais lisible */
+  .detailleRapport .table td,
+  .detailleRapport .table th {
+    padding: 0.15rem !important;
+  }
+  
+  
+  /* Maintenir les proportions tout en assurant le défilement */
+  .detailleRapport .sub-table-1,
   .detailleRapport .sub-table-2 {
-    width: 121px;
+    width: 50% !important;
   }
 }
 
 @media screen and (max-width: 320px) {
-  .detailleRapport .images {
-    display: block;
-    position: relative;
-    justify-content: center;
-    padding-bottom: 95px;
+  /* Ajustements du positionnement de l'en-tête */
+  .detailleRapport{
+    padding: 10px 0;
+    margin: 1.5rem 0; 
+  }
+
+    .btn_print{
+    margin: 1rem 1.5rem;
   }
 
   .detailleRapport .images .logoLigue {
-    position: absolute;
     left: 0px;
-    top: 0px;
-    width: 100px;
-    height: 50px;
   }
-
-  .detailleRapport .images .titleLigue {
-    width: 115px;
-    height: 17px;
-    opacity: 0.5;
-    position: absolute;
-    top: 17px;
-  }
-
+  
   .detailleRapport .images h1 {
-    font-family: "El Messiri", sans-serif;
-    position: absolute;
-    top: 67px;
-    font-size: small;
     right: 59px;
-    width: 111px;
   }
-
-  .detailleRapport .sub-table-1 {
-    width: 97.5px;
+  
+  /* Réduire encore la taille de police pour ces très petits écrans */
+  .detailleRapport .table {
+    font-size: 9px;
   }
-
+  
+  /* Réduire davantage les paddings */
+  .detailleRapport .table td,
+  .detailleRapport .table th {
+    padding: 0.1rem !important;
+  }
+  
+  /* Maintenir les proportions tout en assurant le défilement */
+  .detailleRapport .sub-table-1,
   .detailleRapport .sub-table-2 {
-    width: 101px;
+    width: 50% !important;
   }
 }

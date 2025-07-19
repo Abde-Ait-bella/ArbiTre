@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Route, Link, NavLink, Routes, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'; // Add this import
 
 import Matches from './Component/Matche/MatchesListe';
 import UpdateMatche from './Component/Matche/UpdateMatche/UpdateMatche';
@@ -26,6 +27,7 @@ import AddedRapport from './Component/Rapport/AddRapport/AddedRapport';
 import HomeDashboard from './Component/HomeDashboard';
 import './css/style.css'
 import './css/bootstrap.min.css'
+import './index.css'
 import ArbiTreListe from './Component/Arbitre/ArbitreListe';
 import AddArbitre from './Component/Arbitre/AddArbitre';
 import AddedArbitre from './Component/Arbitre/AddedArbitre';
@@ -61,10 +63,12 @@ import { axiosClinet } from './Api/axios';
 import { AuthUser } from './AuthContext';
 import ScrollToTop from 'react-scroll-to-top';
 import { motion, useScroll } from "framer-motion"
+import SuperAdminDashboard from './Admin/SuperAdminDashboard';
+import UserManagement from './Admin/UserManagement';
+import GlobalStatistics from './Admin/GlobalStatistics';
 
 
 function App() {
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [mobile, setMobile] = useState();
@@ -75,21 +79,54 @@ function App() {
   const { user, userDataLogout } = AuthUser();
 
   useEffect(() => {
-
-
     if (user) {
-      setLoading(false)
+      // Check if the user is trying to access admin routes
+      if (window.location.pathname.includes('/dashboard/admin') && user.role !== 'super_admin') {
+        navigate('/dashboard/home');
+      }
+      setLoading(false);
+      
+      // Show development notice
+      showDevelopmentNotice();
     } else {
-      navigate('/login')
-      localStorage.removeItem('AUTHENTICATED')
-      localStorage.removeItem('token')
-      setLoading(false)
+      navigate('/login');
+      localStorage.removeItem('AUTHENTICATED');
+      localStorage.removeItem('token');
+      setLoading(false);
     }
 
-    setMobile(window.innerWidth <= 390)
-
-  }, [window.innerWidth])
-
+    setMobile(window.innerWidth <= 390);
+  }, [user]);
+  
+  // Function to show the development notice
+  const showDevelopmentNotice = () => {
+    // Check if we've shown this already in this session
+    const noticeShown = sessionStorage.getItem('devNoticeShown');
+    if (!noticeShown) {
+      Swal.fire({
+        title: 'تنبيه!',
+        html: `
+          <p> أخي الحكم العصبوي المنصة قيد التطوير ونرحب بكل .</p>
+           <p clssName="fs-7"> هذه المنصة غير تجارية, بحكم الممارسة فالميدان كانت فقط فكرة تم تحقيقها يعني ماعندها تامعنى ايلا ماستافدتي منها "داكشي علاش أي ملاحضة مهمة بالنسبة لينا وأي حاجة مامفهومة ماتبخلش علينا بيها ".</p>
+          <p dir="ltr" style="text-align: center; margin-top: 10px;">
+            <span dir="ltr">+212 681783861</span> <strong">  : للتواصل</strong> 
+          </p>
+        `,
+        icon: 'info',
+        confirmButtonText: 'فهمت',
+        confirmButtonColor: '#fbab00',
+        showClass: {
+          popup: 'animate__animated animate__fadeIn'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOut'
+        }
+      });
+      
+      // Mark as shown for this session
+      sessionStorage.setItem('devNoticeShown', 'true');
+    }
+  };
 
   const logout = async () => {
     await axiosClinet.post('/logout').then((Response) => {
@@ -131,7 +168,7 @@ function App() {
               {/* <!-- Sidebar Start --> */}
               <div className={`sidebar ps-4 ${isSidebarOpen ? 'open' : ''}`} onClick={(e) => handleSidebarClose(e)}>
                 <nav className="bg-secondary navbar navbar-dark" >
-                  <div className='top-50 d-flex align-items-center justify-content-center me-0 mt-1 w-100 navbar-brand brand start-0'>
+                  <div className='mt-1 top-50 d-flex align-items-center justify-content-center me-0 w-100 navbar-brand brand start-0'>
                     <Link to='/dashboard/home' className="">
                       <h3 className="logo">
                         <i class="ms-2 me-3 fa-solid fa-flag-checkered"></i>
@@ -153,8 +190,23 @@ function App() {
                       <NavLink to='/dashboard/home' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active pe-3 fw-bold" : "nav-item nav-link pe-3 fw-bold"
                       }><i class="ms-3 fa-solid fa-house"></i>الصفحة الرئيسية</NavLink>
-                      {/* <i class="me-2 fa fa-tachometer-alt"></i> */}
                     </div>
+                    
+                    {/* Super Admin Menu - Only visible to super_admin role */}
+                    {user?.role === 'super_admin' && (
+                      <div class="me-2 mt-1 nav-item dropdown">
+                        <NavLink to={'/dashboard/admin'} className={({ isActive }) => isActive ? "nav-link dropdown-toggle active show Active fw-bold" : "nav-link dropdown-toggle fw-bold"}
+                          data-bs-toggle="dropdown"><i class="ms-3 me-2 fa-solid fa-user-shield"></i>المشرف</NavLink>
+                        <div class="bg-transparent border-0 dropdown-menu">
+                          <NavLink to={"admin"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>لوحة التحكم<i class="me-3 mt-1 fa-solid fa-gauge"></i></NavLink>
+                          <NavLink to={"admin/users"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المستخدمين<i class="me-3 mt-1 fa-solid fa-users"></i></NavLink>
+                          <NavLink to={"admin/statistics"} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>الإحصائيات<i class="me-3 mt-1 fa-solid fa-chart-line"></i></NavLink>
+                        </div>
+                      </div>
+                    )
+                    
+                    }
+                    
                     <div className="me-2">
                       <NavLink to='matches' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active fw-bold" : "nav-item nav-link fw-bold"
@@ -173,8 +225,8 @@ function App() {
                         <NavLink to={'composants/villes'} className={({ isActive }) => isActive ? "dropdown-item text-white" : "dropdown-item"}>المدن <i class="me-4 mt-1 fa-solid fa-city"></i></NavLink>
                       </div>
                     </div>
-                    <div className='me-2 mt-1'>
-                      <NavLink to='rapport' className={({ isActive }) =>
+                    <div className='mt-1 me-2'>
+                      <NavLink to='rapport ' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active fw-bold " : "nav-item nav-link fw-bold"
                       }><i class="ms-3 me-2 fa-solid fa-book"></i> التقارير</NavLink>
                     </div>
@@ -277,6 +329,15 @@ function App() {
                       <Route path='composants/deletedVille' element={<DeletedVille />} />
                       <Route path='composants/updatedVille' element={<UpdatedVille />} />
 
+                      {/* Super Admin Routes - Only accessible to super_admin role */}
+                      {user?.role === 'super_admin' && (
+                        <>
+                          <Route path="admin" element={<SuperAdminDashboard />} />
+                          <Route path="admin/users" element={<UserManagement />} />
+                          <Route path="admin/statistics" element={<GlobalStatistics />} />
+                        </>
+                      )}
+
                       <Route path='change_password' element={<Settings />} />
                     </ Route>
                   </Routes>
@@ -291,11 +352,11 @@ function App() {
                           &copy; <a className='text-warning' href="#">Arbitrage</a>, All Right Reserved.
                         </div>
                         <div class="text-center col-md-4">
-                          Created By <a target="_blank" className='text-warning' href="https://www.linkedin.com/in/abde-ssamad-ait-bella-92481a249/">AbdeSsamad Ait-bella</a>
+                          Created By <a target="_blank" className='text-warning' href="https://aitbella.digital/">AbdeSsamad Ait-bella</a>
                           <br />
                         </div>
                         <div className="d-lg-block col-md-4 d-none">
-                          <Link to='/dashboard/home' className="d-flex justify-content-center me-0 mt-1 w-100 navbar-brand brand">
+                          <Link to='/dashboard/home' className="mt-1 d-flex justify-content-center me-0 w-100 navbar-brand brand">
                             <h3 className="mb-0 logo">
                               <i class="ms-2 me-3 fa-solid fa-flag-checkered"></i>
                               ArbiTre</h3>
@@ -311,7 +372,7 @@ function App() {
         }
         {/* // Back to Top */}
         <div>
-          <ScrollToTop smooth top="100" id={`${isSidebarOpen ? 'back-up_to_right' : 'back-up_to_lft'}`} className='back-to-top fa-arrow-up text-white fa-solid' style={{ backgroundColor: '#fbab00' }} svgPath />
+          <ScrollToTop smooth top="100" id={`${isSidebarOpen ? 'back-up_to_right' : 'back-up_to_lft'}`} className='text-white back-to-top fa-arrow-up fa-solid' style={{ backgroundColor: '#fbab00' }} svgPath />
         </div>
         {/* // Content End */}
       </div >

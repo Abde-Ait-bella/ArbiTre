@@ -1,9 +1,13 @@
 
 body{
 
-    font-family: El Messiri;
+    font-family: Cairo, sans-serif;
     font-size: 17px;
     // scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Cairo, sans-serif;
 }
 
 .penalty {
@@ -26,4 +30,17 @@ body{
 
 .border-left{
     border-left: 1px solid;
+}
+
+/* Style spécifique pour les tooltips PrimeReact */
+.p-tooltip .p-tooltip-text {
+    font-family: Cairo, sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+}
+
+/* Alternative si vous voulez cibler tous les tooltips */
+.p-tooltip {
+    font-family: Cairo, sans-serif;
+    
 }

@@ -1,130 +1,143 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import '../../style/Stade/StadesListe.scss'
-import { axiosClinet } from '../../Api/axios';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from 'primereact/button';
+import { useDataFetching, useDeleteItem } from '../Utils/hooks';
+import DataTableTemplate from '../Utils/DataTableTemplate';
+import { TextFilterComponent, DropdownFilterComponent } from '../Utils/FilterComponents';
+import { AuthUser } from '../../AuthContext';
+import UpdateButton from '../Utils/UpdateButton';
+import DeleteButton from '../Utils/DeleteButton';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { AuthUser } from '../../AuthContext';
+import 'primereact/resources/themes/lara-dark-indigo/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
 
 function StadesListe() {
-
-    const [stades, setStades] = useState();
-    const [stadesDefault, setStadesDefault] = useState();
-    const [villes, setVilles] = useState();
-    const [loading, setLoading] = useState(true);
-    const [loadingDelete, setLoadingDelete] = useState(true);
-    const [idStade, setIdStade] = useState(true);
-
     const { user } = AuthUser();
-    const navigate = useNavigate();
+    
+    // Récupérer les données des stades et des villes avec nos hooks personnalisés
+    const { data: allStades, loading: stadesLoading } = useDataFetching('/stade');
+    const { data: villes, loading: villesLoading } = useDataFetching('/ville');
+    
+    // Gérer la suppression avec le hook personnalisé
+    const { handleDelete, loadingDelete, itemIdToDelete } = useDeleteItem(
+        '/stade',
+        '/dashboard/composants/deletedStade'
+    );
 
-    useEffect(() => {
-        axiosClinet.get('/stade')
-            .then((res) => {
-                setStades(res.data.filter((v) => parseInt(v.user_id) === user?.id))
-                setStadesDefault(res.data.filter((v) => v.user_id === null))
-            })
-        axiosClinet.get('/ville')
-            .then((res) => {
-                setVilles(res.data)
-                setLoading(false)
-            })
-    }, [])
-
-
-
-    const handleDelete = async (id) => {
-        setIdStade(id);
-        setLoadingDelete(true)
-        await axiosClinet.delete(`/stade/${id}`).then(
-            (response) => {
-                const { status } = response;
-                if (status === 200) {
-                    setLoadingDelete(false)
-                    navigate('/dashboard/composants/DeletedStade');
-                }
-            }
-        ).catch((error) => {
-            setLoadingDelete(false)
-            console.error(`Error deleting stade with id ${id}:`, error);
-        });
+    // Préparer les données: combiner les stades par défaut et ceux de l'utilisateur
+    const stadesDefault = allStades?.filter(s => s.user_id === null) || [];
+    const userStades = allStades?.filter(s => parseInt(s.user_id) === user?.id) || [];
+    const stades = [...stadesDefault, ...userStades];
+    
+    // Template pour afficher le nom de la ville
+    const villeBodyTemplate = (rowData) => {
+        const ville = villes?.find(v => v.id === parseInt(rowData.ville_id));
+        return ville ? ville.nom : '';
+    };
+    
+    // Template pour les actions (modifier/supprimer)
+    const actionBodyTemplate = (rowData) => {
+        const isDefault = rowData.user_id === null;
+        
+        return (
+            <div className="flex gap-2 justify-content-center">
+                {!isDefault ? (
+                    <>
+                        {/* Utiliser le composant UpdateButton */}
+                        <UpdateButton
+                            itemId={rowData.id}
+                            updatePath="/dashboard/composants/updateStade"
+                            tooltip="تعديل الملعب"
+                        />
+                        
+                        {/* Utiliser le composant DeleteButton avec loader Font Awesome */}
+                        <DeleteButton
+                            itemId={rowData.id}
+                            onDelete={handleDelete}
+                            loading={loadingDelete}
+                            loadingItemId={itemIdToDelete}
+                            loadingIcon="fa-solid fa-spinner fa-spin text-danger"
+                            tooltip="حذف الملعب"
+                        />
+                    </>
+                ) : (
+                    <span className="text-muted">ملعب افتراضي</span>
+                )}
+            </div>
+        );
     };
 
-    return (
-        <>
-
-
-
-            <div className="container-fluid pt-4 px-4">
-                <div className="bg-secondary text-center rounded p-4">
-                    <div className="d-flex align-items-center justify-content-start mb-3">
-                        <Link to="/dashboard/composants/addStade" className="btn btn-warning px-4">إضافة ملعب <i className="fa-solid fa-circle-plus me-2 pt-1"></i></Link>
-
-                    </div>
-                    <div className="table-responsive">
-                        <table className="table text-start align-middle table-hover mb-0">
-                            <thead>
-                                <tr className="text-white">
-                                    <th scope="col" className="text-center">الملعب</th>
-                                    <th scope="col" className="text-center">المدينة أو الجماعة</th>
-                                    <th scope="col" className="text-center col-4">الحدف أو التعديل</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    loading ?
-
-                                        <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                            <tr className="text-center">
-                                                <th><Skeleton height={30} /></th>
-                                                <th><Skeleton height={30} /></th>
-                                                <th><Skeleton height={30} /></th>
-                                            </tr>
-                                            <tr className="text-center">
-                                                <th><Skeleton height={30} /></th>
-                                                <th><Skeleton height={30} /></th>
-                                                <th><Skeleton height={30} /></th>
-                                            </tr>
-                                        </SkeletonTheme>
-
-                                        :
-                                        <>
-                                            <>{
-                                                stadesDefault?.map((s) => (
-                                                    <tr className="text-center" key={s.id}>
-                                                        <td>{s.nom}</td>
-                                                        <td>{villes?.find(ville => ville.id === parseInt(s.ville_id))?.nom}</td>
-                                                        <td><i class="fa-solid fa-wrench text-dark"></i> <i class="fa-solid fa-trash text-dark me-3 pt-2"></i></td>
-                                                    </tr>
-                                                ))}
-                                            </>
-                                            <>{
-                                                stades?.map((s) => (
-                                                    <tr className="text-center" key={s.id}>
-                                                        <td>{s.nom}</td>
-                                                        <td>{villes?.find(ville => ville.id === parseInt(s.ville_id))?.nom}</td>
-                                                        <td><Link to={`/dashboard/composants/updateStade/${s.id}`}><i class="fa-solid fa-wrench"></i></Link> <Link onClick={() => handleDelete(s.id)} >
-                                                                {
-                                                                    loadingDelete & idStade === s.id ? (
-                                                                        <div className="spinner-border spinner-border-sm me-3 mb-lg-1 fs-2" role="status">
-                                                                            <span className="sr-only">Loading...</span>
-                                                                        </div>) : <i className="fa-solid fa-trash me-3"></i>
-                                                                }
-                                                            </Link>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </>
-                                        </>
-                                }
-
-                            </tbody>
-                        </table>
-                    </div>
+    // Template pour le skeleton loading
+    const loadingTemplate = () => {
+        return (
+            <div className="px-4 pt-4 container-fluid">
+                <div className="p-4 text-center rounded" style={{ backgroundColor: '#1f2937' }}>
+                    <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                        <Skeleton height={60} count={1} className="mb-4" />
+                        <Skeleton height={40} count={5} />
+                    </SkeletonTheme>
                 </div>
             </div>
-        </>
-    )
+        );
+    };
+
+    // Définition des colonnes pour le DataTable
+    const columns = [
+        {
+            field: 'nom',
+            header: 'الملعب',
+            sortable: true,
+            filterable: true,
+            filterPlaceholder: 'بحث بالملعب',
+            filterElement: options => <TextFilterComponent options={options} placeholder="بحث بالملعب" />,
+            style: { minWidth: '200px', textAlign: 'center' }
+        },
+        {
+            field: 'ville_id',
+            header: 'المدينة أو الجماعة',
+            filterable: true,
+            filterPlaceholder: 'بحث بالمدينة',
+            filterElement: options => <DropdownFilterComponent 
+                options={options} 
+                items={villes?.map(v => ({ label: v.nom, value: v.id.toString() }))}
+                placeholder="بحث بالمدينة" 
+            />,
+            body: villeBodyTemplate,
+            style: { minWidth: '200px', textAlign: 'center' }
+        },
+        {
+            field: 'actions',
+            header: 'الحدف أو التعديل',
+            body: actionBodyTemplate,
+            style: { width: '15rem', textAlign: 'center' }
+        }
+    ];
+
+    // État de chargement combiné
+    const loading = stadesLoading || villesLoading;
+
+    // Rendu du composant avec le template
+    if (loading && !stades.length) {
+        return loadingTemplate();
+    }
+
+    return (
+        <DataTableTemplate
+            title="قائمة الملاعب"
+            data={stades}
+            columns={columns}
+            loading={loading}
+            addButtonLabel="إضافة ملعب"
+            addButtonPath="/dashboard/composants/addStade"
+            globalSearchFields={['nom']}
+            emptyMessage="لا توجد ملاعب متاحة"
+            onDelete={handleDelete}
+            loadingTemplate={loadingTemplate}
+        />
+    );
 }
 
 export default StadesListe;

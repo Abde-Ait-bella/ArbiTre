@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable';
 import { axiosClinet } from '../../../Api/axios';
@@ -290,7 +290,7 @@ export function Matche(props) {
             stadeClub_1 = state.stades.find((s) => stadeClub_1?.id === s.value)
         } else if (event?.name === "stade_id") {
             stadeClub_1 = event
-        }else if (event?.name === "club_id_2") {
+        } else if (event?.name === "club_id_2") {
             club_2_Option(value)
         }
 
@@ -298,35 +298,35 @@ export function Matche(props) {
         var arbitreVille_4 = event?.name === "arbitre_4_id" ? event.ville : selectedSelect.arbitre_4_ville
         if (event?.name === "arbitre_4_id") {
             arbitreVille_4 = state.villes.find((v) => arbitreVille_4?.id === v.value)
-        }else if(event?.name === "arbitre_4_ville"){
+        } else if (event?.name === "arbitre_4_ville") {
             arbitreVille_4 = event
         }
 
         var villeAssistant_1 = event?.name === "arbitre_a1_id" ? event.ville : selectedSelect.villeAssistant_1
         if (event?.name === "arbitre_a1_id") {
             villeAssistant_1 = state.villes.find((v) => villeAssistant_1?.id === v.value)
-        }else if(event?.name === "assistant_1_ville"){
+        } else if (event?.name === "assistant_1_ville") {
             villeAssistant_1 = event
         }
 
         var villeAssistant_2 = event?.name === "arbitre_a2_id" ? event.ville : selectedSelect.villeAssistant_2
         if (event?.name === "arbitre_a2_id") {
             villeAssistant_2 = state.villes.find((v) => villeAssistant_2?.id === v.value)
-        }else if(event?.name === "assistant_2_ville"){
+        } else if (event?.name === "assistant_2_ville") {
             villeAssistant_2 = event
         }
 
         var villeDelegue = event?.name === "delegue_id" ? event.ville : selectedSelect.villeDelegue
         if (event?.name === "delegue_id") {
             villeDelegue = state.villes.find((v) => villeDelegue?.id === v.value)
-        }else if(event?.name === "delegue_ville"){
+        } else if (event?.name === "delegue_ville") {
             villeDelegue = event
         }
 
         var villeCentre = event?.name === "arbitre_c_id" ? event.ville : selectedSelect.villeCentre
         if (event?.name === "arbitre_c_id") {
             villeCentre = state.villes.find((v) => villeCentre?.id === v.value)
-        }else if(event?.name === "centre_ville"){
+        } else if (event?.name === "centre_ville") {
             villeCentre = event
         }
 
@@ -336,15 +336,12 @@ export function Matche(props) {
             [name]: value,
             stade_id: stadeClub_1?.value,
             ville_id: stadeClub_1?.ville?.id,
-            centre_ville : villeCentre?.value,
+            centre_ville: villeCentre?.value,
             assistant_1_ville: villeAssistant_1?.value,
             assistant_2_ville: villeAssistant_2?.value,
             arbitre_4_ville: arbitreVille_4?.value,
             delegue_ville: villeDelegue?.value,
         }));
-
-        console.log('InputValue', inputValue);
-
 
         setSelectedSelect(prevValues => ({
             ...prevValues,
@@ -376,9 +373,9 @@ export function Matche(props) {
             {
                 loading ?
                     <>
-                        <div className="d-none d-lg-break">
+                        <div className='mb-4 d-none d-lg-block'>
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-4 mx-2">
+                                <div className="mx-2 mt-4 row">
                                     <div className="col-3">
                                         <Skeleton height={40} />
                                     </div>
@@ -393,11 +390,11 @@ export function Matche(props) {
                                     </div>
                                 </div>
 
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-4 mx-2">
+                                <div className="mx-2 mt-4 row">
                                     <div className="col-3">
                                         <Skeleton height={40} />
                                         <div className="mt-2">
@@ -424,7 +421,7 @@ export function Matche(props) {
                                     </div>
                                 </div>
 
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <div className="col-6">
                                         <Skeleton height={40} />
                                     </div>
@@ -434,7 +431,7 @@ export function Matche(props) {
                                 </div>
 
 
-                                <div className="row mt-4 mx-1">
+                                <div className="mx-1 mt-4 row">
                                     <div className="col-3">
                                         <Skeleton height={40} />
                                     </div>
@@ -449,7 +446,7 @@ export function Matche(props) {
                                     </div>
                                 </div>
 
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <div className="col-4">
                                         <Skeleton height={40} />
                                     </div>
@@ -460,11 +457,11 @@ export function Matche(props) {
                                         <Skeleton height={40} />
                                     </div>
                                 </div>
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-4 mx-2">
+                                <div className="mx-2 mt-4 row">
                                     <div className="col-4">
                                         <div>
                                             <Skeleton height={40} />
@@ -493,11 +490,11 @@ export function Matche(props) {
                                     </div>
                                 </div>
 
-                                <div className="row mt-4">
+                                <div className="mt-4 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-4 mx-2">
+                                <div className="mx-2 mt-4 row">
                                     <div className="col-12 ">
                                         <div>
                                             <Skeleton height={85} />
@@ -509,45 +506,42 @@ export function Matche(props) {
 
                         <div className="d-lg-none">
                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row mt-4 mx-2">
-                                    <div className="col-12 mt-3">
+                                <div className="mx-2 mt-4 row">
+                                    <div className="mt-3 col-12">
                                         <Skeleton height={40} />
                                     </div>
-                                    <div className="col-12 mt-4">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
-                                    <div className="col-12 mt-4">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
-                                    <div className="col-12 mt-4">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
                                 </div>
 
-                                <div className="row mt-4 mx-1">
+                                <div className="mx-1 mt-4 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-4 mx-2">
-                                    {/* <div className="col-12 mt-3">
-                                        <Skeleton height={40} />
-                                    </div> */}
-                                    <div className="col-12 mt-4">
+                                <div className="mx-2 mt-4 row">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
-                                    <div className="col-12 mt-4">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
-                                    <div className="col-12 mt-4">
+                                    <div className="mt-4 col-12">
                                         <Skeleton height={40} />
                                     </div>
                                 </div>
 
-                                <div className="row mt-4 mx-1">
+                                <div className="mx-1 mt-4 row">
                                     <Skeleton height={40} />
                                 </div>
 
-                                <div className="row mt-4 mx-2 pb-2">
+                                <div className="pb-2 mx-2 mt-4 row">
                                     <div className="col-12 ">
                                         <div>
                                             <Skeleton height={85} />
@@ -559,31 +553,59 @@ export function Matche(props) {
                     </>
                     :
                     <div >
-                        <div className="row my-2 mx-2">
+                        <div className="mx-2 my-2 row">
                             <div className="form-group col-md-3">
                                 <label className='text-white' htmlFor="inputEmail4">الموسم الرياضي</label>
                                 <div className='my-2'>
-                                    <CreatableSelect isClearable name={selectedSelect} onChange={handleSelectChange} options={state.saison} placeholder="أكتب..." required />
+                                    <Select
+                                        isClearable
+                                        name={selectedSelect}
+                                        onChange={handleSelectChange}
+                                        options={state.saison}
+                                        placeholder="أكتب..."
+                                        required
+                                        menuPortalTarget={document.body}
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                    />
                                 </div>
                             </div>
                             <div className="form-group col-md-3">
                                 <label className='text-white' htmlFor="inputPassword4">التاريخ</label>
-                                <input type="date" name='date' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" required />
+                                <input type="date" name='date' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" required />
                             </div>
                             <div className="form-group col-md-3">
                                 <label className='text-white' htmlFor="inputPassword4">المنافسة</label>
                                 <div className='my-2'>
-                                    <CreatableSelect isClearable name={selectedSelect} onChange={handleSelectChange} options={state.competition} placeholder="أكتب..." required />
+                                    <Select
+                                        isClearable
+                                        name={selectedSelect}
+                                        onChange={handleSelectChange}
+                                        options={state.competition}
+                                        placeholder="أكتب..."
+                                        required
+                                        menuPortalTarget={document.body}
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
+                                    />
                                 </div>
                             </div>
-                            <div className="form-group col-md-3 text-white">
+                            <div className="text-white form-group col-md-3">
                                 <label htmlFor="inputEmail4">الفئة</label>
                                 <div className='my-2'>
-                                    <CreatableSelect className='text-light' isClearable name={selectedSelect} onChange={handleSelectChange} options={state.category} placeholder="أكتب..." required />
+                                    <Select
+                                        className='text-light'
+                                        isClearable
+                                        name={selectedSelect}
+                                        onChange={handleSelectChange}
+                                        options={state.category}
+                                        placeholder="أكتب..."
+                                        required
+                                        menuPortalTarget={document.body}
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
+                                    />
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-2">
+                        <div className="my-2 row">
                             <div className="col-md-12">
                                 <div class=" card text-center bg-light text-white mx-1">
                                     <div class="card-header bg-secondary">
@@ -594,25 +616,37 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">الحكم</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.centre} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <CreatableSelect className='text-light' options={state.centre} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">الحكم المساعد 1</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.assistant_1} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' options={state.assistant_1} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">الحكم المساعد 2</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.assistant_2} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' options={state.assistant_2} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المراقب</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.delegue} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' options={state.delegue} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -620,25 +654,37 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.centreVille} value={selectedSelect?.villeCentre ? { value: selectedSelect?.villeCentre?.value, label: selectedSelect?.villeCentre?.label } : null} onChange={handleSelectChange} placeholder="..." />
+                                                    <Select className='text-light' options={state.centreVille} value={selectedSelect?.villeCentre ? { value: selectedSelect?.villeCentre?.value, label: selectedSelect?.villeCentre?.label } : null} onChange={handleSelectChange} placeholder="..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.assistant_1_Ville} value={selectedSelect.villeAssistant_1 ? { value: selectedSelect.villeAssistant_1?.value, label: selectedSelect.villeAssistant_1?.label } : null} onChange={handleSelectChange} placeholder="..." />
+                                                    <Select className='text-light' options={state.assistant_1_Ville} value={selectedSelect.villeAssistant_1 ? { value: selectedSelect.villeAssistant_1?.value, label: selectedSelect.villeAssistant_1?.label } : null} onChange={handleSelectChange} placeholder="..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.assistant_2_Ville} value={selectedSelect.villeAssistant_2 ? { value: selectedSelect.villeAssistant_2?.value, label: selectedSelect.villeAssistant_2?.label } : null} onChange={handleSelectChange} placeholder="..." />
+                                                    <Select className='text-light' options={state.assistant_2_Ville} value={selectedSelect.villeAssistant_2 ? { value: selectedSelect.villeAssistant_2?.value, label: selectedSelect.villeAssistant_2?.label } : null} onChange={handleSelectChange} placeholder="..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.delegueVille} value={selectedSelect.villeDelegue ? { value: selectedSelect?.villeDelegue?.value, label: selectedSelect?.villeDelegue?.label } : null} onChange={handleSelectChange} placeholder="..." />
+                                                    <Select className='text-light' options={state.delegueVille} value={selectedSelect.villeDelegue ? { value: selectedSelect?.villeDelegue?.value, label: selectedSelect?.villeDelegue?.label } : null} onChange={handleSelectChange} placeholder="..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -646,13 +692,19 @@ export function Matche(props) {
                                             <div className="form-group col-md-3 ">
                                                 <label htmlFor="inputEmail4">الحكم الرابع</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.arbitre_4} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' options={state.arbitre_4} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                                    />
                                                 </div>
                                             </div>
-                                        <div className="form-group col-md-3">
+                                            <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.arbitre_4_ville} value={selectedSelect?.arbitre_4_ville ? { value: selectedSelect?.arbitre_4_ville?.value, label: selectedSelect?.arbitre_4_ville?.label } : null} onChange={handleSelectChange} placeholder="..." />
+                                                    <Select className='text-light' options={state.arbitre_4_ville} value={selectedSelect?.arbitre_4_ville ? { value: selectedSelect?.arbitre_4_ville?.value, label: selectedSelect?.arbitre_4_ville?.label } : null} onChange={handleSelectChange} placeholder="..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -660,7 +712,7 @@ export function Matche(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-2">
+                        <div className="my-2 row">
                             <div className="col-md-6">
                                 <div class=" card text-center bg-light text-white mx-1">
                                     <div class="card-header bg-secondary">
@@ -671,13 +723,19 @@ export function Matche(props) {
                                             <div className="form-group col-md-6">
                                                 <label htmlFor="inputEmail4">الفريق المستقبل</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.clubs_1} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' options={state.clubs_1} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                    />
                                                 </div>
                                             </div>
-                                            <div className="form-group  col-md-6">
+                                            <div className="form-group col-md-6">
                                                 <label htmlFor="inputEmail4">الفريق الزائر</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.clubs_2} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..." />
+                                                    <Select className='text-light' options={state.clubs_2} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -693,36 +751,50 @@ export function Matche(props) {
                                         <div className="row">
                                             <div className="form-group col-md-6">
                                                 <label htmlFor="inputEmail4">الفريق المستقبل</label>
-                                                <input type="namber" name='result_club_1' onChange={handleInputChange} className="form-control bg-white border-0 mt-2 mb-2" id="inputPassword4" placeholder='' />
+                                                <input type="namber" name='result_club_1' onChange={handleInputChange} className="mt-2 mb-2 bg-white border-0 form-control" id="inputPassword4" placeholder='' />
                                             </div>
-                                            <div className="form-group  col-md-6">
+                                            <div className="form-group col-md-6">
                                                 <label htmlFor="inputEmail4">الفريق الزائر</label>
-                                                <input type="namber" name='result_club_2' onChange={handleInputChange} className="form-control bg-white border-0 mt-2 mb-2" id="inputPassword4" />
+                                                <input type="namber" name='result_club_2' onChange={handleInputChange} className="mt-2 mb-2 bg-white border-0 form-control" id="inputPassword4" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-2 mx-2">
+                        <div className="mx-2 my-2 row">
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputPassword4">التوقيت</label>
-                                <input type="time" name='temps' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputTime" />
+                                <input type="time" name='temps' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputTime" />
                             </div>
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputEmail4">الملعب</label>
                                 <div className="my-2">
-                                    <Select className='text-light' value={selectedSelect?.stadeClub_1 ? { value: selectedSelect?.stadeClub_1?.value, label: selectedSelect?.stadeClub_1?.label } : null} options={state.stades} name={selectedSelect} onChange={handleSelectChange} placeholder="اكتب" />
+                                    <Select className='text-light' value={selectedSelect?.stadeClub_1 ? { value: selectedSelect?.stadeClub_1?.value, label: selectedSelect?.stadeClub_1?.label } : null} options={state.stades} name={selectedSelect} onChange={handleSelectChange} placeholder="اكتب"
+                                        menuPortalTarget={document.body}
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                    />
                                 </div>
                             </div>
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputEmail4">المدينة</label>
                                 <div className="my-2">
-                                    <CreatableSelect className='text-light' php isDisabled value={selectedSelect?.stadeClub_1?.ville ? { value: selectedSelect?.stadeClub_1?.ville?.id, label: selectedSelect?.stadeClub_1?.ville?.nom } : null} options={state.villes} name={selectedSelect} onChange={handleSelectChange} placeholder="..." />
+                                    <Select
+                                        className='text-light'
+                                        php
+                                        isDisabled
+                                        value={selectedSelect?.stadeClub_1?.ville ? { value: selectedSelect?.stadeClub_1?.ville?.id, label: selectedSelect?.stadeClub_1?.ville?.nom } : null}
+                                        options={state.villes}
+                                        name={selectedSelect}
+                                        onChange={handleSelectChange}
+                                        placeholder="..."
+                                        menuPortalTarget={document.body}
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
+                                    />
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-2">
+                        <div className="my-2 row">
                             <div className="col-md-12">
                                 <div class="card text-center bg-light text-white mx-1">
                                     <div class="card-header bg-secondary">
@@ -732,30 +804,30 @@ export function Matche(props) {
                                         <div className="row">
                                             <div className="form-group col-md-4">
                                                 <label htmlFor="inputPassword4">1.	توقيت حضور مراقب المباراة : </label>
-                                                <input type="time" name='temp_presence_delegue' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputTime" />
+                                                <input type="time" name='temp_presence_delegue' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputTime" />
                                             </div>
                                             <div className="form-group col-md-4">
                                                 <label htmlFor="inputPassword4">2.  توقيت حضور رجال الأمن :</label>
-                                                <input type="time" name='temp_presence_agents_sécurité' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputTime" />
+                                                <input type="time" name='temp_presence_agents_sécurité' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputTime" />
                                             </div>
                                             <div className="form-group col-md-4">
                                                 <label htmlFor="inputPassword4">3.	عدد رجال الامن</label>
-                                                <input type="nember" name='nombre_agents_sécurité' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                <input type="nember" name='nombre_agents_sécurité' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                             </div>
                                             <div className="form-group col-md-6">
                                                 <label htmlFor="inputPassword4">4.	ارضية الملعب</label>
-                                                <input type="text" name='etat_stade' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                <input type="text" name='etat_stade' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                             </div>
                                             <div className="form-group col-md-6">
                                                 <label htmlFor="inputPassword4">5.	مستودع ملابس الحكام </label>
-                                                <input type="text" name='etat_vestiaire' onChange={handleInputChange} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                <input type="text" name='etat_vestiaire' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-2">
+                        <div className="my-2 row">
                             <div className="col-md-12">
                                 <div class="card text-center bg-light text-white mx-1">
                                     <div class="card-header bg-secondary">
@@ -771,10 +843,10 @@ export function Matche(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className='text-center mx-4 mt-3'>
+                        <div className='mx-4 mt-3 text-center'>
                             {error && <span className='text-warning'>{error}<span className='text-warning me-2'>!!</span></span>}
                         </div>
-                         <button className={`btn me-3 my-2 px-4 fw-bold ${isValideData ? 'btn-warning text-danger' : 'btn-secondary'}`} onClick={sendData}>حفـــــظ</button>
+                        <button className={`btn me-3 my-2 px-4 fw-bold ${isValideData ? 'btn-warning text-danger' : 'btn-secondary'}`} onClick={sendData}>حفـــــظ</button>
                     </div>
             }
 
