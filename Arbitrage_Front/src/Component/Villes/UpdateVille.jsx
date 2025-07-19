@@ -1,179 +1,144 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useNavigate, useParams } from 'react-router-dom';
-import { axiosClinet } from "../../Api/axios";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useUpdateHandler } from '../Utils/useUpdateHandler';
+import { validationSchemas } from '../Utils/validationSchemas';
+import { FormInput, SubmitButton, ErrorAlert } from '../Utils/FormComponents';
+import '../../style/forms.css';
 
 function UpdateVille() {
+    const {
+        register,
+        handleSubmit,
+        errors,
+        loading,
+        submitLoading,
+        submitError
+    } = useUpdateHandler(
+        validationSchemas.ville,
+        '/ville',
+        '/dashboard/composants/updatedVille'
+    );
 
+    if (loading) {
+        return (
+            <>
+                {/* Desktop Skeleton */}
+                <div className="my-4 d-flex justify-content-center">
+                    <div className="text-center col-sm-12 col-xl-6 d-none d-lg-block">
+                        <div className="p-4 rounded bg-secondary h-100">
+                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                                <div className="row d-flex align-items-center justify-content-center">
+                                    <div className="col-md-5">
+                                        <Skeleton height={40} />
+                                    </div>
+                                </div>
+                                <div className="mt-4 row">
+                                    <div className="col-2">
+                                        <Skeleton height={35} />
+                                    </div>
+                                    <div className="col-10">
+                                        <Skeleton height={35} />
+                                    </div>
+                                </div>
+                                <div className="mt-3 row d-flex justify-content-between">
+                                    <div className="col-3">
+                                        <Skeleton height={36} />
+                                    </div>
+                                    <div className="col-3">
+                                        <Skeleton height={36} />
+                                    </div>
+                                </div>
+                            </SkeletonTheme>
+                        </div>
+                    </div>
+                </div>
 
-    const [ville, setVille] = useState();
-    const [updateVille, setUpdateVille] = useState();
-    const [loading, setLoading] = useState(true);
-    const [loadingUpdate, setLoadingUpdate] = useState(false);
-    const navigate = useNavigate();
-    const { id } = useParams();
-
-    useEffect(() => {
-        axiosClinet.get('/ville')
-            .then((res) => {
-                setVille(res.data.find((v) => v.id === parseInt(id)))
-                setLoading(false)
-            })
-    }, [])
-
-    const handleUpdateVille = (event) => {
-        const { name, value } = event.target;
-        setUpdateVille(prevValues => ({
-            ...prevValues,
-            [name]: value,
-        }))
+                {/* Mobile Skeleton */}
+                <div className="mx-4 my-4 d-lg-none">
+                    <div className="text-center col-sm-12 col-xl-6">
+                        <div className="p-4 rounded bg-secondary h-100">
+                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                                <div className="row d-flex align-items-center justify-content-center">
+                                    <div className="col-6">
+                                        <Skeleton height={40} />
+                                    </div>
+                                </div>
+                                <div className="mt-4 row d-flex align-items-center justify-content-center">
+                                    <div className="col-5">
+                                        <Skeleton height={30} />
+                                    </div>
+                                </div>
+                                <div className="mt-2 row">
+                                    <div className="col-12">
+                                        <Skeleton height={35} />
+                                    </div>
+                                </div>
+                                <div className="mt-3 row d-flex justify-content-between">
+                                    <div className="col-5">
+                                        <Skeleton height={36} />
+                                    </div>
+                                    <div className="col-5">
+                                        <Skeleton height={36} />
+                                    </div>
+                                </div>
+                            </SkeletonTheme>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
     }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setLoadingUpdate(true)
-        if (updateVille) {
-            await axiosClinet.put(`/ville/${id}`, updateVille).then(
-                (response) => {
-                    const { status } = response;
-                    if (status === 200) {
-                        setLoadingUpdate(false)
-                        navigate('/dashboard/composants/updatedVille');
-                    }
-                }
-            ).catch(
-                (error) => {
-                    setLoadingUpdate(false)
-                }
-            )
-        } else {
-            setLoadingUpdate(false)
-        }
-    }
-
-
 
     return (
-        <>{
-            loading ?
-                <>
-                    <div className="d-flex justify-content-center my-4">
-                        <div class="col-sm-12 col-xl-6 text-center d-none d-lg-block">
-                            <div class="bg-secondary rounded h-100 p-4">
-                                <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-
-                                    <div className="row d-flex align-items-center justify-content-center">
-                                        <div className="col-md-5">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-
-                                    <div className="row mt-4">
-                                        <div className="col-2">
-                                            <div className="mt-2">
-                                                <Skeleton height={35} />
-                                            </div>
-                                        </div>
-                                        <div className="col-10">
-                                            <div className="mt-2">
-                                                <Skeleton height={35} />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row mt-3 d-flex justify-content-between">
-                                        <div className="col-3">
-                                            <div className="mt-2">
-                                                <Skeleton height={36} />
-                                            </div>
-                                        </div>
-                                        <div className="col-3">
-                                            <div className="mt-2">
-                                                <Skeleton height={36} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </SkeletonTheme>
-                            </div>
-                        </div>
+        <div className="my-4 d-flex justify-content-center">
+            <div className="text-center col-sm-12 col-xl-6">
+                <div className="p-4 mx-4 rounded bg-secondary h-100 mx-lg-0">
+                    <div className="mb-3 d-flex justify-content-start">
+                        <Link to="/dashboard/composants/villes" className="px-4 mb-3 btn btn-danger">
+                            <i className="fa-solid fa-arrow-right ms-2"></i>
+                            رجـــوع
+                        </Link>
+                    </div>
+                    
+                    <div className="mb-4">
+                        <h2 className="text-white fw-bold">
+                            <i className="fas fa-edit ms-3"></i>
+                            تعديل المدينة
+                        </h2>
+                        <p className="mb-0 text-white-50">عدّل بيانات المدينة أو الجماعة</p>
                     </div>
 
-                    <div className="my-4 d-lg-none mx-4">
-                        <div class="col-sm-12 col-xl-6 text-center">
-                            <div class="bg-secondary rounded h-100 p-4">
-                                <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                    <form onSubmit={handleSubmit} noValidate>
+                        <ErrorAlert error={submitError} />
 
-                                    <div className="row d-flex align-items-center justify-content-center">
-                                        <div className="col-6">
-                                            <Skeleton height={40} />
-                                        </div>
-                                    </div>
-
-                                    <div className="row d-flex align-items-center justify-content-center mt-4">
-                                        <div className="col-5">
-                                            <Skeleton height={30} />
-                                        </div>
-                                    </div>
-
-                                    <div className="row mt-2">
-                                        <div className="col-12">
-                                            <div className="mt-2">
-                                                <Skeleton height={35} />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row mt-3 d-flex justify-content-between">
-                                        <div className="col-5">
-                                            <div className="mt-2">
-                                                <Skeleton height={36} />
-                                            </div>
-                                        </div>
-                                        <div className="col-5">
-                                            <div className="mt-2">
-                                                <Skeleton height={36} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </SkeletonTheme>
+                        <div className="row">
+                            <div className="col-12">
+                                <FormInput
+                                    label="اسم المدينة أو الجماعة"
+                                    name="nom"
+                                    placeholder="أدخل اسم المدينة أو الجماعة"
+                                    register={register}
+                                    error={errors.nom}
+                                    icon="fas fa-map-marked-alt"
+                                />
                             </div>
                         </div>
-                    </div>
-                </>
-                :
-                <>
-                        <div className="d-flex justify-content-center my-4">
-                            <div class="col-sm-12 col-xl-6 text-center">
-                                <div class="bg-secondary rounded h-100 p-4 p-4 mx-4 mx-lg-0">
-                                    <p class="mb-4 fs-2 fw-bold text-white">تعديل المدينة</p>
-                                    <form onSubmit={handleSubmit}>
-                                        <div class="row mb-3">
-                                            <label for="inputEmail3" class="col-sm-2 col-form-label"> الاسم</label>
-                                            <div class="col-md-12">
-                                                <input placeholder="المدينة - الجماعة" name="nom" value={updateVille ? updateVille?.nom : ville?.nom} onChange={handleUpdateVille} type="text" class="form-control" id="inputEmail3" />
-                                            </div>
-                                        </div>
-                                        <div className="d-flex justify-content-between">
-                                            <Link to="/dashboard/composants/villes" class="btn btn-danger pt-0 px-4 mt-3"> رجوع<i class="fa-solid fa-caret-right me-2 mt-1 pt-1"></i></Link>
-                                            <button type="submit" class="btn btn-danger px-4 mt-3">تعديل
-                                                {
-                                                    loadingUpdate ? (
-                                                        <div className="spinner-border spinner-border-sm fs-2 mt-1 me-3" role="status">
-                                                            <span className="sr-only">Loading...</span>
-                                                        </div>)
-                                                        : <i class="fa-solid fa-circle-check me-3"></i>
-                                                }
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+
+                        <div className="mt-4">
+                            <SubmitButton
+                                loading={submitLoading}
+                                text="تعديـــل المدينة"
+                                loadingText="جاري تعديل المدينة..."
+                                icon="fas fa-save"
+                            />
                         </div>
-                </>
-        }
-        </>
-    )
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
 }
+
 export default UpdateVille;

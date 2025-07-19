@@ -92,7 +92,7 @@ function AddDelegue() {
         <div className="my-4 d-flex justify-content-center">
             <div className="text-center col-sm-12 col-xl-6">
                 <div className="p-4 rounded bg-secondary h-100 delegue-form">
-                    <div className="d-flex justify-content-start">
+                    <div className="mb-3 d-flex justify-content-start">
                         <Link to="/dashboard/composants/delegues" className="px-4 mb-3 btn btn-danger">
                             <i className="fa-solid fa-arrow-right me-2"></i>
                             رجـــوع
