@@ -14,10 +14,6 @@ export function Changement(props) {
     const [state, setState] = useState({
         joueursEntre: [],
         joueursSort: [],
-        JoueursLicenceE: [],
-        JoueursLicenceS: [],
-        joueursCreat: [],
-        joueursLicence: [],
         clubs: [],
     });
 
@@ -28,8 +24,6 @@ export function Changement(props) {
 
     const [isLoadingEntree, setIsLoadingEntree] = useState(false);
     const [isLoadingSortie, setIsLoadingSortie] = useState(false);
-    const [isLoadingLicenceEntree, setIsLoadingLicenceEntree] = useState(false);
-    const [isLoadingLicenceSortie, setIsLoadingLicenceSortie] = useState(false);
 
     const { id } = useParams();
 
@@ -57,22 +51,8 @@ export function Changement(props) {
                     licence: item.joueur_numero_licence
                 }))
 
-                const optionJoueursLicenceE = dataJoueurs?.map(item => ({
-                    value: item.joueur_numero_licence,
-                    label: item.joueur_numero_licence.toUpperCase(),
-                    name: "joueur_licence_entr"
-                }))
-
-                const optionJoueursLicenceS = dataJoueurs?.map(item => ({
-                    value: item.joueur_numero_licence,
-                    label: item.joueur_numero_licence.toUpperCase(),
-                    name: "joueur_licence_sort"
-                }))
-
-                setOptionsLicenceE(optionJoueursLicenceE);
                 setOptionsJEntr(optionJoueursEntr);
                 setOptionsJSort(optionJoueursSort);
-                setOptionsLicenceS(optionJoueursLicenceS);
 
                 const club1 = parseInt(club_1_update);
                 const club2 = parseInt(club_2_update);
@@ -96,8 +76,6 @@ export function Changement(props) {
                     clubs: optionClubs,
                     joueursEntre: optionJoueursEntr,
                     joueursSort: optionJoueursSort,
-                    JoueursLicenceE: optionJoueursLicenceE,
-                    JoueursLicenceS: optionJoueursLicenceS,
                 }))
 
                 setLoading(false)
@@ -175,79 +153,6 @@ export function Changement(props) {
         setChangeUpdate(newChange)
     }
 
-    //-----Sélection licence de joueur entrant
-
-    const createOptionLicenceE = (label) => ({
-        label: label.toUpperCase(),
-        value: label.toLowerCase().replace(/\W/g, ''),
-        name: "joueur_licence_entr"
-    });
-
-
-    const [isLoadingLicenceE, setIsLoadingLicenceE] = useState(false);
-    const [optionsLicenceE, setOptionsLicenceE] = useState();
-
-    const handleCreateLicenceE = (inputValue) => {
-        setIsLoadingLicenceE(true);
-        setTimeout(() => {
-            const newOption = createOptionLicenceE(inputValue);
-            setIsLoadingLicenceE(false);
-            setOptionsLicenceE((prev) => [...prev, newOption]);
-        }, 1000);
-    };
-
-    const handleChangeSelectLicenceE = (event, index) => {
-        let valeur = event;
-        if (valeur === null) {
-            valeur = {
-                value: "",
-                name: "joueur_licence_entr"
-            };
-        }
-        const { name, value } = valeur;
-
-        const newChange = [...changeUpdate];
-        newChange[index][name] = value;
-        setChangeUpdate(newChange);
-
-    };
-
-    //-----Sélection licence de joueur sortant
-
-    const createOptionLicenceS = (label) => ({
-        label,
-        value: label.toLowerCase(),
-        name: "joueur_licence_sort"
-    });
-
-
-    const [isLoadingLicenceS, setIsLoadingLicenceS] = useState(false);
-    const [optionsLicenceS, setOptionsLicenceS] = useState();
-
-
-    const handleCreateLicenceS = (inputValue) => {
-        setIsLoadingLicenceS(true);
-        setTimeout(() => {
-            const newOption = createOptionLicenceS(inputValue);
-            setIsLoadingLicenceS(false);
-            setOptionsLicenceS((prev) => [...prev, newOption]);
-        }, 1000);
-    };
-
-    const handleChangeSelectLicenceS = (event, index) => {
-        let valeur = event
-        if (valeur === null) {
-            valeur = {
-                value: "",
-                name: "joueur_licence_sort"
-            }
-        }
-        const { name, value } = valeur;
-        const newChange = [...changeUpdate];
-        newChange[index][name] = value;
-        setChangeUpdate(newChange)
-    }
-
     const handleChangeSelect = (event, index) => {
         const { name, value } = event;
         const newChange = [...changeUpdate];
@@ -270,7 +175,7 @@ export function Changement(props) {
         changeUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes <= 9 || numberOfAttributes === 12 || numberOfAttributes == null) {
+        if (numberOfAttributes == 7 || numberOfAttributes === 12 || numberOfAttributes == null) {
             setChangeUpdate([...changeUpdate, {}])
             setError("")
         } else {
@@ -293,7 +198,9 @@ export function Changement(props) {
         changeUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 9 || numberOfAttributes === 12) {
+
+        console.log(numberOfAttributes);
+        if (numberOfAttributes === 5 || numberOfAttributes === 7) {
             setError("")
             props.dataChangement(changeUpdate);
             setIsValide(prev => !prev);
@@ -367,64 +274,6 @@ export function Changement(props) {
         setIsLoadingSortie(false);
     };
 
-    // 4. Améliorez la fonction handleCreateLicenceEntree pour les licences des joueurs entrants
-    const handleCreateLicenceEntree = (inputValue) => {
-        if (currentEditingIndex === null) return;
-
-        setIsLoadingLicenceEntree(true);
-
-        // Créer la nouvelle option
-        const newOption = createOptionLicenceE(inputValue);
-
-        // Vérifier si l'option existe déjà
-        const optionExists = state.JoueursLicenceE.some(
-            option => option.value === newOption.value
-        );
-
-        if (!optionExists) {
-            setState(prevState => ({
-                ...prevState,
-                JoueursLicenceE: [...prevState.JoueursLicenceE, newOption]
-            }));
-        }
-
-        // Mettre à jour le changement avec la nouvelle licence
-        const newChangements = [...changeUpdate];
-        newChangements[currentEditingIndex].joueur_licence_entr = newOption.value;
-        setChangeUpdate(newChangements);
-
-        setIsLoadingLicenceEntree(false);
-    };
-
-    // 5. Améliorez la fonction handleCreateLicenceSortie pour les licences des joueurs sortants
-    const handleCreateLicenceSortie = (inputValue) => {
-        if (currentEditingIndex === null) return;
-
-        setIsLoadingLicenceSortie(true);
-
-        // Créer la nouvelle option
-        const newOption = createOptionLicenceS(inputValue);
-
-        // Vérifier si l'option existe déjà
-        const optionExists = state.JoueursLicenceS.some(
-            option => option.value === newOption.value
-        );
-
-        if (!optionExists) {
-            setState(prevState => ({
-                ...prevState,
-                JoueursLicenceS: [...prevState.JoueursLicenceS, newOption]
-            }));
-        }
-
-        // Mettre à jour le changement avec la nouvelle licence
-        const newChangements = [...changeUpdate];
-        newChangements[currentEditingIndex].joueur_licence_sort = newOption.value;
-        setChangeUpdate(newChangements);
-
-        setIsLoadingLicenceSortie(false);
-    };
-
     // 1. Ajouter un état pour contrôler l'ouverture/fermeture
     const [isOpen, setIsOpen] = useState(false); // Par défaut ouvert
 
@@ -445,7 +294,7 @@ export function Changement(props) {
                                 <div className="row">
                                     <Skeleton height={40} />
                                 </div>
-                                <div className="row mt-1">
+                                <div className="mt-1 row">
                                     <Skeleton height={30} />
                                 </div>
                             </SkeletonTheme>
@@ -453,7 +302,7 @@ export function Changement(props) {
                     </>
 
                     :
-                    <div className="row my-2 changement-update">
+                    <div className="my-2 row changement-update">
                         <div className="col-md-12">
                             <div class=" card text-center bg-light text-white mx-1">
                                 <div class="card-header bg-secondary fw-bold d-flex justify-content-between align-items-center"
@@ -463,7 +312,7 @@ export function Changement(props) {
                                     <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                                 </div>
                                 <div
-                                    className="card-body overflow-hidden transition-max-height"
+                                    className="overflow-hidden card-body transition-max-height"
                                     style={{
                                         maxHeight: isOpen ? '5000px' : '0',
                                         opacity: isOpen ? 1 : 0,
@@ -476,7 +325,7 @@ export function Changement(props) {
                                         (
                                             <div>
                                                 {changeUpdate?.map((item, index) =>
-                                                    <div className="row  border border-secondary border-4 rounded py-3 px-2 my-1 mt-3" key={index}>
+                                                    <div className="px-2 py-3 my-1 mt-3 border border-4 rounded row border-secondary" key={index}>
                                                         <div className="form-group col-md-3">
                                                             <label>الفريق</label>
                                                             <div className='my-2'>
@@ -502,24 +351,8 @@ export function Changement(props) {
                                                         <div className="form-group col-md-3">
                                                             <label >رقم الاعب الداخل</label>
                                                             <div className='my-2'>
-                                                                <input type="text" name='joueur_num_entr' value={item?.joueur_num_entr} className="form-control bg-white border-light my-2" onChange={(event) => handleChangeInput(event, index)} id="inputPassword4" />
+                                                                <input type="text" name='joueur_num_entr' value={item?.joueur_num_entr} className="my-2 bg-white form-control border-light" onChange={(event) => handleChangeInput(event, index)} id="inputPassword4" />
 
-                                                            </div>
-                                                        </div>
-                                                        <div className="form-group col-md-3">
-                                                            <label >رقم رخصة الداخل</label>
-                                                            <div className='my-2'>
-                                                                <CreatableSelect className='text-light'
-                                                                    isClearable
-                                                                    isDisabled={isLoadingLicenceE}
-                                                                    isLoading={isLoadingLicenceE}
-                                                                    onChange={(event) => handleChangeSelectLicenceE(event, index)}
-                                                                    onCreateOption={handleCreateLicenceEntree}  // Utiliser la nouvelle fonction
-                                                                    options={state.JoueursLicenceE}             // Utiliser state au lieu de optionsLicenceE
-                                                                    value={state?.JoueursLicenceE.find((j) => j.value === item?.joueur_licence_entr)}
-                                                                    placeholder='أكتب واختر'
-                                                                    onFocus={() => handleFocusField(index)}     // Ajouter l'événement onFocus
-                                                                />
                                                             </div>
                                                         </div>
                                                         <div className="form-group col-md-3">
@@ -539,31 +372,15 @@ export function Changement(props) {
                                                             </div>
                                                         </div>
                                                         <div className="form-group col-md-3">
-                                                            <label >رقم رخصة الخارج</label>
-                                                            <div className='my-2'>
-                                                                <CreatableSelect className='text-light'
-                                                                    isClearable
-                                                                    isDisabled={isLoadingLicenceS}
-                                                                    isLoading={isLoadingLicenceS}
-                                                                    onChange={(event) => handleChangeSelectLicenceS(event, index)}
-                                                                    onCreateOption={handleCreateLicenceSortie}  // Utiliser la nouvelle fonction
-                                                                    options={state.JoueursLicenceS}             // Utiliser state au lieu de optionsLicenceS
-                                                                    value={state?.JoueursLicenceS.find((j) => j.value === item?.joueur_licence_sort)}
-                                                                    placeholder='أكتب واختر'
-                                                                    onFocus={() => handleFocusField(index)}     // Ajouter l'événement onFocus
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div className="form-group col-md-3">
                                                             <label >رقم الاعب الخارج</label>
                                                             <div className='my-2'>
-                                                                <input type="text" name='joueur_num_sort' value={item?.joueur_num_sort} onChange={(event) => handleChangeInput(event, index)} className="form-control bg-white border-light my-2" id="inputPassword4" />
+                                                                <input type="text" name='joueur_num_sort' value={item?.joueur_num_sort} onChange={(event) => handleChangeInput(event, index)} className="my-2 bg-white form-control border-light" id="inputPassword4" />
                                                             </div>
                                                         </div>
                                                         <div className="form-group col-md-2">
                                                             <label >الدقيقة</label>
                                                             <div className='my-2'>
-                                                                <input type="text" name='minute' value={item?.minute} onChange={(event) => handleChangeInput(event, index)} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                                <input type="text" name='minute' value={item?.minute} onChange={(event) => handleChangeInput(event, index)} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                                             </div>
                                                         </div>
                                                         <div className='mt-2'>
@@ -576,7 +393,7 @@ export function Changement(props) {
                                         :
                                         (<h1>...</h1>)
                                     }
-                                    <div className='d-flex justify-content-center mt-3'>
+                                    <div className='mt-3 d-flex justify-content-center'>
                                         <div>
                                             <button className='btn btn-warning rounded-pill' onClick={addRow}><i class="fa-solid fa-plus px-4"></i></button>
                                         </div>
@@ -584,7 +401,7 @@ export function Changement(props) {
                                     <div className='mt-3'>
                                         {error && <span className='text-warning'>{error}<span className='text-warning me-2'>!!</span></span>}
                                     </div>
-                                    <div className='d-flex justify-content-right pt-2'>
+                                    <div className='pt-2 d-flex justify-content-right'>
                                         <button className={`btn me-3 my-2 px-4 fw-bold ${isValide ? 'btn-warning text-danger' : 'btn-secondary'}`} onClick={sendData}>حفـــــظ</button>
                                     </div>
                                 </div>

@@ -23,8 +23,6 @@ export function Changement(props) {
         // 1. Initialiser tous les états d'options comme des tableaux vides
 const [optionsJEntr, setOptionsJEntr] = useState([]);
 const [optionsJSort, setOptionsJSort] = useState([]);
-const [optionsLicenceE, setOptionsLicenceE] = useState([]);
-const [optionsLicenceS, setOptionsLicenceS] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,18 +46,6 @@ const [optionsLicenceS, setOptionsLicenceS] = useState([]);
                     name: "joueur_nom_sort",
                 }))
 
-                const optionJoueursLicenceE = dataJoueurs?.map(item => ({
-                    value: item.joueur_numero_licence,
-                    label: item.joueur_numero_licence.toUpperCase(),
-                    name: "joueur_licence_entr"
-                }))
-
-                const optionJoueursLicenceS = dataJoueurs?.map(item => ({
-                    value: item.joueur_numero_licence,
-                    label: item.joueur_numero_licence.toUpperCase(),
-                    name: "joueur_licence_sort"
-                }))
-
                 const dataClubs = clubResponse.data.filter((c) => (parseInt(c.user_id) === user?.id || c.user_id === null ) && (parseInt(club_1) === c.id || parseInt(club_2) === c.id));
                 const optionClubs = dataClubs?.map(item => ({
                     value: item.id,
@@ -80,10 +66,8 @@ const [optionsLicenceS, setOptionsLicenceS] = useState([]);
                     matchNamber: parseInt(matchNamber.pop() + 1)
                 }))
 
-                setOptionsLicenceE(optionJoueursLicenceE);
                 setOptionsJEntr(optionJoueursEntr);
                 setOptionsJSort(optionJoueursSort);
-                setOptionsLicenceS(optionJoueursLicenceS);
                 setLoading(false)
 
             } catch (error) {
@@ -203,102 +187,6 @@ const [optionsLicenceS, setOptionsLicenceS] = useState([]);
         setValueJSort(event)
     }
 
-    //-----Sélection licence de joueur entrant
-
-    const createOptionLicenceE = (label) => ({
-        label: label.toUpperCase(), // Assurer que tous les labels sont en majuscules
-        value: label.toLowerCase().replace(/\W/g, ''),
-        name: "joueur_licence_entr"
-    });
-
-
-    const [isLoadingLicenceE, setIsLoadingLicenceE] = useState(false);
-
-
-    const handleCreateLicenceE = (inputValue) => {
-        if (currentEditingIndex === null) return;
-        
-        setIsLoadingLicenceE(true);
-        
-        // Créer la nouvelle option
-        const newOption = createOptionLicenceE(inputValue);
-        
-        // Ajouter l'option aux licences disponibles
-        setOptionsLicenceE(prevOptions => [...prevOptions, newOption]);
-        
-        // Mettre à jour immédiatement le changement avec la nouvelle licence
-        const newChanges = [...change];
-        newChanges[currentEditingIndex].joueur_licence_entr = newOption.value;
-        setChange(newChanges);
-        
-        setIsLoadingLicenceE(false);
-    };
-
-    const handleChangeSelectLicenceE = (event, index) => {
-        let valeur = event
-        if (valeur === null) {
-            valeur = {
-                value: "",
-                name: "joueur_licence_entr" // Utiliser ce nom systématiquement
-            }
-        }
-        const { name, value } = valeur;
-        const newChange = [...change];
-        newChange[index][name] = value;
-        setChange(newChange)
-    }
-
-
-    //-----Sélection licence de joueur sortant
-
-    const createOptionLicenceS = (label) => ({
-        label: label.toUpperCase(), // Ajout de toUpperCase()
-        value: label.toLowerCase().replace(/\W/g, ''),
-        name: "joueur_licence_sort"
-    });
-
-
-    const [isLoadingLicenceS, setIsLoadingLicenceS] = useState(false);
-
-
-    const handleCreateLicenceS = (inputValue) => {
-        if (currentEditingIndex === null) return;
-        
-        setIsLoadingLicenceS(true);
-        
-        // Créer la nouvelle option
-        const newOption = createOptionLicenceS(inputValue);
-        
-        // Ajouter l'option aux licences disponibles
-        setOptionsLicenceS(prevOptions => [...prevOptions, newOption]);
-        
-        // Mettre à jour immédiatement le changement avec la nouvelle licence
-        const newChanges = [...change];
-        newChanges[currentEditingIndex].joueur_licence_sort = newOption.value;
-        setChange(newChanges);
-        
-        setIsLoadingLicenceS(false);
-    };
-
-    const handleChangeSelectLicenceS = (event, index) => {
-        let valeur = event
-        if (valeur === null) {
-            valeur = {
-                value: "",
-                name: "joueur_licence_sort"
-            }
-            const { name, value } = valeur;
-            const newChange = [...change];
-            newChange[index][name] = value;
-            setChange(newChange)
-        } else {
-            const { name, value } = valeur;
-            const newChange = [...change];
-            newChange[index][name] = value;
-            setChange(newChange)
-        }
-    }
-
     const handleChangeSelect = (event, index) => {
 
         const { name, value } = event;
@@ -318,7 +206,7 @@ const [optionsLicenceS, setOptionsLicenceS] = useState([]);
 
     const addRow = () => {
         // Si c'est le premier élément vide ou si tous les champs nécessaires sont remplis
-        if (change.length === 1 && Object.keys(change[0]).length === 0 ||  change.every(item => Object.keys(item).length === 10)) {
+        if (change.length === 1 && Object.keys(change[0]).length === 0 ||  change.every(item => Object.keys(item).length === 7)) {
             setChange([...change, {}]);
             setError("");
         } else {
@@ -340,7 +228,7 @@ const [optionsLicenceS, setOptionsLicenceS] = useState([]);
         change.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 10) {
+        if (numberOfAttributes === 7) {
             setError("")
             props.dataChangement(change);
             setIsValide(prev => !prev);
@@ -431,22 +319,6 @@ const [optionsLicenceS, setOptionsLicenceS] = useState([]);
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
-                                                <label >رقم رخصة الداخل</label>
-                                                <div className='my-2'>
-                                                    <CreatableSelect className='text-light'
-                                                        isClearable
-                                                        isDisabled={isLoadingLicenceE}
-                                                        isLoading={isLoadingLicenceE}
-                                                        onChange={(event) => handleChangeSelectLicenceE(event, index)}
-                                                        onCreateOption={handleCreateLicenceE}
-                                                        options={optionsLicenceE}
-                                                        value={change[index]?.joueur_licence_entr ? optionsLicenceE?.find((l) => l.value === change[index]?.joueur_licence_entr) : ""}
-                                                        placeholder="أكتب و اختر"
-                                                        onFocus={() => handleFocusField(index)}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="form-group col-md-3">
                                                 <label >اسم الاعب الخارج</label>
                                                 <div className='my-2'>
                                                     <CreatableSelect className='text-light'
@@ -458,22 +330,6 @@ const [optionsLicenceS, setOptionsLicenceS] = useState([]);
                                                         options={optionsJSort}
                                                         value={change[index]?.joueur_nom_sort ? optionsJSort?.find((l) => l.value === change[index]?.joueur_nom_sort) : ""}
                                                         placeholder="أكتب و اختر"
-                                                        onFocus={() => handleFocusField(index)}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="form-group col-md-3">
-                                                <label >رقم رخصة الخارج</label>
-                                                <div className='my-2'>
-                                                    <CreatableSelect className='text-light'
-                                                        isClearable
-                                                        isDisabled={isLoadingLicenceS}
-                                                        isLoading={isLoadingLicenceS}
-                                                        onChange={(event) => handleChangeSelectLicenceS(event, index)}
-                                                        onCreateOption={handleCreateLicenceS}
-                                                        options={optionsLicenceS}
-                                                        value={change[index]?.joueur_licence_sort ? optionsLicenceS?.find((l) => l.value === change[index]?.joueur_licence_sort) : ""}
-                                                        placeholder='أكتب و اختر'
                                                         onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
