@@ -1,190 +1,207 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate, useParams } from 'react-router-dom';
 import { axiosClinet } from "../../Api/axios";
 import { AuthUser } from "../../AuthContext";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useUpdateHandler } from '../Utils/useUpdateHandler';
+import { validationSchemas } from '../Utils/validationSchemas';
+import { FormInput, FormSelect, SubmitButton, ErrorAlert } from '../Utils/FormComponents';
+import '../../style/forms.css';
 
-function UpdateStade() {
-
-    const [stades, setStades] = useState();
-    const [clubs, setClubs] = useState();
-    const [villes, setVilles] = useState();
-    const [updateClub, setUpdateClub] = useState();
-    const [loadingUpdate, setLoadingUpdate] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+function UpdateClub() {
+    const [villes, setVilles] = useState([]);
+    const [stades, setStades] = useState([]);
+    const [relatedDataLoading, setRelatedDataLoading] = useState(true);
     const { user } = AuthUser();
-    const { id } = useParams();
+
+    const {
+        register,
+        handleSubmit,
+        errors,
+        loading,
+        submitLoading,
+        submitError
+    } = useUpdateHandler(
+        validationSchemas.club,
+        '/club',
+        '/dashboard/composants/updatedClub',
+        '/club'
+    );
 
     useEffect(() => {
-        axiosClinet.get('/club')
-            .then((res) => setClubs(res.data.find((s) => s.id === parseInt(id))))
-        axiosClinet.get('/stade')
-            .then((res) => setStades(res.data.filter((v) => parseInt(v.user_id) === user?.id || v.user_id === null)))
-        axiosClinet.get('/ville')
-            .then((res) => {
-            setVilles(res.data.filter((v) => parseInt(v.user_id) === user?.id || v.user_id === null))
-            setLoading(false)
-            })
-    }, [])
+        const fetchRelatedData = async () => {
+            try {
+                const [villesRes, stadesRes] = await Promise.all([
+                    axiosClinet.get('/ville'),
+                    axiosClinet.get('/stade')
+                ]);
 
+                const filteredVilles = villesRes.data.filter(
+                    (v) => parseInt(v.user_id) === user?.id || v.user_id === null
+                );
+                const filteredStades = stadesRes.data.filter(
+                    (s) => parseInt(s.user_id) === user?.id || s.user_id === null
+                );
 
-    const handleUpdateClub = (event) => {
-        const { name, value } = event.target;
-        setUpdateClub(prevValues => ({
-            ...prevValues,
-            [name]: value.toUpperCase(),
-        }))
-    }
-    const handleUpdateClubSelect = (event) => {
-        const { name, value } = event.target;
-        setUpdateClub(prevValues => ({
-            ...prevValues,
-            [name]: parseInt(value),
-        }))
-    }
+                setVilles(filteredVilles);
+                setStades(filteredStades);
+            } catch (error) {
+                console.error('Error fetching related data:', error);
+            } finally {
+                setRelatedDataLoading(false);
+            }
+        };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setLoadingUpdate(true)
-        if (updateClub) {
-            await axiosClinet.put(`/club/${id}`, updateClub).then(
-                (response) => {
-                    const { status } = response;
-                    if (status === 200) {
-                        setLoadingUpdate(false)
-                        navigate('/composants/updatedClub');
-                    }
-                }
-            ).catch(
-                (error) => {
-                    setLoadingUpdate(false)
-                }
-            )
-        } else {
-            setLoadingUpdate(false)
-        }
-    }
+        fetchRelatedData();
+    }, [user?.id]);
 
-
-    return (
-        <>{
-            loading ?
-                <div className="d-flex justify-content-center my-4">
-                    <div class="col-sm-12 col-xl-6 text-center d-none d-lg-block">
-                        <div class="bg-secondary rounded h-100 p-4">
-                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                <div className="row d-flex align-items-center justify-content-center">
-                                    <div className="col-md-5">
-                                        <Skeleton height={40} />
+    if (loading || relatedDataLoading) {
+        return (
+            <div className="my-4 d-flex justify-content-center">
+                <div className="text-center col-sm-12 col-xl-6 d-none d-lg-block">
+                    <div className="p-4 rounded bg-secondary h-100">
+                        <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                            <div className="row d-flex align-items-center justify-content-center">
+                                <div className="col-md-5">
+                                    <Skeleton height={40} />
+                                </div>
+                            </div>
+                            <div className="mt-4 row">
+                                <div className="col-2">
+                                    <Skeleton height={35} />
+                                </div>
+                                <div className="col-10">
+                                    <Skeleton height={35} />
+                                </div>
+                            </div>
+                            <div className="mt-2 row">
+                                <div className="col-2">
+                                    <div className="mt-2">
                                     </div>
                                 </div>
-
-                                <div className="row mt-4">
-                                    <div className="col-2">
-                                        <div className="mt-2">
-                                            <Skeleton height={35} />
-                                        </div>
-                                    </div>
-                                    <div className="col-10">
-                                        <div className="mt-2">
-                                            <Skeleton height={35} />
-                                        </div>
+                                <div className="col-10">
+                                    <div className="mt-2">
+                                        <Skeleton height={35} />
                                     </div>
                                 </div>
-                                <div className="row mt-2">
-                                    <div className="col-2">
-                                        <div className="mt-2">
-                                            {/* <Skeleton height={35} /> */}
-                                        </div>
-                                    </div>
-                                    <div className="col-10">
-                                        <div className="mt-2">
-                                            <Skeleton height={35} />
-                                        </div>
+                            </div>
+                            <div className="mt-2 row">
+                                <div className="col-12">
+                                    <div className="mt-2">
+                                        <Skeleton height={35} />
                                     </div>
                                 </div>
-
-                                <div className="row mt-2">
-                                    <div className="col-12">
-                                        <div className="mt-2">
-                                            <Skeleton height={35} />
-                                        </div>
+                            </div>
+                            <div className="mt-2 row">
+                                <div className="col-12">
+                                    <div className="mt-2">
+                                        <Skeleton height={35} />
                                     </div>
                                 </div>
-                                <div className="row mt-2">
-                                    <div className="col-12">
-                                        <div className="mt-2">
-                                            <Skeleton height={35} />
-                                        </div>
+                            </div>
+                            <div className="mt-3 row d-flex justify-content-between">
+                                <div className="col-3">
+                                    <div className="mt-2">
+                                        <Skeleton height={35} />
                                     </div>
                                 </div>
-
-                                <div className="row mt-3 d-flex justify-content-between">
-                                    <div className="col-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={35} />
-                                        </div>
-                                    </div>
-                                    <div className="col-3">
-                                        <div className="mt-2">
-                                            <Skeleton height={35} />
-                                        </div>
+                                <div className="col-3">
+                                    <div className="mt-2">
+                                        <Skeleton height={35} />
                                     </div>
                                 </div>
-                            </SkeletonTheme>
-                        </div>
+                            </div>
+                        </SkeletonTheme>
                     </div>
                 </div>
-                :
-                <div className="d-flex justify-content-center my-4">
-                    <div class="col-sm-12 col-xl-6 text-center">
-                        <div class="bg-secondary rounded h-100 p-4">
-                            <p class="mb-4 fs-2 fw-bold text-white">تعديل النادي</p>
-                            <form onSubmit={handleSubmit}>
-                                <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> الاسم</label>
-                                    <div class="col-sm-10">
-                                        <input name="nom" value={updateClub ? updateClub?.nom : clubs?.nom} onChange={handleUpdateClub} type="text" class="form-control" id="inputEmail3" placeholder="الاسم الكامل" />
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
-                                    <div class="col-sm-10">
-                                        <input name="abbr" value={updateClub ? updateClub?.abbr : clubs?.abbr} onChange={handleUpdateClub} type="text" class="form-control" id="inputEmail3" placeholder="التسمية الملخصة  (ABBR)" />
-                                    </div>
-                                </div>
-                                <select name="ville_id" onChange={handleUpdateClubSelect} class="form-select mb-3" aria-label="Default select example">
-                                    <option selected disabled>المدينة</option>
-                                    {villes?.map((v) =>
-                                        <option selected={parseInt(clubs?.ville_id) === v.id} key={v.id} value={v.id}>{v.nom}</option>
-                                    )}
-                                </select>
-                                <select name="stade_id" onChange={handleUpdateClubSelect} class="form-select mb-3" aria-label="Default select example">
-                                    <option selected disabled>الملعب</option>
-                                    {stades?.map((s) =>
-                                        <option selected={parseInt(clubs?.stade_id) === s.id} key={s.id} value={s.id}>{s.nom}</option>
-                                    )}
-                                </select>
-                                <div className="d-flex justify-content-between">
-                                    <Link to="/composants/clubs" class="btn btn-danger pt-0 px-4 mt-3"> رجوع<i class="fa-solid fa-caret-right pt-2 me-4"></i></Link>
-                                    <button type="submit" class="btn btn-danger pt-0 px-4 mt-3">تعديل
-                                        {
-                                            loadingUpdate ? (
-                                                <div className="spinner-border spinner-border-sm fs-2 mt-2 me-3" role="status">
-                                                    <span className="sr-only">Loading...</span>
-                                                </div>)
-                                                : <i class="fa-solid fa-circle-check pt-2 me-3"></i>
-                                        }
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="my-4 d-flex justify-content-center">
+            <div className="text-center col-sm-12 col-xl-6">
+                <div className="p-4 rounded bg-secondary h-100">
+                    <div className="mb-3 d-flex justify-content-start">
+                        <Link to="/dashboard/composants/clubs" className="px-4 mb-3 btn btn-danger">
+                            <i className="fa-solid fa-arrow-right ms-2"></i>
+                            رجـــوع
+                        </Link>
                     </div>
-                </div>}
-        </>
-    )
+                    
+                    <div className="mb-4">
+                        <h2 className="text-white fw-bold">
+                            <i className="fas fa-edit ms-3"></i>
+                            تعديل النادي
+                        </h2>
+                        <p className="mb-0 text-white-50">عدّل بيانات النادي</p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} noValidate>
+                        <ErrorAlert error={submitError} />
+
+                        <div className="row">
+                            <div className="col-12">
+                                <FormInput
+                                    label="اسم النادي"
+                                    name="nom"
+                                    placeholder="أدخل الاسم الكامل للنادي"
+                                    register={register}
+                                    error={errors.nom}
+                                    icon="fas fa-shield-alt"
+                                />
+                            </div>
+
+                            <div className="col-12">
+                                <FormInput
+                                    label="التسمية المختصرة"
+                                    name="abbr"
+                                    placeholder="التسمية الملخصة (مثال: OCA)"
+                                    register={register}
+                                    error={errors.abbr}
+                                    icon="fas fa-code"
+                                />
+                            </div>
+
+                            <div className="col-md-6">
+                                <FormSelect
+                                    label="المدينة"
+                                    name="ville_id"
+                                    options={villes}
+                                    register={register}
+                                    error={errors.ville_id}
+                                    placeholder="اختر المدينة"
+                                    icon="fas fa-map-marker-alt"
+                                />
+                            </div>
+
+                            <div className="col-md-6">
+                                <FormSelect
+                                    label="الملعب"
+                                    name="stade_id"
+                                    options={stades}
+                                    register={register}
+                                    error={errors.stade_id}
+                                    placeholder="اختر الملعب"
+                                    icon="fas fa-futbol"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="mt-4">
+                            <SubmitButton
+                                loading={submitLoading}
+                                text="تعديـــل النادي"
+                                loadingText="جاري تعديل النادي..."
+                                icon="fas fa-save"
+                            />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
 }
-export default UpdateStade;
+
+export default UpdateClub;
