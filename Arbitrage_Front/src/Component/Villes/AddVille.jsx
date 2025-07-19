@@ -1,82 +1,74 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
-import { axiosClinet } from "../../Api/axios";
+import React from "react";
+import { Link } from 'react-router-dom';
 import { AuthUser } from "../../AuthContext";
+import { useFormHandler } from '../Utils/useFormHandler';
+import { validationSchemas } from '../Utils/validationSchemas';
+import { FormInput, SubmitButton, ErrorAlert } from '../Utils/FormComponents';
+import '../../style/forms.css';
 
 function AddVille() {
-
-
-    const [addVille, setAddVille] = useState();
-    const [loadingAdd, setLoadingAdd] = useState(false);
-    const navigate = useNavigate();
     const { user } = AuthUser();
 
-
-    const handleAddVille = (event) => {
-        const { name, value } = event.target;
-        setAddVille(prevValues => ({
-            ...prevValues,
-            [name]: value,
-            user_id: parseInt(user?.id),
-        }))
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setLoadingAdd(true)
-        if (addVille) {
-            await axiosClinet.post('/ville', addVille).then(
-                (response) => {
-                    const { data } = response;
-                    if (data.status === true) {
-                        setLoadingAdd(false)
-                        navigate('/dashboard/composants/addedVille');
-                    }
-                }
-            ).catch(
-                (error) => {
-                    setLoadingAdd(false)
-                    console.error('Error:', error)
-                }
-            )
-        } else {
-            setLoadingAdd(false)
-        }
-    }
+    const {
+        register,
+        handleSubmit,
+        errors,
+        loading: submitLoading,
+        submitError
+    } = useFormHandler(
+        validationSchemas.ville,
+        '/ville',
+        '/dashboard/composants/addedVille'
+    );
 
     return (
-        <>
-            <div className="d-flex justify-content-center my-4 mx-4">
-                <div class="col-12 col-lg-6 text-center">
-                    <div class="bg-secondary rounded h-100 p-4 col-md-12">
-                        <div className="d-flex justify-content-start">
-                            <Link to="/dashboard/composants/villes" class="btn btn-warning px-4 mb-3"> رجـــوع<i class="fa-solid fa-caret-right me-3"></i></Link>
-                        </div>
-                        <p class="mb-lg-4 fs-2 fw-bold text-white">إضافة مدينة - جماعة</p>
-                        <form onSubmit={handleSubmit}>
-                            <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <input placeholder="المدينة - الجماعة" name="nom" onChange={handleAddVille} type="text" class="form-control" id="inputEmail3" />
-                                </div>
-                            </div>
-                            <div>
-                            </div>
-                            <div className="mt-5">
-                                <button type="submit" class="btn btn-danger pe-5 ps-5">إضــــافة
-                                    {
-                                        loadingAdd ? (
-                                            <div className="spinner-border spinner-border-sm fs-2 me-2" role="status">
-                                                <span className="sr-only">Loading...</span>
-                                            </div>)
-                                            : ""
-                                    }
-                                </button>
-                            </div>
-                        </form>
+        <div className="mx-4 my-4 d-flex justify-content-center">
+            <div className="text-center col-12 col-lg-6">
+                <div className="p-4 rounded bg-secondary h-100 col-md-12">
+                    <div className="d-flex justify-content-start">
+                        <Link to="/dashboard/composants/villes" className="px-4 mb-3 btn btn-danger">
+                            <i className="fa-solid fa-arrow-right ms-2"></i>
+                            رجـــوع
+                        </Link>
                     </div>
+                    
+                    <div className="mb-4">
+                        <h2 className="text-white fw-bold">
+                            <i className="fas fa-city ms-3"></i>
+                            إضافة مدينة - جماعة
+                        </h2>
+                        <p className="mb-0 text-white-50">أضف مدينة أو جماعة جديدة إلى قاعدة البيانات</p>
+                    </div>
+                    
+                    <form onSubmit={handleSubmit} noValidate>
+                        <ErrorAlert error={submitError} />
+                        
+                        <div className="row">
+                            <div className="col-12">
+                                <FormInput
+                                    label="اسم المدينة أو الجماعة"
+                                    name="nom"
+                                    placeholder="أدخل اسم المدينة أو الجماعة"
+                                    register={register}
+                                    error={errors.nom}
+                                    icon="fas fa-map-marked-alt"
+                                />
+                            </div>
+                        </div>
+                        
+                        <div className="mt-4">
+                            <SubmitButton 
+                                loading={submitLoading}
+                                text="إضــــافة المدينة"
+                                loadingText="جاري إضافة المدينة..."
+                                icon="fas fa-plus-circle"
+                            />
+                        </div>
+                    </form>
                 </div>
             </div>
-        </>
-    )
+        </div>
+    );
 }
+
 export default AddVille;
