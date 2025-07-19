@@ -9,7 +9,13 @@ class But extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['club_id', 'joueur_nom', 'joueur_numero_licence', 'joueur_numero', 'minute', 'matche_id'];
+    protected $fillable = [
+        'matche_id',
+        'club_id',
+        'joueur_numero',
+        'joueur_nom',
+        'minute',
+    ];
 
     public function club(){
         return $this->belongsTo(Club::class);
