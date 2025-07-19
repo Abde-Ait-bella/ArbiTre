@@ -12,12 +12,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
-            'name' => 'Abde',
-            'email' => 'abde@example.com',
-            'password' => 'abde123456'
-        ]);
+        $this->call(
+            ArbitreSeeder::class,
+        );
+        // \App\Models\User::factory(10)->create();
+
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Abde',
+        //     'email' => 'abde@example.com',
+        //     'password' => 'abde123456'
+        // ]);
     }
 }

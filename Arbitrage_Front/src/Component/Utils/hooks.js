@@ -38,28 +38,30 @@ export const useDataFetching = (endpoint, filterFn = null) => {
     return { data, setData, loading, error };
 };
 
-// Hook pour gérer les suppressions
-export const useDeleteItem = (endpoint, redirectPath) => {
+
+export const useDeleteItem = (endpoint, redirectPath = null) => {
     const [loadingDelete, setLoadingDelete] = useState(false);
     const [itemIdToDelete, setItemIdToDelete] = useState(null);
     const navigate = useNavigate();
 
     const handleDelete = async (id) => {
+        setItemIdToDelete(id);
+        setLoadingDelete(true);
+
         try {
-            setLoadingDelete(true);
-            setItemIdToDelete(id);
+            // Activer l'appel API réel
+            await axiosClinet.delete(`${endpoint}/${id}`);
             
-            const response = await axiosClinet.delete(`${endpoint}/${id}`);
             
-            if (response.status === 200) {
-                if (redirectPath) {
-                    navigate(redirectPath);
-                }
-                return true;
+            // Redirection si nécessaire
+            if (redirectPath) {
+                navigate(redirectPath);
             }
-            return false;
+            
+            return true;
         } catch (error) {
-            console.error(`Error deleting item with id ${id}:`, error);
+            console.error(`❌ Erreur suppression ID ${id}:`, error);
+            alert('فشل في حذف العنصر');
             return false;
         } finally {
             setLoadingDelete(false);

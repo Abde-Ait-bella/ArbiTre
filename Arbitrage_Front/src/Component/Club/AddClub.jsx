@@ -50,7 +50,7 @@ function AddStade() {
                     const { data } = response;
                     if (data.status === true) {
                         setLoadingAdd(false)
-                        navigate('/composants/addedClub');
+                        navigate('/dashboard/composants/addedClub');
                     }
                 }
             ).catch(
@@ -70,7 +70,7 @@ function AddStade() {
             {
                 loading ?
                     <>
-                        <div className="d-flex justify-content-center my-4">
+                        <div className="my-4 d-flex justify-content-center">
                             <div class="col-sm-12 col-xl-6 text-center d-none d-lg-block">
                                 <div class="bg-secondary rounded h-100 p-4">
                                     <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
@@ -80,13 +80,13 @@ function AddStade() {
                                             </div>
                                         </div>
 
-                                        <div className="row d-flex align-items-center justify-content-center mt-4">
+                                        <div className="mt-4 row d-flex align-items-center justify-content-center">
                                             <div className="col-md-5">
                                                 <Skeleton height={40} />
                                             </div>
                                         </div>
 
-                                        <div className="row mt-2">
+                                        <div className="mt-2 row">
                                             <div className="col-2">
                                                 <div className="mt-2">
                                                     <Skeleton height={35} />
@@ -98,7 +98,7 @@ function AddStade() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="row mt-2">
+                                        <div className="mt-2 row">
                                             <div className="col-2">
                                                 <div className="mt-2">
                                                     <Skeleton height={35} />
@@ -111,14 +111,14 @@ function AddStade() {
                                             </div>
                                         </div>
 
-                                        <div className="row mt-2">
+                                        <div className="mt-2 row">
                                             <div className="col-12">
                                                 <div className="mt-2">
                                                     <Skeleton height={35} />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="row mt-2">
+                                        <div className="mt-2 row">
                                             <div className="col-12">
                                                 <div className="mt-2">
                                                     <Skeleton height={35} />
@@ -126,7 +126,7 @@ function AddStade() {
                                             </div>
                                         </div>
 
-                                        <div className="row mt-4 d-flex justify-content-center">
+                                        <div className="mt-4 row d-flex justify-content-center">
                                             <div className="col-4">
                                                 <div className="mt-2">
                                                     <Skeleton height={40} width={135} />
@@ -138,7 +138,7 @@ function AddStade() {
                             </div>
                         </div>
 
-                        <div className="my-2 mx-4 d-lg-none">
+                        <div className="mx-4 my-2 d-lg-none">
                             <div class="col-md-6 col-xl-6 text-center">
                                 <div class="bg-secondary rounded h-100 p-4">
                                     <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
@@ -149,35 +149,20 @@ function AddStade() {
                                             </div>
                                         </div>
 
-                                        <div className="row d-flex align-items-center justify-content-center mt-4">
+                                        <div className="mt-4 row d-flex align-items-center justify-content-center">
                                             <div className="col-7">
                                                 <Skeleton height={40} />
                                             </div>
                                         </div>
 
-                                        <div className="row mt-2">
+                                        <div className="mt-2 row">
                                             <div className="col-12">
                                                 <div className="mt-2">
                                                     <Skeleton height={35} />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="row mt-2">
-                                            <div className="col-12">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="row mt-2">
-                                            <div className="col-12">
-                                                <div className="mt-2">
-                                                    <Skeleton height={35} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="row mt-2 mb-lg-3 mb-5">
+                                        <div className="mt-2 row">
                                             <div className="col-12">
                                                 <div className="mt-2">
                                                     <Skeleton height={35} />
@@ -185,7 +170,22 @@ function AddStade() {
                                             </div>
                                         </div>
 
-                                        <div className="row mt-4 d-flex justify-content-center">
+                                        <div className="mt-2 row">
+                                            <div className="col-12">
+                                                <div className="mt-2">
+                                                    <Skeleton height={35} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="mt-2 mb-5 row mb-lg-3">
+                                            <div className="col-12">
+                                                <div className="mt-2">
+                                                    <Skeleton height={35} />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-4 row d-flex justify-content-center">
                                             <div className="col-12">
                                                 <div className="mt-2">
                                                     <Skeleton height={40} width={135} />
@@ -200,7 +200,7 @@ function AddStade() {
 
                     :
 
-                    <div className="d-flex justify-content-center my-4">
+                    <div className="my-4 d-flex justify-content-center">
                         <div class="col-sm-12 col-xl-6 text-center">
                             <div class="bg-secondary rounded h-100 p-4">
                                 <div className="d-flex justify-content-start">

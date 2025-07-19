@@ -2,7 +2,20 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>تقرير الحكم</title>
+    <title>@foreach($clubs as $club)
+                    @if($club->id == $rapport->club_id_1)
+                        {{ $club->abbr }}
+                    @endif
+                @endforeach
+                #
+                @foreach($clubs as $club)
+                    @if($club->id == $rapport->club_id_2)
+                        {{ $club->abbr }}
+                    @endif
+                @endforeach  
+            
+                تقرير مبارة
+            </title>
     <style>
 
         

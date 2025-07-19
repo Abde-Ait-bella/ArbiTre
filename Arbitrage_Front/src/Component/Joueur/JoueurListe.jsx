@@ -4,6 +4,8 @@ import { Button } from 'primereact/button';
 import { useDataFetching, useDeleteItem } from '../Utils/hooks';
 import DataTableTemplate from '../Utils/DataTableTemplate';
 import { TextFilterComponent } from '../Utils/FilterComponents';
+import UpdateButton from '../Utils/UpdateButton';
+import DeleteButton from '../Utils/DeleteButton';
 import 'primereact/resources/themes/lara-dark-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -25,15 +27,21 @@ function JoueurListe() {
     const actionBodyTemplate = (rowData) => {
         return (
             <div className="flex gap-2 justify-content-center">
-                <Link to={`/dashboard/composants/updateJoueur/${rowData.id}`} className="p-button p-button-icon-only p-button-rounded p-button-text">
-                    <i className="pi pi-wrench"></i>
-                </Link>
+                {/* Utiliser le composant UpdateButton */}
+                <UpdateButton
+                    itemId={rowData.id}
+                    updatePath="/dashboard/composants/updateJoueur"
+                    tooltip="تعديل اللاعب"
+                />
                 
-                <Button
-                    icon={loadingDelete && itemIdToDelete === rowData.id ? 'pi pi-spin pi-spinner' : 'pi pi-trash'}
-                    className="p-button-danger p-button-text p-button-rounded"
-                    onClick={() => handleDelete(rowData.id)}
-                    disabled={loadingDelete && itemIdToDelete === rowData.id}
+                {/* Utiliser le composant DeleteButton avec loader Font Awesome */}
+                <DeleteButton
+                    itemId={rowData.id}
+                    onDelete={handleDelete}
+                    loading={loadingDelete}
+                    loadingItemId={itemIdToDelete}
+                    loadingIcon="fa-solid fa-spinner fa-spin text-danger"
+                    tooltip="حذف اللاعب"
                 />
             </div>
         );

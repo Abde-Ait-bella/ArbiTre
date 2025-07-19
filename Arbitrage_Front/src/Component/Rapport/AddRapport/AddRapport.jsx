@@ -111,16 +111,14 @@ function AddRapport() {
         setDataPenalty(dataFromChild);
     }
 
-    console.log('dataPenalty', dataPenalty)
-
 
     return (
         <>
-            <div className="bg-dark p-4">
+            <div className="p-4 bg-dark">
                 <div class="card-header bg-secondary border border-light">
                     <p class=" mt-2 text-light text-center fs-3 fw-bold mb-1">إضافة تقرير</p>
                 </div>
-                <div className="addRapport px-lg-5 py-3 rounded-bottom bg-light">
+                <div className="py-3 addRapport px-lg-5 rounded-bottom bg-light">
                     <Matche dataMatche={handleMatcheData} />
                     <Avert dataAvert={handleAvertData} />
                     <Changement dataChangement={handleChangementData} />
@@ -129,7 +127,7 @@ function AddRapport() {
                     <form onSubmit={handleSubmit}>
                         <div className="d-flex justify-content-center">
                             <div>
-                            <button type="submit" onChange={handleSubmit} className="btn btn-outline-warning px-5 py-2 fw-bold">إضـافـــــــة
+                            <button type="submit" onChange={handleSubmit} className="px-5 py-2 btn btn-outline-warning fw-bold">إضـافـــــــة
                                 {loading ? (
                                     <div className="spinner-border spinner-border-sm me-3 fs-2" role="status">
                                         <span className="sr-only">Loading...</span>

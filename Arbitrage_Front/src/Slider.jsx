@@ -52,7 +52,6 @@ function Slider() {
         break;
     }
 
-    console.log(inView2)
   }, [inView1, inView2, inView3])
 
 
@@ -159,20 +158,6 @@ function Slider() {
         
         // Tenter la lecture automatique dès que la vidéo est chargée
         const playPromise = videoRef.current.play();
-        
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              console.log("Lecture vidéo démarrée avec succès");
-            })
-            .catch(error => {
-              console.log("Échec de la lecture automatique:", error);
-              // En cas d'échec, tentez de nouveau après un délai court
-              setTimeout(() => {
-                videoRef.current?.play().catch(e => console.log("Deuxième tentative échouée"));
-              }, 300);
-            });
-        }
       };
       
       // Ajouter l'événement de chargement
@@ -355,7 +340,7 @@ function Slider() {
               <p>بعد كل مباراة ، توفر لك المنصة إمكانية إنتاج تقارير مفصلة على شكل <span>PDF</span> ، بحيث يمكنك تحميلها أو طباعتها وتقديمها للجهات المسؤولة</p>
             </div>
             <div className="but" >
-              <h3 htmlFor="">أهدافنـــــــــــــــــــــــــــــــــــــــــا</h3>
+              {window.innerWidth > 992 ?   <h3 htmlFor="">أهدافنـــــــــــــــــــــــــــــــــــــــــا</h3> :   <h3 htmlFor="">أهدافنـــــــــا</h3>}
               <div className="img">
                 <img src={refreeImage} alt="" />
               </div>

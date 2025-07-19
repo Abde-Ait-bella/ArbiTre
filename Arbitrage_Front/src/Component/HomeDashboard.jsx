@@ -396,7 +396,7 @@ function Home() {
                 <div class="row">
                     {
                         loading ?
-                            <div className="col-sm-6 mt-4 col-xl-4">
+                            <div className="mt-4 col-sm-6 col-xl-4">
                                 <div class="bg-secondary p-4 rounded">
                                     <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
                                         <div className="mx-2 row">
@@ -413,11 +413,11 @@ function Home() {
                                 </div>
                             </div>
                             :
-                            <div className="col-sm-6 mt-4 col-xl-4">
+                            <div className="mt-4 col-sm-6 col-xl-4">
                                 <div class="d-flex align-items-center justify-content-around bg-secondary p-4 rounded">
                                     <img src={ImageYellow} style={{ height: '75px' }} alt="" />
                                     <div class="ms-lg-3">
-                                        <p class="mb-2 fw-bold fs-5">عدد البطاقات الصفراء</p>
+                                        <p class="mb-2 fw-bold fs-7">عدد البطاقات الصفراء</p>
                                         <h6 class="mb-0">{avert_G?.length}</h6>
                                     </div>
                                 </div>
@@ -425,7 +425,7 @@ function Home() {
                     }
                     {
                         loading ?
-                            <div className="col-sm-6 mt-4 col-xl-4">
+                            <div className="mt-4 col-sm-6 col-xl-4">
                                 <div class="bg-secondary p-4 rounded">
                                     <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
                                         <div className="mx-2 row">
@@ -442,11 +442,11 @@ function Home() {
                                 </div>
                             </div>
                             :
-                            <div className="col-sm-6 mt-4 col-xl-4">
+                            <div className="mt-4 col-sm-6 col-xl-4">
                                 <div class="d-flex align-items-center justify-content-around bg-secondary p-4 rounded">
                                     <img src={ImageRed} style={{ height: '75px' }} alt="" />
                                     <div class="ms-lg-3">
-                                        <p class="mb-2 fw-bold text-center fs-5">عدد البطاقات الحمراء</p>
+                                        <p class="mb-2 fw-bold text-center fs-7">عدد البطاقات الحمراء</p>
                                         <h6 class="mb-0">{avert_R?.length}</h6>
                                     </div>
                                 </div>
@@ -454,7 +454,7 @@ function Home() {
                     {
                         loading ?
 
-                            <div className="col-sm-6 mt-4 col-md-12 col-xl-4">
+                            <div className="mt-4 col-sm-6 col-md-12 col-xl-4">
                                 <div class="bg-secondary p-4 rounded">
                                     <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
                                         <div className="mx-2 row">
@@ -471,11 +471,11 @@ function Home() {
                                 </div>
                             </div>
                             :
-                            <div className="col-sm-6 mt-4 col-xl-4">
+                            <div className="mt-4 col-sm-6 col-xl-4">
                                 <div class="d-flex align-items-center justify-content-around bg-secondary p-4 rounded">
                                     <img src={ImageMatche} style={{ height: '75px' }} alt="" />
                                     <div class="ms-lg-3">
-                                        <p class="mb-2 fw-bold text-center fs-5">عدد  المباريات</p>
+                                        <p class="mb-2 fw-bold text-center fs-7">عدد  المباريات</p>
                                         <h6 class="mb-0">{matcheSeason?.length}</h6>
                                     </div>
                                 </div>
@@ -490,7 +490,7 @@ function Home() {
                                         <div className="d-lg-block d-none">
                                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
                                                 <div className="">
-                                                    <div className="d-flex justify-content-center mt-2 mb-3 col-12">
+                                                    <div className="mt-2 mb-3 d-flex justify-content-center col-12">
                                                         <Skeleton height={23} width={95} />
                                                     </div>
                                                 </div>
@@ -559,7 +559,7 @@ function Home() {
                                         <div className="d-lg-none">
                                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
 
-                                                <div className="d-flex justify-content-center mt-2 mb-3 col-12">
+                                                <div className="mt-2 mb-3 d-flex justify-content-center col-12">
                                                     <Skeleton height={23} width={95} />
                                                 </div>
 
@@ -620,7 +620,7 @@ function Home() {
                                                         <Skeleton height={23} width={95} />
                                                     </div>
                                                 </div>
-                                                <div className="d-flex justify-content-center me-1 mt-2 row">
+                                                <div className="mt-2 d-flex justify-content-center me-1 row">
                                                     <div className="mt-2 col-3">
                                                         <Skeleton height={23} width={85} />
                                                     </div>
@@ -657,11 +657,11 @@ function Home() {
                                         {/* Skeleton Loading Mobile */}
                                         <div className="d-lg-none">
                                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                                <div className="d-flex justify-content-center mt-2 col-12">
+                                                <div className="mt-2 d-flex justify-content-center col-12">
                                                     <Skeleton height={23} width={95} />
                                                 </div>
 
-                                                <div className="d-flex justify-content-around mt-2">
+                                                <div className="mt-2 d-flex justify-content-around">
                                                     <div className="mt-2 col-4">
                                                         <Skeleton height={23} width={85} />
                                                     </div>
@@ -697,23 +697,23 @@ function Home() {
                             }
                         </div>
                     </div>
-                    <div className="col-sm-12 mt-4 col-xl-5" >
-                        <div className="d-flex align-items-center justify-content-center bg-secondary p-4 rounded">
+                    <div className="mt-4 col-sm-12 col-xl-5" >
+                        <div className="p-4 rounded d-flex align-items-center justify-content-center bg-secondary">
                             {
                                 loading ?
                                     <>
                                         <div className="d-lg-block d-none">
                                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
                                                 <div className="d-flex justify-content-center row">
-                                                    <div className="d-flex justify-content-center mt-2 col-3">
+                                                    <div className="mt-2 d-flex justify-content-center col-3">
                                                         <Skeleton height={33} width={150} />
                                                     </div>
                                                 </div>
-                                                <div className="d-flex justify-content-around mt-3 row">
-                                                    <div className="d-flex justify-content-center mt-2 col-3">
+                                                <div className="mt-3 d-flex justify-content-around row">
+                                                    <div className="mt-2 d-flex justify-content-center col-3">
                                                         <Skeleton height={23} width={100} />
                                                     </div>
-                                                    <div className="d-flex justify-content-center mt-2 col-3">
+                                                    <div className="mt-2 d-flex justify-content-center col-3">
                                                         <Skeleton height={23} width={100} />
                                                     </div>
                                                 </div>
@@ -729,15 +729,15 @@ function Home() {
                                         <div className="d-lg-none">
                                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
                                                 <div className="d-flex justify-content-center row">
-                                                    <div className="d-flex justify-content-center mt-2 col-3">
+                                                    <div className="mt-2 d-flex justify-content-center col-3">
                                                         <Skeleton height={33} width={150} />
                                                     </div>
                                                 </div>
-                                                <div className="d-flex justify-content-around mt-3 row">
-                                                    <div className="d-flex justify-content-center mt-2 col-3">
+                                                <div className="mt-3 d-flex justify-content-around row">
+                                                    <div className="mt-2 d-flex justify-content-center col-3">
                                                         <Skeleton height={23} width={95} />
                                                     </div>
-                                                    <div className="d-flex justify-content-center mt-2 col-3">
+                                                    <div className="mt-2 d-flex justify-content-center col-3">
                                                         <Skeleton height={23} width={95} />
                                                     </div>
                                                 </div>
@@ -762,8 +762,8 @@ function Home() {
                         </div>
                     </div>
 
-                    <div className="col-sm-12 mt-4 col-xl-7" >
-                        <div className="d-flex align-items-center justify-content-center bg-secondary p-4 rounded">
+                    <div className="mt-4 col-sm-12 col-xl-7" >
+                        <div className="p-4 rounded d-flex align-items-center justify-content-center bg-secondary">
                             {
                                 loading ?
 
@@ -771,22 +771,22 @@ function Home() {
                                         <div className="d-lg-block d-none">
                                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
                                                 <div className="d-flex justify-content-center row">
-                                                    <div className="d-flex justify-content-center mt-2 col-3">
+                                                    <div className="mt-2 d-flex justify-content-center col-3">
                                                         <Skeleton height={33} width={150} />
                                                     </div>
                                                 </div>
-                                                <div className="d-flex justify-content-center ms-4 container">
-                                                    <div className="d-flex justify-content-around mt-3 row">
-                                                        <div className="d-flex justify-content-center mt-2 col-3">
+                                                <div className="container d-flex justify-content-center ms-4">
+                                                    <div className="mt-3 d-flex justify-content-around row">
+                                                        <div className="mt-2 d-flex justify-content-center col-3">
                                                             <Skeleton height={23} width={100} />
                                                         </div>
-                                                        <div className="d-flex justify-content-center mt-2 col-3">
+                                                        <div className="mt-2 d-flex justify-content-center col-3">
                                                             <Skeleton height={23} width={100} />
                                                         </div>
-                                                        <div className="d-flex justify-content-center mt-2 col-3">
+                                                        <div className="mt-2 d-flex justify-content-center col-3">
                                                             <Skeleton height={23} width={100} />
                                                         </div>
-                                                        <div className="d-flex justify-content-center mt-2 col-3">
+                                                        <div className="mt-2 d-flex justify-content-center col-3">
                                                             <Skeleton height={23} width={100} />
                                                         </div>
                                                     </div>
@@ -811,22 +811,22 @@ function Home() {
                                         <div className="d-lg-none">
                                             <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
                                                 <div className="d-flex justify-content-center row">
-                                                    <div className="d-flex justify-content-center mt-2 col-3">
+                                                    <div className="mt-2 d-flex justify-content-center col-3">
                                                         <Skeleton height={33} width={150} />
                                                     </div>
                                                 </div>
                                                 <div className="d-flex justify-content-around col-12">
-                                                    <div className="d-flex justify-content-between mt-3 row col-12">
-                                                        <div className="d-flex justify-content-center mt-2 col-3">
+                                                    <div className="mt-3 d-flex justify-content-between row col-12">
+                                                        <div className="mt-2 d-flex justify-content-center col-3">
                                                             <Skeleton height={23} width={55} />
                                                         </div>
-                                                        <div className="d-flex justify-content-center mt-2 col-3">
+                                                        <div className="mt-2 d-flex justify-content-center col-3">
                                                             <Skeleton height={23} width={55} />
                                                         </div>
-                                                        <div className="d-flex justify-content-center mt-2 col-3">
+                                                        <div className="mt-2 d-flex justify-content-center col-3">
                                                             <Skeleton height={23} width={55} />
                                                         </div>
-                                                        <div className="d-flex justify-content-center mt-2 col-3">
+                                                        <div className="mt-2 d-flex justify-content-center col-3">
                                                             <Skeleton height={23} width={55} />
                                                         </div>
                                                     </div>
@@ -857,7 +857,7 @@ function Home() {
                 </div>
                 
                 <div class="row">
-                            <div className="col-sm-6 mt-4 col-xl-4" style={{ cursor : 'pointer'}}>
+                            <div className="mt-4 col-sm-6 col-xl-4" style={{ cursor : 'pointer'}}>
                                 <a href="files/transport.pdf" download="المسافة بالكيلومتر بين المدن المنضوية تحت لواء عصبة سوس لكرة القدم 2016-2017">
                                 <div class="d-flex align-items-center justify-content-around bg-secondary p-1 px-2 rounded download-file">
                                     <img src={imgPdf} style={{ height: '75px' }} alt="" />
@@ -868,7 +868,7 @@ function Home() {
                                 </a>
                             </div>
                             
-                            <div className="col-sm-6 mt-4 col-xl-4" style={{ cursor : 'pointer'}}>
+                            <div className="mt-4 col-sm-6 col-xl-4" style={{ cursor : 'pointer'}}>
                                 <a href="files/Rapport.docx" download="rapport du match format exploitable">
                                 <div class="d-flex align-items-center justify-content-around bg-secondary p-2 px-2 rounded download-file">
                                     <img src={imgWord} style={{ height: '67px' }} alt="" />
@@ -879,7 +879,7 @@ function Home() {
                                 </a>
                             </div>
                             
-                            <div className="col-sm-6 mt-4 col-xl-4" style={{ cursor : 'pointer'}}>
+                            <div className="mt-4 col-sm-6 col-xl-4" style={{ cursor : 'pointer'}}>
                                 <a href="files/reçu.pdf" download="توصيل">
                                 <div class="d-flex align-items-center justify-content-around bg-secondary p-1 px-2 rounded download-file">
                                     <img src={imgPdf} style={{ height: '75px' }} alt="" />
