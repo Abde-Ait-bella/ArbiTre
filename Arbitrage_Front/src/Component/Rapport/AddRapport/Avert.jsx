@@ -49,12 +49,22 @@ export function Avert(props) {
                     name: "joueur_numero_licence"
                 }))
 
+                
                 const dataClubs = clubResponse.data.filter((c) => (parseInt(c.user_id) === user?.id || c.user_id === null) && (c.id === parseInt(club_1) || c.id === parseInt(club_2)));
-                const optionClubs = dataClubs?.map(item => ({
+                var optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + item.abbr,
                     name: "club_id",
                 }))
+
+                
+                if(!Number.isInteger(club_1)) {
+                    var optionClubs = [...optionClubs, club_1];
+                }
+                if(!Number.isInteger(club_2)) {
+                    var optionClubs = [...optionClubs, club_2];
+                }
+                console.log("optionClubs", club_1, club_2, optionClubs);
 
                 const dataMatch = matcheRespose.data;
                 if (!dataMatch || dataMatch.length === 0) {

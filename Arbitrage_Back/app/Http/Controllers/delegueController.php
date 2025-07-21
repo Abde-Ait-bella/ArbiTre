@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Delegue;
 use Illuminate\Http\Request;
 
-class delegueController extends Controller
+class DelegueController extends Controller
 {
     public function index()
     {
@@ -18,11 +17,31 @@ class delegueController extends Controller
      */
     public function store(Request $request)
     {
-        $delegue = Delegue::create($request->all());
-        return [
-            "status" => true,
-            "data" => $delegue
-        ];
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'user_id' => 'required|integer'
+        ]);
+
+        // Vérifier si le délégué existe déjà
+        $existingDelegue = Delegue::where('nom', strtoupper($request->nom))
+            ->where('prenom', strtoupper($request->prenom))
+            ->where('user_id', $request->user_id)
+            ->first();
+
+        if ($existingDelegue) {
+            return response()->json([
+                'message' => 'Ce délégué existe déjà'
+            ], 409);
+        }
+
+        $delegue = Delegue::create([
+            'nom' => strtoupper($request->nom),
+            'prenom' => strtoupper($request->prenom),
+            'user_id' => $request->user_id
+        ]);
+
+        return response()->json($delegue, 201);
     }
 
     /**

@@ -8,10 +8,12 @@ import { AuthUser } from '../../../AuthContext';
 
 export function Matche(props) {
 
+    // Corriger le state initial - ajouter arbitre_4
     const [state, setState] = useState({
         centre: [],
         assistant_1: [],
         assistant_2: [],
+        arbitre_4: [], // Ajouter cette ligne qui manque
         delegue: [],
         clubs: [],
         clubs_1: [],
@@ -27,10 +29,10 @@ export function Matche(props) {
         ],
         joueurs: [],
         joueursLicence: [],
-        centreVille: [],
-        assistant_1_Ville: [],
-        assistant_2_Ville: [],
-        delegueVille: [],
+        centre_ville: [],
+        assistant_1_ville: [],
+        assistant_2_ville: [],
+        delegue_ville: [],
         dernierIdMatche: []
     });
 
@@ -156,12 +158,12 @@ export function Matche(props) {
                     label: item.nom,
                     name: "centre_ville"
                 }))
-                const optionAssistant_1_ville = dataVilles.map(item => ({
+                const optionassistant_1_ville = dataVilles.map(item => ({
                     value: item.id,
                     label: item.nom,
                     name: "assistant_1_ville"
                 }))
-                const optionAssistant_2_ville = dataVilles.map(item => ({
+                const optionassistant_2_ville = dataVilles.map(item => ({
                     value: item.id,
                     label: item.nom,
                     name: "assistant_2_ville"
@@ -179,11 +181,11 @@ export function Matche(props) {
                 setState(prevData => ({
                     ...prevData,
                     villes: optionVilles,
-                    centreVille: optionCentre_ville,
-                    assistant_1_Ville: optionAssistant_1_ville,
-                    assistant_2_Ville: optionAssistant_2_ville,
+                    centre_ville: optionCentre_ville,
+                    assistant_1_ville: optionassistant_1_ville,
+                    assistant_2_ville: optionassistant_2_ville,
                     arbitre_4_ville: optionArbitre_4_ville,
-                    delegueVille: optionDelegue_ville
+                    delegue_ville: optionDelegue_ville
                 }))
             })
         axiosClinet.get('/competition')
@@ -268,7 +270,8 @@ export function Matche(props) {
         villeAssistant_2: "",
         villeDelegue: "",
         stade: "",
-        stadeClub_1: ""
+        stadeClub_1: "",
+        ville_manuelle: null // Ajouter ce champ
     });
 
     const handleInputChange = (event) => {
@@ -284,6 +287,9 @@ export function Matche(props) {
 
     const handleSelectChange = (event) => {
         const { name, value } = event;
+
+        var ville = name === "ville_id" ? value : inputValue.ville_id
+
         var stadeClub_1 = event?.name === "club_id_1" ? event?.stade : selectedSelect.stadeClub_1
         if (event?.name === "club_id_1") {
             club_1_Option(value)
@@ -293,7 +299,6 @@ export function Matche(props) {
         } else if (event?.name === "club_id_2") {
             club_2_Option(value)
         }
-
 
         var arbitreVille_4 = event?.name === "arbitre_4_id" ? event.ville : selectedSelect.arbitre_4_ville
         if (event?.name === "arbitre_4_id") {
@@ -330,18 +335,32 @@ export function Matche(props) {
             villeCentre = event
         }
 
+        var ville_id = "";
+        if (name === "club_id_1") {
+            console.log("yess");
+            ville_id = stadeClub_1?.ville?.id
+        } else if (name === "stade_id") {
+            ville_id = state.stades.find((s) => s.value === value)?.ville?.id
+        } else {
+            ville_id = ville
+        }
+
+
+        console.log("ville_id", ville_id);
 
         setInputValue(prevValues => ({
             ...prevValues,
             [name]: value,
             stade_id: stadeClub_1?.value,
-            ville_id: stadeClub_1?.ville?.id,
+            ville_id: ville_id,
             centre_ville: villeCentre?.value,
             assistant_1_ville: villeAssistant_1?.value,
             assistant_2_ville: villeAssistant_2?.value,
             arbitre_4_ville: arbitreVille_4?.value,
             delegue_ville: villeDelegue?.value,
         }));
+
+
 
         setSelectedSelect(prevValues => ({
             ...prevValues,
@@ -353,9 +372,12 @@ export function Matche(props) {
             arbitre_4_ville: arbitreVille_4,
             stadeClub_1: stadeClub_1,
         }))
+
+        console.log("data", inputValue);
     };
 
     const [isValideData, setIsValideData] = useState();
+
 
     const sendData = () => {
         const numberKey = Object.keys(inputValue).length;
@@ -367,6 +389,352 @@ export function Matche(props) {
             setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
     }
+
+    const [isLoadingArbitre, setIsLoadingArbitre] = useState(false);
+    const [isLoadingDelegue, setIsLoadingDelegue] = useState(false);
+    const [currentEditingField, setCurrentEditingField] = useState(null);
+
+    // Ajouter ces fonctions qui manquent - exactement comme dans Avert.jsx
+    const createOptionArbitre = (label) => ({
+        label: label.toUpperCase(),
+        value: label.toLowerCase(),
+        name: "arbitre"
+    });
+
+    const createOptionDelegue = (label) => ({
+        label: label.toUpperCase(),
+        value: label.toLowerCase(),
+        name: "delegue"
+    });
+
+    // Corriger la fonction handleCreateArbitre - exactement comme handleCreate dans Avert.jsx
+    const handleCreateArbitre = (inputValue) => {
+        if (!currentEditingField) return;
+
+        setIsLoadingArbitre(true);
+
+        // Créer la nouvelle option avec le nom complet comme value
+        const newOption = {
+            label: inputValue.toUpperCase(),
+            value: inputValue.toLowerCase(), // Utiliser le nom complet comme value
+            name: currentEditingField
+        };
+
+        // Ajouter aux options pour l'affichage
+        if (currentEditingField === 'arbitre_c_id') {
+            setState(prevState => ({
+                ...prevState,
+                centre: [...prevState.centre, { ...newOption, name: 'arbitre_c_id' }]
+            }));
+        }
+        else if (currentEditingField === 'arbitre_a1_id') {
+            setState(prevState => ({
+                ...prevState,
+                assistant_1: [...prevState.assistant_1, { ...newOption, name: 'arbitre_a1_id' }]
+            }));
+        }
+        else if (currentEditingField === 'arbitre_a2_id') {
+            setState(prevState => ({
+                ...prevState,
+                assistant_2: [...prevState.assistant_2, { ...newOption, name: 'arbitre_a2_id' }]
+            }));
+        }
+        else if (currentEditingField === 'arbitre_4_id') {
+            setState(prevState => ({
+                ...prevState,
+                arbitre_4: [...prevState.arbitre_4, { ...newOption, name: 'arbitre_4_id' }]
+            }));
+        }
+
+        // Sélectionner automatiquement avec le nom complet
+        setInputValue(prevValues => ({
+            ...prevValues,
+            [currentEditingField]: inputValue // Envoyer le nom complet
+        }));
+
+        setIsLoadingArbitre(false);
+        setError("");
+    };
+
+    // Corriger la fonction handleCreateDelegue - exactement comme handleCreateLicence dans Avert.jsx
+    const handleCreateDelegue = (inputValue) => {
+        if (!currentEditingField) return;
+
+        setIsLoadingDelegue(true);
+
+        // Créer la nouvelle option avec le nom complet comme value
+        const newOption = {
+            label: inputValue.toUpperCase(),
+            value: inputValue.toLowerCase(), // Utiliser le nom complet comme value
+            name: "delegue_id"
+        };
+
+        setState(prevState => ({
+            ...prevState,
+            delegue: [...prevState.delegue, newOption]
+        }));
+
+        // Sélectionner automatiquement avec le nom complet
+        setInputValue(prevValues => ({
+            ...prevValues,
+            delegue_id: inputValue // Envoyer le nom complet
+        }));
+
+        setIsLoadingDelegue(false);
+        setError("");
+    };
+
+    const handleFocusField = (fieldName) => {
+        setCurrentEditingField(fieldName);
+    };
+
+    // Corriger les fonctions de changement - exactement comme dans Avert.jsx
+    const handleArbitreSelectChange = (event, fieldName) => {
+        let valeur = event;
+        if (valeur === null) {
+            valeur = {
+                value: "",
+                name: fieldName
+            };
+        }
+
+        const { name, value } = valeur;
+        setInputValue(prevValues => ({
+            ...prevValues,
+            [fieldName]: value
+        }));
+
+        // Appeler aussi handleSelectChange pour les autres logiques si nécessaire
+        if (value) {
+            handleSelectChange({ ...valeur, name: fieldName });
+        }
+    };
+
+    const handleDelegueSelectChange = (event) => {
+        let valeur = event;
+        if (valeur === null) {
+            valeur = {
+                value: "",
+                name: "delegue_id"
+            };
+        }
+
+        const { name, value } = valeur;
+        setInputValue(prevValues => ({
+            ...prevValues,
+            delegue_id: value
+        }));
+
+        if (value) {
+            handleSelectChange({ ...valeur, name: "delegue_id" });
+        }
+    };
+
+    // Ajouter les états pour les clubs
+    const [isLoadingClub, setIsLoadingClub] = useState(false);
+
+    // // Ajouter les fonctions pour créer des clubs
+    // const createOptionClub = (label) => ({
+    //     label: label.toUpperCase(),
+    //     value: label.toLowerCase(),
+    //     name: "club"
+    // });
+
+    const handleCreateClub = (inputValue) => {
+        if (!currentEditingField) return;
+
+        setIsLoadingClub(true);
+
+        // Créer la nouvelle option avec le nom du club complet
+        const newOption = {
+            label: inputValue.toUpperCase(),
+            value: inputValue.toLowerCase(), // Utiliser le nom complet comme value
+            name: currentEditingField
+        };
+
+        // Ajouter aux options pour l'affichage
+        if (currentEditingField === 'club_id_1') {
+            setState(prevState => ({
+                ...prevState,
+                clubs_1: [...prevState.clubs_1, { ...newOption, name: 'club_id_1' }]
+            }));
+            club_1_Option(newOption); // Mettre à jour le contexte avec le nouveau club
+        }
+        else if (currentEditingField === 'club_id_2') {
+            setState(prevState => ({
+                ...prevState,
+                clubs_2: [...prevState.clubs_2, { ...newOption, name: 'club_id_2' }]
+            }));
+            club_2_Option(newOption); // Mettre à jour le contexte avec le nouveau club
+        }
+
+        // Sélectionner automatiquement avec le nom complet du club
+        setInputValue(prevValues => ({
+            ...prevValues,
+            [currentEditingField]: inputValue // Envoyer le nom complet du club
+        }));
+
+        
+
+        setIsLoadingClub(false);
+        setError("");
+    };
+
+    const handleClubSelectChange = (event, fieldName) => {
+        let valeur = event;
+        if (valeur === null) {
+            valeur = {
+                value: "",
+                name: fieldName
+            };
+        }
+
+        const { name, value } = valeur;
+        setInputValue(prevValues => ({
+            ...prevValues,
+            [fieldName]: value
+        }));
+
+        if (value) {
+            handleSelectChange({ ...valeur, name: fieldName });
+        }
+    };
+
+    // Modifier handleStadeSelectChange pour gérer la ville
+    const handleStadeSelectChange = (event) => {
+        let valeur = event;
+        if (valeur === null) {
+            valeur = {
+                value: "",
+                name: "stade_id",
+                ville: null
+            };
+        }
+
+        const { name, value } = valeur;
+        setInputValue(prevValues => ({
+            ...prevValues,
+            stade_id: value,
+            // Si le stade a une ville, on la met automatiquement
+            ville_id: valeur.ville?.id || prevValues.ville_id
+        }));
+
+        // Mettre à jour selectedSelect pour l'affichage
+        setSelectedSelect(prevValues => ({
+            ...prevValues,
+            stadeClub_1: valeur,
+            // Si pas de ville dans le stade, garder la sélection manuelle existante
+            ville_manuelle: valeur.ville ? null : prevValues.ville_manuelle
+        }));
+
+        if (value) {
+            handleSelectChange({ ...valeur, name: "stade_id" });
+        }
+    };
+
+    // Ajouter une fonction pour gérer la sélection manuelle de ville
+    const handleVilleManuelleChange = (event) => {
+        let valeur = event;
+        if (valeur === null) {
+            valeur = {
+                value: "",
+                name: "ville_id"
+            };
+        }
+
+        const { name, value } = valeur;
+        setInputValue(prevValues => ({
+            ...prevValues,
+            ville_id: value
+        }));
+
+        setSelectedSelect(prevValues => ({
+            ...prevValues,
+            ville_manuelle: valeur
+        }));
+
+        if (value) {
+            handleSelectChange({ ...valeur, name: "ville_id" });
+        }
+    };
+
+    const [isLoadingStade, setIsLoadingStade] = useState(false);
+
+    // // Ajouter les fonctions pour créer des stades
+    // const createOptionStade = (label) => ({
+    //     label: label.toUpperCase(),
+    //     value: label.toLowerCase(),
+    //     name: "stade"
+    // });
+
+    // Modifier handleCreateStade pour initialiser avec la ville sélectionnée
+    const handleCreateStade = (inputValue) => {
+        if (!currentEditingField) return;
+
+        setIsLoadingStade(true);
+
+        // Récupérer la ville sélectionnée manuellement si elle existe
+        const villeSelectionnee = selectedSelect?.ville_manuelle || null;
+
+        // Créer la nouvelle option avec le nom du stade
+        const newOption = {
+            label: inputValue.toUpperCase(),
+            value: inputValue.toLowerCase(),
+            name: currentEditingField,
+            ville: villeSelectionnee // Associer la ville si sélectionnée
+        };
+
+        // Ajouter aux options pour l'affichage
+        setState(prevState => ({
+            ...prevState,
+            stades: [...prevState.stades, { ...newOption, name: 'stade_id' }]
+        }));
+
+        // Sélectionner automatiquement avec le nom du stade
+        setInputValue(prevValues => ({
+            ...prevValues,
+            stade_id: inputValue, // Envoyer le nom du stade
+            ville_id: villeSelectionnee?.value || prevValues.ville_id // Garder la ville sélectionnée
+        }));
+
+        // Mettre à jour selectedSelect
+        setSelectedSelect(prevValues => ({
+            ...prevValues,
+            stadeClub_1: newOption
+        }));
+
+        setIsLoadingStade(false);
+        setError("");
+    };
+
+
+    const handleCreateVille = (input, name) => {
+        const newVille = {
+            value: input, label: input, name
+        };
+
+        if (name === 'ville_id') {
+            setState(prev => ({
+                ...prev,
+                villes: [...(prev.villes || []), newVille],
+            }));
+            
+        }else{
+            setState(prev => ({
+                ...prev,
+                [name]: [...(prev[name] || []), newVille],
+            }));
+        }
+
+        setInputValue(prev => ({
+            ...prev,
+            [name]: newVille.value
+        }));
+
+        console.log("inputValue", inputValue);
+        console.log("villes state:", state.centre_ville.find(v => v.value === inputValue.centre_ville));
+        console.log("villes state:", state.assistant_1_ville.find(v => v.value === inputValue.assistant_1_ville));
+    };
 
     return (
         <>
@@ -616,7 +984,17 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">الحكم</label>
                                                 <div className='my-2'>
-                                                    <CreatableSelect className='text-light' options={state.centre} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                    <CreatableSelect
+                                                        className='text-light'
+                                                        isClearable
+                                                        isDisabled={isLoadingArbitre}
+                                                        isLoading={isLoadingArbitre}
+                                                        options={state.centre}
+                                                        value={inputValue.arbitre_c_id ? state.centre.find(option => option.value === inputValue.arbitre_c_id) : null}
+                                                        onChange={(event) => handleArbitreSelectChange(event, 'arbitre_c_id')}
+                                                        onCreateOption={handleCreateArbitre}
+                                                        onFocus={() => handleFocusField('arbitre_c_id')}
+                                                        placeholder="اختر او أضف حكما"
                                                         menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                                     />
@@ -625,7 +1003,17 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">الحكم المساعد 1</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.assistant_1} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                    <CreatableSelect
+                                                        className='text-light'
+                                                        isClearable
+                                                        isDisabled={isLoadingArbitre}
+                                                        isLoading={isLoadingArbitre}
+                                                        options={state.assistant_1}
+                                                        value={inputValue.arbitre_a1_id ? state.assistant_1.find(option => option.value === inputValue.arbitre_a1_id) : null}
+                                                        onChange={(event) => handleArbitreSelectChange(event, 'arbitre_a1_id')}
+                                                        onCreateOption={handleCreateArbitre}
+                                                        onFocus={() => handleFocusField('arbitre_a1_id')}
+                                                        placeholder="اختر او أضف حكما"
                                                         menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                                     />
@@ -634,7 +1022,17 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">الحكم المساعد 2</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.assistant_2} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                    <CreatableSelect
+                                                        className='text-light'
+                                                        isClearable
+                                                        isDisabled={isLoadingArbitre}
+                                                        isLoading={isLoadingArbitre}
+                                                        options={state.assistant_2}
+                                                        value={inputValue.arbitre_a2_id ? state.assistant_2.find(option => option.value === inputValue.arbitre_a2_id) : null}
+                                                        onChange={(event) => handleArbitreSelectChange(event, 'arbitre_a2_id')}
+                                                        onCreateOption={handleCreateArbitre}
+                                                        onFocus={() => handleFocusField('arbitre_a2_id')}
+                                                        placeholder="اختر او أضف حكما"
                                                         menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                                     />
@@ -643,7 +1041,17 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المراقب</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.delegue} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                    <CreatableSelect
+                                                        className='text-light'
+                                                        isClearable
+                                                        isDisabled={isLoadingDelegue}
+                                                        isLoading={isLoadingDelegue}
+                                                        options={state.delegue}
+                                                        value={inputValue.delegue_id ? state.delegue.find(option => option.value === inputValue.delegue_id) : null}
+                                                        onChange={handleDelegueSelectChange}
+                                                        onCreateOption={handleCreateDelegue}
+                                                        onFocus={() => handleFocusField('delegue_id')}
+                                                        placeholder="اختر او أضف مندوبا"
                                                         menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                                     />
@@ -654,7 +1062,11 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.centreVille} value={selectedSelect?.villeCentre ? { value: selectedSelect?.villeCentre?.value, label: selectedSelect?.villeCentre?.label } : null} onChange={handleSelectChange} placeholder="..."
+                                                    <CreatableSelect className='text-light'
+                                                        onCreateOption={(value) => handleCreateVille(value, 'centre_ville')}
+                                                        options={state.centre_ville}
+                                                        value={inputValue?.centre_ville ? state.centre_ville.find((v) => v.value === inputValue.centre_ville) : null}
+                                                        onChange={handleSelectChange} placeholder="..."
                                                         menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
                                                     />
@@ -663,7 +1075,13 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.assistant_1_Ville} value={selectedSelect.villeAssistant_1 ? { value: selectedSelect.villeAssistant_1?.value, label: selectedSelect.villeAssistant_1?.label } : null} onChange={handleSelectChange} placeholder="..."
+                                                    <CreatableSelect
+                                                        className='text-light'
+                                                        options={state.assistant_1_ville}
+                                                        onCreateOption={(value) => handleCreateVille(value, 'assistant_1_ville')}
+                                                        value={inputValue?.assistant_1_ville ? state.assistant_1_ville.find((v) => v.value === inputValue.assistant_1_ville) : null}
+                                                        onChange={handleSelectChange}
+                                                        placeholder="..."
                                                         menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
                                                     />
@@ -672,7 +1090,11 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.assistant_2_Ville} value={selectedSelect.villeAssistant_2 ? { value: selectedSelect.villeAssistant_2?.value, label: selectedSelect.villeAssistant_2?.label } : null} onChange={handleSelectChange} placeholder="..."
+                                                    <CreatableSelect className='text-light'
+                                                        options={state.assistant_2_ville}
+                                                        onCreateOption={(value) => handleCreateVille(value, 'assistant_2_ville')}
+                                                        value={inputValue?.assistant_2_ville ? state.assistant_2_ville.find((v) => v.value === inputValue.assistant_2_ville) : null}
+                                                        onChange={handleSelectChange} placeholder="..."
                                                         menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
                                                     />
@@ -681,7 +1103,11 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.delegueVille} value={selectedSelect.villeDelegue ? { value: selectedSelect?.villeDelegue?.value, label: selectedSelect?.villeDelegue?.label } : null} onChange={handleSelectChange} placeholder="..."
+                                                    <CreatableSelect className='text-light'
+                                                        options={state.delegue_ville}
+                                                        onCreateOption={(value) => handleCreateVille(value, 'delegue_ville')}
+                                                        value={inputValue?.delegue_ville ? state.delegue_ville.find((v) => v.value === inputValue.delegue_ville) : null}
+                                                        onChange={handleSelectChange} placeholder="..."
                                                         menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
                                                     />
@@ -692,7 +1118,17 @@ export function Matche(props) {
                                             <div className="form-group col-md-3 ">
                                                 <label htmlFor="inputEmail4">الحكم الرابع</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.arbitre_4} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                    <CreatableSelect
+                                                        className='text-light'
+                                                        isClearable
+                                                        isDisabled={isLoadingArbitre}
+                                                        isLoading={isLoadingArbitre}
+                                                        options={state.arbitre_4}
+                                                        value={inputValue.arbitre_4_id ? state.arbitre_4.find(option => option.value === inputValue.arbitre_4_id) : null}
+                                                        onChange={(event) => handleArbitreSelectChange(event, 'arbitre_4_id')}
+                                                        onCreateOption={handleCreateArbitre}
+                                                        onFocus={() => handleFocusField('arbitre_4_id')}
+                                                        placeholder="اختر او أضف حكما "
                                                         menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                                     />
@@ -701,7 +1137,11 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.arbitre_4_ville} value={selectedSelect?.arbitre_4_ville ? { value: selectedSelect?.arbitre_4_ville?.value, label: selectedSelect?.arbitre_4_ville?.label } : null} onChange={handleSelectChange} placeholder="..."
+                                                    <CreatableSelect className='text-light'
+                                                        options={state.arbitre_4_ville}
+                                                        onCreateOption={(value) => handleCreateVille(value, 'arbitre_4_ville')}
+                                                        value={inputValue?.arbitre_4_ville ? state.arbitre_4_ville.find((v) => v.value === inputValue.arbitre_4_ville) : null}
+                                                        onChange={handleSelectChange} placeholder="..."
                                                         menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
                                                     />
@@ -723,18 +1163,40 @@ export function Matche(props) {
                                             <div className="form-group col-md-6">
                                                 <label htmlFor="inputEmail4">الفريق المستقبل</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.clubs_1} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                    <CreatableSelect
+                                                        className='text-light'
+                                                        isClearable
+                                                        isDisabled={isLoadingClub}
+                                                        isLoading={isLoadingClub}
+                                                        options={state.clubs_1}
+                                                        value={inputValue.club_id_1 ? state.clubs_1.find(option => option.value === inputValue.club_id_1) : null}
+                                                        onChange={(event) => handleClubSelectChange(event, 'club_id_1')}
+                                                        onCreateOption={handleCreateClub}
+                                                        onFocus={() => handleFocusField('club_id_1')}
+                                                        placeholder="اختر أو أضف فريقا"
+                                                        formatCreateLabel={(inputValue) => `إضافة فريق: ${inputValue}`}
                                                         menuPortalTarget={document.body}
-                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                                     />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-6">
                                                 <label htmlFor="inputEmail4">الفريق الزائر</label>
                                                 <div className='my-2'>
-                                                    <Select className='text-light' options={state.clubs_2} name={selectedSelect} onChange={handleSelectChange} placeholder="اختر..."
+                                                    <CreatableSelect
+                                                        className='text-light'
+                                                        isClearable
+                                                        isDisabled={isLoadingClub}
+                                                        isLoading={isLoadingClub}
+                                                        options={state.clubs_2}
+                                                        value={inputValue.club_id_2 ? state.clubs_2.find(option => option.value === inputValue.club_id_2) : null}
+                                                        onChange={(event) => handleClubSelectChange(event, 'club_id_2')}
+                                                        onCreateOption={handleCreateClub}
+                                                        onFocus={() => handleFocusField('club_id_2')}
+                                                        placeholder="اختر أو أضف فريقا"
+                                                        formatCreateLabel={(inputValue) => `إضافة فريق: ${inputValue}`}
                                                         menuPortalTarget={document.body}
-                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                                     />
                                                 </div>
                                             </div>
@@ -770,22 +1232,35 @@ export function Matche(props) {
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputEmail4">الملعب</label>
                                 <div className="my-2">
-                                    <Select className='text-light' value={selectedSelect?.stadeClub_1 ? { value: selectedSelect?.stadeClub_1?.value, label: selectedSelect?.stadeClub_1?.label } : null} options={state.stades} name={selectedSelect} onChange={handleSelectChange} placeholder="اكتب"
+                                    <CreatableSelect
+                                        className='text-light'
+                                        isClearable
+                                        isDisabled={isLoadingStade}
+                                        isLoading={isLoadingStade}
+                                        options={state.stades}
+                                        value={inputValue.stade_id ? state.stades.find(option => option.value === inputValue.stade_id) : null}
+                                        onChange={handleStadeSelectChange}
+                                        onCreateOption={handleCreateStade}
+                                        onFocus={() => handleFocusField('stade_id')}
+                                        placeholder="اختر أو أضف ملعب..."
+                                        formatCreateLabel={(inputValue) => `إضافة ملعب: ${inputValue}`}
                                         menuPortalTarget={document.body}
-                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                     />
                                 </div>
                             </div>
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputEmail4">المدينة</label>
                                 <div className="my-2">
-                                    <Select
+                                    <CreatableSelect
                                         className='text-light'
-                                        php
-                                        isDisabled
-                                        value={selectedSelect?.stadeClub_1?.ville ? { value: selectedSelect?.stadeClub_1?.ville?.id, label: selectedSelect?.stadeClub_1?.ville?.nom } : null}
+                                        isClearable
+
+                                        onCreateOption={(value) => handleCreateVille(value, 'ville_id')}
+                                                        value={inputValue?.ville_id ? state.villes.find((v) => v.value === inputValue.ville_id) : null}
+                                        // value={state.villes.find(option => option.value === inputValue.centre_ville) || null}
                                         options={state.villes}
-                                        name={selectedSelect}
+                                        name="centre_ville"
                                         onChange={handleSelectChange}
                                         placeholder="..."
                                         menuPortalTarget={document.body}
@@ -803,23 +1278,23 @@ export function Matche(props) {
                                     <div class="card-body">
                                         <div className="row">
                                             <div className="form-group col-md-4">
-                                                <label htmlFor="inputPassword4">1.	توقيت حضور مراقب المباراة : </label>
-                                                <input type="time" name='temp_presence_delegue' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputTime" />
+                                                <label htmlFor="inputtemp_presence_delegue">1.	توقيت حضور مراقب المباراة : </label>
+                                                <input type="time" name='temp_presence_delegue' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputtemp_presence_delegue" />
                                             </div>
                                             <div className="form-group col-md-4">
-                                                <label htmlFor="inputPassword4">2.  توقيت حضور رجال الأمن :</label>
-                                                <input type="time" name='temp_presence_agents_sécurité' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputTime" />
+                                                <label htmlFor="inputTemp_presence_agents_sécurité">2.  توقيت حضور رجال الأمن :</label>
+                                                <input type="time" name='temp_presence_agents_sécurité' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputTemp_presence_agents_sécurité" />
                                             </div>
                                             <div className="form-group col-md-4">
-                                                <label htmlFor="inputPassword4">3.	عدد رجال الامن</label>
-                                                <input type="nember" name='nombre_agents_sécurité' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
+                                                <label htmlFor="inputNombre_agents_sécurité">3.	عدد رجال الامن</label>
+                                                <input type="nember" name='nombre_agents_sécurité' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputNombre_agents_sécurité" />
                                             </div>
                                             <div className="form-group col-md-6">
-                                                <label htmlFor="inputPassword4">4.	ارضية الملعب</label>
-                                                <input type="text" name='etat_stade' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
+                                                <label htmlFor="inputEtat_stade">4.	ارضية الملعب</label>
+                                                <input type="text" name='etat_stade' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputEtat_stade" />
                                             </div>
                                             <div className="form-group col-md-6">
-                                                <label htmlFor="inputPassword4">5.	مستودع ملابس الحكام </label>
+                                                <label htmlFor="inputEtat_vestiaire">5.	مستودع ملابس الحكام </label>
                                                 <input type="text" name='etat_vestiaire' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                             </div>
                                         </div>

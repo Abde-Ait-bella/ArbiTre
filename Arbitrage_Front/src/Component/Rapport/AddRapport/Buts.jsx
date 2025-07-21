@@ -18,7 +18,7 @@ export function Buts(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState()
     const { user, club_1, club_2 } = AuthUser();
-    
+
 
 
     useEffect(() => {
@@ -38,11 +38,18 @@ export function Buts(props) {
                 }))
 
                 const dataClubs = clubResponse.data.filter((c) => (parseInt(c.user_id) === user?.id || c.user_id === null) && (parseInt(club_1) === c.id || parseInt(club_2) === c.id));
-                const optionClubs = dataClubs?.map(item => ({
+                var optionClubs = dataClubs?.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + item.abbr,
                     name: "club_id",
                 }))
+
+                if (!Number.isInteger(club_1)) {
+                    var optionClubs = [...optionClubs, club_1];
+                }
+                if (!Number.isInteger(club_2)) {
+                    var optionClubs = [...optionClubs, club_2];
+                }
 
                 const dataMatch = matcheRespose.data;
                 if (!dataMatch || dataMatch.length === 0) {
@@ -79,20 +86,20 @@ export function Buts(props) {
 
     const handleCreateJ = (inputValue) => {
         if (currentEditingIndex === null) return;
-        
+
         setIsLoadingJ(true);
-        
+
         // Créer la nouvelle option
         const newOption = createOptionJ(inputValue);
-        
+
         // Ajouter l'option sans vérification - permet les doublons
         setOptionsJ((prev) => [...prev, newOption]);
-        
+
         // Mettre à jour le but avec le nouveau nom
         const newButs = [...buts];
         newButs[currentEditingIndex].joueur_nom = newOption.value;
         setButs(newButs);
-        
+
         setIsLoadingJ(false);
     };
 
@@ -189,28 +196,28 @@ export function Buts(props) {
                 loading ?
 
                     <>
-                             <div className='mb-4 d-none d-lg-block'>
-                                                   <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                                       <div className="row">
-                                                           <Skeleton height={40} />
-                                                       </div>
-                                                       <div className="mt-1 row">
-                                                           <Skeleton height={30} />
-                                                       </div>
-                                                   </SkeletonTheme>
-                                               </div>
+                        <div className='mb-4 d-none d-lg-block'>
+                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                                <div className="row">
+                                    <Skeleton height={40} />
+                                </div>
+                                <div className="mt-1 row">
+                                    <Skeleton height={30} />
+                                </div>
+                            </SkeletonTheme>
+                        </div>
                     </>
                     :
                     <div className="my-2 row">
                         <div className="col-md-12">
                             <div class=" card text-center bg-light text-white mx-1">
                                 <div class="card-header bg-secondary fw-bold d-flex justify-content-between align-items-center"
-                                    onClick={toggleOpen} 
+                                    onClick={toggleOpen}
                                     style={{ cursor: 'pointer' }}>
                                     <span>الهدافــون</span>
                                     <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                                 </div>
-                                <div 
+                                <div
                                     className="overflow-hidden card-body transition-max-height"
                                     style={{
                                         maxHeight: isOpen ? '5000px' : '0',
@@ -224,7 +231,7 @@ export function Buts(props) {
                                             <div className="form-group col-md-4">
                                                 <label>الفريق</label>
                                                 <div className='my-2'>
-                                                    <CreatableSelect className='text-light' options={state?.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder={`${state?.clubs.length > 0  ? 'اكتب و اختر' : 'اختر الفرق أعلاه !!'}`} />
+                                                    <CreatableSelect className='text-light' options={state?.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder={`${state?.clubs.length > 0 ? 'اكتب و اختر' : 'اختر الفرق أعلاه !!'}`} />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-4">
