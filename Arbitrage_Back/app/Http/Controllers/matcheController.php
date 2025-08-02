@@ -264,12 +264,52 @@ class MatcheController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $matche = Matche::find($id);
-        $matche->update($request->all());
-        return [
-            "status" => true,
-            "data" => $matche
-        ];
+        try {
+            $data = $request->all();
+            $user_id = $request->input('user_id');
+
+            // Gestion des villes
+            $this->handleVille($data, 'centre_ville', $user_id);
+            $this->handleVille($data, 'assistant_1_ville', $user_id);
+            $this->handleVille($data, 'assistant_2_ville', $user_id);
+            $this->handleVille($data, 'delegue_ville', $user_id);
+            $this->handleVille($data, 'ville_id', $user_id);
+            $this->handleVille($data, 'arbitre_4_ville', $user_id);
+
+            // Gestion des arbitres
+            $this->handleArbitre($data, 'arbitre_c_id', 'centre', $user_id, $data['centre_ville']);
+            $this->handleArbitre($data, 'arbitre_a1_id', 'assistant', $user_id, $data['assistant_1_ville']);
+            $this->handleArbitre($data, 'arbitre_a2_id', 'assistant', $user_id, $data['assistant_2_ville']);
+
+            if (isset($data['arbitre_4_id'])) {
+                $this->handleArbitre($data, 'arbitre_4_id', 'centre', $user_id, $data['arbitre_4_ville']);
+            } else {
+                $data['arbitre_4_id'] = null;
+                $data['arbitre_4_ville'] = null;
+            }
+
+            // Gestion du délégué
+            $this->handleDelegue($data, 'delegue_id', $user_id, $data['delegue_ville']);
+
+            // Gestion du stade
+            $this->handleStade($data, 'stade_id', $user_id, $data['ville_id']);
+
+            // Gestion des clubs
+            $this->handleClub($data, 'club_id_1', $user_id, $data['stade_id'], $data['ville_id']);
+            $this->handleClub($data, 'club_id_2', $user_id, null, null);
+
+            $matche = Matche::find($id);
+            $matche->update($data);
+            return [
+                "status" => true,
+                "data" => $matche
+            ];
+        } catch (\Exception $e) {
+            return [
+                "status" => false,
+                "message" => 'Erreur lors de la mise à jour du match: ' . $e->getMessage()
+            ];
+        }
     }
 
     /**

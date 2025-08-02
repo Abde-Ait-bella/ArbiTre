@@ -46,17 +46,16 @@ export function Buts(props) {
                     name: "joueur_numero_licence"
                 }))
 
-                const club1 = parseInt(club_1_update);
-                const club2 = parseInt(club_2_update);
-                const hasClubs = !!club1 || !!club2;
+                const hasClubs = !!club_1_update || !!club_2_update;
 
-                const dataClubs = clubResponse.data?.filter((c) => {
+                const dataClubs = hasClubs ? [club_1_update, club_2_update] : clubResponse.data?.filter((c) => {
                     const isMine = parseInt(c.user_id) === user?.id || c.user_id === null;
-                    return isMine && (!hasClubs || c.id === club1 || c.id === club2);
+                    return isMine;
                 });
+                
                 const optionClubs = dataClubs?.map(item => ({
-                    value: item.id,
-                    label: "(" + item.nom + ")" + item.abbr,
+                    value: (item.value ? item.value : item.id),
+                    label:  (item.label ? item.label : item.nom) + (item?.abbr ?  "(" + item?.abbr + ")" : '') ,
                     name: "club_id",
                 }))
 

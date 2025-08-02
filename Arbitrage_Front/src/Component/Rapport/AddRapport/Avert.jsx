@@ -49,22 +49,15 @@ export function Avert(props) {
                     name: "joueur_numero_licence"
                 }))
 
-                
-                const dataClubs = clubResponse.data.filter((c) => (parseInt(c.user_id) === user?.id || c.user_id === null) && (c.id === parseInt(club_1) || c.id === parseInt(club_2)));
-                var optionClubs = dataClubs?.map(item => ({
-                    value: item.id,
-                    label: "(" + item.nom + ")" + item.abbr,
-                    name: "club_id",
-                }))
+                const hasClubs = !!club_1 || !!club_2;
+                const dataClubs = [club_1, club_2]
 
-                
-                if(!Number.isInteger(club_1)) {
-                    var optionClubs = [...optionClubs, club_1];
-                }
-                if(!Number.isInteger(club_2)) {
-                    var optionClubs = [...optionClubs, club_2];
-                }
-                console.log("optionClubs", club_1, club_2, optionClubs);
+                var optionClubs = hasClubs ? dataClubs?.map(item => ({
+                    value: item?.value,
+                    label: item?.label,
+                    name: "club_id",
+                })) : [];
+
 
                 const dataMatch = matcheRespose.data;
                 if (!dataMatch || dataMatch.length === 0) {
@@ -102,24 +95,24 @@ export function Avert(props) {
 
     const handleCreate = (inputValue) => {
         if (currentEditingIndex === null) return;
-        
+
         setIsLoadingJ(true);
-        
+
         // Créer la nouvelle option
         const newOption = createOptionJ(inputValue);
-        
+
         // Ajouter l'option sans vérification - permet les doublons
         setState(prevState => ({
             ...prevState,
             joueurs: [...prevState.joueurs, newOption]
         }));
         setOptionsJ(prevOptions => [...prevOptions, newOption]);
-        
+
         // Mettre à jour l'avertissement avec le nouveau nom
         const newAverts = [...avert];
         newAverts[currentEditingIndex].nom = newOption.value;
         setAvert(newAverts);
-        
+
         setIsLoadingJ(false);
     };
 
@@ -159,20 +152,20 @@ export function Avert(props) {
 
     const handleCreateLicence = (inputValue) => {
         if (currentEditingIndex === null) return;
-        
+
         setIsLoadingLicence(true);
-        
+
         // Créer la nouvelle option
         const newOption = createOptionLicence(inputValue);
-        
+
         // Ajouter l'option sans vérification - permet les doublons
         setOptionsLicence(prevOptions => [...prevOptions, newOption]);
-        
+
         // Mettre à jour l'avertissement avec la nouvelle licence
         const newAverts = [...avert];
         newAverts[currentEditingIndex].joueur_numero_licence = newOption.value;
         setAvert(newAverts);
-        
+
         setIsLoadingLicence(false);
     };
 
@@ -277,16 +270,16 @@ export function Avert(props) {
             {
                 loading ?
                     <>
-                            <div className='mb-4 d-none d-lg-block'>
-                                                  <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                                      <div className="row">
-                                                          <Skeleton height={40} />
-                                                      </div>
-                                                      <div className="mt-1 row">
-                                                          <Skeleton height={30} />
-                                                      </div>
-                                                  </SkeletonTheme>
-                                              </div>
+                        <div className='mb-4 d-none d-lg-block'>
+                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                                <div className="row">
+                                    <Skeleton height={40} />
+                                </div>
+                                <div className="mt-1 row">
+                                    <Skeleton height={30} />
+                                </div>
+                            </SkeletonTheme>
+                        </div>
                     </>
 
                     :
@@ -294,12 +287,12 @@ export function Avert(props) {
                         <div className="col-md-12">
                             <div class=" card text-center bg-light text-white mx-1">
                                 <div class="card-header bg-secondary fw-bold d-flex justify-content-between align-items-center"
-                                    onClick={toggleOpen} 
+                                    onClick={toggleOpen}
                                     style={{ cursor: 'pointer' }}>
                                     <span>العقوبــات الانضباطيـة</span>
                                     <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                                 </div>
-                                <div 
+                                <div
                                     className="overflow-hidden card-body transition-max-height"
                                     style={{
                                         maxHeight: isOpen ? '5000px' : '0',
@@ -314,7 +307,8 @@ export function Avert(props) {
                                             <div className="form-group col-md-4">
                                                 <label>الفريق</label>
                                                 <div className="my-2">
-                                                    <CreatableSelect className='text-light' options={state?.clubs} onChange={(event) => handleAvertSelectChange(event, index)} placeholder={`${state?.clubs.length > 0  ? 'اكتب و اختر' : 'اختر الفرق أعلاه !!'}`} required />
+                                                    {console.log(state.clubs)}
+                                                    <CreatableSelect className='text-light' options={state?.clubs} onChange={(event) => handleAvertSelectChange(event, index)} placeholder={`${state.clubs.length > 0 ? 'اكتب و اختر' : 'اختر الفرق أعلاه !!'}`} required />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-2">

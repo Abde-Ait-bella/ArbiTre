@@ -292,12 +292,12 @@ export function Matche(props) {
 
         var stadeClub_1 = event?.name === "club_id_1" ? event?.stade : selectedSelect.stadeClub_1
         if (event?.name === "club_id_1") {
-            club_1_Option(value)
+            club_1_Option(event)
             stadeClub_1 = state.stades.find((s) => stadeClub_1?.id === s.value)
         } else if (event?.name === "stade_id") {
             stadeClub_1 = event
         } else if (event?.name === "club_id_2") {
-            club_2_Option(value)
+            club_2_Option(event)
         }
 
         var arbitreVille_4 = event?.name === "arbitre_4_id" ? event.ville : selectedSelect.arbitre_4_ville
@@ -336,17 +336,14 @@ export function Matche(props) {
         }
 
         var ville_id = "";
+        
         if (name === "club_id_1") {
-            console.log("yess");
             ville_id = stadeClub_1?.ville?.id
         } else if (name === "stade_id") {
             ville_id = state.stades.find((s) => s.value === value)?.ville?.id
         } else {
             ville_id = ville
         }
-
-
-        console.log("ville_id", ville_id);
 
         setInputValue(prevValues => ({
             ...prevValues,
@@ -574,6 +571,7 @@ export function Matche(props) {
             [currentEditingField]: inputValue // Envoyer le nom complet du club
         }));
 
+        console.log("inputValue", inputValue);
         
 
         setIsLoadingClub(false);
@@ -589,7 +587,8 @@ export function Matche(props) {
             };
         }
 
-        const { name, value } = valeur;
+        const { value } = valeur;
+        
         setInputValue(prevValues => ({
             ...prevValues,
             [fieldName]: value
@@ -718,8 +717,8 @@ export function Matche(props) {
                 ...prev,
                 villes: [...(prev.villes || []), newVille],
             }));
-            
-        }else{
+
+        } else {
             setState(prev => ({
                 ...prev,
                 [name]: [...(prev[name] || []), newVille],
@@ -1255,9 +1254,8 @@ export function Matche(props) {
                                     <CreatableSelect
                                         className='text-light'
                                         isClearable
-
                                         onCreateOption={(value) => handleCreateVille(value, 'ville_id')}
-                                                        value={inputValue?.ville_id ? state.villes.find((v) => v.value === inputValue.ville_id) : null}
+                                        value={inputValue?.ville_id ? state.villes.find((v) => v.value === inputValue.ville_id) : null}
                                         // value={state.villes.find(option => option.value === inputValue.centre_ville) || null}
                                         options={state.villes}
                                         name="centre_ville"

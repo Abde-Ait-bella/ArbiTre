@@ -37,19 +37,15 @@ export function Buts(props) {
                     name: "joueur_nom",
                 }))
 
-                const dataClubs = clubResponse.data.filter((c) => (parseInt(c.user_id) === user?.id || c.user_id === null) && (parseInt(club_1) === c.id || parseInt(club_2) === c.id));
-                var optionClubs = dataClubs?.map(item => ({
-                    value: item.id,
-                    label: "(" + item.nom + ")" + item.abbr,
-                    name: "club_id",
-                }))
+                
+                const hasClubs = !!club_1 || !!club_2;
+                const dataClubs = [club_1, club_2]
 
-                if (!Number.isInteger(club_1)) {
-                    var optionClubs = [...optionClubs, club_1];
-                }
-                if (!Number.isInteger(club_2)) {
-                    var optionClubs = [...optionClubs, club_2];
-                }
+                var optionClubs = hasClubs ? dataClubs?.map(item => ({
+                    value: item?.value,
+                    label: item?.label,
+                    name: "club_id",
+                })) : [];
 
                 const dataMatch = matcheRespose.data;
                 if (!dataMatch || dataMatch.length === 0) {
