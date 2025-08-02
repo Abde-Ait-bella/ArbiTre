@@ -28,7 +28,7 @@ function AddRapport() {
                 await axiosClinet.post('/matche', dataMatche).then(
                     (response) => {
                         const { status } = response;
-                        if (status === 200) {
+                        if (status === 201) {
                             setLoading(false)
                             club_1_Option('')
                             club_2_Option('')

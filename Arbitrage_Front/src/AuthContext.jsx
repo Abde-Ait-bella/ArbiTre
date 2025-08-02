@@ -11,10 +11,10 @@ export const AuthProvider = ({ children }) => {
         }
     );
     
-    const  [club_1, setClub_1] = useState();
-    const  [club_2, setClub_2] = useState();
-    const  [club_1_update, setClub_1_update] = useState();
-    const  [club_2_update, setClub_2_update] = useState();
+    const  [club_1, setClub_1] = useState(null);
+    const  [club_2, setClub_2] = useState(null);
+    const  [club_1_update, setClub_1_update] = useState(null);
+    const  [club_2_update, setClub_2_update] = useState(null);
 
     const club_1_Option = (dataClub) => {
         setClub_1(dataClub)

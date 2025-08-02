@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Arbitre;
 use Illuminate\Http\Request;
 
@@ -18,11 +17,33 @@ class ArbitreController extends Controller
      */
     public function store(Request $request)
     {
-        $arbitre = Arbitre::create($request->all());
-        return [
-            "status" => true,
-            "data" => $arbitre
-        ];
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'type' => 'required|in:centre,assistant',
+            'user_id' => 'required|integer'
+        ]);
+
+        // Vérifier si l'arbitre existe déjà
+        $existingArbitre = Arbitre::where('nom', strtoupper($request->nom))
+            ->where('prenom', strtoupper($request->prenom))
+            ->where('user_id', $request->user_id)
+            ->first();
+
+        if ($existingArbitre) {
+            return response()->json([
+                'message' => 'Cet arbitre existe déjà'
+            ], 409);
+        }
+
+        $arbitre = Arbitre::create([
+            'nom' => strtoupper($request->nom),
+            'prenom' => strtoupper($request->prenom),
+            'type' => $request->type,
+            'user_id' => $request->user_id
+        ]);
+
+        return response()->json($arbitre, 201);
     }
 
     /**

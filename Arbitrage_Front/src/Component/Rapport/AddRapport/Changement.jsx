@@ -20,9 +20,9 @@ export function Changement(props) {
     const [error, setError] = useState()
     const { user, club_1, club_2 } = AuthUser();
 
-        // 1. Initialiser tous les états d'options comme des tableaux vides
-const [optionsJEntr, setOptionsJEntr] = useState([]);
-const [optionsJSort, setOptionsJSort] = useState([]);
+    // 1. Initialiser tous les états d'options comme des tableaux vides
+    const [optionsJEntr, setOptionsJEntr] = useState([]);
+    const [optionsJSort, setOptionsJSort] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -46,12 +46,15 @@ const [optionsJSort, setOptionsJSort] = useState([]);
                     name: "joueur_nom_sort",
                 }))
 
-                const dataClubs = clubResponse.data.filter((c) => (parseInt(c.user_id) === user?.id || c.user_id === null ) && (parseInt(club_1) === c.id || parseInt(club_2) === c.id));
-                const optionClubs = dataClubs?.map(item => ({
-                    value: item.id,
-                    label: "(" + item.nom + ")" + " " + item.abbr,
+                
+                const hasClubs = !!club_1 || !!club_2;
+                const dataClubs = [club_1, club_2]
+
+                var optionClubs = hasClubs ? dataClubs?.map(item => ({
+                    value: item?.value,
+                    label: item?.label,
                     name: "club_id",
-                }))
+                })) : [];
 
                 const dataMatch = matcheRespose.data;
                 if (!dataMatch || dataMatch.length === 0) {
@@ -92,25 +95,25 @@ const [optionsJSort, setOptionsJSort] = useState([]);
 
     const handleCreateJEntr = (inputValue) => {
         if (currentEditingIndex === null) return;
-        
+
         setIsLoadingJEntr(true);
-        
+
         // Créer la nouvelle option
         const newOption = createOptionJEntr(inputValue);
-        
+
         // Important: créer la nouvelle liste d'options avant de mettre à jour l'état
         const updatedOptions = [...optionsJEntr, newOption];
-        
+
         // Mettre à jour les options disponibles
         setOptionsJEntr(updatedOptions);
-        
+
         // Mettre à jour le changement avec le nouveau nom
         const newChanges = [...change];
         newChanges[currentEditingIndex].joueur_nom_entr = newOption.value;
-        
+
         // Stocker aussi la référence à l'option complète pour un affichage immédiat
         newChanges[currentEditingIndex]._activeOption = newOption;
-        
+
         setChange(newChanges);
         setIsLoadingJEntr(false);
     };
@@ -148,20 +151,20 @@ const [optionsJSort, setOptionsJSort] = useState([]);
 
     const handleCreateSort = (inputValue) => {
         if (currentEditingIndex === null) return;
-        
+
         setIsLoadingJSort(true);
-        
+
         // Créer la nouvelle option
         const newOption = createOptionJSort(inputValue);
-        
+
         // Ajouter l'option aux joueurs disponibles
         setOptionsJSort(prevOptions => [...prevOptions, newOption]);
-        
+
         // Mettre à jour immédiatement le changement avec le nouveau nom
         const newChanges = [...change];
         newChanges[currentEditingIndex].joueur_nom_sort = newOption.value;
         setChange(newChanges);
-        
+
         setIsLoadingJSort(false);
     };
 
@@ -206,7 +209,7 @@ const [optionsJSort, setOptionsJSort] = useState([]);
 
     const addRow = () => {
         // Si c'est le premier élément vide ou si tous les champs nécessaires sont remplis
-        if (change.length === 1 && Object.keys(change[0]).length === 0 ||  change.every(item => Object.keys(item).length === 7)) {
+        if (change.length === 1 && Object.keys(change[0]).length === 0 || change.every(item => Object.keys(item).length === 7)) {
             setChange([...change, {}]);
             setError("");
         } else {
@@ -253,28 +256,28 @@ const [optionsJSort, setOptionsJSort] = useState([]);
             {
                 loading ?
                     <>
-                            <div className='mb-4 d-none d-lg-block'>
-                                                  <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                                      <div className="row">
-                                                          <Skeleton height={40} />
-                                                      </div>
-                                                      <div className="mt-1 row">
-                                                          <Skeleton height={30} />
-                                                      </div>
-                                                  </SkeletonTheme>
-                                              </div>
+                        <div className='mb-4 d-none d-lg-block'>
+                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                                <div className="row">
+                                    <Skeleton height={40} />
+                                </div>
+                                <div className="mt-1 row">
+                                    <Skeleton height={30} />
+                                </div>
+                            </SkeletonTheme>
+                        </div>
                     </>
                     :
                     <div className="my-2 row">
                         <div className="col-md-12">
                             <div class=" card text-center bg-light text-white mx-1">
                                 <div class="card-header bg-secondary fw-bold d-flex justify-content-between align-items-center"
-                                    onClick={toggleOpen} 
+                                    onClick={toggleOpen}
                                     style={{ cursor: 'pointer' }}>
                                     <span>التغييــرات</span>
                                     <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                                 </div>
-                                <div 
+                                <div
                                     className="overflow-hidden card-body transition-max-height"
                                     style={{
                                         maxHeight: isOpen ? '5000px' : '0',
@@ -288,7 +291,7 @@ const [optionsJSort, setOptionsJSort] = useState([]);
                                             <div className="form-group col-md-3">
                                                 <label>الفريق</label>
                                                 <div className='my-2'>
-                                                    <CreatableSelect className='text-light' options={state.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder={`${state?.clubs.length > 0  ? 'اكتب و اختر' : 'اختر الفرق أعلاه !!'}`} />
+                                                    <CreatableSelect className='text-light' options={state.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder={`${state?.clubs.length > 0 ? 'اكتب و اختر' : 'اختر الفرق أعلاه !!'}`} />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
@@ -302,9 +305,9 @@ const [optionsJSort, setOptionsJSort] = useState([]);
                                                         onCreateOption={handleCreateJEntr}
                                                         options={optionsJEntr}
                                                         value={
-                                                            change[index]?._activeOption || 
-                                                            (change[index]?.joueur_nom_entr ? 
-                                                                optionsJEntr?.find((l) => l.value === change[index]?.joueur_nom_entr) : 
+                                                            change[index]?._activeOption ||
+                                                            (change[index]?.joueur_nom_entr ?
+                                                                optionsJEntr?.find((l) => l.value === change[index]?.joueur_nom_entr) :
                                                                 null)
                                                         }
                                                         placeholder="أكتب و اختر"
