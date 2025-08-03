@@ -28,7 +28,7 @@ jobs:
           npm run build
 
       - name: Deploy Arbitrage_Front via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_FRONT_SERVER }}
           username: ${{ secrets.FTP_FRONT_USERNAME }}
@@ -36,29 +36,3 @@ jobs:
           local-dir: Arbitrage_Front/dist
           server-dir: arbitre.ma
 
-  # deploy-backend:
-  #   if: contains(github.event.head_commit.message, '[back]') || 
-  #       contains(github.event.head_commit.message, '[both]')
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-
-  #     - name: Setup PHP
-  #       uses: shivammathur/setup-php@v2
-  #       with:
-  #         php-version: '8.2'
-
-  #     - name: Install backend dependencies
-  #       run: |
-  #         cd back
-  #         composer install --no-dev --optimize-autoloader
-
-  #     - name: Deploy back via FTP
-  #       uses: SamKirkland/FTP-Deploy-Action@v4
-  #       with:
-  #         server: ${{ secrets.FTP_BACK_SERVER }}
-  #         username: ${{ secrets.FTP_BACK_USERNAME }}
-  #         password: ${{ secrets.FTP_BACK_PASSWORD }}
-  #         local-dir: back
-  #         server-dir: /api/
