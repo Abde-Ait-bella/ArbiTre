@@ -11,7 +11,6 @@ export function Buts(props) {
     const [state, setState] = useState({
         joueurs: [],
         joueursCreat: [],
-        joueursLicence: [],
         clubs: [],
     });
 
@@ -19,7 +18,7 @@ export function Buts(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState()
     const { user, club_1, club_2 } = AuthUser();
-    
+
 
 
     useEffect(() => {
@@ -38,18 +37,15 @@ export function Buts(props) {
                     name: "joueur_nom",
                 }))
 
-                const optionJoueursLicence = dataJoueurs?.map(item => ({
-                    value: item.joueur_numero_licence,
-                    label: item.joueur_numero_licence?.toUpperCase(),
-                    name: "joueur_numero_licence"
-                }))
+                
+                const hasClubs = !!club_1 || !!club_2;
+                const dataClubs = [club_1, club_2]
 
-                const dataClubs = clubResponse.data.filter((c) => (parseInt(c.user_id) === user?.id || c.user_id === null) && (parseInt(club_1) === c.id || parseInt(club_2) === c.id));
-                const optionClubs = dataClubs?.map(item => ({
-                    value: item.id,
-                    label: "(" + item.nom + ")" + item.abbr,
+                var optionClubs = hasClubs ? dataClubs?.map(item => ({
+                    value: item?.value,
+                    label: item?.label,
                     name: "club_id",
-                }))
+                })) : [];
 
                 const dataMatch = matcheRespose.data;
                 if (!dataMatch || dataMatch.length === 0) {
@@ -65,7 +61,6 @@ export function Buts(props) {
                     matchNamber: parseInt(matchNamber.pop() + 1)
                 }))
                 setOptionsJ(optionJoueurs);
-                setOptionsLicence(optionJoueursLicence)
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -87,20 +82,20 @@ export function Buts(props) {
 
     const handleCreateJ = (inputValue) => {
         if (currentEditingIndex === null) return;
-        
+
         setIsLoadingJ(true);
-        
+
         // Créer la nouvelle option
         const newOption = createOptionJ(inputValue);
-        
+
         // Ajouter l'option sans vérification - permet les doublons
         setOptionsJ((prev) => [...prev, newOption]);
-        
+
         // Mettre à jour le but avec le nouveau nom
         const newButs = [...buts];
         newButs[currentEditingIndex].joueur_nom = newOption.value;
         setButs(newButs);
-        
+
         setIsLoadingJ(false);
     };
 
@@ -123,61 +118,6 @@ export function Buts(props) {
             newBut[index][name] = value;
             setButs(newBut);
         }
-    }
-
-
-    //-----Sélection licence de joueur entrant
-
-    const createOptionLicence = (label) => ({
-        label: label.toUpperCase(),
-        value: label.toLowerCase().replace(/\W/g, ''),
-        name: "joueur_numero_licence"
-    });
-
-
-    const [isLoadingLicence, setIsLoadingLicence] = useState(false);
-    const [optionsLicence, setOptionsLicence] = useState();
-    const [valueLicence, setValueLicence] = useState();
-
-
-    const handleCreateLicence = (inputValue) => {
-        if (currentEditingIndex === null) return;
-        
-        setIsLoadingLicence(true);
-        
-        // Créer la nouvelle option
-        const newOption = createOptionLicence(inputValue);
-        
-        // Ajouter l'option sans vérification - permet les doublons
-        setOptionsLicence((prev) => [...prev, newOption]);
-        
-        // Mettre à jour le but avec la nouvelle licence
-        const newButs = [...buts];
-        newButs[currentEditingIndex].joueur_numero_licence = newOption.value;
-        setButs(newButs);
-        
-        setIsLoadingLicence(false);
-    };
-
-    const handleChangeSelectLicence = (event, index) => {
-        let valeur = event
-        if (valeur === null) {
-            valeur = {
-                value: "",
-                name: "joueur_numero_licence"
-            }
-            const { name, value } = valeur;
-            const newBut = [...buts];
-            newBut[index][name] = value;
-            setButs(newBut);
-        } else {
-            setValueLicence(valeur)
-            const { name, value } = valeur;
-            const newBut = [...buts];
-            newBut[index][name] = value;
-            setButs(newBut);
-        }
-        setValueLicence(event);
     }
 
 
@@ -204,10 +144,9 @@ export function Buts(props) {
         buts.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 6 || numberOfAttributes == null) {
+        if (numberOfAttributes === 5 || numberOfAttributes == null) {
             setError("")
             setButs([...buts, {},]);
-            setValueLicence()
         } else {
             setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
@@ -227,7 +166,7 @@ export function Buts(props) {
         buts.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes === 6) {
+        if (numberOfAttributes === 5) {
             setError("")
             props.dataButs(buts);
             setIsValide(prev => !prev)
@@ -253,29 +192,29 @@ export function Buts(props) {
                 loading ?
 
                     <>
-                             <div className='mb-4 d-none d-lg-block'>
-                                                   <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
-                                                       <div className="row">
-                                                           <Skeleton height={40} />
-                                                       </div>
-                                                       <div className="row mt-1">
-                                                           <Skeleton height={30} />
-                                                       </div>
-                                                   </SkeletonTheme>
-                                               </div>
+                        <div className='mb-4 d-none d-lg-block'>
+                            <SkeletonTheme baseColor="#3a3f5c" highlightColor="#6C7293">
+                                <div className="row">
+                                    <Skeleton height={40} />
+                                </div>
+                                <div className="mt-1 row">
+                                    <Skeleton height={30} />
+                                </div>
+                            </SkeletonTheme>
+                        </div>
                     </>
                     :
-                    <div className="row my-2">
+                    <div className="my-2 row">
                         <div className="col-md-12">
                             <div class=" card text-center bg-light text-white mx-1">
                                 <div class="card-header bg-secondary fw-bold d-flex justify-content-between align-items-center"
-                                    onClick={toggleOpen} 
+                                    onClick={toggleOpen}
                                     style={{ cursor: 'pointer' }}>
                                     <span>الهدافــون</span>
                                     <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                                 </div>
-                                <div 
-                                    className="card-body overflow-hidden transition-max-height"
+                                <div
+                                    className="overflow-hidden card-body transition-max-height"
                                     style={{
                                         maxHeight: isOpen ? '5000px' : '0',
                                         opacity: isOpen ? 1 : 0,
@@ -284,11 +223,11 @@ export function Buts(props) {
                                     }}
                                 >
                                     {buts?.map((item, index) => (
-                                        <div className="row border border-secondary border-4 rounded py-3 px-2 my-1 mt-3" key={index}>
+                                        <div className="px-2 py-3 my-1 mt-3 border border-4 rounded row border-secondary" key={index}>
                                             <div className="form-group col-md-4">
                                                 <label>الفريق</label>
                                                 <div className='my-2'>
-                                                    <CreatableSelect className='text-light' options={state?.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder={`${state?.clubs.length > 0  ? 'اكتب و اختر' : 'اختر الفرق أعلاه !!'}`} />
+                                                    <CreatableSelect className='text-light' options={state?.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder={`${state?.clubs.length > 0 ? 'اكتب و اختر' : 'اختر الفرق أعلاه !!'}`} />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-4">
@@ -307,32 +246,16 @@ export function Buts(props) {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="form-group col-md-4">
-                                                <label >رقم رخصة</label>
-                                                <div className='my-2'>
-                                                    <CreatableSelect className='text-light'
-                                                        isClearable
-                                                        isDisabled={isLoadingLicence}
-                                                        isLoading={isLoadingLicence}
-                                                        onChange={(event) => handleChangeSelectLicence(event, index)}
-                                                        onCreateOption={handleCreateLicence}
-                                                        options={optionsLicence}
-                                                        value={buts[index]?.joueur_numero_licence ? optionsLicence?.find((l) => l.value === buts[index]?.joueur_numero_licence) : null}
-                                                        placeholder='أكتب و اختر'
-                                                        onFocus={() => handleFocusField(index)}
-                                                    />
-                                                </div>
-                                            </div>
                                             <div className="form-group col-md-2">
                                                 <label >رقم الاعب</label>
                                                 <div className='my-2'>
-                                                    <input type="text" name='joueur_numero' onChange={(event) => handleChangeInput(event, index)} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                    <input type="text" name='joueur_numero' onChange={(event) => handleChangeInput(event, index)} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-2">
                                                 <label >الدقيقة</label>
                                                 <div className='my-2'>
-                                                    <input type="text" name='minute' onChange={(event) => handleChangeInput(event, index)} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                    <input type="text" name='minute' onChange={(event) => handleChangeInput(event, index)} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                                 </div>
                                             </div>
                                             <div>
@@ -340,7 +263,7 @@ export function Buts(props) {
                                             </div>
                                         </div>
                                     ))}
-                                    <div className='d-flex justify-content-center mt-3'>
+                                    <div className='mt-3 d-flex justify-content-center'>
                                         <div>
                                             <button className='btn btn-warning rounded-pill' onClick={addRow}><i class="fa-solid fa-plus px-4"></i></button>
                                         </div>
@@ -348,7 +271,7 @@ export function Buts(props) {
                                     <div className='mt-3'>
                                         {error && <span className='text-warning'>{error}<span className='text-warning me-2'>!!</span></span>}
                                     </div>
-                                    <div className='d-flex justify-content-right pt-2'>
+                                    <div className='pt-2 d-flex justify-content-right'>
                                         <button className={`btn me-3 my-2 px-4 fw-bold  ${isValide ? 'bg-warning text-danger' : 'bg-secondary text-white'}`} onClick={sendData}>حفـــــظ</button>
                                     </div>
                                 </div>

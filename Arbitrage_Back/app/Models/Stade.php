@@ -18,7 +18,8 @@ class Stade extends Model
 
     protected $fillable = [
         'nom',
-        'ville_id'
+        'ville_id',
+        'user_id',
     ];
 
 }

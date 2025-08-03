@@ -6,7 +6,7 @@ use App\Http\Controllers\AvertissementCotroller;
 use App\Http\Controllers\ButsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\change_passwordController;
-use App\Http\Controllers\ChangementCotroller;
+use App\Http\Controllers\ChangementController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\delegueController;
@@ -46,12 +46,12 @@ Route::post('/avertissement' , [AvertissementCotroller::class, 'store'])->middle
 Route::put('/avertissement/{id}' , [AvertissementCotroller::class, 'update'])->middleware(['auth.api']);
 Route::delete('/avertissement/{id}' , [AvertissementCotroller::class, 'destroy'])->middleware(['auth.api']);
 
-// Route::apiResource('changement', ChangementCotroller::class);
+// Route::apiResource('changement', ChangementController::class);
 
-Route::get('/changement' , [ChangementCotroller::class, 'index'])->middleware(['auth.api']);
-Route::post('/changement' , [ChangementCotroller::class, 'store'])->middleware(['auth.api']);
-Route::put('/changement/{id}' , [ChangementCotroller::class, 'update'])->middleware(['auth.api']);
-Route::delete('/changement/{id}' , [ChangementCotroller::class, 'destroy'])->middleware(['auth.api']);
+Route::get('/changement' , [ChangementController::class, 'index'])->middleware(['auth.api']);
+Route::post('/changement' , [ChangementController::class, 'store'])->middleware(['auth.api']);
+Route::put('/changement/{id}' , [ChangementController::class, 'update'])->middleware(['auth.api']);
+Route::delete('/changement/{id}' , [ChangementController::class, 'destroy'])->middleware(['auth.api']);
 
 Route::get('/but' , [ButsController::class, 'index'])->middleware(['auth.api']);
 Route::post('/but' , [ButsController::class, 'store'])->middleware(['auth.api']);

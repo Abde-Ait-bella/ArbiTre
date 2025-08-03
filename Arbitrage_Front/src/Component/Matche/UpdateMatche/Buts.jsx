@@ -46,17 +46,16 @@ export function Buts(props) {
                     name: "joueur_numero_licence"
                 }))
 
-                const club1 = parseInt(club_1_update);
-                const club2 = parseInt(club_2_update);
-                const hasClubs = !!club1 || !!club2;
+                const hasClubs = !!club_1_update || !!club_2_update;
 
-                const dataClubs = clubResponse.data?.filter((c) => {
+                const dataClubs = hasClubs ? [club_1_update, club_2_update] : clubResponse.data?.filter((c) => {
                     const isMine = parseInt(c.user_id) === user?.id || c.user_id === null;
-                    return isMine && (!hasClubs || c.id === club1 || c.id === club2);
+                    return isMine;
                 });
+                
                 const optionClubs = dataClubs?.map(item => ({
-                    value: item.id,
-                    label: "(" + item.nom + ")" + item.abbr,
+                    value: (item.value ? item.value : item.id),
+                    label:  (item.label ? item.label : item.nom) + (item?.abbr ?  "(" + item?.abbr + ")" : '') ,
                     name: "club_id",
                 }))
 
@@ -208,10 +207,9 @@ export function Buts(props) {
         butUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes <= 6 || numberOfAttributes === 9 || numberOfAttributes == null) {
+        if (numberOfAttributes <= 5 || numberOfAttributes === 9 || numberOfAttributes == null) {
             setError("")
             setButUpdate([...butUpdate, {},]);
-            setValueLicence()
         } else {
             setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
@@ -231,7 +229,8 @@ export function Buts(props) {
         butUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes <= 6 || numberOfAttributes === 9) {
+        console.log(numberOfAttributes);
+        if (numberOfAttributes <= 5 || numberOfAttributes === 8) {
             setError("")
             props.dataButs(butUpdate);
             setIsValide(prev => !prev)
@@ -298,7 +297,7 @@ export function Buts(props) {
                                                     <CreatableSelect className='text-light' options={state.clubs} value={state?.clubs.find((s) => s.value === parseInt(item?.club_id))} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب" />
                                                 </div>
                                             </div>
-                                            <div className="form-group col-md-3">
+                                            <div className="form-group col-md-4">
                                                 <label>اسم الاعب</label>
                                                 <div className='my-2'>
                                                     <CreatableSelect className='text-light'
@@ -311,22 +310,6 @@ export function Buts(props) {
                                                         value={state?.joueurs.find((j) => j.value === item?.joueur_nom)}
                                                         placeholder="أكتب او اختر"
                                                         onFocus={() => handleFocusField(index)} // <-- AJOUTE CETTE LIGNE
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="form-group col-md-3">
-                                                <label >رقم رخصة</label>
-                                                <div className='my-2'>
-                                                    <CreatableSelect className='text-light'
-                                                        isClearable
-                                                        isDisabled={isLoadingLicence}
-                                                        isLoading={isLoadingLicence}
-                                                        onChange={(event) => handleChangeSelectLicence(event, index)}
-                                                        onCreateOption={handleCreateLicence}
-                                                        options={state.licences}
-                                                        value={state?.licences.find((l) => l.value === item?.joueur_numero_licence)}
-                                                        placeholder='أكتب واختر'
-                                                        onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
                                             </div>
