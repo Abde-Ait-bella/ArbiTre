@@ -3,7 +3,7 @@ name: Deploy Arbitrage_Front and Arbitrage_Back
 on:
   push:
     branches:
-      - feature/auto-add-arbitres-delegues
+      - master
 
 jobs:
   deploy-frontend:
