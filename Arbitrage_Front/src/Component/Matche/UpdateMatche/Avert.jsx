@@ -48,20 +48,19 @@ export function Avert(props) {
                     name: "joueur_numero_licence"
                 }))
 
-                const club1 = parseInt(club_1_update);
-                const club2 = parseInt(club_2_update);
-                const hasClubs = !!club1 || !!club2;
+                const hasClubs = !!club_1_update || !!club_2_update;
 
-                const dataClubs = clubResponse.data?.filter((c) => {
+                const dataClubs = hasClubs ? [club_1_update, club_2_update] : clubResponse.data?.filter((c) => {
                     const isMine = parseInt(c.user_id) === user?.id || c.user_id === null;
-                    return isMine && (!hasClubs || c.id === club1 || c.id === club2);
+                    return isMine;
                 });
 
                 const optionClubs = dataClubs?.map(item => ({
-                    value: item.id,
-                    label: "(" + item.nom + ")" + item.abbr,
+                    value: (item.value ? item.value : item.id),
+                    label: (item.label ? item.label : item.nom) + (item?.abbr ? "(" + item?.abbr + ")" : ''),
                     name: "club_id",
                 }))
+
 
                 setAvertUpdate([...avertResponse.data.filter((a) => parseInt(a.matche_id) === parseInt(id))]);
 
@@ -78,8 +77,6 @@ export function Avert(props) {
         };
         fetchData();
     }, [club_1_update, club_2_update]);
-
-
 
     //--------select nom joueur
 
@@ -133,7 +130,6 @@ export function Avert(props) {
         newAverts[index][name] = value;
         setAvertUpdate(newAverts);
     }
-
 
     const createOptionLicence = (label) => ({
         label: label.toUpperCase(),
@@ -283,14 +279,14 @@ export function Avert(props) {
                                 <div className="row">
                                     <Skeleton height={40} />
                                 </div>
-                                <div className="row mt-1">
+                                <div className="mt-1 row">
                                     <Skeleton height={30} />
                                 </div>
                             </SkeletonTheme>
                         </div>
                     </>
                     :
-                    <div className="row my-2 avert-update">
+                    <div className="my-2 row avert-update">
                         <div className="col-md-12">
                             <div class=" card text-center bg-light text-white mx-1">
                                 <div class="card-header bg-secondary fw-bold d-flex justify-content-between align-items-center"
@@ -300,7 +296,7 @@ export function Avert(props) {
                                     <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                                 </div>
                                 <div
-                                    className="card-body overflow-hidden transition-max-height"
+                                    className="overflow-hidden card-body transition-max-height"
                                     style={{
                                         maxHeight: isOpen ? '5000px' : '0',
                                         opacity: isOpen ? 1 : 0,
@@ -314,7 +310,7 @@ export function Avert(props) {
                                         (
                                             <div>
                                                 {avertUpdate?.map((item, index) =>
-                                                    <div className="row  border border-secondary border-4 rounded py-3 px-2 my-1 mt-3" key={index}>
+                                                    <div className="px-2 py-3 my-1 mt-3 border border-4 rounded row border-secondary" key={index}>
                                                         <div className="form-group col-md-4">
                                                             <label>الفريق</label>
                                                             <div className="my-2">
@@ -324,10 +320,10 @@ export function Avert(props) {
                                                         </div>
                                                         <div className="form-group col-md-2">
                                                             <label>نوع العقوبة</label>
-                                                            <div className="d-flex justify-content-center pt-3">
-                                                                <div className="form-check mx-2">
+                                                            <div className="pt-3 d-flex justify-content-center">
+                                                                <div className="mx-2 form-check">
                                                                     <input
-                                                                        className="form-check-input bg-warning border-0"
+                                                                        className="border-0 form-check-input bg-warning"
                                                                         checked={item?.type === 'G'}
                                                                         type="radio"
                                                                         value="G"
@@ -339,9 +335,9 @@ export function Avert(props) {
                                                                         انذار
                                                                     </label>
                                                                 </div>
-                                                                <div className="form-check mx-2">
+                                                                <div className="mx-2 form-check">
                                                                     <input
-                                                                        className="form-check-input bg-danger border-0"
+                                                                        className="border-0 form-check-input bg-danger"
                                                                         checked={item.type === 'R'}
                                                                         type="radio"
                                                                         value="R"
@@ -374,7 +370,7 @@ export function Avert(props) {
                                                         <div className="form-group col-md-2">
                                                             <label >رقم الاعب</label>
                                                             <div className='my-2'>
-                                                                <input type="text" name='joueur_numero' value={item?.joueur_numero} className="form-control bg-white border-light my-2" onChange={(event) => handleAvertInputChange(event, index)} id="inputPassword4" />
+                                                                <input type="text" name='joueur_numero' value={item?.joueur_numero} className="my-2 bg-white form-control border-light" onChange={(event) => handleAvertInputChange(event, index)} id="inputPassword4" />
                                                             </div>
                                                         </div>
                                                         <div className="form-group col-md-3">
@@ -396,13 +392,13 @@ export function Avert(props) {
                                                         <div className="form-group col-md-7">
                                                             <label >سبب الانذار</label>
                                                             <div className='my-2'>
-                                                                <input type="text" name='cause' value={item?.cause} onChange={(event) => handleAvertInputChange(event, index)} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                                <input type="text" name='cause' value={item?.cause} onChange={(event) => handleAvertInputChange(event, index)} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                                             </div>
                                                         </div>
                                                         <div className="form-group col-md-2">
                                                             <label >الدقيقة</label>
                                                             <div className='my-2'>
-                                                                <input type="text" name='minute' value={item?.minute} onChange={(event) => handleAvertInputChange(event, index)} className="form-control bg-white border-light mt-2 mb-2" id="inputPassword4" />
+                                                                <input type="text" name='minute' value={item?.minute} onChange={(event) => handleAvertInputChange(event, index)} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                                             </div>
                                                         </div>
                                                         <div className='mt-2'>
@@ -413,7 +409,7 @@ export function Avert(props) {
                                             </div>
                                         )
                                     }
-                                    <div className='d-flex justify-content-center mt-3'>
+                                    <div className='mt-3 d-flex justify-content-center'>
                                         <div>
                                             <button className='btn btn-warning rounded-pill' onClick={addRow}><i class="fa-solid fa-plus px-4"></i></button>
                                         </div>
@@ -421,7 +417,7 @@ export function Avert(props) {
                                     <div className='mt-3'>
                                         {error && <span className='text-warning'>{error}<span className='text-warning me-2'>!!</span></span>}
                                     </div>
-                                    <div className='d-flex justify-content-right pt-2'>
+                                    <div className='pt-2 d-flex justify-content-right'>
                                         <button className={`btn px-4 fw-bold ${isValide ? 'bg-warning text-danger' : 'bg-secondary text-white'}`} onClick={sendData}>حفـــــظ</button>
                                     </div>
                                 </div>
