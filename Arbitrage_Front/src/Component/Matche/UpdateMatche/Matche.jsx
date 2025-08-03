@@ -859,7 +859,6 @@ export function Matche(props) {
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="inputEmail4">المدينة</label>
                                                 <div className='my-2'>
-
                                                     <CreatableSelect
                                                         className='text-light'
                                                         isClearable
@@ -868,6 +867,7 @@ export function Matche(props) {
                                                         onChange={handleSelectChange}
                                                         onCreateOption={input => handleCreateVille(input, 'centre_ville')}
                                                         placeholder="اكتب"
+                                                        menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                                     />
                                                 </div>
@@ -883,6 +883,7 @@ export function Matche(props) {
                                                         onChange={handleSelectChange}
                                                         onCreateOption={input => handleCreateVille(input, 'assistant_1_ville')}
                                                         placeholder="اكتب"
+                                                        menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                                     />
                                                 </div>
@@ -899,6 +900,7 @@ export function Matche(props) {
                                                         onChange={handleSelectChange}
                                                         onCreateOption={input => handleCreateVille(input, 'assistant_2_ville')}
                                                         placeholder="اكتب"
+                                                        menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                                     />
                                                 </div>
@@ -914,6 +916,7 @@ export function Matche(props) {
                                                         onChange={handleSelectChange}
                                                         onCreateOption={input => handleCreateVille(input, 'delegue_ville')}
                                                         placeholder="اكتب"
+                                                        menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                                     />
                                                 </div>
@@ -950,6 +953,7 @@ export function Matche(props) {
                                                         onChange={handleSelectChange}
                                                         onCreateOption={input => handleCreateVille(input, 'arbitre_4_ville')}
                                                         placeholder="اكتب"
+                                                        menuPortalTarget={document.body}
                                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }}
                                                     />
                                                 </div>
@@ -1041,6 +1045,7 @@ export function Matche(props) {
                                         onChange={handleSelectChange}
                                         onCreateOption={input => handleCreateStade(input)}
                                         placeholder="اكتب"
+                                        menuPortalTarget={document.body}
                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                     />
                                 </div>
@@ -1056,8 +1061,11 @@ export function Matche(props) {
                                         onChange={handleSelectChange}
                                         onCreateOption={input => handleCreateVille(input, 'ville_id')}
                                         placeholder="اكتب"
-                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                        menuPortalTarget={document.body}
+
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                     />
+
                                 </div>
                             </div>
                         </div>
