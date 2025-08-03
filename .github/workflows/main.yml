@@ -30,9 +30,9 @@ jobs:
       - name: Deploy Arbitrage_Front via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_BACK_SERVER }}
-          username: ${{ secrets.FTP_BACK_USERNAME }}
-          password: ${{ secrets.FTP_BACK_PASSWORD }}
+          server: ${{ secrets.FTP_FRONT_SERVER }}
+          username: ${{ secrets.FTP_FRONT_USERNAME }}
+          password: ${{ secrets.FTP_FRONT_PASSWORD }}
           local-dir: Arbitrage_Front/dist
           server-dir: arbitre.ma
 
