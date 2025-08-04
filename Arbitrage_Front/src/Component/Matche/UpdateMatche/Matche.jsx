@@ -481,19 +481,26 @@ export function Matche(props) {
     };
 
     const handleSelectChange = (event) => {
+        
+        const { name, value } = event;    
 
-        const { name, value } = event;
-
+        console.log("name :", name, "value :", value);
+        
+        var ville = name === "ville_id" ? value : inputValue.ville_id
+        
         var stadeClub_1 = name === "club_id_1" ? event?.stade : parseInt(matcheUpdate?.stade_id);
         if (name === "club_id_1") {
             club_1_Option_update(event)
             stadeClub_1 = state.stades.find((s) => stadeClub_1?.id === parseInt(s.value))
+            ville = stadeClub_1?.ville?.id
         } else if (name === "stade_id") {
             stadeClub_1 = event
         } else if (name === "club_id_2") {
             club_2_Option_update(event)
         }
-        var villeStade = state?.villes?.find((v) => parseInt(v.value) === parseInt(stadeClub_1?.ville?.id))
+        // var villeStade = name == 'ville_id' ? ''  : state?.villes?.find((v) => parseInt(v.value) === parseInt(stadeClub_1?.ville?.id))
+
+        
 
         var arbitreVille_4 = name === "arbitre_4_id" ? event.ville : matcheUpdate.arbitre_4_ville
         if (name === "arbitre_4_id") {
@@ -526,24 +533,26 @@ export function Matche(props) {
         var villeCentre = name === "arbitre_c_id" ? event.ville : matcheUpdate.centre_ville
         if (name === "arbitre_c_id") {
             villeCentre = state.villes.find((v) => villeCentre?.id === v.value)
-            console.log('salaaaaam');
 
         } else if (name === "centre_ville") {
             villeCentre = event
         }
 
         const newObject = { ...matcheUpdate };
+
+        
         newObject[name] = value;
         newObject.stade_id = stadeClub_1?.value ? stadeClub_1?.value : stadeClub_1;
-        newObject.ville_id = villeStade?.value ? villeStade?.value : villeStade;
+        newObject.ville_id = ville;
         newObject.centre_ville = villeCentre?.value ? villeCentre?.value : villeCentre,
             newObject.assistant_1_ville = villearbitre_a1_id?.value ? villearbitre_a1_id?.value : villearbitre_a1_id,
             newObject.assistant_2_ville = villearbitre_a2_id?.value ? villearbitre_a2_id?.value : villearbitre_a2_id,
             newObject.arbitre_4_ville = arbitreVille_4?.value ? arbitreVille_4?.value : arbitreVille_4,
             newObject.delegue_ville = villeDelegue?.value ? villeDelegue?.value : villeDelegue,
             setMatcheUpdate(newObject);
-
     };
+
+    
 
     const [isValide, setIsValide] = useState();
 
@@ -1053,18 +1062,30 @@ export function Matche(props) {
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputEmail4">المدينة</label>
                                 <div className="my-2">
-                                    <CreatableSelect
-                                        className='text-light'
-                                        isClearable
-                                        value={matcheUpdate.ville_id ? state.villes?.find(s => s.value === matcheUpdate?.ville_id || s.value === parseInt(matcheUpdate?.ville_id)) : null}
-                                        options={state.villes}
-                                        onChange={handleSelectChange}
-                                        onCreateOption={input => handleCreateVille(input, 'ville_id')}
-                                        placeholder="اكتب"
-                                        menuPortalTarget={document.body}
 
-                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
-                                    />
+{/* CreatableSelect */}
+                                                        {/* className='text-light'
+                                                        isClearable
+                                                        value={matcheUpdate.arbitre_4_ville ? state.arbitre_4_ville?.find(s => s.value === matcheUpdate?.arbitre_4_ville || s.value === parseInt(matcheUpdate?.arbitre_4_ville)) : null}
+                                                        options={state.arbitre_4_ville}
+                                                        onChange={handleSelectChange}
+                                                        onCreateOption={input => handleCreateVille(input, 'arbitre_4_ville')}
+                                                        placeholder="اكتب"
+                                                        menuPortalTarget={document.body}
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }} */}
+
+                                        <CreatableSelect
+                                            className='text-light'
+                                            isClearable
+                                            value={matcheUpdate.ville_id ? state.villes?.find(s => s.value === matcheUpdate?.ville_id || s.value === parseInt(matcheUpdate?.ville_id)) : null}
+                                            options={state.villes}
+                                            onChange={handleSelectChange}
+                                            onCreateOption={input => handleCreateVille(input, 'ville_id')}
+                                            placeholder="اكتب"
+                                            menuPortalTarget={document.body}
+
+                                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
+                                        />
 
                                 </div>
                             </div>
