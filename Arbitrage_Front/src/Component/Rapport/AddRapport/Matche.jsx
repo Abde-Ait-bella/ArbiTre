@@ -371,7 +371,6 @@ export function Matche(props) {
 
     const [isValideData, setIsValideData] = useState();
 
-
     const sendData = () => {
         const numberKey = Object.keys(inputValue).length;
         if (numberKey >= 27) {
@@ -512,13 +511,6 @@ export function Matche(props) {
 
     // Ajouter les états pour les clubs
     const [isLoadingClub, setIsLoadingClub] = useState(false);
-
-    // // Ajouter les fonctions pour créer des clubs
-    // const createOptionClub = (label) => ({
-    //     label: label.toUpperCase(),
-    //     value: label.toLowerCase(),
-    //     name: "club"
-    // });
 
     const handleCreateClub = (inputValue) => {
         if (!currentEditingField) return;
