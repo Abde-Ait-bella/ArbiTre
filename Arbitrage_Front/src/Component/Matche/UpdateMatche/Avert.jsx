@@ -137,7 +137,6 @@ export function Avert(props) {
         name: "joueur_numero_licence"
     });
 
-
     const [isLoadingLicence, setIsLoadingLicence] = useState();
 
 
