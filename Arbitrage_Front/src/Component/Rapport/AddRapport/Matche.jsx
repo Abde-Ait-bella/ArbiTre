@@ -367,7 +367,6 @@ export function Matche(props) {
             arbitre_4_ville: arbitreVille_4,
             stadeClub_1: stadeClub_1,
         }))
-
     };
 
     const [isValideData, setIsValideData] = useState();
