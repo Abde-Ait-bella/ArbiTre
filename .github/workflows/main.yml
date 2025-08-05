@@ -1,11 +1,23 @@
 name: Deploy Arbitrage_Front and Arbitrage_Back
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - master
+    paths-ignore:
+      - '**.md'
+
 jobs:
+  check-merge-develop:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master' && github.event.pull_request.head.ref == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger deploy jobs
+        run: echo "Merged develop into master, triggering deploy jobs."
+
   deploy-frontend:
+    needs: check-merge-develop
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -33,6 +45,4 @@ jobs:
           username: ${{ secrets.FTP_FRONT_USERNAME }}
           password: ${{ secrets.FTP_FRONT_PASSWORD }}
           local-dir: Arbitrage_Front/dist/
-          server-dir: /
-
-
+          server-dir: arbitre.ma/
