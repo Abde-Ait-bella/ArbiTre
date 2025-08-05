@@ -35,7 +35,7 @@ export function Avert(props) {
                     axiosClinet.get('/avertissement'),
                 ]);
 
-                const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) === user?.id);
+                const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) == user?.id);
                 const optionJoueurs = dataJoueurs?.map(item => ({
                     value: item.nom,
                     label: item.nom.toUpperCase(),
@@ -51,7 +51,7 @@ export function Avert(props) {
                 const hasClubs = !!club_1_update || !!club_2_update;
 
                 const dataClubs = hasClubs ? [club_1_update, club_2_update] : clubResponse.data?.filter((c) => {
-                    const isMine = parseInt(c.user_id) === user?.id || c.user_id === null;
+                    const isMine = parseInt(c.user_id) == user?.id || c.user_id == null;
                     return isMine;
                 });
 
@@ -62,7 +62,7 @@ export function Avert(props) {
                 }))
 
 
-                setAvertUpdate([...avertResponse.data.filter((a) => parseInt(a.matche_id) === parseInt(id))]);
+                setAvertUpdate([...avertResponse.data.filter((a) => parseInt(a.matche_id) == parseInt(id))]);
 
                 setState(prevData => ({
                     ...prevData,
@@ -89,7 +89,7 @@ export function Avert(props) {
     const [isLoadingJ, setIsLoadingJ] = useState(false);
 
     const handleCreate = (inputValue) => {
-        if (currentEditingIndex === null) return;
+        if (currentEditingIndex == null) return;
 
         setIsLoadingJ(true);
 
@@ -98,7 +98,7 @@ export function Avert(props) {
 
         // IMPORTANT: Vérifier si l'option existe déjà avant de l'ajouter
         const optionExists = state.joueurs.some(
-            option => option.value === newOption.value
+            option => option.value == newOption.value
         );
 
         if (!optionExists) {
@@ -119,7 +119,7 @@ export function Avert(props) {
 
     const handleAvertSelectChangeJ = (event, index) => {
         let valeur = event
-        if (valeur === null) {
+        if (valeur == null) {
             valeur = {
                 value: "",
                 name: "nom"
@@ -142,7 +142,7 @@ export function Avert(props) {
 
 
     const handleCreateLicence = (inputValue) => {
-        if (currentEditingIndex === null) return;
+        if (currentEditingIndex == null) return;
 
         setIsLoadingLicence(true);
 
@@ -150,7 +150,7 @@ export function Avert(props) {
 
         // Vérifier si l'option existe déjà
         const optionExists = state.joueursLicence.some(
-            option => option.value === newOption.value
+            option => option.value == newOption.value
         );
 
         if (!optionExists) {
@@ -171,7 +171,7 @@ export function Avert(props) {
 
     const handleAvertSelectChangeLicence = (event, index) => {
         let valeur = event
-        if (valeur === null) {
+        if (valeur == null) {
             valeur = {
                 value: "",
                 name: "joueur_numero_licence"
@@ -201,7 +201,7 @@ export function Avert(props) {
 
     const handleAvertInputChange = (event, index) => {
         let TypeEvent = event.target;
-        const type_update = TypeEvent.name === `type${index}` ? TypeEvent.value : '';
+        const type_update = TypeEvent.name == `type${index}` ? TypeEvent.value : '';
 
         if (type_update) {
             TypeEvent = {
@@ -221,7 +221,7 @@ export function Avert(props) {
         avertUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes <= 8 || numberOfAttributes === 12 || numberOfAttributes == null) {
+        if (numberOfAttributes <= 8 || numberOfAttributes == 12 || numberOfAttributes == null) {
             setAvertUpdate([...avertUpdate, {}])
             setError("")
         } else {
@@ -314,7 +314,7 @@ export function Avert(props) {
                                                         <div className="form-group col-md-4">
                                                             <label>الفريق</label>
                                                             <div className="my-2">
-                                                                <CreatableSelect className='text-light' value={state?.clubs.find((s) => (s.value === parseInt(item?.club_id)))}
+                                                                <CreatableSelect className='text-light' value={state?.clubs.find((s) => (s.value == parseInt(item?.club_id)))}
                                                                     options={state.clubs} onChange={(event) => handleAvertSelectChange(event, index)} placeholder="اكتب" />
                                                             </div>
                                                         </div>
@@ -324,7 +324,7 @@ export function Avert(props) {
                                                                 <div className="mx-2 form-check">
                                                                     <input
                                                                         className="border-0 form-check-input bg-warning"
-                                                                        checked={item?.type === 'G'}
+                                                                        checked={item?.type == 'G'}
                                                                         type="radio"
                                                                         value="G"
                                                                         name={`type${index}`}
@@ -338,7 +338,7 @@ export function Avert(props) {
                                                                 <div className="mx-2 form-check">
                                                                     <input
                                                                         className="border-0 form-check-input bg-danger"
-                                                                        checked={item.type === 'R'}
+                                                                        checked={item.type == 'R'}
                                                                         type="radio"
                                                                         value="R"
                                                                         name={`type${index}`}
@@ -361,7 +361,7 @@ export function Avert(props) {
                                                                     onChange={(event) => handleAvertSelectChangeJ(event, index)}
                                                                     onCreateOption={handleCreate}
                                                                     options={state.joueurs}
-                                                                    value={state?.joueurs.find((j) => (j.value === item?.nom))}
+                                                                    value={state?.joueurs.find((j) => (j.value == item?.nom))}
                                                                     placeholder="أكتب او اختر"
                                                                     onFocus={() => handleFocusField(index)} // Ajout de l'événement onFocus
                                                                 />
@@ -383,7 +383,7 @@ export function Avert(props) {
                                                                     onChange={(event) => handleAvertSelectChangeLicence(event, index)}
                                                                     onCreateOption={handleCreateLicence}
                                                                     options={state.joueursLicence}
-                                                                    value={state?.joueursLicence.find((j) => j.value === item?.joueur_numero_licence)}
+                                                                    value={state?.joueursLicence.find((j) => j.value == item?.joueur_numero_licence)}
                                                                     placeholder='أكتب واختر'
                                                                     onFocus={() => handleFocusField(index)} // Ajout de l'événement onFocus manquant
                                                                 />

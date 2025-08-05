@@ -33,7 +33,7 @@ export function Buts(props) {
                     axiosClinet.get('/but'),
                 ]);
 
-                const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) === user?.id);
+                const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) == user?.id);
                 const optionJoueurs = dataJoueurs?.map(item => ({
                     value: item.nom,
                     label: item.nom.toUpperCase(),
@@ -49,7 +49,7 @@ export function Buts(props) {
                 const hasClubs = !!club_1_update || !!club_2_update;
 
                 const dataClubs = hasClubs ? [club_1_update, club_2_update] : clubResponse.data?.filter((c) => {
-                    const isMine = parseInt(c.user_id) === user?.id || c.user_id === null;
+                    const isMine = parseInt(c.user_id) == user?.id || c.user_id == null;
                     return isMine;
                 });
                 
@@ -59,7 +59,7 @@ export function Buts(props) {
                     name: "club_id",
                 }))
 
-                setButUpdate([...butsResponse.data?.filter((b) => parseInt(b.matche_id) === parseInt(id))]);
+                setButUpdate([...butsResponse.data?.filter((b) => parseInt(b.matche_id) == parseInt(id))]);
                 setState(prevData => ({
                     ...prevData,
                     clubs: optionClubs,
@@ -85,7 +85,7 @@ export function Buts(props) {
     const [isLoadingJ, setIsLoadingJ] = useState(false);
 
     const handleCreateJ = (inputValue) => {
-        if (currentEditingIndex === null) return;
+        if (currentEditingIndex == null) return;
 
         setIsLoadingJ(true);
 
@@ -93,7 +93,7 @@ export function Buts(props) {
 
         // Vérifier si l'option existe déjà
         const optionExists = state.joueurs.some(
-            option => option.value === newOption.value
+            option => option.value == newOption.value
         );
 
         if (!optionExists) {
@@ -115,7 +115,7 @@ export function Buts(props) {
 
     const handleChangeSelectJ = (event, index) => {
         let valeur = event
-        if (valeur === null) {
+        if (valeur == null) {
             valeur = {
                 value: "",
                 name: "joueur_nom"
@@ -142,7 +142,7 @@ export function Buts(props) {
 
 
     const handleCreateLicence = (inputValue) => {
-        if (currentEditingIndex === null) return;
+        if (currentEditingIndex == null) return;
 
         setIsLoadingLicence(true);
 
@@ -151,7 +151,7 @@ export function Buts(props) {
 
         // Vérifier si l'option existe déjà
         const optionExists = state.licences.some(
-            option => option.value === newOption.value
+            option => option.value == newOption.value
         );
 
         if (!optionExists) {
@@ -172,7 +172,7 @@ export function Buts(props) {
 
     const handleChangeSelectLicence = (event, index) => {
         let valeur = event
-        if (valeur === null) {
+        if (valeur == null) {
             valeur = {
                 value: "",
                 name: "joueur_numero_licence"
@@ -207,7 +207,7 @@ export function Buts(props) {
         butUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes <= 5 || numberOfAttributes === 9 || numberOfAttributes == null) {
+        if (numberOfAttributes <= 5 || numberOfAttributes == 9 || numberOfAttributes == null) {
             setError("")
             setButUpdate([...butUpdate, {},]);
         } else {
@@ -230,7 +230,7 @@ export function Buts(props) {
             numberOfAttributes = Object.keys(obj).length;
         });
         console.log(numberOfAttributes);
-        if (numberOfAttributes <= 5 || numberOfAttributes === 8) {
+        if (numberOfAttributes <= 5 || numberOfAttributes == 8) {
             setError("")
             props.dataButs(butUpdate);
             setIsValide(prev => !prev)
@@ -294,7 +294,7 @@ export function Buts(props) {
                                             <div className="form-group col-md-4">
                                                 <label>الفريق</label>
                                                 <div className='my-2'>
-                                                    <CreatableSelect className='text-light' options={state.clubs} value={state?.clubs.find((s) => s.value === parseInt(item?.club_id))} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب" />
+                                                    <CreatableSelect className='text-light' options={state.clubs} value={state?.clubs.find((s) => s.value == parseInt(item?.club_id))} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب" />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-4">
@@ -307,7 +307,7 @@ export function Buts(props) {
                                                         onChange={(event) => handleChangeSelectJ(event, index)}
                                                         onCreateOption={handleCreateJ}
                                                         options={state.joueurs}
-                                                        value={state?.joueurs.find((j) => j.value === item?.joueur_nom)}
+                                                        value={state?.joueurs.find((j) => j.value == item?.joueur_nom)}
                                                         placeholder="أكتب او اختر"
                                                         onFocus={() => handleFocusField(index)} // <-- AJOUTE CETTE LIGNE
                                                     />

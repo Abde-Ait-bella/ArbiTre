@@ -36,7 +36,7 @@ export function Changement(props) {
                     axiosClinet.get('/changement'),
                 ]);
 
-                const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) === user?.id);
+                const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) == user?.id);
 
                 const optionJoueursEntr = dataJoueurs?.map(item => ({
                     value: item.nom,
@@ -57,7 +57,7 @@ export function Changement(props) {
                 const hasClubs = !!club_1_update || !!club_2_update;
 
                 const dataClubs = hasClubs ? [club_1_update, club_2_update] : clubResponse.data?.filter((c) => {
-                    const isMine = parseInt(c.user_id) === user?.id || c.user_id === null;
+                    const isMine = parseInt(c.user_id) == user?.id || c.user_id == null;
                     return isMine;
                 });
 
@@ -67,7 +67,7 @@ export function Changement(props) {
                     name: "club_id",
                 }))
 
-                setChangeUpdate([...changeResponse.data?.filter((ch) => parseInt(ch.matche_id) === parseInt(id))])
+                setChangeUpdate([...changeResponse.data?.filter((ch) => parseInt(ch.matche_id) == parseInt(id))])
 
                 setState(prevData => ({
                     ...prevData,
@@ -105,7 +105,7 @@ export function Changement(props) {
     };
 
     const handleChangeSelectJEntr = (event, index) => {
-        if (event === null) {
+        if (event == null) {
             var valeur = {
                 value: "",
                 name: "joueur_nom_entr"
@@ -139,7 +139,7 @@ export function Changement(props) {
 
     const handleChangeSelectJSort = (event, index) => {
         let valeur = event
-        if (valeur === null) {
+        if (valeur == null) {
             valeur = {
                 value: "",
                 name: "joueur_nom_sort"
@@ -173,7 +173,7 @@ export function Changement(props) {
         changeUpdate.forEach(obj => {
             numberOfAttributes = Object.keys(obj).length;
         });
-        if (numberOfAttributes == 7 || numberOfAttributes === 12 || numberOfAttributes == null) {
+        if (numberOfAttributes == 7 || numberOfAttributes == 12 || numberOfAttributes == null) {
             setChangeUpdate([...changeUpdate, {}])
             setError("")
         } else {
@@ -198,7 +198,7 @@ export function Changement(props) {
         });
 
         console.log(numberOfAttributes);
-        if (numberOfAttributes === 5 || numberOfAttributes === 7) {
+        if (numberOfAttributes == 5 || numberOfAttributes == 7) {
             setError("")
             props.dataChangement(changeUpdate);
             setIsValide(prev => !prev);
@@ -216,7 +216,7 @@ export function Changement(props) {
 
     // 2. Améliorez la fonction handleCreateEntree pour les joueurs entrants
     const handleCreateEntree = (inputValue) => {
-        if (currentEditingIndex === null) return;
+        if (currentEditingIndex == null) return;
 
         setIsLoadingEntree(true);
 
@@ -225,7 +225,7 @@ export function Changement(props) {
 
         // Vérifier si l'option existe déjà
         const optionExists = state.joueursEntre.some(
-            option => option.value === newOption.value
+            option => option.value == newOption.value
         );
 
         if (!optionExists) {
@@ -245,7 +245,7 @@ export function Changement(props) {
 
     // 3. Améliorez la fonction handleCreateSortie pour les joueurs sortants
     const handleCreateSortie = (inputValue) => {
-        if (currentEditingIndex === null) return;
+        if (currentEditingIndex == null) return;
 
         setIsLoadingSortie(true);
 
@@ -254,7 +254,7 @@ export function Changement(props) {
 
         // Vérifier si l'option existe déjà
         const optionExists = state.joueursSort.some(
-            option => option.value === newOption.value
+            option => option.value == newOption.value
         );
 
         if (!optionExists) {
@@ -327,7 +327,7 @@ export function Changement(props) {
                                                         <div className="form-group col-md-3">
                                                             <label>الفريق</label>
                                                             <div className='my-2'>
-                                                                <CreatableSelect className='text-light' value={state?.clubs.find((c) => c.value === parseInt(item?.club_id))} options={state.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب" />
+                                                                <CreatableSelect className='text-light' value={state?.clubs.find((c) => c.value == parseInt(item?.club_id))} options={state.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب" />
                                                             </div>
                                                         </div>
                                                         <div className="form-group col-md-3">
@@ -340,7 +340,7 @@ export function Changement(props) {
                                                                     onChange={(event) => handleChangeSelectJEntr(event, index)}
                                                                     onCreateOption={handleCreateEntree}  // Utiliser la nouvelle fonction
                                                                     options={state.joueursEntre}         // Utiliser state au lieu de optionsJEntr
-                                                                    value={state?.joueursEntre.find((j) => (j.value === item?.joueur_nom_entr))}
+                                                                    value={state?.joueursEntre.find((j) => (j.value == item?.joueur_nom_entr))}
                                                                     placeholder="أكتب او اختر"
                                                                     onFocus={() => handleFocusField(index)}  // Ajouter ceci
                                                                 />
@@ -363,7 +363,7 @@ export function Changement(props) {
                                                                     onChange={(event) => handleChangeSelectJSort(event, index)}
                                                                     onCreateOption={handleCreateSortie}       // Utiliser la nouvelle fonction
                                                                     options={state.joueursSort}               // Utiliser state au lieu de optionsJSort
-                                                                    value={state?.joueursSort.find((j) => (j.value === item?.joueur_nom_sort))}
+                                                                    value={state?.joueursSort.find((j) => (j.value == item?.joueur_nom_sort))}
                                                                     placeholder="أكتب او اختر"
                                                                     onFocus={() => handleFocusField(index)}   // Ajouter l'événement onFocus
                                                                 />

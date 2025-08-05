@@ -31,10 +31,10 @@ export function Penalty(props) {
                     axiosClinet.get('/penalty'),
                 ]);
 
-                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null);
+                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) == user?.id || c.user_id == null);
 
                 const dataMatch = matcheRespose.data;
-                if (!dataMatch || dataMatch.length === 0) {
+                if (!dataMatch || dataMatch.length == 0) {
                     var matchNamber = [0]
                 } else (
                     matchNamber = dataMatch.map(item => item.id)
@@ -42,8 +42,8 @@ export function Penalty(props) {
 
                 const curentMatche = dataMatch.find((m) => m.id == id)
 
-                const dataPenalty_1 = penaltyRespose.data.filter((p) => parseInt(p.matche_id) === parseInt(id) && p.club_id === parseInt(curentMatche?.club_id_1));
-                const dataPenalty_2 = penaltyRespose.data.filter((p) => parseInt(p.matche_id) === parseInt(id) && p.club_id === parseInt(curentMatche?.club_id_2));
+                const dataPenalty_1 = penaltyRespose.data.filter((p) => parseInt(p.matche_id) == parseInt(id) && p.club_id == parseInt(curentMatche?.club_id_1));
+                const dataPenalty_2 = penaltyRespose.data.filter((p) => parseInt(p.matche_id) == parseInt(id) && p.club_id == parseInt(curentMatche?.club_id_2));
                 setPenaltyData_1(!club_1_update && !club_2_update && dataPenalty_1.length > 0 ? dataPenalty_1 : [{},{},{},{},{}])
                 setPenaltyData_2(!club_1_update && !club_2_update && dataPenalty_2.length > 0 ? dataPenalty_2 : [{},{},{},{},{}])
 
@@ -60,9 +60,6 @@ export function Penalty(props) {
             }
         };
         fetchData();
-
-        // setPenaltyData_1([{},{},{},{},{}]);
-        // setPenaltyData_2([{},{},{},{},{}]);
 
     }, [club_1_update, club_2_update]);
 
@@ -82,7 +79,7 @@ export function Penalty(props) {
 
     const handleChange = (event, indexClub, indexPenalty) => {
 
-        if (indexClub === 0 ) {
+        if (indexClub == 0 ) {
             const newPenalty = [...penaltyData_1];
             newPenalty[indexPenalty].club_id = club_1_update ? club_1_update : parseInt(penaltyData_1[indexClub].club_id);
             newPenalty[indexPenalty].result = parseInt(event.target.value);
@@ -220,7 +217,7 @@ export function Penalty(props) {
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
-                                                        <p className='fs-5'>{club_1_update ? state.clubs.find((c) => c.id === club_1_update)?.nom : state.clubs.find((c) => c.id === penaltyData_1[1]?.club_id)?.nom}{penaltyData_1[1]?.club_id ? "" : "..."}</p>
+                                                        <p className='fs-5'>{club_1_update ? state.clubs.find((c) => c.id == club_1_update)?.nom : state.clubs.find((c) => c.id == penaltyData_1[1]?.club_id)?.nom}{penaltyData_1[1]?.club_id ? "" : "..."}</p>
                                                     </div>
                                                 </div>
                                                 {club_1_update || penaltyData_1[1]?.club_id ? penaltyData_1?.map((_, index) => (
@@ -251,7 +248,7 @@ export function Penalty(props) {
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
-                                                        <p className='fs-5'>{club_2_update ? state.clubs.find((c) => c.id === club_2_update)?.nom : state.clubs.find((c) => c.id === penaltyData_2[1]?.club_id)?.nom}{penaltyData_1[1]?.club_id ? "" : "..."}</p>
+                                                        <p className='fs-5'>{club_2_update ? state.clubs.find((c) => c.id == club_2_update)?.nom : state.clubs.find((c) => c.id == penaltyData_2[1]?.club_id)?.nom}{penaltyData_1[1]?.club_id ? "" : "..."}</p>
                                                     </div>
                                                 </div>
                                                 {club_2_update || penaltyData_2[1]?.club_id ? penaltyData_2?.map((_, index) => (
