@@ -795,7 +795,7 @@ export function Matche(props) {
                                                         isDisabled={isLoadingArbitre}
                                                         isLoading={isLoadingArbitre}
                                                         options={state.centre}
-                                                        value={state.centre?.find((c) => c.value === matcheUpdate?.arbitre_c_id)}
+                                                        value={matcheUpdate.arbitre_c_id ? state.centre?.find(s => s.value === matcheUpdate?.arbitre_c_id || s.value === parseInt(matcheUpdate?.arbitre_c_id)) : null}
                                                         onChange={(event) => handleArbitreSelectChange(event, 'arbitre_c_id')}
                                                         onCreateOption={handleCreateArbitre}
                                                         onFocus={() => handleFocusField('arbitre_c_id')}
@@ -814,7 +814,7 @@ export function Matche(props) {
                                                         isDisabled={isLoadingArbitre}
                                                         isLoading={isLoadingArbitre}
                                                         options={state.arbitre_a1_id}
-                                                        value={state.arbitre_a1_id?.find((c) => c.value === matcheUpdate?.arbitre_a1_id)}
+                                                        value={matcheUpdate.arbitre_a1_id ? state.arbitre_a1_id?.find(s => s.value === matcheUpdate?.arbitre_a1_id || s.value === parseInt(matcheUpdate?.arbitre_a1_id)) : null}
                                                         onChange={(event) => handleArbitreSelectChange(event, 'arbitre_a1_id')}
                                                         onCreateOption={handleCreateArbitre}
                                                         onFocus={() => handleFocusField('arbitre_a1_id')}
@@ -833,7 +833,7 @@ export function Matche(props) {
                                                         isDisabled={isLoadingArbitre}
                                                         isLoading={isLoadingArbitre}
                                                         options={state.arbitre_a2_id}
-                                                        value={state.arbitre_a2_id?.find((c) => c.value === matcheUpdate?.arbitre_a2_id)}
+                                                        value={matcheUpdate.arbitre_a2_id ? state.arbitre_a2_id?.find(s => s.value === matcheUpdate?.arbitre_a2_id || s.value === parseInt(matcheUpdate?.arbitre_a2_id)) : null}
                                                         onChange={(event) => handleArbitreSelectChange(event, 'arbitre_a2_id')}
                                                         onCreateOption={handleCreateArbitre}
                                                         onFocus={() => handleFocusField('arbitre_a2_id')}
@@ -851,8 +851,8 @@ export function Matche(props) {
                                                         isClearable
                                                         isDisabled={isLoadingDelegue}
                                                         isLoading={isLoadingDelegue}
-                                                        options={state.delegue}
-                                                        value={matcheUpdate.delegue_id ? state.delegue.find(option => option.value === matcheUpdate.delegue_id) : null}
+                                                        options={state.delegue}          
+                                                        value={matcheUpdate.delegue_id ? state.delegue?.find(s => s.value === matcheUpdate?.delegue_id || s.value === parseInt(matcheUpdate?.delegue_id)) : null}
                                                         onChange={handleDelegueSelectChange}
                                                         onCreateOption={handleCreateDelegue}
                                                         onFocus={() => handleFocusField('delegue_id')}
@@ -940,7 +940,7 @@ export function Matche(props) {
                                                         isDisabled={isLoadingArbitre}
                                                         isLoading={isLoadingArbitre}
                                                         options={state.arbitre_4_id}
-                                                        value={state.arbitre_4_id?.find((c) => c.value === matcheUpdate?.arbitre_4_id)}
+                                                        value={matcheUpdate.arbitre_4_id ? state.arbitre_4_id?.find(s => s.value === matcheUpdate?.arbitre_4_id || s.value === parseInt(matcheUpdate?.arbitre_4_id)) : null}
                                                         onChange={(event) => handleArbitreSelectChange(event, 'arbitre_4_id')}
                                                         onCreateOption={handleCreateArbitre}
                                                         onFocus={() => handleFocusField('arbitre_4_id')}
@@ -1061,18 +1061,6 @@ export function Matche(props) {
                             <div className="form-group col-md-4">
                                 <label className='text-white' htmlFor="inputEmail4">المدينة</label>
                                 <div className="my-2">
-
-{/* CreatableSelect */}
-                                                        {/* className='text-light'
-                                                        isClearable
-                                                        value={matcheUpdate.arbitre_4_ville ? state.arbitre_4_ville?.find(s => s.value === matcheUpdate?.arbitre_4_ville || s.value === parseInt(matcheUpdate?.arbitre_4_ville)) : null}
-                                                        options={state.arbitre_4_ville}
-                                                        onChange={handleSelectChange}
-                                                        onCreateOption={input => handleCreateVille(input, 'arbitre_4_ville')}
-                                                        placeholder="اكتب"
-                                                        menuPortalTarget={document.body}
-                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'right' }) }} */}
-
                                         <CreatableSelect
                                             className='text-light'
                                             isClearable
@@ -1082,7 +1070,6 @@ export function Matche(props) {
                                             onCreateOption={input => handleCreateVille(input, 'ville_id')}
                                             placeholder="اكتب"
                                             menuPortalTarget={document.body}
-
                                             styles={{ menuPortal: base => ({ ...base, zIndex: 9999, textAlign: 'center' }) }}
                                         />
 

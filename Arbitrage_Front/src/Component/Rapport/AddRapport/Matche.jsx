@@ -357,8 +357,6 @@ export function Matche(props) {
             delegue_ville: villeDelegue?.value,
         }));
 
-
-
         setSelectedSelect(prevValues => ({
             ...prevValues,
             name: event?.name,
@@ -370,7 +368,6 @@ export function Matche(props) {
             stadeClub_1: stadeClub_1,
         }))
 
-        console.log("data", inputValue);
     };
 
     const [isValideData, setIsValideData] = useState();
@@ -390,19 +387,6 @@ export function Matche(props) {
     const [isLoadingArbitre, setIsLoadingArbitre] = useState(false);
     const [isLoadingDelegue, setIsLoadingDelegue] = useState(false);
     const [currentEditingField, setCurrentEditingField] = useState(null);
-
-    // Ajouter ces fonctions qui manquent - exactement comme dans Avert.jsx
-    const createOptionArbitre = (label) => ({
-        label: label.toUpperCase(),
-        value: label.toLowerCase(),
-        name: "arbitre"
-    });
-
-    const createOptionDelegue = (label) => ({
-        label: label.toUpperCase(),
-        value: label.toLowerCase(),
-        name: "delegue"
-    });
 
     // Corriger la fonction handleCreateArbitre - exactement comme handleCreate dans Avert.jsx
     const handleCreateArbitre = (inputValue) => {
