@@ -1,5 +1,6 @@
-import { React, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
+import Select from 'react-select';
 import { useParams } from 'react-router-dom';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -42,7 +43,7 @@ export function Buts(props) {
                 }))
                 const optionJoueursLicence = dataJoueurs?.map(item => ({
                     value: item.joueur_numero_licence,
-                        label: item.joueur_numero_licence?.toUpperCase(),
+                    label: item.joueur_numero_licence?.toUpperCase(),
                     name: "joueur_numero_licence"
                 }))
 
@@ -52,10 +53,10 @@ export function Buts(props) {
                     const isMine = parseInt(c.user_id) == user?.id || c.user_id == null;
                     return isMine;
                 });
-                
+
                 const optionClubs = dataClubs?.map(item => ({
                     value: (item.value ? item.value : item.id),
-                    label:  (item.label ? item.label : item.nom) + (item?.abbr ?  "(" + item?.abbr + ")" : '') ,
+                    label: (item.label ? item.label : item.nom) + (item?.abbr ? "(" + item?.abbr + ")" : ''),
                     name: "club_id",
                 }))
 
@@ -72,7 +73,10 @@ export function Buts(props) {
             }
         };
         fetchData();
+
+
     }, [club_1_update, club_2_update]);
+
 
     //--------Sélection joueur
 
@@ -109,9 +113,9 @@ export function Buts(props) {
         setButUpdate(newButs);
 
         setIsLoadingJ(false);
+        setIsValide(false);
     };
 
-    console.log('clubs',state.clubs)
 
     const handleChangeSelectJ = (event, index) => {
         let valeur = event
@@ -125,65 +129,8 @@ export function Buts(props) {
         const newBut = [...butUpdate];
         newBut[index][name] = value;
         setButUpdate(newBut);
+        setIsValide(false);
     }
-
-
-    //-----Sélection licence de joueur entrant
-
-    const createOptionLicence = (label) => ({
-        label: label.toUpperCase(),
-        value: label.toLowerCase(),
-        name: "joueur_numero_licence"
-    });
-
-
-    const [isLoadingLicence, setIsLoadingLicence] = useState(false);
-    const [optionsLicence, setOptionsLicence] = useState();
-
-
-    const handleCreateLicence = (inputValue) => {
-        if (currentEditingIndex == null) return;
-
-        setIsLoadingLicence(true);
-
-        // Créer la nouvelle option
-        const newOption = createOptionLicence(inputValue);
-
-        // Vérifier si l'option existe déjà
-        const optionExists = state.licences.some(
-            option => option.value == newOption.value
-        );
-
-        if (!optionExists) {
-            // Mettre à jour uniquement si l'option n'existe pas déjà
-            setState(prevState => ({
-                ...prevState,
-                licences: [...prevState.licences, newOption]
-            }));
-        }
-
-        // Mettre à jour le but avec la nouvelle licence
-        const newButs = [...butUpdate];
-        newButs[currentEditingIndex].joueur_numero_licence = newOption.value;
-        setButUpdate(newButs);
-
-        setIsLoadingLicence(false);
-    };
-
-    const handleChangeSelectLicence = (event, index) => {
-        let valeur = event
-        if (valeur == null) {
-            valeur = {
-                value: "",
-                name: "joueur_numero_licence"
-            }
-        }
-        const { name, value } = valeur;
-        const newBut = [...butUpdate];
-        newBut[index][name] = value;
-        setButUpdate(newBut);
-    }
-
 
     const handleChangeSelect = (event, index) => {
 
@@ -192,6 +139,7 @@ export function Buts(props) {
         newBut[index][name] = value;
         newBut[index].matche_id = parseInt(id);
         setButUpdate(newBut);
+        setIsValide(false);
     }
 
     const handleChangeInput = (event, index) => {
@@ -199,20 +147,36 @@ export function Buts(props) {
         const newBut = [...butUpdate];
         newBut[index][name] = value;
         setButUpdate(newBut);
+        setIsValide(false);
     }
 
 
     const addRow = () => {
-        let numberOfAttributes;
-        butUpdate.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes <= 5 || numberOfAttributes == 9 || numberOfAttributes == null) {
+        
+        const requiredFields = ["club_id", "joueur_nom", "joueur_numero", "minute"];
+        let hasError = false;
+        for (let i = 0; i < butUpdate.length; i++) {
+            const but = butUpdate[i];
+            for (let field of requiredFields) {
+                if (
+                    but[field] === undefined ||
+                    but[field] === null ||
+                    but[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
+        }
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
+        } else {
             setError("")
             setButUpdate([...butUpdate, {},]);
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
+        
+        setIsValide(false);
     };
 
     const SuppRow = (index) => {
@@ -220,24 +184,36 @@ export function Buts(props) {
         const newBut = [...butUpdate];
         newBut.splice(index, 1);
         setButUpdate(newBut);
+        setIsValide(false);
     };
 
     const [isValide, setIsValide] = useState();
 
     const sendData = () => {
-        let numberOfAttributes;
-        butUpdate.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        console.log(numberOfAttributes);
-        if (numberOfAttributes <= 5 || numberOfAttributes == 8) {
-            setError("")
-            props.dataButs(butUpdate);
-            setIsValide(prev => !prev)
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
+        // Champs obligatoires pour chaque but
+        const requiredFields = ["club_id", "joueur_nom", "joueur_numero", "minute"];
+        let hasError = false;
+        for (let i = 0; i < butUpdate.length; i++) {
+            const but = butUpdate[i];
+            for (let field of requiredFields) {
+                if (
+                    but[field] === undefined ||
+                    but[field] === null ||
+                    but[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
         }
-
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
+        } else {
+            setError("");
+            props.dataButs(butUpdate);
+            setIsValide(prev => !prev);
+        }
     };
 
     const [currentEditingIndex, setCurrentEditingIndex] = useState(null);
@@ -294,7 +270,12 @@ export function Buts(props) {
                                             <div className="form-group col-md-4">
                                                 <label>الفريق</label>
                                                 <div className='my-2'>
-                                                    <CreatableSelect className='text-light' options={state.clubs} value={state?.clubs.find((s) => s.value == parseInt(item?.club_id))} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب" />
+                                                    <Select isClearable
+                                                        className='text-light'
+                                                        options={state.clubs}
+                                                        value={state?.clubs.find((s) => s.value == parseInt(item?.club_id))} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب"
+                                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-4">
@@ -316,7 +297,7 @@ export function Buts(props) {
                                             <div className="form-group col-md-2">
                                                 <label >رقم الاعب</label>
                                                 <div className='my-2'>
-                                                    <input type="text" name='joueur_numero' value={item?.joueur_numero} onChange={(event) => handleChangeInput(event, index)} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
+                                                    <input type="number" name='joueur_numero' value={item?.joueur_numero} onChange={(event) => handleChangeInput(event, index)} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-2">

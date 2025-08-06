@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Avert } from "./Avert";
 import { Changement } from "./Changement";
 import { Matche } from "./Matche"
@@ -7,7 +9,7 @@ import { Penalty } from "./Penalty";
 import { useNavigate } from "react-router-dom";
 import { axiosClinet } from "../../../Api/axios";
 import { AuthUser } from "../../../AuthContext";
-
+import '../../../style/toast-custom.css';
 
 function AddRapport() {
 
@@ -24,23 +26,45 @@ function AddRapport() {
     const handleSubmit = async(e) => {
         e.preventDefault()
         setLoading(true)
-            if (dataMatche) {
-                await axiosClinet.post('/matche', dataMatche).then(
-                    (response) => {
-                        const { status } = response;
-                        if (status === 201) {
-                            setLoading(false)
-                            club_1_Option('')
-                            club_2_Option('')
-                            navigate('/dashboard/addedRapport')
-                        }
+        if (!dataMatche) {
+            setLoading(false);
+            toast.error('يا هاد الحكم دير حفض للمعلومات أولاً', {
+                position: "top-left",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                type: "error",
+            });
+            return;
+        }
+        if (dataMatche) {
+            await axiosClinet.post('/matche', dataMatche).then(
+                (response) => {
+                    const { status } = response;
+                    if (status === 201) {
+                        setLoading(false)
+                        club_1_Option('')
+                        club_2_Option('')
+                        navigate('/dashboard/addedRapport')
                     }
-                ).catch((response) => {
-                    setLoading(false)
-                })
-            }else{
+                }
+            ).catch((response) => {
                 setLoading(false)
-            }
+                toast.error('حدث خطأ أثناء إضافة المباراة', {
+                    position: "top-left",
+                    autoClose: 4000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    type: "error",
+                });
+            })
+        }
             if (dataAvert) {
                 await axiosClinet.post('/avertissement', dataAvert).then(
                     (response) => {
@@ -114,6 +138,8 @@ function AddRapport() {
 
     return (
         <>
+            <ToastContainer />
+
             <div className="p-4 bg-dark">
                 <div class="card-header bg-secondary border border-light">
                     <p class=" mt-2 text-light text-center fs-3 fw-bold mb-1">إضافة تقرير</p>

@@ -1,7 +1,7 @@
-import { React, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import Select from 'react-select';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { axiosClinet } from '../../../Api/axios';
@@ -115,6 +115,7 @@ export function Changement(props) {
         const newChnageUpdate = [...changeUpdate];
         newChnageUpdate[index][name] = value;
         setChangeUpdate(newChnageUpdate);
+        setIsValide(false);
     }
 
     /////////--------Sélection du joueur sortant
@@ -149,6 +150,7 @@ export function Changement(props) {
         const newChange = [...changeUpdate];
         newChange[index][name] = value;
         setChangeUpdate(newChange)
+        setIsValide(false);
     }
 
     const handleChangeSelect = (event, index) => {
@@ -157,28 +159,51 @@ export function Changement(props) {
         newChange[index].matche_id = parseInt(id);
         newChange[index][name] = value;
         setChangeUpdate(newChange)
+        setIsValide(false);
     }
 
     const handleChangeInput = (event, index) => {
-
         const { name, value } = event.target;
         const newChange = [...changeUpdate];
         newChange[index][name] = value;
         setChangeUpdate(newChange);
+        setIsValide(false);
     }
 
 
     const addRow = () => {
-        let numberOfAttributes;
-        changeUpdate.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes == 7 || numberOfAttributes == 12 || numberOfAttributes == null) {
+        // Champs obligatoires pour chaque changement
+        const requiredFields = [
+            "club_id",
+            "joueur_nom_entr",
+            "joueur_nom_sort",
+            "joueur_num_entr",
+            "joueur_num_sort",
+            "minute",
+            "matche_id"
+        ];
+        let hasError = false;
+        for (let i = 0; i < changeUpdate.length; i++) {
+            const change = changeUpdate[i];
+            for (let field of requiredFields) {
+                if (
+                    change[field] === undefined ||
+                    change[field] === null ||
+                    change[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
+        }
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
+        } else {
             setChangeUpdate([...changeUpdate, {}])
             setError("")
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
+        setIsValide(false);
     };
 
     const SuppRow = (index) => {
@@ -192,18 +217,37 @@ export function Changement(props) {
 
     const sendData = () => {
 
-        let numberOfAttributes;
-        changeUpdate.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-
-        console.log(numberOfAttributes);
-        if (numberOfAttributes == 5 || numberOfAttributes == 7) {
-            setError("")
+        // Champs obligatoires pour chaque changement
+        const requiredFields = [
+            "club_id",
+            "joueur_nom_entr",
+            "joueur_nom_sort",
+            "joueur_num_entr",
+            "joueur_num_sort",
+            "minute",
+            "matche_id"
+        ];
+        let hasError = false;
+        for (let i = 0; i < changeUpdate.length; i++) {
+            const change = changeUpdate[i];
+            for (let field of requiredFields) {
+                if (
+                    change[field] === undefined ||
+                    change[field] === null ||
+                    change[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
+        }
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
+        } else {
+            setError("");
             props.dataChangement(changeUpdate);
             setIsValide(prev => !prev);
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
     };
 
@@ -241,6 +285,7 @@ export function Changement(props) {
         setChangeUpdate(newChangements);
 
         setIsLoadingEntree(false);
+        setIsValide(false);
     };
 
     // 3. Améliorez la fonction handleCreateSortie pour les joueurs sortants
@@ -270,6 +315,7 @@ export function Changement(props) {
         setChangeUpdate(newChangements);
 
         setIsLoadingSortie(false);
+        setIsValide(false);
     };
 
     // 1. Ajouter un état pour contrôler l'ouverture/fermeture
@@ -327,7 +373,7 @@ export function Changement(props) {
                                                         <div className="form-group col-md-3">
                                                             <label>الفريق</label>
                                                             <div className='my-2'>
-                                                                <CreatableSelect className='text-light' value={state?.clubs.find((c) => c.value == parseInt(item?.club_id))} options={state.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب" />
+                                                                <Select isClearable className='text-light' value={state?.clubs.find((c) => c.value == parseInt(item?.club_id))} options={state.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب" />
                                                             </div>
                                                         </div>
                                                         <div className="form-group col-md-3">
@@ -349,7 +395,7 @@ export function Changement(props) {
                                                         <div className="form-group col-md-3">
                                                             <label >رقم الاعب الداخل</label>
                                                             <div className='my-2'>
-                                                                <input type="text" name='joueur_num_entr' value={item?.joueur_num_entr} className="my-2 bg-white form-control border-light" onChange={(event) => handleChangeInput(event, index)} id="inputPassword4" />
+                                                                <input type="number" name='joueur_num_entr' value={item?.joueur_num_entr} className="my-2 bg-white form-control border-light" onChange={(event) => handleChangeInput(event, index)} id="inputPassword4" />
 
                                                             </div>
                                                         </div>
@@ -372,7 +418,7 @@ export function Changement(props) {
                                                         <div className="form-group col-md-3">
                                                             <label >رقم الاعب الخارج</label>
                                                             <div className='my-2'>
-                                                                <input type="text" name='joueur_num_sort' value={item?.joueur_num_sort} onChange={(event) => handleChangeInput(event, index)} className="my-2 bg-white form-control border-light" id="inputPassword4" />
+                                                                <input type="number" name='joueur_num_sort' value={item?.joueur_num_sort} onChange={(event) => handleChangeInput(event, index)} className="my-2 bg-white form-control border-light" id="inputPassword4" />
                                                             </div>
                                                         </div>
                                                         <div className="form-group col-md-2">

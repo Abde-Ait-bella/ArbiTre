@@ -37,7 +37,7 @@ export function Buts(props) {
                     name: "joueur_nom",
                 }))
 
-                
+
                 const hasClubs = !!club_1 || !!club_2;
                 const dataClubs = [club_1, club_2]
 
@@ -97,6 +97,7 @@ export function Buts(props) {
         setButs(newButs);
 
         setIsLoadingJ(false);
+        setIsValide(false);
     };
 
     const handleChangeSelectJ = (event, index) => {
@@ -118,6 +119,7 @@ export function Buts(props) {
             newBut[index][name] = value;
             setButs(newBut);
         }
+        setIsValide(false);
     }
 
 
@@ -128,6 +130,7 @@ export function Buts(props) {
         newBut[index][name] = value;
         newBut[index].matche_id = state.matchNamber;
         setButs(newBut);
+        setIsValide(false);
     }
 
 
@@ -136,20 +139,34 @@ export function Buts(props) {
         const newBut = [...buts];
         newBut[index][name] = value;
         setButs(newBut);
+        setIsValide(false);
     }
 
 
     const addRow = () => {
-        let numberOfAttributes;
-        buts.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes === 5 || numberOfAttributes == null) {
+        const requiredFields = ["club_id", "joueur_nom", "joueur_numero", "minute", "matche_id"];
+        let hasError = false;
+        for (let i = 0; i < buts.length; i++) {
+            const but = buts[i];
+            for (let field of requiredFields) {
+                if (
+                    but[field] === undefined ||
+                    but[field] === null ||
+                    but[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
+        }
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم");
+        } else {
             setError("")
             setButs([...buts, {},]);
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
+        setIsValide(false);
     };
 
     const SuppRow = (index) => {
@@ -157,21 +174,35 @@ export function Buts(props) {
         const newBut = [...buts];
         newBut.splice(index, 1);
         setButs(newBut);
+        setIsValide(false);
     };
 
     const [isValide, setIsValide] = useState();
 
     const sendData = () => {
-        let numberOfAttributes;
-        buts.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes === 5) {
-            setError("")
-            props.dataButs(buts);
-            setIsValide(prev => !prev)
+        // Champs obligatoires pour chaque but
+        const requiredFields = ["club_id", "joueur_nom", "joueur_numero", "minute", "matche_id"];
+        let hasError = false;
+        for (let i = 0; i < buts.length; i++) {
+            const but = buts[i];
+            for (let field of requiredFields) {
+                if (
+                    but[field] === undefined ||
+                    but[field] === null ||
+                    but[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
+        }
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم");
         } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
+            setError("");
+            props.dataButs(buts);
+            setIsValide(prev => !prev);
         }
     };
 
@@ -249,7 +280,7 @@ export function Buts(props) {
                                             <div className="form-group col-md-2">
                                                 <label >رقم الاعب</label>
                                                 <div className='my-2'>
-                                                    <input type="text" name='joueur_numero' onChange={(event) => handleChangeInput(event, index)} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
+                                                    <input type="number" name='joueur_numero' onChange={(event) => handleChangeInput(event, index)} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-2">

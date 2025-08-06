@@ -114,6 +114,7 @@ export function Avert(props) {
         setAvert(newAverts);
 
         setIsLoadingJ(false);
+        setIsValide(false);
     };
 
     const handleAvertSelectChangeJ = (event, index) => {
@@ -135,6 +136,7 @@ export function Avert(props) {
             newAverts[index][name] = value;
             setAvert(newAverts);
         }
+        setIsValide(false);
     }
 
     //-----select licence de joueur
@@ -167,6 +169,7 @@ export function Avert(props) {
         setAvert(newAverts);
 
         setIsLoadingLicence(false);
+        setIsValide(false);
     };
 
     const handleAvertSelectChangeLicence = (event, index) => {
@@ -186,17 +189,17 @@ export function Avert(props) {
             newAverts[index][name] = value;
             setAvert(newAverts);
         }
+        setIsValide(false);
     }
 
 
     const handleAvertSelectChange = (event, index) => {
-
         const { name, value } = event;
         const newAverts = [...avert];
         newAverts[index][name] = value;
         newAverts[index].matche_id = state.matchNamber;
         setAvert(newAverts);
-
+        setIsValide(false);
     }
 
     const handleAvertInputChange = (event, index) => {
@@ -214,20 +217,43 @@ export function Avert(props) {
         const newAverts = [...avert];
         newAverts[index][name] = value;
         setAvert(newAverts);
+        setIsValide(false);
     }
 
 
     const addRow = () => {
-        let numberOfAttributes;
-        avert.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes === 8 || numberOfAttributes == null) {
+        const requiredFields = [
+            "club_id",
+            "nom",
+            "joueur_numero",
+            "joueur_numero_licence",
+            "minute",
+            "matche_id",
+            "cause",
+            "type"
+        ];
+        let hasError = false;
+        for (let i = 0; i < avert.length; i++) {
+            const av = avert[i];
+            for (let field of requiredFields) {
+                if (
+                    av[field] === undefined ||
+                    av[field] === null ||
+                    av[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
+        }
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم");
+        } else {
             setAvert([...avert, {}])
             setError("")
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
+        setIsValide(false);
     };
 
     const SuppRow = (index) => {
@@ -235,21 +261,44 @@ export function Avert(props) {
         const newAverts = [...avert];
         newAverts.splice(index, 1);
         setAvert(newAverts);
+        setIsValide(false);
     };
 
     const [isValide, setIsValide] = useState();
 
     const sendData = () => {
-        let numberOfAttributes;
-        avert.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes === 8) {
-            setError("")
+        // Champs obligatoires pour chaque avertissement
+        const requiredFields = [
+            "club_id",
+            "nom",
+            "joueur_numero",
+            "joueur_numero_licence",
+            "minute",
+            "matche_id",
+            "type",
+            "cause"
+        ];
+        let hasError = false;
+        for (let i = 0; i < avert.length; i++) {
+            const av = avert[i];
+            for (let field of requiredFields) {
+                if (
+                    av[field] === undefined ||
+                    av[field] === null ||
+                    av[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
+        }
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم");
+        } else {
+            setError("");
             props.dataAvert(avert);
             setIsValide(prev => !prev);
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
     };
 
@@ -347,7 +396,7 @@ export function Avert(props) {
                                             <div className="form-group col-md-2">
                                                 <label >رقم الاعب</label>
                                                 <div className='my-2'>
-                                                    <input type="text" name='joueur_numero' className="my-2 bg-white form-control border-light" onChange={(event) => handleAvertInputChange(event, index)} id="inputPassword4" />
+                                                    <input type="number" name='joueur_numero' className="my-2 bg-white form-control border-light" onChange={(event) => handleAvertInputChange(event, index)} id="inputPassword4" />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">

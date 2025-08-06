@@ -47,9 +47,7 @@ export function Matche(props) {
     const { club_1_Option_update, club_2_Option_update } = AuthUser();
     const [error, setError] = useState("");
     // Ajout des états pour la création
-    const [isLoadingClub, setIsLoadingClub] = useState(false);
-    const [isLoadingStade, setIsLoadingStade] = useState(false);
-    const [isLoadingVille, setIsLoadingVille] = useState(false);
+    
     const [isLoadingDelegue, setIsLoadingDelegue] = useState(false);
     const [currentEditingField, setCurrentEditingField] = useState(null);
     // Fonction pour créer un club localement
@@ -449,7 +447,8 @@ export function Matche(props) {
             .then((res) => {
                 const matcheUser = res.data?.filter((c) => parseInt(c.user_id) == user?.id)
                 const dernierId = Math.max(...matcheUser.map(match => match.id), 0);
-                setMatcheUpdate({ ...matcheUser?.find((m) => m.id == parseInt(id)) });
+                const matche = { ...matcheUser?.find((m) => m.id == parseInt(id)) } 
+                setMatcheUpdate(matche);
 
                 setState(prevData => ({
                     ...prevData,
@@ -457,17 +456,35 @@ export function Matche(props) {
                     matches: matcheUser
                 }))
                 setLoading(false)
-            })
+                
+                const club_1 = state.clubs_1.find((c) => c.value == matche?.club_id_1);
+                const club_2 = state.clubs_2.find((c) => c.value == matche?.club_id_2);
+                club_1_Option_update(club_1);
+                club_2_Option_update(club_2);
+            })  
             .catch((error) => {
                 console.error("Une erreur s'est produite lors de la récupération des données de Matches : " + error);
             })
 
-        const club_1_update = state.clubs_1.find((c) => c.value == matcheUpdate?.club_id_1);
-        const club_2_update = state.clubs_2.find((c) => c.value == matcheUpdate?.club_id_2);
-        club_1_Option_update(club_1_update);
-        club_2_Option_update(club_2_update);
 
     }, [])
+
+    // Déclenche club_1_Option_update et club_2_Option_update dès que les données sont prêtes
+    useEffect(() => {
+        if (
+            state.clubs_1 &&
+            state.clubs_2 &&
+            matcheUpdate &&
+            typeof club_1_Option_update === 'function' &&
+            typeof club_2_Option_update === 'function'
+        ) {
+            const club_1 = state.clubs_1.find((c) => c.value == matcheUpdate?.club_id_1);
+            const club_2 = state.clubs_2.find((c) => c.value == matcheUpdate?.club_id_2);
+            if (club_1) club_1_Option_update(club_1);
+            if (club_2) club_2_Option_update(club_2);
+        }
+    }, [state.clubs_1, state.clubs_2, matcheUpdate, club_1_Option_update, club_2_Option_update]);
+    
 
     const handleInputChange = (event) => {
 

@@ -116,6 +116,7 @@ export function Changement(props) {
 
         setChange(newChanges);
         setIsLoadingJEntr(false);
+        setIsValide(false);
     };
 
     const handleChangeSelectJEntr = (event, index) => {
@@ -136,6 +137,7 @@ export function Changement(props) {
             newChnage[index][name] = value
             setChange(newChnage)
         }
+        setIsValide(false);
     }
 
     //--------Sélection du joueur sortant
@@ -166,6 +168,7 @@ export function Changement(props) {
         setChange(newChanges);
 
         setIsLoadingJSort(false);
+        setIsValide(false);
     };
 
     const handleChangeSelectJSort = (event, index) => {
@@ -188,6 +191,7 @@ export function Changement(props) {
             setChange(newChange)
         }
         setValueJSort(event)
+        setIsValide(false);
     }
 
     const handleChangeSelect = (event, index) => {
@@ -197,6 +201,7 @@ export function Changement(props) {
         newChange[index][name] = value;
         newChange[index].matche_id = state.matchNamber;
         setChange(newChange)
+        setIsValide(false);
 
     }
 
@@ -205,15 +210,41 @@ export function Changement(props) {
         const newChange = [...change];
         newChange[index][name] = value;
         setChange(newChange);
+        setIsValide(false);
     }
 
     const addRow = () => {
-        // Si c'est le premier élément vide ou si tous les champs nécessaires sont remplis
-        if (change.length === 1 && Object.keys(change[0]).length === 0 || change.every(item => Object.keys(item).length === 7)) {
+        // Champs obligatoires pour chaque changement
+        const requiredFields = [
+            "club_id",
+            "joueur_nom_entr",
+            "joueur_nom_sort",
+            "joueur_num_entr",
+            "joueur_num_sort",
+            "minute",
+            "matche_id"
+        ];
+        let hasError = false;
+        for (let i = 0; i < change.length; i++) {
+            const ch = change[i];
+            for (let field of requiredFields) {
+                if (
+                    ch[field] === undefined ||
+                    ch[field] === null ||
+                    ch[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
+        }
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم");
+        } else {
             setChange([...change, {}]);
             setError("");
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم");
+            setIsValide(false);
         }
     };
 
@@ -222,21 +253,43 @@ export function Changement(props) {
         const newChnage = [...change];
         newChnage.splice(index, 1);
         setChange(newChnage);
+        setIsValide(false);
     };
 
     const [isValide, setIsValide] = useState();
 
     const sendData = () => {
-        let numberOfAttributes;
-        change.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes === 7) {
-            setError("")
+        // Champs obligatoires pour chaque changement
+        const requiredFields = [
+            "club_id",
+            "joueur_nom_entr",
+            "joueur_nom_sort",
+            "joueur_num_entr",
+            "joueur_num_sort",
+            "minute",
+            "matche_id"
+        ];
+        let hasError = false;
+        for (let i = 0; i < change.length; i++) {
+            const ch = change[i];
+            for (let field of requiredFields) {
+                if (
+                    ch[field] === undefined ||
+                    ch[field] === null ||
+                    ch[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
+        }
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم");
+        } else {
+            setError("");
             props.dataChangement(change);
             setIsValide(prev => !prev);
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
     };
 
@@ -318,7 +371,7 @@ export function Changement(props) {
                                             <div className="form-group col-md-3">
                                                 <label >رقم الاعب الداخل</label>
                                                 <div className='my-2'>
-                                                    <input type="text" name='joueur_num_entr' onChange={(event) => handleChangeInput(event, index)} className="my-2 bg-white form-control border-light" id="inputPassword4" />
+                                                    <input type="number" name='joueur_num_entr' onChange={(event) => handleChangeInput(event, index)} className="my-2 bg-white form-control border-light" id="inputPassword4" />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-3">
@@ -340,7 +393,7 @@ export function Changement(props) {
                                             <div className="form-group col-md-3">
                                                 <label >رقم الاعب الخارج</label>
                                                 <div className='my-2'>
-                                                    <input type="text" name='joueur_num_sort' onChange={(event) => handleChangeInput(event, index)} className="my-2 bg-white form-control border-light" id="inputPassword4" />
+                                                    <input type="number" name='joueur_num_sort' onChange={(event) => handleChangeInput(event, index)} className="my-2 bg-white form-control border-light" id="inputPassword4" />
                                                 </div>
                                             </div>
                                             <div className="form-group col-md-2">
