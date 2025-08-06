@@ -318,31 +318,6 @@ input[type="number"].modern-input {
     -moz-appearance: textfield;
 }
 
-/* Effet spécial pour le numéro du joueur */
-input[name="joueur_numero"] {
-    background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05));
-    border: 2px solid rgba(231, 76, 60, 0.3);
-    color: #e74c3c;
-    font-weight: bold;
-    font-size: 1.2rem;
-    text-align: center;
-}
-
-input[name="joueur_numero"]:focus {
-    background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.08));
-    border-color: #e74c3c;
-    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25);
-    color: #fff;
-}
-
-/* Style pour champ invalide avec animation shake */
-input[name="joueur_numero"].is-invalid {
-    border-color: #dc3545 !important;
-    background: linear-gradient(135deg, rgba(220, 53, 69, 0.15), rgba(220, 53, 69, 0.08));
-    color: #dc3545;
-    animation: shake 0.4s ease-in-out, errorGlow 0.6s ease;
-}
-
 @keyframes errorGlow {
     0% {
         box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
@@ -377,17 +352,4 @@ input[type="number"].modern-input::placeholder {
     color: rgba(255, 255, 255, 0.6);
     text-align: center;
     font-weight: normal;
-}
-
-/* Message de validation réussite pour les nombres */
-input[name="joueur_numero"].is-valid {
-    border-color: #28a745 !important;
-    background: linear-gradient(135deg, rgba(40, 167, 69, 0.15), rgba(40, 167, 69, 0.08));
-    color: #28a745;
-}
-
-input[name="joueur_numero"].is-valid:focus {
-    color: #fff;
-    border-color: #28a745;
-    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
 }

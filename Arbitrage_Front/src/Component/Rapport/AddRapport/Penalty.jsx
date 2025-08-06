@@ -50,17 +50,16 @@ export function Penalty(props) {
         setPenaltyData_2([{},{},{},{},{}]);
     }, [club_1, club_2]);
 
-    
+    console.log('club_1', club_1)
+
     const [penaltyData_1, setPenaltyData_1] = useState([{},{},{},{},{}]);
     const [penaltyData_2, setPenaltyData_2] = useState([{},{},{},{},{}]);
     const [open, setOpen] = useState(false);
-
 
     const addPenalty = ()=>{
         setPenaltyData_1([...penaltyData_1, {}]);
         setPenaltyData_2([...penaltyData_2, {}]);
     }
-
     
     const Open = ()=>{
         setOpen(!open)
@@ -74,22 +73,20 @@ export function Penalty(props) {
 
         if (indexClub === 0 ) {
             const newPenalty = [...penaltyData_1];
-            newPenalty[indexPenalty].club_id = club_1;
+            newPenalty[indexPenalty].club_id = club_1.value;
             newPenalty[indexPenalty].result = event.target.value;
             newPenalty[indexPenalty].opportunity = indexPenalty+1;
             newPenalty[indexPenalty].matche_id = state.matchNamber;
             setPenaltyData_1(newPenalty);
         }else{
             const newPenalty = [...penaltyData_2];
-            newPenalty[indexPenalty].club_id = club_2;
+            newPenalty[indexPenalty].club_id = club_2.value;
             newPenalty[indexPenalty].result = event.target.value;
             newPenalty[indexPenalty].opportunity = indexPenalty+1;
             newPenalty[indexPenalty].matche_id = state.matchNamber;
             setPenaltyData_2(newPenalty);
         }
     }
-
-
 
     const SuppRow = () => {
         setError("")
@@ -217,7 +214,7 @@ export function Penalty(props) {
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
-                                                        <p className='fs-5'>{state.clubs.find((c) => c.id === club_1)?.nom ? state.clubs.find((c) => c.id === club_1)?.nom : "..."}</p>
+                                                        <p className='fs-5'>{club_1 ? club_1.label : '...'}</p>
                                                     </div>
                                                 </div>
                                                 {club_1 ? penaltyData_1.map((_, index) => (
@@ -246,7 +243,7 @@ export function Penalty(props) {
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
-                                                        <p className='fs-5'>{state.clubs.find((c) => c.id === club_2)?.nom ? state.clubs.find((c) => c.id === club_2)?.nom : "..."}</p>
+                                                        <p className='fs-5'>{club_2 ? club_2.label : '...'}</p>
                                                     </div>
                                                 </div>
                                                 {club_2 ? penaltyData_2.map((_, index) => (

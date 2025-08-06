@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\But;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Joueur;
 
 class ButsController extends Controller
 {
@@ -32,10 +33,23 @@ class ButsController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user()->id;
         $buts = $request->all();
 
         foreach ($buts as $but) {
             But::create($but);
+            // Ajout joueur si non existant (par nom, licence null)
+            if (isset($but['joueur_nom']) && is_string($but['joueur_nom'])) {
+                $joueur = Joueur::where('nom', $but['joueur_nom'])->first();
+                if (!$joueur) {
+                    $j = new Joueur();
+                    $j->nom = $but['joueur_nom'];
+                    $j->joueur_numero_licence = null;
+                    $j->joueur_numero = $but['joueur_numero'] ?? null;
+                    $j->user_id = $user;
+                    $j->save();
+                }
+            }
         }
 
         return [
@@ -49,6 +63,7 @@ class ButsController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = Auth::user()->id;
         $updatedButs = $request->all();
         $ids = collect($updatedButs)->pluck('id')->filter(); // Remove null values
 
@@ -68,6 +83,24 @@ class ButsController extends Controller
                 }
             } else {
                 But::create($updatedBut);
+            }
+
+            // Ajout joueur si non existant (par nom, licence null)
+            if (isset($updatedBut['joueur_nom']) && is_string($updatedBut['joueur_nom'])) {
+                $joueur = Joueur::where('nom', $updatedBut['joueur_nom'])->first();
+                if ($joueur) {
+                    $joueur->nom = $updatedBut['joueur_nom'];
+                    $joueur->joueur_numero_licence = null;
+                    $joueur->joueur_numero = $updatedBut['joueur_numero'] ?? $joueur->joueur_numero;
+                    $joueur->save();
+                } else {
+                    $j = new Joueur();
+                    $j->nom = $updatedBut['joueur_nom'];
+                    $j->joueur_numero_licence = null;
+                    $j->joueur_numero = $updatedBut['joueur_numero'] ?? null;
+                    $j->user_id = $user;
+                    $j->save();
+                }
             }
         }
 

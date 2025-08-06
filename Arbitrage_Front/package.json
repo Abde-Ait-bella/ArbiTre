@@ -37,6 +37,7 @@
     "react-select": "^5.7.4",
     "react-simple-typewriter": "^5.0.1",
     "react-to-print": "^2.14.15",
+    "react-toastify": "^11.0.5",
     "sass": "^1.66.1",
     "split-type": "^0.2.1",
     "styled-components": "^6.1.19",

@@ -1,6 +1,6 @@
-import { React, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
-import axios from 'axios';
+import Select from 'react-select';
 import { useParams } from 'react-router-dom';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -26,7 +26,7 @@ export function Avert(props) {
     const { id } = useParams();
 
 
-    useEffect(() => {
+    useEffect(() => {        
         const fetchData = async () => {
             try {
                 const [joueurResponse, clubResponse, avertResponse] = await Promise.all([
@@ -115,6 +115,7 @@ export function Avert(props) {
         setAvertUpdate(newAverts);
 
         setIsLoadingJ(false);
+        setIsValide(false);
     };
 
     const handleAvertSelectChangeJ = (event, index) => {
@@ -129,6 +130,7 @@ export function Avert(props) {
         const newAverts = [...avertUpdate];
         newAverts[index][name] = value;
         setAvertUpdate(newAverts);
+        setIsValide(false);
     }
 
     const createOptionLicence = (label) => ({
@@ -166,6 +168,7 @@ export function Avert(props) {
         setAvertUpdate(newAverts);
 
         setIsLoadingLicence(false);
+        setIsValide(false);
     };
 
     const handleAvertSelectChangeLicence = (event, index) => {
@@ -185,6 +188,7 @@ export function Avert(props) {
             newAverts[index][name] = value;
             setAvertUpdate(newAverts);
         }
+        setIsValide(false);
     }
 
 
@@ -195,6 +199,7 @@ export function Avert(props) {
         newAverts[index][name] = value;
         newAverts[index].matche_id = parseInt(id);
         setAvertUpdate(newAverts);
+        setIsValide(false);
     }
 
 
@@ -213,20 +218,54 @@ export function Avert(props) {
         const newAverts = [...avertUpdate];
         newAverts[index][name] = value;
         setAvertUpdate(newAverts);
+        setIsValide(false);
     }
 
     const addRow = () => {
-        let numberOfAttributes;
-        avertUpdate.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes <= 8 || numberOfAttributes == 12 || numberOfAttributes == null) {
+        // let numberOfAttributes;
+        // avertUpdate.forEach(obj => {
+        //     numberOfAttributes = Object.keys(obj).length;
+        // });
+        // if (numberOfAttributes <= 8 || numberOfAttributes == 12 || numberOfAttributes == null) {
+        //     setAvertUpdate([...avertUpdate, {}])
+        //     setError("")
+        // } else {
+        //     setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
+        // }
+
+            const requiredFields = [
+            "club_id",
+            "nom",
+            "joueur_numero",
+            "joueur_numero_licence",
+            "minute",
+            "matche_id",
+            "cause",
+            "type"
+        ];
+        let hasError = false;
+        for (let i = 0; i < avertUpdate.length; i++) {
+            const av = avertUpdate[i];
+            for (let field of requiredFields) {
+                if (
+                    av[field] === undefined ||
+                    av[field] === null ||
+                    av[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
+        }
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم");
+        } else {
             setAvertUpdate([...avertUpdate, {}])
             setError("")
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
 
+        setIsValide(false);
     };
 
     const SuppRow = (index) => {
@@ -234,21 +273,44 @@ export function Avert(props) {
         const newAverts = [...avertUpdate];
         newAverts.splice(index, 1);
         setAvertUpdate(newAverts);
+        setIsValide(false);
     };
 
     const [isValide, setIsValide] = useState();
 
     const sendData = () => {
-        let numberOfAttributes;
-        avertUpdate.forEach(obj => {
-            numberOfAttributes = Object.keys(obj).length;
-        });
-        if (numberOfAttributes <= 9 || numberOfAttributes <= 13) {
-            setError("")
+        // Champs obligatoires pour chaque avertissement
+        const requiredFields = [
+            "club_id",
+            "nom",
+            "joueur_numero",
+            "joueur_numero_licence",
+            "minute",
+            "matche_id",
+            "cause",
+            "type"
+        ];
+        let hasError = false;
+        for (let i = 0; i < avertUpdate.length; i++) {
+            const av = avertUpdate[i];
+            for (let field of requiredFields) {
+                if (
+                    av[field] === undefined ||
+                    av[field] === null ||
+                    av[field] === ""
+                ) {
+                    hasError = true;
+                    break;
+                }
+            }
+            if (hasError) break;
+        }
+        if (hasError) {
+            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم");
+        } else {
+            setError("");
             props.dataAvert(avertUpdate);
             setIsValide(prev => !prev);
-        } else {
-            setError("هناك خطأ ما ، يجب عليك ملأ جميع الخانات يا هاد الحكم")
         }
     };
 
@@ -313,7 +375,7 @@ export function Avert(props) {
                                                         <div className="form-group col-md-4">
                                                             <label>الفريق</label>
                                                             <div className="my-2">
-                                                                <CreatableSelect className='text-light' value={state?.clubs.find((s) => (s.value == parseInt(item?.club_id)))}
+                                                                <Select isClearable className='text-light' value={state?.clubs.find((s) => (s.value == parseInt(item?.club_id)))}
                                                                     options={state.clubs} onChange={(event) => handleAvertSelectChange(event, index)} placeholder="اكتب" />
                                                             </div>
                                                         </div>
@@ -369,7 +431,7 @@ export function Avert(props) {
                                                         <div className="form-group col-md-2">
                                                             <label >رقم الاعب</label>
                                                             <div className='my-2'>
-                                                                <input type="text" name='joueur_numero' value={item?.joueur_numero} className="my-2 bg-white form-control border-light" onChange={(event) => handleAvertInputChange(event, index)} id="inputPassword4" />
+                                                                <input type='number' name='joueur_numero' value={item?.joueur_numero} className="my-2 bg-white form-control border-light" onChange={(event) => handleAvertInputChange(event, index)} id="inputPassword4" />
                                                             </div>
                                                         </div>
                                                         <div className="form-group col-md-3">

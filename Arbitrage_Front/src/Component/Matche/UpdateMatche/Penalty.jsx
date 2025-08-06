@@ -44,8 +44,10 @@ export function Penalty(props) {
 
                 const dataPenalty_1 = penaltyRespose.data.filter((p) => parseInt(p.matche_id) == parseInt(id) && p.club_id == parseInt(curentMatche?.club_id_1));
                 const dataPenalty_2 = penaltyRespose.data.filter((p) => parseInt(p.matche_id) == parseInt(id) && p.club_id == parseInt(curentMatche?.club_id_2));
-                setPenaltyData_1(!club_1_update && !club_2_update && dataPenalty_1.length > 0 ? dataPenalty_1 : [{},{},{},{},{}])
-                setPenaltyData_2(!club_1_update && !club_2_update && dataPenalty_2.length > 0 ? dataPenalty_2 : [{},{},{},{},{}])
+                console.log('dataPenalty_1', !club_1_update && !club_2_update && dataPenalty_1.length > 0 ? dataPenalty_1 : [{},{},{},{},{}]);
+                
+                setPenaltyData_1(dataPenalty_1.length > 0 ? dataPenalty_1 : [{},{},{},{},{}])
+                setPenaltyData_2(dataPenalty_2.length > 0 ? dataPenalty_2 : [{},{},{},{},{}])
 
                 setOpen(dataPenalty_1.length > 0);
 
@@ -81,14 +83,14 @@ export function Penalty(props) {
 
         if (indexClub == 0 ) {
             const newPenalty = [...penaltyData_1];
-            newPenalty[indexPenalty].club_id = club_1_update ? club_1_update : parseInt(penaltyData_1[indexClub].club_id);
+            newPenalty[indexPenalty].club_id = club_1_update ? club_1_update.value : parseInt(penaltyData_1[indexClub].club_id);
             newPenalty[indexPenalty].result = parseInt(event.target.value);
             newPenalty[indexPenalty].opportunity = indexPenalty+1;
             newPenalty[indexPenalty].matche_id = parseInt(id);
             setPenaltyData_1(newPenalty);
         }else{
             const newPenalty = [...penaltyData_2];
-            newPenalty[indexPenalty].club_id = club_2_update ? club_2_update : parseInt(penaltyData_2[indexClub].club_id);
+            newPenalty[indexPenalty].club_id = club_2_update ? club_2_update.value : parseInt(penaltyData_2[indexClub].club_id);
             newPenalty[indexPenalty].result = parseInt(event.target.value);
             newPenalty[indexPenalty].opportunity = indexPenalty+1;
             newPenalty[indexPenalty].matche_id = parseInt(id);
@@ -217,7 +219,7 @@ export function Penalty(props) {
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
-                                                        <p className='fs-5'>{club_1_update ? state.clubs.find((c) => c.id == club_1_update)?.nom : state.clubs.find((c) => c.id == penaltyData_1[1]?.club_id)?.nom}{penaltyData_1[1]?.club_id ? "" : "..."}</p>
+                                                        <p className='fs-5'>{club_1_update ? club_1_update.label : "..."}</p>
                                                     </div>
                                                 </div>
                                                 {club_1_update || penaltyData_1[1]?.club_id ? penaltyData_1?.map((_, index) => (
@@ -248,7 +250,7 @@ export function Penalty(props) {
                                                 <div className="form-group col-md-3">
                                                     <label>فريق</label>
                                                     <div className='my-2'>
-                                                        <p className='fs-5'>{club_2_update ? state.clubs.find((c) => c.id == club_2_update)?.nom : state.clubs.find((c) => c.id == penaltyData_2[1]?.club_id)?.nom}{penaltyData_1[1]?.club_id ? "" : "..."}</p>
+                                                        <p className='fs-5'>{club_2_update ? club_2_update.label : "..."}</p>
                                                     </div>
                                                 </div>
                                                 {club_2_update || penaltyData_2[1]?.club_id ? penaltyData_2?.map((_, index) => (

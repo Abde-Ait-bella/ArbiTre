@@ -1,0 +1,11 @@
+
+@font-face {
+    font-family: Cairo;
+    src: url(../../../style/Fonts/Cairo-VariableFont_slntwght.ttf);
+}
+
+.Toastify__toast {
+  width: 27rem;
+  padding-right: 2rem;
+  font-family: Cairo;
+}

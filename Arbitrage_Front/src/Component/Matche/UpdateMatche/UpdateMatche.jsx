@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Avert } from "./Avert";
 import { Changement } from "./Changement";
 import { Matche } from "./Matche"
@@ -8,6 +10,7 @@ import { axiosClinet } from "../../../Api/axios";
 import "../../../style/Matche/updateMatche.scss"
 import { Penalty } from "./Penalty";
 import { AuthUser } from "../../../AuthContext";
+import '../../../style/toast-custom.css';
 
 
 function AddMatche() {
@@ -18,6 +21,19 @@ function AddMatche() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (!dataMatche) {
+            toast.error('يا هاد الحكم دير حفض للمعلومات أولاً', {
+                position: "top-left",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                type: "error",
+            });
+            return;
+        }
         if (dataMatche) {
             setLoading(true)
             await axiosClinet.put(`/matche/${id}`, dataMatche).then(
@@ -41,7 +57,7 @@ function AddMatche() {
                         const { data } = response;
                         if (data.status == true) {
                             setLoading(false)
-                            navigate('/updatedMatche')
+                            navigate('/dashboard/updatedMatche')
                         }
                     }
                     ).catch((response) => {
@@ -117,6 +133,8 @@ function AddMatche() {
     }
 
     return (
+        <>
+        <ToastContainer />
         <div className="p-4 bg-dark">
             <div class="card-header bg-secondary border border-light">
                 <p class=" mt-2 text-light text-center fs-3 fw-bold mb-1">تعديل التقرير</p>
@@ -142,6 +160,7 @@ function AddMatche() {
                 </form>
             </div>
         </div>
+        </>
     )
 }
 export default AddMatche;
