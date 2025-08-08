@@ -718,33 +718,33 @@ function DetailleRapport() {
                                   <tr className="text-center border-top-0">
                                     <td className="p-1">
                                       {penalty?.find(
-                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 1
+                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 1
                                       )?.result}
                                     </td>
                                     <td className="p-1">{penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 2
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 2
                                     ) ? penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 2
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 2
                                     )?.result : "-"}</td>
                                     <td className="p-1">
                                       {penalty?.find(
-                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 3
+                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 3
                                       ) ? penalty?.find(
-                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 3
+                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 3
                                       )?.result : "-"}
                                     </td>
                                     <td className="p-1">
                                       {penalty?.find(
-                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 4
+                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 4
                                       ) ? penalty?.find(
-                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 4
+                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 4
                                       ).result : "-"}
                                     </td>
                                     <td className="p-1">
                                       {penalty?.find(
-                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 5
+                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 5
                                       ) ? penalty?.find(
-                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 5
+                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 5
                                       ).result : "-"}
                                     </td>
                                     <td className="p-1" rowSpan={2}>
@@ -756,72 +756,72 @@ function DetailleRapport() {
                                   {/* {(But_1?.length == 0) & (RestBUT1 == 0) ? ( */}
                                   <tr className="text-center">
                                     <td className="p-1">{penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 6
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 6
                                     ) ? penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 6
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 6
                                     ).result : "-"}</td>
                                     <td className="p-1">{penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 7
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 7
                                     ) ? penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 7
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 7
                                     ).result : "-"}</td>
                                     <td className="p-1">{penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 8
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 8
                                     ) ? penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 8
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 8
                                     ).result : "-"}</td>
                                     <td className="p-1">{penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 9
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 9
                                     ) ? penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 9
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 9
                                     ).result : "-"}</td>
                                     <td className="p-1">{penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 10
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 10
                                     ) ? penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 10
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 10
                                     ).result : "-"}</td>
                                     <td className="p-1" rowSpan={2}>0
                                       {penalty?.filter(
-                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.result == 1
+                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.result == 1
                                       ).length}
                                     </td>
                                   </tr>
                                   {
                                     penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 11
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 11
                                     ) ?
                                       <tr className="text-center border-top-0">
                                         <td className="p-1">{penalty?.find(
-                                          (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 11
+                                          (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 11
                                         )?.result}
                                         </td>
                                         <td className="p-1">{
                                           penalty?.find(
-                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 12
+                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 12
                                           ) ? penalty?.find(
-                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 12
+                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 12
                                           )?.result : "-"
                                         }
                                         </td>
                                         <td className="p-1">
                                           {penalty?.find(
-                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 13
+                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 13
                                           ) ? penalty?.find(
-                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 13
+                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 13
                                           )?.result : "-"}
                                         </td>
                                         <td className="p-1">
                                           {penalty?.find(
-                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 14
+                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 14
                                           ) ? penalty?.find(
-                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 14
+                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 14
                                           )?.result : "-"}
                                         </td>
                                         <td className="p-1">
                                           {penalty?.find(
-                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 15
+                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 15
                                           ) ? penalty?.find(
-                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 15
+                                            (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 15
                                           )?.result : "-"}
                                         </td>
                                       </tr>
@@ -922,10 +922,12 @@ function DetailleRapport() {
                                 </thead>
                                 <tbody>
                                   <tr className="text-center">
+                                    {console.log("test", rapports)}
+                                    
                                     <td className="p-1">{penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 6
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 6
                                     ) ? penalty?.find(
-                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_1) && p.opportunity == 6
+                                      (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports?.club_id_1) && p.opportunity == 6
                                     ).result : "-"}</td>
                                     <td className="p-1">{penalty?.find(
                                       (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_2) && p.opportunity == 7
