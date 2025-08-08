@@ -499,8 +499,6 @@ export function Matche(props) {
     const handleSelectChange = (event) => {
         
         const { name, value } = event;    
-
-        console.log("name :", name, "value :", value);
         
         var ville = name == "ville_id" ? value : inputValue.ville_id
         

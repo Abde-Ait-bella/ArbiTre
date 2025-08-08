@@ -44,7 +44,6 @@ export function Penalty(props) {
 
                 const dataPenalty_1 = penaltyRespose.data.filter((p) => parseInt(p.matche_id) == parseInt(id) && p.club_id == parseInt(curentMatche?.club_id_1));
                 const dataPenalty_2 = penaltyRespose.data.filter((p) => parseInt(p.matche_id) == parseInt(id) && p.club_id == parseInt(curentMatche?.club_id_2));
-                console.log('dataPenalty_1', !club_1_update && !club_2_update && dataPenalty_1.length > 0 ? dataPenalty_1 : [{},{},{},{},{}]);
                 
                 setPenaltyData_1(dataPenalty_1.length > 0 ? dataPenalty_1 : [{},{},{},{},{}])
                 setPenaltyData_2(dataPenalty_2.length > 0 ? dataPenalty_2 : [{},{},{},{},{}])
@@ -77,10 +76,7 @@ export function Penalty(props) {
             setPenaltyData_1([{},{},{},{},{}]);
             setPenaltyData_2([{},{},{},{},{}]);
         }
-    }
-
-    console.log("penaltyData_1", penaltyData_1);
-    
+    }    
 
     const handleChange = (event, indexClub, indexPenalty) => {
 
