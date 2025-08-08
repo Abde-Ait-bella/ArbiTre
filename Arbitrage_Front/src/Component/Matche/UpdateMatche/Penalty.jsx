@@ -79,6 +79,9 @@ export function Penalty(props) {
         }
     }
 
+    console.log("penaltyData_1", penaltyData_1);
+    
+
     const handleChange = (event, indexClub, indexPenalty) => {
 
         if (indexClub == 0 ) {
