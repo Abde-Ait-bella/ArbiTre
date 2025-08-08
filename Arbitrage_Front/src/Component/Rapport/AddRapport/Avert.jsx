@@ -356,7 +356,6 @@ export function Avert(props) {
                                             <div className="form-group col-md-4">
                                                 <label>الفريق</label>
                                                 <div className="my-2">
-                                                    {console.log(state.clubs)}
                                                     <CreatableSelect className='text-light' options={state?.clubs} onChange={(event) => handleAvertSelectChange(event, index)} placeholder={`${state.clubs.length > 0 ? 'اكتب و اختر' : 'اختر الفرق أعلاه !!'}`} required />
                                                 </div>
                                             </div>

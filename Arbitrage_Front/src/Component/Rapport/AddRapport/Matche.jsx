@@ -544,10 +544,7 @@ export function Matche(props) {
         setInputValue(prevValues => ({
             ...prevValues,
             [currentEditingField]: inputValue // Envoyer le nom complet du club
-        }));
-
-        console.log("inputValue", inputValue);
-        
+        }));        
 
         setIsLoadingClub(false);
         setError("");
@@ -705,9 +702,6 @@ export function Matche(props) {
             [name]: newVille.value
         }));
 
-        console.log("inputValue", inputValue);
-        console.log("villes state:", state.centre_ville.find(v => v.value === inputValue.centre_ville));
-        console.log("villes state:", state.assistant_1_ville.find(v => v.value === inputValue.assistant_1_ville));
     };
 
     return (

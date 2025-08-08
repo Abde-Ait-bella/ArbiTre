@@ -883,9 +883,7 @@ function DetailleRapport() {
                                       }
                                     </th>
                                   </tr>
-                                  {console.log("pilanty", penalty?.find(
-                                        (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_2) && p.opportunity == 2))}
-                                    <tr className="text-center border-top-0">
+                                  <tr className="text-center border-top-0">
                                     <td className="p-1">
                                       {penalty?.find(
                                         (p) => p.matche_id == parseInt(id) && p.club_id == parseInt(rapports.club_id_2) && p.opportunity == 1

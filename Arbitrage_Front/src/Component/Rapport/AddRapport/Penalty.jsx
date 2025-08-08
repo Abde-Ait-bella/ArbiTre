@@ -50,8 +50,6 @@ export function Penalty(props) {
         setPenaltyData_2([{},{},{},{},{}]);
     }, [club_1, club_2]);
 
-    console.log('club_1', club_1)
-
     const [penaltyData_1, setPenaltyData_1] = useState([{},{},{},{},{}]);
     const [penaltyData_2, setPenaltyData_2] = useState([{},{},{},{},{}]);
     const [open, setOpen] = useState(false);
