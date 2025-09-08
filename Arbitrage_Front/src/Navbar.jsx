@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import SplitType from 'split-type'
 import gsap from 'gsap';
 import { AuthUser } from './AuthContext';
+import logo_red from "../public/img/png/logo_white.png"
+import Logo from './Component/Utils/Logo';
 
 function navbar() {
     const logoRef = useRef();
@@ -18,10 +20,7 @@ function navbar() {
        <div className='navbar-home' dir='rtl'>
             <div className='nav-left'>
                 <Link to='/dashboard/home' className="link-logo">
-                    <i class="fa-solid fa-flag-checkered ms-2 me-3 fs-2 mb-2 text-white"></i>
-                    <h1 dir='ltr' ref={logoRef} className="logo">
-                        <span>ArbiTre</span>
-                    </h1>
+                    <Logo variant="dark" size="medium" />
                 </Link>
                 <div className='skew'></div>
             </div>

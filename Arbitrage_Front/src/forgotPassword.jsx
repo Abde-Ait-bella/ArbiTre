@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { axiosClinet } from "./Api/axios";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import Logo from "./Component/Utils/Logo";
 
 function ForgotPassword() {
 
@@ -80,26 +81,26 @@ function ForgotPassword() {
                     <div className="container-fluid">
                         <div className="row h-100 align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
                             <div className="col-md-5">
-                                <div className="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
+                                <div className="p-4 mx-3 my-4 rounded bg-secondary p-sm-5">
                                     {responce && <div class="p-3 mb-4 bg-success text-white text-center rounded">{responce}</div>}
                                     {errorBack && <div dir="ltr" class="p-3 mb-4 bg-danger text-white text-center rounded">{errorBack}</div>}
-                                    <div className="d-flex align-items-center justify-content-center mb-2">
+                                    <div className="mb-4 d-flex align-items-center justify-content-center">
                                         <a href="/" className="">
-                                            <h3 className="text-primary"><i class="text-primary fa-solid fa-flag-checkered ms-2 "></i> ArbiTre</h3>
+                                            <Logo variant="red" size="large" className="text-primary" />
                                         </a>
                                     </div>
-                                    <div className="form-floating mb-3">
+                                    <div className="mb-3 form-floating">
                                         <input type="email" dir="ltr" name="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={handelCHange} />
                                         <label for="floatingInput">البريد الالكتروني</label>
                                     </div>
                                     {errors?.email && <p className="text-danger me-3">{errors?.email}</p>}
-                                    <button type="submit" className="btn btn-danger py-3 w-100 mb-4 fw-bold" onClick={handleSubmit}>إرســـــــــال
+                                    <button type="submit" className="py-3 mb-4 btn btn-danger w-100 fw-bold" onClick={handleSubmit}>إرســـــــــال
                                         {loading ? (
                                             <div className="spinner-border spinner-border-sm me-3 fs-2" role="status">
                                                 <span className="sr-only">Loading...</span>
                                             </div>) : ''}
                                     </button>
-                                    <p className="text-center mb-0 fw-bold" >العودة الى صفحة <a href="/login">تسجيل الدخول</a></p>
+                                    <p className="mb-0 text-center fw-bold" >العودة الى صفحة <a href="/login">تسجيل الدخول</a></p>
                                 </div>
                             </div>
                         </div>

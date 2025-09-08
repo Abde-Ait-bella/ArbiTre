@@ -19,11 +19,19 @@ function UserManagement() {
 
   const fetchUsers = async () => {
     try {
+      setLoading(true);
+      // Utiliser la route API correcte
       const response = await axiosClinet.get('/users');
-      setUsers(response.data.data);
-      setLoading(false);
+      if (response.data && response.data.status === 'success' && response.data.data) {
+        setUsers(response.data.data);
+      } else {
+        console.error('Format de réponse inattendu:', response.data);
+        setUsers([]);
+      }
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error('Erreur lors de la récupération des utilisateurs:', error);
+      setUsers([]);
+    } finally {
       setLoading(false);
     }
   };
@@ -52,7 +60,7 @@ function UserManagement() {
       fetchUsers();
       setEditingUser(null);
     } catch (error) {
-      console.error('Error updating user:', error);
+      console.error('Erreur lors de la mise à jour de l\'utilisateur:', error);
     }
   };
 
@@ -62,7 +70,7 @@ function UserManagement() {
         await axiosClinet.delete(`/users/${id}`);
         fetchUsers();
       } catch (error) {
-        console.error('Error deleting user:', error);
+        console.error('Erreur lors de la suppression de l\'utilisateur:', error);
       }
     }
   };
