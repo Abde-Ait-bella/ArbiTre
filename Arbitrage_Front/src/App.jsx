@@ -57,7 +57,7 @@ import UpdatedVille from './Component/Villes/UpdatedVille';
 import DeletedVille from './Component/Villes/DeletedVille';
 import "./style/App.scss";
 
-import  Settings  from './Component/Settings';
+import Settings from './Component/Settings';
 import { axiosClinet } from './Api/axios';
 
 import { AuthUser } from './AuthContext';
@@ -67,6 +67,7 @@ import SuperAdminDashboard from './Admin/SuperAdminDashboard';
 import UserManagement from './Admin/UserManagement';
 import GlobalStatistics from './Admin/GlobalStatistics';
 
+import Logo from './Component/Utils/Logo';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -85,7 +86,7 @@ function App() {
         navigate('/dashboard/home');
       }
       setLoading(false);
-      
+
       // Show development notice
       showDevelopmentNotice();
     } else {
@@ -97,7 +98,7 @@ function App() {
 
     setMobile(window.innerWidth <= 390);
   }, [user]);
-  
+
   // Function to show the development notice
   const showDevelopmentNotice = () => {
     // Check if we've shown this already in this session
@@ -122,7 +123,7 @@ function App() {
           popup: 'animate__animated animate__fadeOut'
         }
       });
-      
+
       // Mark as shown for this session
       sessionStorage.setItem('devNoticeShown', 'true');
     }
@@ -140,7 +141,7 @@ function App() {
   };
 
   const handleSidebarClose = (e) => {
-    
+
     if (window.innerWidth <= 768) {
       if (e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle fw-bold show" || e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle fw-bold" || e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle active Active fw-bold show" || e.nativeEvent.srcElement.attributes.class.value === "nav-link dropdown-toggle active Active fw-bold") {
         setIsSidebarOpen(true);
@@ -153,7 +154,7 @@ function App() {
   return (
 
     <>
-      <motion.div className='scroll' style={{ scaleX: scrollYProgress }} />  
+      <motion.div className='scroll' style={{ scaleX: scrollYProgress }} />
 
       <div class="position-relative p-0 container-fluid" ref={pageRef} id='myDIV' >
         {
@@ -170,19 +171,17 @@ function App() {
                 <nav className="bg-secondary navbar navbar-dark" >
                   <div className='mt-1 top-50 d-flex align-items-center justify-content-center me-0 w-100 navbar-brand brand start-0'>
                     <Link to='/dashboard/home' className="">
-                      <h3 className="logo">
-                        <i class="ms-2 me-3 fa-solid fa-flag-checkered"></i>
-                        ArbiTre</h3>
+                      <Logo variant="red" size="medium" />
                     </Link>
                   </div>
                   <div class="w-100">
                     <div class="position-relative me-3 mb-1">
-                      <img class="rounded-circle" src="img/arbitre.png" alt="" style={{ width: '35px', height: '35px' }} />
+                      <img class="rounded-circle" src="img/png/arbitre.png" alt="" style={{ width: '35px', height: '35px' }} />
                       <div class="bottom-0 position-absolute bg-success p-1 border border-2 border-white rounded-circle end-0"></div>
                     </div>
                     <div class="me-4">
                       <p class="d-flex justify-content-center mb-0 text-white text-center fs-4">{user?.name}</p>
-                      <span className="w-100 text-truncate text-wrap badge badge-primary" dir='ltr' style={{ width: '13rem'}}>{user?.email}</span>
+                      <span className="w-100 text-truncate text-wrap badge badge-primary" dir='ltr' style={{ width: '13rem' }}>{user?.email}</span>
                     </div>
                   </div>
                   <div class="w-100 navbar-nav nav-part-3">
@@ -191,7 +190,7 @@ function App() {
                         isActive ? "nav-item nav-link Active pe-3 fw-bold" : "nav-item nav-link pe-3 fw-bold"
                       }><i class="ms-3 fa-solid fa-house"></i>الصفحة الرئيسية</NavLink>
                     </div>
-                    
+
                     {/* Super Admin Menu - Only visible to super_admin role */}
                     {user?.role === 'super_admin' && (
                       <div class="me-2 mt-1 nav-item dropdown">
@@ -204,9 +203,9 @@ function App() {
                         </div>
                       </div>
                     )
-                    
+
                     }
-                    
+
                     <div className="me-2">
                       <NavLink to='matches' className={({ isActive }) =>
                         isActive ? "nav-item nav-link Active fw-bold" : "nav-item nav-link fw-bold"
@@ -256,7 +255,7 @@ function App() {
                   <div class="align-items-center me-auto navbar-nav">
                     <div class="ms-lg-5 nav-item dropdown">
                       <Link href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="ms-2 me-lg-2 rounded-circle" src="img/arbitre.png" alt="" style={{ width: '35px', height: '35px' }} />
+                        <img class="ms-2 me-lg-2 rounded-circle" src="img/png/arbitre.png" alt="" style={{ width: '35px', height: '35px' }} />
                         <span class="d-lg-inline-flex ms-2 me-2 fw-bold d-none">{user?.name}</span>
                       </Link>
                       <div class="bg-secondary m-0 me-4 me-lg-5 border-0 rounded-0 rounded-bottom w-20 select-menu dropdown-menu dropdown-menu-end">
@@ -356,10 +355,8 @@ function App() {
                           <br />
                         </div>
                         <div className="d-lg-block col-md-4 d-none">
-                          <Link to='/dashboard/home' className="mt-1 d-flex justify-content-center me-0 w-100 navbar-brand brand">
-                            <h3 className="mb-0 logo">
-                              <i class="ms-2 me-3 fa-solid fa-flag-checkered"></i>
-                              ArbiTre</h3>
+                          <Link to='/dashboard/home' className="pt-0 mt-1 d-flex justify-content-center me-0 w-100 navbar-brand brand">
+                            <Logo variant="white" size="small" />
                           </Link>
                         </div>
                       </div>

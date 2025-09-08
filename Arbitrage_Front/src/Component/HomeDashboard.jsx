@@ -6,13 +6,13 @@ import { Line } from 'react-chartjs-2';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { AuthUser } from "../AuthContext";
-import ImageYellow from "../../public/img/yellow-card.png";
-import ImageRed from "../../public/img/red-card.png";
-import ImageMatche from "../../public/img/matche.png";
-import ImageBalance from "../../public/img/balance.png";
-import Palestine from "../../public/img/palistaine.png";
-import imgPdf from "../../public/img/pngdow.png";
-import imgWord from "../../public/img/word.png";
+import ImageYellow from "../../public/img/png/yellow-card.png";
+import ImageRed from "../../public/img/png/red-card.png";
+import ImageMatche from "../../public/img/png/matche.png";
+import ImageBalance from "../../public/img/png/balance.png";
+import Palestine from "../../public/img/png/palistaine.png";
+import imgPdf from "../../public/img/png/pngdow.png";
+import imgWord from "../../public/img/png/word.png";
 
 import "../style/HomeDashboard.scss";
 

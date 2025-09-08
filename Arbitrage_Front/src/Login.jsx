@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { axiosClinet } from "./Api/axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthUser } from "./AuthContext";
+import Logo from "./Component/Utils/Logo";
 
 function Login() {
 
@@ -115,10 +116,10 @@ function Login() {
                                     <div className="col-md-5">
                                         <div className="p-4 mx-3 rounded bg-secondary p-sm-5">
                                             {errorBack && <div dir="rtl" class="p-3 mb-4 bg-danger text-white text-center rounded">{errorBack}</div>}
-                                            <div className="mb-3 d-flex align-items-center justify-content-between">
-                                                <p className="pt-2 fs-2 fw-bold">ت الدخول</p>
+                                            <div className="mb-5 d-flex align-items-center justify-content-between">
+                                                <span className="pt-2 fs-2 fw-bold">ت الدخول</span>
                                                 <Link to="/" className="logo">
-                                                    <h3 className="text-primary"><i class="text-primary fa-solid fa-flag-checkered ms-2 me-3"></i> ArbiTre</h3>
+                                                    <Logo variant="red" size="medium" className="text-primary" />
                                                 </Link>
                                             </div>
                                             <div className="mb-3 form-floating">

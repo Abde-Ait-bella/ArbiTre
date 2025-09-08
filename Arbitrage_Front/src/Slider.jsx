@@ -7,11 +7,11 @@ import { useInView } from 'react-intersection-observer';
 import { Typewriter } from 'react-simple-typewriter'
 import { Link } from 'react-router-dom';
 import { motion, useScroll } from "framer-motion"
-import dataImage from "../public/img/data.png"
-import saveImage from "../public/img/save.jpg"
-import analyseImage from "../public/img/analyse.jpg"
-import rapportImage from "../public/img/rapportpdf.jpg"
-import refreeImage from "../public/img/refree.jpg"
+import dataImage from "../public/img/png/data.png"
+import saveImage from "../public/img/jpg/save.jpg"
+import analyseImage from "../public/img/jpg/analyse.jpg"
+import rapportImage from "../public/img/jpg/rapportpdf.jpg"
+import refreeImage from "../public/img/jpg/refree.jpg"
 
 function Slider() {
   const videoRef = useRef(null);

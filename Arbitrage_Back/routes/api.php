@@ -17,7 +17,9 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaisonController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StadeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VilleController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -110,6 +112,13 @@ Route::post('/penalty' , [PenaltyController::class, 'store'])->middleware(['auth
 Route::put('/penalty/{id}', [PenaltyController::class, 'update'])->middleware(['auth.api']);
 Route::delete('/penalty/{id}' , [PenaltyController::class, 'destroy'])->middleware(['auth.api']);
 
+//Users - Routes CRUD complètes
+Route::get('/users', [UserController::class, 'index'])->middleware(['auth.api']);
+Route::post('/users', [UserController::class, 'store'])->middleware(['auth.api']);
+Route::get('/users/{id}', [UserController::class, 'show'])->middleware(['auth.api']);
+Route::put('/users/{id}', [UserController::class, 'update'])->middleware(['auth.api']);
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware(['auth.api']);
+
 //change_password
 Route::post('/change_password' , [SettingsController::class, 'updatePassword'])->middleware(['auth.api']);
 
@@ -124,13 +133,135 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('resetPassword', 'App\Http\Controllers\ChangePasswordController@passwordResetProcess');
 });
 
-Route::get('/users', function (Request $request) {
-    $users = \App\Models\User::all();
+// Dashboard Routes
+Route::prefix('dashboard')->middleware(['auth.api'])->group(function () {
+    // Statistiques générales
+    Route::get('/stats', [AdminController::class, 'getStats']);
+    Route::get('/overview', [AdminController::class, 'getOverview']);
+
+    // Routes pour le panneau d'administration
+    Route::prefix('admin')->group(function () {
+        // Statistiques pour SuperAdminDashboard
+        Route::get('/stats', [AdminController::class, 'getStats']);
+
+        // Statistiques détaillées pour GlobalStatistics
+        Route::prefix('statistics')->group(function () {
+            // Statistiques des matches par mois
+            Route::get('/matches', [AdminController::class, 'getMatchesByMonth']);
+            Route::get('/referees', [AdminController::class, 'getRefereeStats']);
+            Route::get('/categories', [AdminController::class, 'getCategoryStats']);
+            Route::get('/users-matches', [AdminController::class, 'getUserMatchesStats']);
+        });
+
+        // Comptes rapides pour SuperAdminDashboard
+        Route::get('/users/count', [AdminController::class, 'getUserCount']);
+        Route::get('/matche/count', [AdminController::class, 'getMatchCount']);
+        Route::get('/club/count', [AdminController::class, 'getClubCount']);
+        Route::get('/arbitre/count', [AdminController::class, 'getRefereeCount']);
+    });
+});
+
+// Routes pour récupérer les données avec pagination
+Route::get('/arbitres/paginated', function (Request $request) {
+    $perPage = $request->get('per_page', 15);
+    $arbitres = \App\Models\Arbitre::with('ville')->paginate($perPage);
     return response()->json([
         'status' => 'success',
-        'data' => $users,
-    ]); 
-})->middleware('auth:api');
+        'data' => $arbitres,
+    ]);
+})->middleware(['auth.api']);
+
+Route::get('/clubs/paginated', function (Request $request) {
+    $perPage = $request->get('per_page', 15);
+    $clubs = \App\Models\Club::with('stade', 'stade.ville')->paginate($perPage);
+    return response()->json([
+        'status' => 'success',
+        'data' => $clubs,
+    ]);
+})->middleware(['auth.api']);
+
+Route::get('/matches/paginated', function (Request $request) {
+    $perPage = $request->get('per_page', 15);
+    $matches = \App\Models\Matche::with(['stade.ville', 'ville', 'delegue.ville', 'competition', 'saison'])
+        ->paginate($perPage);
+    return response()->json([
+        'status' => 'success',
+        'data' => $matches,
+    ]);
+})->middleware(['auth.api']);
+
+// Routes API supplémentaires pour le front Admin
+Route::prefix('admin')->middleware(['auth.api'])->group(function () {
+    Route::get('/users/active', function (Request $request) {
+        $users = \App\Models\User::where('status', 'accepted')->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $users,
+        ]);
+    });
+
+    Route::get('/users/inactive', function (Request $request) {
+        $users = \App\Models\User::where('status', '!=', 'active')->orWhereNull('status')->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $users,
+        ]);
+    });
+
+    Route::post('/users/{id}/activate', function (Request $request, $id) {
+        $user = \App\Models\User::find($id);
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Utilisateur non trouvé',
+            ], 404);
+        }
+        $user->status = 'active';
+        $user->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Utilisateur activé avec succès',
+            'data' => $user,
+        ]);
+    });
+
+    Route::post('/users/{id}/deactivate', function (Request $request, $id) {
+        $user = \App\Models\User::find($id);
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Utilisateur non trouvé',
+            ], 404);
+        }
+        $user->status = 'blocked';
+        $user->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Utilisateur désactivé avec succès',
+            'data' => $user,
+        ]);
+    });
+
+    Route::post('/users/{id}/role', function (Request $request, $id) {
+        $user = \App\Models\User::find($id);
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Utilisateur non trouvé',
+            ], 404);
+        }
+        $request->validate([
+            'role' => 'required|in:user,super_admin',
+        ]);
+        $user->role = $request->role;
+        $user->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Rôle utilisateur mis à jour avec succès',
+            'data' => $user,
+        ]);
+    });
+});
 
 Route::get('/rapport/{id}', [ReportController::class, 'generatePDF']);
 
