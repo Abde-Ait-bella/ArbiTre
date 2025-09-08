@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { axiosClinet } from "./Api/axios";
 import { AuthUser } from "./AuthContext";
+import Logo from "./Component/Utils/Logo";
 
 function Register() {
     const [values, setValues] = useState({
@@ -105,25 +106,25 @@ function Register() {
                 <div className="container-fluid">
                     <div className="row h-100 align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
                         <div className="col-md-5">
-                            <div className="bg-secondary rounded px-5 py-4 my-4 mx-3">
+                            <div className="px-5 py-4 mx-3 my-4 rounded bg-secondary">
                                 {errorBack && <div dir="rtl" class="p-3 mb-4 bg-danger text-white text-center rounded">{errorBack}</div>}
-                                <div className="d-flex align-items-center justify-content-between mb-3">
-                                    <p className="fs-3 pt-2 fw-bold">إنشاء حساب</p>
+                                <div className="mb-4 d-flex align-items-center justify-content-between">
+                                    <p className="pt-2 m-0 fs-3 fw-bold">إنشاء حساب</p>
                                         <Link to="/" className="">
-                                            <h3 className="text-primary"><i class="text-primary fa-solid fa-flag-checkered ms-2 me-3"></i> ArbiTre</h3>
+                                            <Logo variant="red" size="medium" className="text-primary" />
                                         </Link>
                                 </div>
-                                <div className="form-floating mb-3">
+                                <div className="mb-3 form-floating">
                                     <input type="text" className="form-control" id="floatingText" placeholder="jhondoe" name="name" onChange={handelCHange} />
                                     <label style={{right: "0"}} for="floatingText">الاسم الشخصي</label>
                                 </div>
                                 {errors?.name && <p className="text-danger me-3">{errors?.name}</p>}
-                                <div className="form-floating mb-3">
+                                <div className="mb-3 form-floating">
                                     <input type="email" className="form-control" dir="ltr" id="floatingInput" placeholder="name@example.com" name="email" onChange={handelCHange} />
                                     <label style={{right: "0"}}  for="floatingInput">البريد الالكتروني</label>
                                 </div>
                                 {errors?.email && <p className="text-danger me-3">{errors?.email}</p>}
-                                <div className="form-floating d-flex align-items-center justify-content-between mb-4">
+                                <div className="mb-3 form-floating d-flex align-items-center justify-content-between">
                                     <div className="form-floating col-11">
                                         <input type={inputType} name="password" dir="ltr" className="form-control" id="floatingPassword" placeholder="password" onChange={handelCHange} />
                                         <label style={{right: "0"}} for="floatingPassword">الرمز السري</label>
@@ -131,19 +132,19 @@ function Register() {
                                     <i className={`${iconType} me-2`} onClick={togglePassword} ></i>
                                 </div>
                                 {errors?.password && <p className="text-danger me-3">{errors?.password}</p>}
-                                <div className="form-floating d-flex align-items-center justify-content-between mb-4">
+                                <div className="mb-4 form-floating d-flex align-items-center justify-content-between">
                                     <div className="form-floating col-12">
                                         <input type={inputType} dir="ltr" name="password_confirmation" className="form-control" id="floatingPassword" placeholder="password" onChange={handelCHange} />
                                         <label style={{right: "0"}} for="floatingPassword">تأكيد الرمز السري </label>
                                     </div>
                                 </div>
-                                <button type="submit" className="btn btn-danger py-3 w-100 mb-4 fw-bold" onClick={handleSubmit}>إرســـــــــال
+                                <button type="submit" className="py-3 mb-4 btn btn-danger w-100 fw-bold" onClick={handleSubmit}>إرســـــــــال
                                     {loading ? (
                                         <div className="spinner-border spinner-border-sm me-3 fs-2" role="status">
                                             <span className="sr-only">Loading...</span>
                                         </div>) : ''}
                                 </button>
-                                <p className="text-center fw-bold mb-0"><a href="/login">العودة الى صفحة تسجيل الدخول</a></p>
+                                <p className="mb-0 text-center fw-bold"><a href="/login">العودة الى صفحة تسجيل الدخول</a></p>
                             </div>
                         </div>
                     </div>
