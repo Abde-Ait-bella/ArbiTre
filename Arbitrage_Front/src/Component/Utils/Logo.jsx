@@ -24,7 +24,7 @@ const Logo = ({ variant = 'white', size = 'medium', className = '', style = {} }
 
   // Convert size to actual CSS values
   const sizeMap = {
-    small: '30px',
+    small: '4rem',
     medium: '7rem',
     large: '9rem'
   };

@@ -355,7 +355,7 @@ function App() {
                           <br />
                         </div>
                         <div className="d-lg-block col-md-4 d-none">
-                          <Link to='/dashboard/home' className="pt-0 mt-1 d-flex justify-content-center me-0 w-100 navbar-brand brand">
+                          <Link to='/dashboard/home' className="pt-0 d-flex justify-content-center me-0 w-100 navbar-brand brand">
                             <Logo variant="white" size="small" />
                           </Link>
                         </div>
