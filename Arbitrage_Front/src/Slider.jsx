@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import "../src/style/Slider.scss"
 import SplitType from 'split-type'
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin(ScrollTrigger);
 import { useInView } from 'react-intersection-observer';
 import { Typewriter } from 'react-simple-typewriter'
 import { Link } from 'react-router-dom';
