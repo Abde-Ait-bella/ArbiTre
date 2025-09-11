@@ -168,10 +168,10 @@ function App() {
             <div>
               {/* <!-- Sidebar Start --> */}
               <div className={`sidebar ps-4 ${isSidebarOpen ? 'open' : ''}`} onClick={(e) => handleSidebarClose(e)}>
-                <nav className="bg-secondary navbar navbar-dark" >
-                  <div className='mt-1 top-50 d-flex align-items-center justify-content-center me-0 w-100 navbar-brand brand start-0'>
+                <nav className="mt-5 bg-secondary navbar navbar-dark" >
+                  <div className='mt-4 top-50 d-flex align-items-center justify-content-center me-0 w-100 navbar-brand brand start-0'>
                     <Link to='/dashboard/home' className="">
-                      <Logo variant="red" size="medium" />
+                      <Logo variant="white" size="medium" />
                     </Link>
                   </div>
                   <div class="w-100">
@@ -244,15 +244,15 @@ function App() {
                   <a class="d-lg-block flex-shrink-0 justify-cotent-center me-4 sidebar-toggler d-none" onClick={handleSidebarToggle}>
                     {isSidebarOpen ? <i class="d-flex align-items-center justify-content-center h-100 fa fa-bars"></i> : <i class="fa-right-long d-flex align-items-center justify-content-center h-100 fa-solid fs-4"></i>}
                   </a>
-                  <a class="d-block flex-shrink-0 justify-cotent-center me-4 sidebar-toggler d-lg-none" onClick={handleSidebarToggle}>
+                  <a class="d-block flex-shrink-0 justify-cotent-center sidebar-toggler d-lg-none w-2" onClick={handleSidebarToggle}>
                     {isSidebarOpen ? <i class="fa-right-long d-flex align-items-center justify-content-center h-100 fa-solid fs-4"></i> : <i class="d-flex align-items-center justify-content-center h-100 fa fa-bars"></i>}
                   </a>
 
-                  <Link to={'/dashboard/home'} class="d-flex navbar-brand d-lg-none">
-                    <h2 class="mb-0 text-primary"><i class="ms-2 me-3 fa-solid fa-flag-checkered"></i>ArbiTre</h2>
+                  <Link to={'/dashboard/home'} class="d-flex d-lg-none">
+                    <Logo size="medium" variant="red" />
                   </Link>
 
-                  <div class="align-items-center me-auto navbar-nav">
+                  <div class="align-items-center navbar-nav">
                     <div class="ms-lg-5 nav-item dropdown">
                       <Link href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="ms-2 me-lg-2 rounded-circle" src="img/png/arbitre.png" alt="" style={{ width: '35px', height: '35px' }} />
