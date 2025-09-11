@@ -5,6 +5,7 @@ import { AuthUser } from './AuthContext'
 import "./style/Navbar-Res.scss"
 import { motion, useScroll } from "framer-motion"
 import "./style/Slider.scss"
+import Logo from './Component/Utils/Logo'
 
 function Navbar() {
     const logoRef = useRef();
@@ -18,10 +19,7 @@ function Navbar() {
        <div className='navbarRes-home' dir='rtl'>
             <div className='nav-top'>
                 <Link to='/dashboard/home' className="link-logo">
-                    <i class="fa-solid fa-flag-checkered ms-2 fs-2 my-2 text-white"></i>
-                    <h1 dir='ltr' ref={logoRef} className="logo">
-                        <span>ArbiTre</span>
-                    </h1>
+                    <Logo size={"medium"} style={{width: "5rem"}} />
                 </Link>
             </div>
             <div className='nav-bottom'>
