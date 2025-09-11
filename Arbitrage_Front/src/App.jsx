@@ -239,7 +239,7 @@ function App() {
 
               <div className={`content bg-dark ${isSidebarOpen ? 'open' : ''}`} >
                 {/* <!-- Navbar Start --> */}
-                <nav class="navbar-top sticky-top justify-content-around bg-secondary px-4 py-0 navbar navbar-expand navbar-dark">
+                <nav class="navbar-top sticky-top justify-content-between bg-secondary px-4 py-0 navbar navbar-expand navbar-dark">
 
                   <a class="d-lg-block flex-shrink-0 justify-cotent-center me-4 sidebar-toggler d-none" onClick={handleSidebarToggle}>
                     {isSidebarOpen ? <i class="d-flex align-items-center justify-content-center h-100 fa fa-bars"></i> : <i class="fa-right-long d-flex align-items-center justify-content-center h-100 fa-solid fs-4"></i>}
