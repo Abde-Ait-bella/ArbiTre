@@ -241,16 +241,14 @@ function App() {
                 {/* <!-- Navbar Start --> */}
                 <nav class="navbar-top sticky-top justify-content-between bg-secondary px-4 py-0 navbar navbar-expand navbar-dark">
 
+
+
                   <a class="d-lg-block flex-shrink-0 justify-cotent-center me-4 sidebar-toggler d-none" onClick={handleSidebarToggle}>
                     {isSidebarOpen ? <i class="d-flex align-items-center justify-content-center h-100 fa fa-bars"></i> : <i class="fa-right-long d-flex align-items-center justify-content-center h-100 fa-solid fs-4"></i>}
                   </a>
                   <a class="d-block flex-shrink-0 justify-cotent-center sidebar-toggler d-lg-none w-2" onClick={handleSidebarToggle}>
                     {isSidebarOpen ? <i class="fa-right-long d-flex align-items-center justify-content-center h-100 fa-solid fs-4"></i> : <i class="d-flex align-items-center justify-content-center h-100 fa fa-bars"></i>}
                   </a>
-
-                  <Link to={'/dashboard/home'} class="d-flex d-lg-none">
-                    <Logo size="medium" variant="red" />
-                  </Link>
 
                   <div class="align-items-center navbar-nav">
                     <div class="ms-lg-5 nav-item dropdown">
@@ -264,6 +262,7 @@ function App() {
                       </div>
                     </div>
                   </div>
+
                   {/* <form class="d-md-flex me-5 d-none">
               <input class="bg-dark form-control border-0" type="search" placeholder="بحت" />
             </form> */}
@@ -347,18 +346,20 @@ function App() {
                   <div class="px-4 pt-4 container-fluid">
                     <div class="bg-secondary p-3 rounded-top">
                       <div class="d-flex align-items-center justify-content-around row">
-                        <div dir="ltr" class="text-center col-md-4">
-                          &copy; <a className='text-warning' href="#">Arbitrage</a>, All Right Reserved.
-                        </div>
-                        <div class="text-center col-md-4">
-                          Created By <a target="_blank" className='text-warning' href="https://aitbella.digital/">AbdeSsamad Ait-bella</a>
-                          <br />
-                        </div>
-                        <div className="d-lg-block col-md-4 d-none">
+
+                        <div className="col-md-4">
                           <Link to='/dashboard/home' className="pt-0 d-flex justify-content-center me-0 w-100 navbar-brand brand">
-                            <Logo variant="white" size="small" />
+                            <Logo variant="white" size={mobile ? "medium" : "small"} />
                           </Link>
                         </div>
+                          <div dir="ltr" class="text-center col-md-4">
+                            &copy; <a className='text-warning' href="#">Arbitrage</a>, All Right Reserved.
+                          </div>
+                          <div class="text-center col-md-4">
+                            Created By <a target="_blank" className='text-warning' href="https://aitbella.digital/">AbdeSsamad Ait-bella</a>
+                            <br />
+                          </div>
+
                       </div>
                     </div>
                   </div>
