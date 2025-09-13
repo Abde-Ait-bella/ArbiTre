@@ -239,9 +239,7 @@ function App() {
 
               <div className={`content bg-dark ${isSidebarOpen ? 'open' : ''}`} >
                 {/* <!-- Navbar Start --> */}
-                <nav class="navbar-top sticky-top justify-content-between bg-secondary px-4 py-0 navbar navbar-expand navbar-dark">
-
-
+                <nav class="navbar-top sticky-top justify-content-between bg-secondary px-4 py-0 navbar navbar-expand navbar-dark ">
 
                   <a class="d-lg-block flex-shrink-0 justify-cotent-center me-4 sidebar-toggler d-none" onClick={handleSidebarToggle}>
                     {isSidebarOpen ? <i class="d-flex align-items-center justify-content-center h-100 fa fa-bars"></i> : <i class="fa-right-long d-flex align-items-center justify-content-center h-100 fa-solid fs-4"></i>}
@@ -256,7 +254,7 @@ function App() {
                         <img class="ms-2 me-lg-2 rounded-circle" src="img/png/arbitre.png" alt="" style={{ width: '35px', height: '35px' }} />
                         <span class="d-lg-inline-flex ms-2 me-2 fw-bold d-none">{user?.name}</span>
                       </Link>
-                      <div class="bg-secondary m-0 me-4 me-lg-5 border-0 rounded-0 rounded-bottom w-20 select-menu dropdown-menu dropdown-menu-end">
+                      <div class="bg-secondary m-0 me-4 me-lg-5 border-0 rounded-0 rounded-bottom w-20 select-menu dropdown-menu dropdown-menu-end gap-3 d-flex flex-column pt-4 pb-4">
                         <Link to={"/dashboard/change_password"} class="d-flex justify-content-around dropdown-item"><span className='d-lg-block d-none'>الاعدادات</span> <i class={`fa-solid fa-gears ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
                         <Link class="d-flex justify-content-around dropdown-item" onClick={logout}><span className='d-lg-block d-none'>تسجيل الخروج</span> <i class={`fa-solid fa-right-from-bracket ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
                       </div>
