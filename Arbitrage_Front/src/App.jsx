@@ -169,7 +169,7 @@ function App() {
               {/* <!-- Sidebar Start --> */}
               <div className={`sidebar ps-4 ${isSidebarOpen ? 'open' : ''}`} onClick={(e) => handleSidebarClose(e)}>
                 <nav className="mt-5 bg-secondary navbar navbar-dark" >
-                  <div className='mt-4 top-50 d-flex align-items-center justify-content-center me-0 w-100 navbar-brand brand start-0'>
+                  <div className='mt-4 mt-lg-0 top-50 d-flex align-items-center justify-content-center me-0 w-100 navbar-brand brand start-0'>
                     <Link to='/dashboard/home' className="">
                       <Logo variant="white" size="medium" />
                     </Link>
