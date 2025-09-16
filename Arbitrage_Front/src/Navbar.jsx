@@ -20,7 +20,7 @@ function navbar() {
        <div className='navbar-home' dir='rtl'>
             <div className='nav-left'>
                 <Link to='/dashboard/home' className="link-logo">
-                    <Logo variant="dark" size="medium" />
+                    <Logo variant="white" size="medium" />
                 </Link>
                 <div className='skew'></div>
             </div>
@@ -28,7 +28,7 @@ function navbar() {
                 <div className='info-contact'>
                     <div>
                         <label htmlFor="">البريد الاكتروني</label>
-                        <p>abdessamadaitbella1998@gmail.com</p>
+                        <p>contact@arbitre.ma</p>
                     </div>
                     <div>
                     <label htmlFor="">الهاتف</label>

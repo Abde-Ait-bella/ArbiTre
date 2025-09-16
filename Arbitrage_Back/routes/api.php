@@ -151,6 +151,7 @@ Route::prefix('dashboard')->middleware(['auth.api'])->group(function () {
             Route::get('/referees', [AdminController::class, 'getRefereeStats']);
             Route::get('/categories', [AdminController::class, 'getCategoryStats']);
             Route::get('/users-matches', [AdminController::class, 'getUserMatchesStats']);
+            Route::get('/device-usage', 'App\Http\Controllers\Api\DeviceStatisticsController@getDeviceUsage');
         });
 
         // Comptes rapides pour SuperAdminDashboard
@@ -216,7 +217,7 @@ Route::prefix('admin')->middleware(['auth.api'])->group(function () {
                 'message' => 'Utilisateur non trouvé',
             ], 404);
         }
-        $user->status = 'active';
+        $user->status = 'accepted';
         $user->save();
         return response()->json([
             'status' => 'success',
@@ -233,7 +234,7 @@ Route::prefix('admin')->middleware(['auth.api'])->group(function () {
                 'message' => 'Utilisateur non trouvé',
             ], 404);
         }
-        $user->status = 'blocked';
+        $user->status = 'rejected';
         $user->save();
         return response()->json([
             'status' => 'success',
