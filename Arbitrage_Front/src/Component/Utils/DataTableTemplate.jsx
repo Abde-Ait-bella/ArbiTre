@@ -89,7 +89,7 @@ const DataTableTemplate = ({
                     </div>
                 )}
 
-                <div className="header-search">
+                <div className="">
                     <span className="p-input-icon-left">
                         <i className="pi pi-search" style={{ left: "20px" }} />
                         <InputText

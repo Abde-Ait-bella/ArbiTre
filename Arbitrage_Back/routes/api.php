@@ -193,75 +193,31 @@ Route::get('/matches/paginated', function (Request $request) {
 
 // Routes API supplémentaires pour le front Admin
 Route::prefix('admin')->middleware(['auth.api'])->group(function () {
-    Route::get('/users/active', function (Request $request) {
-        $users = \App\Models\User::where('status', 'accepted')->get();
-        return response()->json([
-            'status' => 'success',
-            'data' => $users,
-        ]);
-    });
+    // Récupérer les utilisateurs par statut (utilise le contrôleur)
+    Route::get('/users/active', [UserController::class, 'getActiveUsers']);
+    Route::get('/users/inactive', [UserController::class, 'getInactiveUsers']);
 
-    Route::get('/users/inactive', function (Request $request) {
-        $users = \App\Models\User::where('status', '!=', 'active')->orWhereNull('status')->get();
-        return response()->json([
-            'status' => 'success',
-            'data' => $users,
-        ]);
-    });
-
-    Route::post('/users/{id}/activate', function (Request $request, $id) {
-        $user = \App\Models\User::find($id);
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Utilisateur non trouvé',
-            ], 404);
-        }
-        $user->status = 'accepted';
-        $user->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Utilisateur activé avec succès',
-            'data' => $user,
-        ]);
-    });
-
-    Route::post('/users/{id}/deactivate', function (Request $request, $id) {
-        $user = \App\Models\User::find($id);
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Utilisateur non trouvé',
-            ], 404);
-        }
-        $user->status = 'rejected';
-        $user->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Utilisateur désactivé avec succès',
-            'data' => $user,
-        ]);
-    });
-
-    Route::post('/users/{id}/role', function (Request $request, $id) {
-        $user = \App\Models\User::find($id);
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Utilisateur non trouvé',
-            ], 404);
-        }
-        $request->validate([
-            'role' => 'required|in:user,super_admin',
-        ]);
-        $user->role = $request->role;
-        $user->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Rôle utilisateur mis à jour avec succès',
-            'data' => $user,
-        ]);
-    });
+    // Modifier le statut des utilisateurs (utilise le contrôleur)
+    Route::post('/users/{id}/activate', [UserController::class, 'activate']);
+    Route::post('/users/{id}/pending', [UserController::class, 'pending']);
+    Route::post('/users/{id}/reject', [UserController::class, 'reject']);
+    
+    // Anciennes routes (gardées pour rétrocompatibilité) 
+    // 'deactivate' est maintenant 'pending' (mise en attente)
+    Route::post('/users/{id}/deactivate', [UserController::class, 'pending']);
+    
+    // Bulk update route
+    Route::post('/users/bulk-status-update', [UserController::class, 'bulkUpdateStatus']);
+    
+    // Mise à jour du rôle utilisateur
+    Route::post('/users/{id}/role', [UserController::class, 'updateRole']);
+    
+    // Anciennes routes (gardées pour rétrocompatibilité) 
+    // 'deactivate' est maintenant 'pending' (mise en attente)
+    Route::post('/users/{id}/deactivate', [UserController::class, 'pending']);
+    
+    // Mise à jour du rôle utilisateur
+    Route::post('/users/{id}/role', [UserController::class, 'updateRole']);
 });
 
 Route::get('/rapport/{id}', [ReportController::class, 'generatePDF']);
