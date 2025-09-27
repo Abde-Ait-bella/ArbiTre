@@ -97,6 +97,27 @@ class AuthController extends Controller
             ]
         ]);
     }
+    
+    /**
+     * Récupérer le statut actuel de l'utilisateur authentifié
+     * Cette méthode permet au frontend de vérifier si le statut de l'utilisateur a changé
+     */
+    public function getUserStatus()
+    {
+        $user = Auth::user();
+        
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Utilisateur non authentifié',
+            ], 401);
+        }
+        
+        return response()->json([
+            'status' => 'success',
+            'user_status' => $user->status,
+        ]);
+    }
 
     /**
      * Enregistre les informations sur l'appareil de l'utilisateur

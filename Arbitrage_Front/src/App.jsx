@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Route, Link, NavLink, Routes, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'; // Add this import
+import { ToastProvider, showAccessDeniedToast } from './Component/Utils/ToastProvider';
 
 import Matches from './Component/Matche/MatchesListe';
 import UpdateMatche from './Component/Matche/UpdateMatche/UpdateMatche';
@@ -79,8 +80,44 @@ function App() {
 
   const { user, userDataLogout } = AuthUser();
 
+  // Fonction pour vérifier le statut de l'utilisateur
+  const verifyUserStatus = async () => {
+    try {
+      if (user && user.id) {
+        const response = await axiosClinet.get('/user/status');
+        if (response.data && response.data.user_status) {
+          // Si le statut renvoyé par l'API est différent de celui en local storage
+          if (user.status !== response.data.user_status) {
+            console.log("Statut mis à jour depuis le serveur:", response.data.user_status);
+            const updatedUser = JSON.parse(localStorage.getItem('user'));
+            updatedUser.status = response.data.user_status;
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            window.location.reload(); // Recharger pour appliquer le nouveau statut
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Erreur lors de la vérification du statut:", error);
+      // Les intercepteurs géreront les erreurs 401, 403, etc.
+    }
+  };
+  
   useEffect(() => {
     if (user) {
+      // Vérifier le statut utilisateur avec le serveur au chargement de l'application
+      verifyUserStatus();
+      
+      // Vérifier si l'utilisateur a le statut approprié
+      if (user.status !== 'accepted') {
+        // Afficher une notification d'accès refusé avec lien WhatsApp
+        showAccessDeniedToast(user.status);
+        
+        // Rediriger vers la page d'accueil avec le statut pour afficher le message d'accès refusé
+        localStorage.setItem('ACCESS_DENIED_STATUS', user.status);
+        navigate('/');
+        return;
+      }
+      
       // Check if the user is trying to access admin routes
       if (window.location.pathname.includes('/dashboard/admin') && user.role !== 'super_admin') {
         navigate('/dashboard/home');
@@ -153,7 +190,7 @@ function App() {
 
   return (
 
-    <>
+    <ToastProvider>
       <motion.div className='scroll' style={{ scaleX: scrollYProgress }} />
 
       <div class="position-relative p-0 container-fluid" ref={pageRef} id='myDIV' >
@@ -372,7 +409,7 @@ function App() {
         </div>
         {/* // Content End */}
       </div >
-    </>
+    </ToastProvider>
   );
 }
 
