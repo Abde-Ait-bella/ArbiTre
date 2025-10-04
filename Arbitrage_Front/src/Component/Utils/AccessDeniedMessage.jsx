@@ -41,7 +41,7 @@ const AccessDeniedMessage = ({ status = 'pending', onClose }) => {
       confirmButtonText: '<i class="fa-brands fa-whatsapp" style="margin-left: 8px;"></i> تواصل مع المشرف',
       cancelButtonText: 'العودة للصفحة الرئيسية',
       confirmButtonColor: '#25d366',
-      cancelButtonColor: '#3085d6',
+      cancelButtonColor: '#ffc107 ',
       allowOutsideClick: false,
       allowEscapeKey: false,
     }).then((result) => {
