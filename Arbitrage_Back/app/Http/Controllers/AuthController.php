@@ -9,12 +9,16 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use App\Services\AdminNotificationService;
 
 class AuthController extends Controller
 {
-    public function __construct()
+    protected $adminNotificationService;
+
+    public function __construct(AdminNotificationService $adminNotificationService)
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->adminNotificationService = $adminNotificationService;
     }
 
     public function login(Request $request)
@@ -59,9 +63,12 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'satus' => 1,
+            'status' => 'pending', // Définir le statut initial à 'pending'
             'password' => Hash::make($request->password),
         ]);
+
+        // Envoyer des notifications à l'administrateur
+        $this->adminNotificationService->notifyAdminOfNewUser($user);
 
         Auth::login($user);
         $token = Auth::tokenById($user->id);
@@ -95,6 +102,27 @@ class AuthController extends Controller
                 'token' => Auth::refresh(),
                 'type' => 'bearer',
             ]
+        ]);
+    }
+    
+    /**
+     * Récupérer le statut actuel de l'utilisateur authentifié
+     * Cette méthode permet au frontend de vérifier si le statut de l'utilisateur a changé
+     */
+    public function getUserStatus()
+    {
+        $user = Auth::user();
+        
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Utilisateur non authentifié',
+            ], 401);
+        }
+        
+        return response()->json([
+            'status' => 'success',
+            'user_status' => $user->status,
         ]);
     }
 

@@ -148,18 +148,18 @@ function SuperAdminDashboard() {
 
   return (
     <div className="px-4 pt-4 container-fluid">
-      <div className="row g-4">
-        <div className="col-sm-6 col-xl-3">
-          <div className="p-4 rounded bg-secondary d-flex align-items-center justify-content-between">
+      <div className="flex justify-content-center row g-4">
+        <div className="col-sm-6 col-xl-4">
+          <div className="p-4 rounded bg-secondary d-flex align-items-center justify-content-around">
             <i className="fa fa-users fa-3x text-primary"></i>
-            <div className="ms-3">
+            <div className="ms-2">
               <p className="mb-2">إجمالي المستخدمين</p>
               <h6 className="mb-0">{loading ? 'جار التحميل...' : stats.totalUsers}</h6>
             </div>
           </div>
         </div>
-        <div className="col-sm-6 col-xl-3">
-          <div className="p-4 rounded bg-secondary d-flex align-items-center justify-content-between">
+        <div className="col-sm-6 col-xl-4">
+          <div className="p-4 rounded bg-secondary d-flex align-items-center justify-content-around">
             <i className="fa fa-futbol fa-3x text-primary"></i>
             <div className="ms-3">
               <p className="mb-2">إجمالي المباريات</p>
@@ -167,8 +167,8 @@ function SuperAdminDashboard() {
             </div>
           </div>
         </div>
-        <div className="col-sm-6 col-xl-3">
-          <div className="p-4 rounded bg-secondary d-flex align-items-center justify-content-between">
+        <div className="col-sm-6 col-xl-4">
+          <div className="p-4 rounded bg-secondary d-flex align-items-center justify-content-around">
             <i className="fa fa-shield fa-3x text-primary"></i>
             <div className="ms-3">
               <p className="mb-2">إجمالي الأندية</p>
@@ -176,8 +176,8 @@ function SuperAdminDashboard() {
             </div>
           </div>
         </div>
-        <div className="col-sm-6 col-xl-3">
-          <div className="p-4 rounded bg-secondary d-flex align-items-center justify-content-between">
+        <div className="col-sm-6 col-xl-6">
+          <div className="p-4 rounded bg-secondary d-flex align-items-center justify-content-around">
             <i className="fa fa-book fa-3x text-primary"></i>
             <div className="ms-3">
               <p className="mb-2">إجمالي التقارير</p>

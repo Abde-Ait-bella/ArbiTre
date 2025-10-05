@@ -35,106 +35,108 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //->middleware('auth:sanctum')
-Route::get('/matche' , [matcheController::class, 'index'])->middleware(['auth.api']);
-Route::post('/matche' , [matcheController::class, 'store'])->middleware(['auth.api']);
-Route::put('/matche/{id}' , [matcheController::class, 'update'])->middleware(['auth.api']);
-Route::delete('/matche/{id}' , [matcheController::class, 'destroy'])->middleware(['auth.api']);
+Route::get('/matche' , [matcheController::class, 'index'])->middleware(['auth.api', 'checkStatus:accepted']);
+Route::post('/matche' , [matcheController::class, 'store'])->middleware(['auth.api', 'checkStatus:accepted']);
+Route::put('/matche/{id}' , [matcheController::class, 'update'])->middleware(['auth.api', 'checkStatus:accepted']);
+Route::delete('/matche/{id}' , [matcheController::class, 'destroy'])->middleware(['auth.api', 'checkStatus:accepted']);
     
 
-// Route::apiResource('avertissemet', AvertissementCotroller::class);
+// Group all protected routes with auth and status check
+Route::middleware(['auth.api', 'checkStatus:accepted'])->group(function () {
+    // Avertissement routes
+    Route::get('/avertissement', [AvertissementCotroller::class, 'index']);
+    Route::post('/avertissement', [AvertissementCotroller::class, 'store']);
+    Route::put('/avertissement/{id}', [AvertissementCotroller::class, 'update']);
+    Route::delete('/avertissement/{id}', [AvertissementCotroller::class, 'destroy']);
 
-Route::get('/avertissement' , [AvertissementCotroller::class, 'index'])->middleware(['auth.api']);
-Route::post('/avertissement' , [AvertissementCotroller::class, 'store'])->middleware(['auth.api']);
-Route::put('/avertissement/{id}' , [AvertissementCotroller::class, 'update'])->middleware(['auth.api']);
-Route::delete('/avertissement/{id}' , [AvertissementCotroller::class, 'destroy'])->middleware(['auth.api']);
+    // Changement routes
+    Route::get('/changement', [ChangementController::class, 'index']);
+    Route::post('/changement', [ChangementController::class, 'store']);
+    Route::put('/changement/{id}', [ChangementController::class, 'update']);
+    Route::delete('/changement/{id}', [ChangementController::class, 'destroy']);
 
-// Route::apiResource('changement', ChangementController::class);
+    // But routes
+    Route::get('/but', [ButsController::class, 'index']);
+    Route::post('/but', [ButsController::class, 'store']);
+    Route::put('/but/{id}', [ButsController::class, 'update']);
+    Route::delete('/but/{id}', [ButsController::class, 'destroy']);
 
-Route::get('/changement' , [ChangementController::class, 'index'])->middleware(['auth.api']);
-Route::post('/changement' , [ChangementController::class, 'store'])->middleware(['auth.api']);
-Route::put('/changement/{id}' , [ChangementController::class, 'update'])->middleware(['auth.api']);
-Route::delete('/changement/{id}' , [ChangementController::class, 'destroy'])->middleware(['auth.api']);
+    // Arbitre routes
+    Route::get('/arbitre', [ArbitreController::class, 'index']);
+    Route::post('/arbitre', [ArbitreController::class, 'store']);
+    Route::put('/arbitre/{id}', [ArbitreController::class, 'update']);
+    Route::delete('/arbitre/{id}', [ArbitreController::class, 'destroy']);
 
-Route::get('/but' , [ButsController::class, 'index'])->middleware(['auth.api']);
-Route::post('/but' , [ButsController::class, 'store'])->middleware(['auth.api']);
-Route::put('/but/{id}' , [ButsController::class, 'update'])->middleware(['auth.api']);
-Route::delete('/but/{id}' , [ButsController::class, 'destroy'])->middleware(['auth.api']);
+    // Delegue routes
+    Route::get('/delegue', [delegueController::class, 'index']);
+    Route::post('/delegue', [delegueController::class, 'store']);
+    Route::put('/delegue/{id}', [delegueController::class, 'update']);
+    Route::delete('/delegue/{id}', [delegueController::class, 'destroy']);
 
-//Arbitre
-Route::get('/arbitre' , [ArbitreController::class, 'index'])->middleware(['auth.api']);
-Route::post('/arbitre' , [ArbitreController::class, 'store'])->middleware(['auth.api']);
-Route::put('/arbitre/{id}' , [ArbitreController::class, 'update'])->middleware(['auth.api']);
-Route::delete('/arbitre/{id}' , [ArbitreController::class, 'destroy'])->middleware(['auth.api']);
+    // Club routes
+    Route::get('/club', [ClubController::class, 'index']);
+    Route::post('/club', [ClubController::class, 'store']);
+    Route::delete('/club/{id}', [ClubController::class, 'destroy']);
+    Route::put('/club/{id}', [ClubController::class, 'update']);
 
-//Delegue
-Route::get('/delegue' , [delegueController::class, 'index'])->middleware(['auth.api']);
-Route::post('/delegue' , [delegueController::class, 'store'])->middleware(['auth.api']);
-Route::put('/delegue/{id}' , [delegueController::class, 'update'])->middleware(['auth.api']);
-Route::delete('/delegue/{id}' , [delegueController::class, 'destroy'])->middleware(['auth.api']);
+    // Stade routes
+    Route::get('/stade', [StadeController::class, 'index']);
+    Route::post('/stade', [StadeController::class, 'store']);
+    Route::put('/stade/{id}', [StadeController::class, 'update']);
+    Route::delete('/stade/{id}', [StadeController::class, 'destroy']);
 
-//Club
-Route::get('/club' , [ClubController::class, 'index'])->middleware(['auth.api']);
-Route::post('/club' , [ClubController::class, 'store'])->middleware(['auth.api']);
-Route::delete('/club/{id}' , [ClubController::class, 'destroy'])->middleware(['auth.api']);
-Route::put('/club/{id}' , [ClubController::class, 'update'])->middleware(['auth.api']);
+    // Ville routes
+    Route::get('/ville', [VilleController::class, 'index']);
+    Route::post('/ville', [VilleController::class, 'store']);
+    Route::put('/ville/{id}', [VilleController::class, 'update']);
+    Route::delete('/ville/{id}', [VilleController::class, 'destroy']);
 
+    // Competition routes
+    Route::get('/competition', [CompetitionController::class, 'index']);
 
-//Stade
-Route::get('/stade' , [StadeController::class, 'index'])->middleware(['auth.api']);
-Route::post('/stade' , [StadeController::class, 'store'])->middleware(['auth.api']);
-Route::put('/stade/{id}', [StadeController::class, 'update'])->middleware(['auth.api']);
-Route::delete('/stade/{id}' , [StadeController::class, 'destroy'])->middleware(['auth.api']);
+    // Saison routes
+    Route::get('/saison', [SaisonController::class, 'index']);
 
-// villes
-Route::get('/ville' , [VilleController::class, 'index'])->middleware(['auth.api']);
-Route::post('/ville' , [VilleController::class, 'store'])->middleware(['auth.api']);
-Route::put('/ville/{id}', [VilleController::class, 'update'])->middleware(['auth.api']);
-Route::delete('/ville/{id}' , [VilleController::class, 'destroy'])->middleware(['auth.api']);
+    // Category routes
+    Route::get('/category', [CategoryController::class, 'index']);
 
-//competitions
-Route::get('/competition' , [CompetitionController::class, 'index'])->middleware(['auth.api']);
+    // Joueur routes
+    Route::get('/joueur', [JoueurController::class, 'index']);
+    Route::post('/joueur', [JoueurController::class, 'store']);
+    Route::put('/joueur/{id}', [JoueurController::class, 'update']);
+    Route::delete('/joueur/{id}', [JoueurController::class, 'destroy']);
 
-//saison
-Route::get('/saison' , [SaisonController::class, 'index'])->middleware(['auth.api']);
-
-//category
-Route::get('/category' , [CategoryController::class, 'index'])->middleware(['auth.api']);
-
-//joueur
-Route::get('/joueur' , [JoueurController::class, 'index'])->middleware(['auth.api']);
-Route::post('/joueur' , [JoueurController::class, 'store'])->middleware(['auth.api']);
-Route::put('/joueur/{id}', [JoueurController::class, 'update'])->middleware(['auth.api']);
-Route::delete('/joueur/{id}' , [JoueurController::class, 'destroy'])->middleware(['auth.api']);
-
-//penalty
-Route::get('/penalty' , [PenaltyController::class, 'index'])->middleware(['auth.api']);
-Route::post('/penalty' , [PenaltyController::class, 'store'])->middleware(['auth.api']);
-Route::put('/penalty/{id}', [PenaltyController::class, 'update'])->middleware(['auth.api']);
-Route::delete('/penalty/{id}' , [PenaltyController::class, 'destroy'])->middleware(['auth.api']);
+    // Penalty routes
+    Route::get('/penalty', [PenaltyController::class, 'index']);
+    Route::post('/penalty', [PenaltyController::class, 'store']);
+    Route::put('/penalty/{id}', [PenaltyController::class, 'update']);
+    Route::delete('/penalty/{id}', [PenaltyController::class, 'destroy']);
+});
 
 //Users - Routes CRUD complètes
-Route::get('/users', [UserController::class, 'index'])->middleware(['auth.api']);
-Route::post('/users', [UserController::class, 'store'])->middleware(['auth.api']);
-Route::get('/users/{id}', [UserController::class, 'show'])->middleware(['auth.api']);
-Route::put('/users/{id}', [UserController::class, 'update'])->middleware(['auth.api']);
-Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware(['auth.api']);
+Route::get('/users', [UserController::class, 'index'])->middleware(['auth.api', 'checkStatus:accepted']);
+Route::post('/users', [UserController::class, 'store'])->middleware(['auth.api', 'checkStatus:accepted']);
+Route::get('/users/{id}', [UserController::class, 'show'])->middleware(['auth.api', 'checkStatus:accepted']);
+Route::put('/users/{id}', [UserController::class, 'update'])->middleware(['auth.api', 'checkStatus:accepted']);
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware(['auth.api', 'checkStatus:accepted']);
 
 //change_password
-Route::post('/change_password' , [SettingsController::class, 'updatePassword'])->middleware(['auth.api']);
+Route::post('/change_password' , [SettingsController::class, 'updatePassword'])->middleware(['auth.api', 'checkStatus:accepted']);
 
 //change_name
-Route::post('/change_name' , [SettingsController::class, 'updateName'])->middleware(['auth.api']);
+Route::post('/change_name' , [SettingsController::class, 'updateName'])->middleware(['auth.api', 'checkStatus:accepted']);
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::post('register', 'register');
     Route::post('logout', 'logout');
+    Route::get('user/status', 'getUserStatus')->middleware('auth.api'); // Route pour vérifier le statut de l'utilisateur
     Route::post('sendPasswordResetLink', 'App\Http\Controllers\PasswordResetRequestController@sendEmail');
     Route::post('resetPassword', 'App\Http\Controllers\ChangePasswordController@passwordResetProcess');
 });
 
 // Dashboard Routes
-Route::prefix('dashboard')->middleware(['auth.api'])->group(function () {
+Route::prefix('dashboard')->middleware(['auth.api', 'checkStatus:accepted'])->group(function () {
     // Statistiques générales
     Route::get('/stats', [AdminController::class, 'getStats']);
     Route::get('/overview', [AdminController::class, 'getOverview']);
@@ -170,7 +172,7 @@ Route::get('/arbitres/paginated', function (Request $request) {
         'status' => 'success',
         'data' => $arbitres,
     ]);
-})->middleware(['auth.api']);
+})->middleware(['auth.api', 'checkStatus:accepted']);
 
 Route::get('/clubs/paginated', function (Request $request) {
     $perPage = $request->get('per_page', 15);
@@ -179,7 +181,7 @@ Route::get('/clubs/paginated', function (Request $request) {
         'status' => 'success',
         'data' => $clubs,
     ]);
-})->middleware(['auth.api']);
+})->middleware(['auth.api', 'checkStatus:accepted']);
 
 Route::get('/matches/paginated', function (Request $request) {
     $perPage = $request->get('per_page', 15);
@@ -189,82 +191,38 @@ Route::get('/matches/paginated', function (Request $request) {
         'status' => 'success',
         'data' => $matches,
     ]);
-})->middleware(['auth.api']);
+})->middleware(['auth.api', 'checkStatus:accepted']);
 
 // Routes API supplémentaires pour le front Admin
-Route::prefix('admin')->middleware(['auth.api'])->group(function () {
-    Route::get('/users/active', function (Request $request) {
-        $users = \App\Models\User::where('status', 'accepted')->get();
-        return response()->json([
-            'status' => 'success',
-            'data' => $users,
-        ]);
-    });
+Route::prefix('admin')->middleware(['auth.api', 'checkStatus:accepted'])->group(function () {
+    // Récupérer les utilisateurs par statut (utilise le contrôleur)
+    Route::get('/users/active', [UserController::class, 'getActiveUsers']);
+    Route::get('/users/inactive', [UserController::class, 'getInactiveUsers']);
 
-    Route::get('/users/inactive', function (Request $request) {
-        $users = \App\Models\User::where('status', '!=', 'active')->orWhereNull('status')->get();
-        return response()->json([
-            'status' => 'success',
-            'data' => $users,
-        ]);
-    });
-
-    Route::post('/users/{id}/activate', function (Request $request, $id) {
-        $user = \App\Models\User::find($id);
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Utilisateur non trouvé',
-            ], 404);
-        }
-        $user->status = 'accepted';
-        $user->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Utilisateur activé avec succès',
-            'data' => $user,
-        ]);
-    });
-
-    Route::post('/users/{id}/deactivate', function (Request $request, $id) {
-        $user = \App\Models\User::find($id);
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Utilisateur non trouvé',
-            ], 404);
-        }
-        $user->status = 'rejected';
-        $user->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Utilisateur désactivé avec succès',
-            'data' => $user,
-        ]);
-    });
-
-    Route::post('/users/{id}/role', function (Request $request, $id) {
-        $user = \App\Models\User::find($id);
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Utilisateur non trouvé',
-            ], 404);
-        }
-        $request->validate([
-            'role' => 'required|in:user,super_admin',
-        ]);
-        $user->role = $request->role;
-        $user->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Rôle utilisateur mis à jour avec succès',
-            'data' => $user,
-        ]);
-    });
+    // Modifier le statut des utilisateurs (utilise le contrôleur)
+    Route::post('/users/{id}/activate', [UserController::class, 'activate']);
+    Route::post('/users/{id}/pending', [UserController::class, 'pending']);
+    Route::post('/users/{id}/reject', [UserController::class, 'reject']);
+    
+    // Anciennes routes (gardées pour rétrocompatibilité) 
+    // 'deactivate' est maintenant 'pending' (mise en attente)
+    Route::post('/users/{id}/deactivate', [UserController::class, 'pending']);
+    
+    // Bulk update route
+    Route::post('/users/bulk-status-update', [UserController::class, 'bulkUpdateStatus']);
+    
+    // Mise à jour du rôle utilisateur
+    Route::post('/users/{id}/role', [UserController::class, 'updateRole']);
+    
+    // Anciennes routes (gardées pour rétrocompatibilité) 
+    // 'deactivate' est maintenant 'pending' (mise en attente)
+    Route::post('/users/{id}/deactivate', [UserController::class, 'pending']);
+    
+    // Mise à jour du rôle utilisateur
+    Route::post('/users/{id}/role', [UserController::class, 'updateRole']);
 });
 
-Route::get('/rapport/{id}', [ReportController::class, 'generatePDF']);
+Route::get('/rapport/{id}', [ReportController::class, 'generatePDF'])->middleware(['auth.api', 'checkStatus:accepted']);
 
 require __DIR__.'/auth.php';
 
