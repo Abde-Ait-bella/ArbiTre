@@ -41,6 +41,7 @@ Route::post('/matche' , [matcheController::class, 'store'])->middleware(['auth.a
 Route::put('/matche/{id}' , [matcheController::class, 'update'])->middleware(['auth.api', 'checkStatus:accepted']);
 Route::delete('/matche/{id}' , [matcheController::class, 'destroy'])->middleware(['auth.api', 'checkStatus:accepted']);
 
+
 // Group all protected routes with auth and status check
 Route::middleware(['auth.api', 'checkStatus:accepted'])->group(function () {
     // Avertissement routes
