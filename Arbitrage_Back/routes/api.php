@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 //->middleware('auth:sanctum')
 Route::get('/matche' , [matcheController::class, 'index'])->middleware(['auth.api', 'checkStatus:accepted']);
 Route::post('/matche' , [matcheController::class, 'store'])->middleware(['auth.api', 'checkStatus:accepted']);
