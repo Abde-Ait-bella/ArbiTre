@@ -4,11 +4,25 @@ import Navbar_Res from './Navbar_Res'
 import Slider from './Slider'
 import Swal from 'sweetalert2'
 import "./style/Home.scss"
+import AccessDeniedMessage from './Component/Utils/AccessDeniedMessage'
 
 export default function Home() {
+  const [showAccessDenied, setShowAccessDenied] = useState(false);
+  const [userStatus, setUserStatus] = useState('');
+
   useEffect(() => {
-    // Show development notice when component mounts
-    showDevelopmentNotice();
+    // Vérifier si l'utilisateur a été redirigé en raison d'un accès refusé
+    const accessDeniedStatus = localStorage.getItem('ACCESS_DENIED_STATUS');
+    
+    if (accessDeniedStatus) {
+      setUserStatus(accessDeniedStatus);
+      setShowAccessDenied(true);
+      // Nettoyer après avoir montré le message
+      localStorage.removeItem('ACCESS_DENIED_STATUS');
+    } else {
+      // Sinon, montrer le message de développement normal
+      showDevelopmentNotice();
+    }
   }, []);
 
   const showDevelopmentNotice = () => {
@@ -46,6 +60,14 @@ export default function Home() {
         window.innerWidth > 992 ? <Navbar /> : <Navbar_Res />
       }
       <Slider />
+      
+      {/* Afficher le message d'accès refusé si nécessaire */}
+      {showAccessDenied && (
+        <AccessDeniedMessage 
+          status={userStatus} 
+          onClose={() => setShowAccessDenied(false)}
+        />
+      )}
     </div>
   )
 }
