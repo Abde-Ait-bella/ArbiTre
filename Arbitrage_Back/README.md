@@ -1,11 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ArbiTre - Backend API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+ArbiTre est une application pour les arbitres qui facilite la gestion des rapports et la coordination des matches.
+
+## Configuration des notifications d'inscription
+
+Ce projet inclut un système de notification qui alerte l'administrateur lorsqu'un nouvel utilisateur s'inscrit. Les notifications sont envoyées par email et WhatsApp.
+
+### Configuration des emails
+
+1. Modifiez votre fichier `.env` et configurez les paramètres email :
+```
+MAIL_MAILER=smtp
+MAIL_HOST=your-smtp-server
+MAIL_PORT=587
+MAIL_USERNAME=your-email@example.com
+MAIL_PASSWORD=your-email-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=no-reply@arbitre.com
+MAIL_FROM_NAME=ArbiTre
+
+# Email de l'administrateur qui recevra les notifications
+ADMIN_EMAIL=your-admin-email@example.com
+```
+
+### Configuration WhatsApp (via CallMeBot)
+
+1. Pour recevoir des notifications WhatsApp, ajoutez votre numéro WhatsApp dans le fichier `.env` :
+```
+ADMIN_WHATSAPP_NUMBER=+212XXXXXXXXX
+```
+
+2. Pour obtenir votre API key CallMeBot:
+   - Suivez les instructions sur [ce lien](https://www.callmebot.com/blog/free-api-whatsapp-messages/)
+   - Envoyez un message WhatsApp à l'API: "I allow callmebot to send me messages" au numéro +34 644 15 32 47
+   - Attendez de recevoir votre API key par WhatsApp
+   - Ajoutez cette API key dans votre fichier `.env` :
+```
+CALLMEBOT_API_KEY=your-api-key-here
+```
+
+> Note : Par défaut, les messages WhatsApp sont uniquement enregistrés dans les logs. Pour activer l'envoi réel, décommentez le code approprié dans `WhatsAppService.php`.
 
 ## About Laravel
 

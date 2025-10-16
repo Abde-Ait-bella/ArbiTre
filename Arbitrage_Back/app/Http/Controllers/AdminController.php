@@ -131,7 +131,7 @@ class AdminController extends Controller
     {
         // Récupérer le nombre de matches par catégorie
         $categories = Category::select('categories.id', 'categories.nom', DB::raw('COUNT(matches.id) as match_count'))
-            ->leftJoin('matches', 'categories.id', '=', 'matches.category_id')
+            ->leftJoin('matches', 'categories.id', '=', 'matches.categorie_id')
             ->groupBy('categories.id', 'categories.nom')
             ->get();
         

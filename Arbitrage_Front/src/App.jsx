@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Route, Link, NavLink, Routes, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'; // Add this import
+import { ToastProvider, showAccessDeniedToast } from './Component/Utils/ToastProvider';
 
 import Matches from './Component/Matche/MatchesListe';
 import UpdateMatche from './Component/Matche/UpdateMatche/UpdateMatche';
@@ -79,8 +80,44 @@ function App() {
 
   const { user, userDataLogout } = AuthUser();
 
+  // Fonction pour vérifier le statut de l'utilisateur
+  const verifyUserStatus = async () => {
+    try {
+      if (user && user.id) {
+        const response = await axiosClinet.get('/user/status');
+        if (response.data && response.data.user_status) {
+          // Si le statut renvoyé par l'API est différent de celui en local storage
+          if (user.status !== response.data.user_status) {
+            console.log("Statut mis à jour depuis le serveur:", response.data.user_status);
+            const updatedUser = JSON.parse(localStorage.getItem('user'));
+            updatedUser.status = response.data.user_status;
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            window.location.reload(); // Recharger pour appliquer le nouveau statut
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Erreur lors de la vérification du statut:", error);
+      // Les intercepteurs géreront les erreurs 401, 403, etc.
+    }
+  };
+  
   useEffect(() => {
     if (user) {
+      // Vérifier le statut utilisateur avec le serveur au chargement de l'application
+      verifyUserStatus();
+      
+      // Vérifier si l'utilisateur a le statut approprié
+      if (user.status !== 'accepted') {
+        // Afficher une notification d'accès refusé avec lien WhatsApp
+        showAccessDeniedToast(user.status);
+        
+        // Rediriger vers la page d'accueil avec le statut pour afficher le message d'accès refusé
+        localStorage.setItem('ACCESS_DENIED_STATUS', user.status);
+        navigate('/');
+        return;
+      }
+      
       // Check if the user is trying to access admin routes
       if (window.location.pathname.includes('/dashboard/admin') && user.role !== 'super_admin') {
         navigate('/dashboard/home');
@@ -153,7 +190,7 @@ function App() {
 
   return (
 
-    <>
+    <ToastProvider>
       <motion.div className='scroll' style={{ scaleX: scrollYProgress }} />
 
       <div class="position-relative p-0 container-fluid" ref={pageRef} id='myDIV' >
@@ -169,7 +206,7 @@ function App() {
               {/* <!-- Sidebar Start --> */}
               <div className={`sidebar ps-4 ${isSidebarOpen ? 'open' : ''}`} onClick={(e) => handleSidebarClose(e)}>
                 <nav className="mt-5 bg-secondary navbar navbar-dark" >
-                  <div className='mt-4 top-50 d-flex align-items-center justify-content-center me-0 w-100 navbar-brand brand start-0'>
+                  <div className='mt-4 mt-lg-0 top-50 d-flex align-items-center justify-content-center me-0 w-100 navbar-brand brand start-0'>
                     <Link to='/dashboard/home' className="">
                       <Logo variant="white" size="medium" />
                     </Link>
@@ -239,9 +276,7 @@ function App() {
 
               <div className={`content bg-dark ${isSidebarOpen ? 'open' : ''}`} >
                 {/* <!-- Navbar Start --> */}
-                <nav class="navbar-top sticky-top justify-content-between bg-secondary px-4 py-0 navbar navbar-expand navbar-dark">
-
-
+                <nav class="navbar-top sticky-top justify-content-between bg-secondary px-4 py-0 navbar navbar-expand navbar-dark ">
 
                   <a class="d-lg-block flex-shrink-0 justify-cotent-center me-4 sidebar-toggler d-none" onClick={handleSidebarToggle}>
                     {isSidebarOpen ? <i class="d-flex align-items-center justify-content-center h-100 fa fa-bars"></i> : <i class="fa-right-long d-flex align-items-center justify-content-center h-100 fa-solid fs-4"></i>}
@@ -257,8 +292,8 @@ function App() {
                         <span class="d-lg-inline-flex ms-2 me-2 fw-bold d-none">{user?.name}</span>
                       </Link>
                       <div class="bg-secondary m-0 me-4 me-lg-5 border-0 rounded-0 rounded-bottom w-20 select-menu dropdown-menu dropdown-menu-end">
-                        <Link to={"/dashboard/change_password"} class="d-flex justify-content-around dropdown-item"><span className='d-lg-block d-none'>الاعدادات</span> <i class={`fa-solid fa-gears ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
-                        <Link class="d-flex justify-content-around dropdown-item" onClick={logout}><span className='d-lg-block d-none'>تسجيل الخروج</span> <i class={`fa-solid fa-right-from-bracket ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
+                        <Link to={"/dashboard/change_password"} class="d-flex justify-content-around dropdown-item mt-2 mb-2 pt-2 pb-2 "><span className='d-lg-block d-none'>الاعدادات</span> <i class={`fa-solid fa-gears ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
+                        <Link class="d-flex justify-content-around dropdown-item mt-2 mb-2 pt-2 pb-2  " onClick={logout}><span className='d-lg-block d-none'>تسجيل الخروج</span> <i class={`fa-solid fa-right-from-bracket ${mobile ? 'fs-1' : 'fs-5'}`}></i></Link>
                       </div>
                     </div>
                   </div>
@@ -374,7 +409,7 @@ function App() {
         </div>
         {/* // Content End */}
       </div >
-    </>
+    </ToastProvider>
   );
 }
 

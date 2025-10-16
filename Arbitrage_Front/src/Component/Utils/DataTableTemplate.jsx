@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
@@ -22,8 +22,32 @@ const DataTableTemplate = ({
     globalSearchFields,
     customFilters,
     emptyMessage,
-    onDelete
+    onDelete,
+    showAddButton = true,
+    selectionMode,
+    selection,
+    onSelectionChange
 }) => {
+    // Assurer que data est un tableau
+    const [processedData, setProcessedData] = useState([]);
+    
+    useEffect(() => {
+        if (data) {
+            if (Array.isArray(data)) {
+                setProcessedData(data);
+            } else if (data.data && Array.isArray(data.data)) {
+                // Si l'API retourne un objet avec une propriété data qui est un tableau
+                setProcessedData(data.data);
+            } else {
+                // Sinon, initialiser avec un tableau vide
+                console.error('Les données ne sont pas au format attendu:', data);
+                setProcessedData([]);
+            }
+        } else {
+            setProcessedData([]);
+        }
+    }, [data]);
+    
     // États pour le filtrage
     const [filters, setFilters] = useState(
         columns.reduce((acc, col) => {
@@ -52,18 +76,20 @@ const DataTableTemplate = ({
     const renderHeader = () => {
         return (
             <div className="header-container">
-                <div className="header-button">
-                    <Link to={addButtonPath} className="no-underline">
-                        <Button 
-                            icon="fa-solid fa-circle-plus ms-2" 
-                            label={addButtonLabel} 
-                            className="rounded btn-warning"
-                            style={{ direction: 'rtl' }}
-                        />
-                    </Link>
-                </div>
+                {showAddButton && addButtonPath && (
+                    <div className="header-button">
+                        <Link to={addButtonPath} className="no-underline">
+                            <Button 
+                                icon="fa-solid fa-circle-plus ms-2" 
+                                label={addButtonLabel} 
+                                className="rounded btn-warning"
+                                style={{ direction: 'rtl' }}
+                            />
+                        </Link>
+                    </div>
+                )}
 
-                <div className="header-search">
+                <div className="">
                     <span className="p-input-icon-left">
                         <i className="pi pi-search" style={{ left: "20px" }} />
                         <InputText
@@ -122,7 +148,7 @@ const DataTableTemplate = ({
     const paginatorRight = isMobile 
         ? null 
         : <div className="p-d-flex p-ai-center" style={{fontFamily: "Cairo"}}>
-              عرض <b>{data ? data.length : 0}</b> من السجلات
+              عرض <b>{processedData ? processedData.length : 0}</b> من السجلات
           </div>;
 
     // Rendu du composant DataTable
@@ -136,7 +162,7 @@ const DataTableTemplate = ({
                     </SkeletonTheme>
                 ) : (
                     <DataTable
-                        value={data}
+                        value={processedData}
                         dataKey="id"
                         paginator
                         rows={5}
@@ -157,6 +183,9 @@ const DataTableTemplate = ({
                         paginatorClassName="ltr-paginator"
                         locale="ar"
                         paginatorRowsPerPageTemplate={paginatorRowsPerPageTemplate}
+                        selectionMode={selectionMode}
+                        selection={selection}
+                        onSelectionChange={onSelectionChange}
                     >
                         {columns.map(col => (
                             <Column
