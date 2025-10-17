@@ -80,7 +80,6 @@ Route::middleware(['auth.api', 'checkStatus:accepted'])->group(function () {
     Route::delete('/club/{id}', [ClubController::class, 'destroy']);
     Route::put('/club/{id}', [ClubController::class, 'update']);
 
-    
     // Stade routes
     Route::get('/stade', [StadeController::class, 'index']);
     Route::post('/stade', [StadeController::class, 'store']);
