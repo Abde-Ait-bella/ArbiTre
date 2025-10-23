@@ -108,6 +108,7 @@ Route::middleware(['auth.api', 'checkStatus:accepted'])->group(function () {
     Route::delete('/joueur/{id}', [JoueurController::class, 'destroy']);
 
     // Penalty routes
+    
     Route::get('/penalty', [PenaltyController::class, 'index']);
     Route::post('/penalty', [PenaltyController::class, 'store']);
     Route::put('/penalty/{id}', [PenaltyController::class, 'update']);
