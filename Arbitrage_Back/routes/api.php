@@ -128,7 +128,6 @@ Route::post('/change_password' , [SettingsController::class, 'updatePassword'])-
 //change_name
 Route::post('/change_name' , [SettingsController::class, 'updateName'])->middleware(['auth.api', 'checkStatus:accepted']);
 
-
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::post('register', 'register');
