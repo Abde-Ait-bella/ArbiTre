@@ -121,6 +121,7 @@ Route::get('/users/{id}', [UserController::class, 'show'])->middleware(['auth.ap
 Route::put('/users/{id}', [UserController::class, 'update'])->middleware(['auth.api', 'checkStatus:accepted']);
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware(['auth.api', 'checkStatus:accepted']);
 
+
 //change_password
 Route::post('/change_password' , [SettingsController::class, 'updatePassword'])->middleware(['auth.api', 'checkStatus:accepted']);
 
