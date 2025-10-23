@@ -125,6 +125,7 @@ Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware(['a
 //change_password
 Route::post('/change_password' , [SettingsController::class, 'updatePassword'])->middleware(['auth.api', 'checkStatus:accepted']);
 
+
 //change_name
 Route::post('/change_name' , [SettingsController::class, 'updateName'])->middleware(['auth.api', 'checkStatus:accepted']);
 
