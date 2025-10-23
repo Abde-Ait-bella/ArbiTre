@@ -45,4 +45,4 @@ jobs:
           username: ${{ secrets.FTP_FRONT_USERNAME }}
           password: ${{ secrets.FTP_FRONT_PASSWORD }}
           local-dir: Arbitrage_Front/dist/
-          server-dir: ./
+          server-dir: /home/aitbrrgd/arbitre.ma/
