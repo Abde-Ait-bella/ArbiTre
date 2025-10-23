@@ -115,6 +115,7 @@ Route::middleware(['auth.api', 'checkStatus:accepted'])->group(function () {
 });
 
 
+
 //Users - Routes CRUD complètes
 Route::get('/users', [UserController::class, 'index'])->middleware(['auth.api', 'checkStatus:accepted']);
 Route::post('/users', [UserController::class, 'store'])->middleware(['auth.api', 'checkStatus:accepted']);
