@@ -47,3 +47,4 @@ jobs:
           local-dir: Arbitrage_Front/dist/
           server-dir: arbitre.ma/
           protocol: ftp
+          log-level: verbose
