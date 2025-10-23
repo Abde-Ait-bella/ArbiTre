@@ -114,6 +114,7 @@ Route::middleware(['auth.api', 'checkStatus:accepted'])->group(function () {
     Route::delete('/penalty/{id}', [PenaltyController::class, 'destroy']);
 });
 
+
 //Users - Routes CRUD complètes
 
 Route::get('/users', [UserController::class, 'index'])->middleware(['auth.api', 'checkStatus:accepted']);
