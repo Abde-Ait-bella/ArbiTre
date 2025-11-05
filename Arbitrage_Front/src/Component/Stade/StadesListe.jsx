@@ -29,7 +29,7 @@ function StadesListe() {
 
     // Préparer les données: combiner les stades par défaut et ceux de l'utilisateur
     const stadesDefault = allStades?.filter(s => s.user_id === null) || [];
-    const userStades = allStades?.filter(s => parseInt(s.user_id) === user?.id) || [];
+    const userStades = allStades?.filter(s => parseInt(s.user_id) == user?.id) || [];
     const stades = [...stadesDefault, ...userStades];
     
     // Template pour afficher le nom de la ville

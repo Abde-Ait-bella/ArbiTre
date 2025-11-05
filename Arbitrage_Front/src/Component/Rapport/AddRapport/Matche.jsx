@@ -44,7 +44,12 @@ export function Matche(props) {
     useEffect(() => {
         axiosClinet.get('/arbitre')
             .then((res) => {
-                const arbitreUser = res.data.filter(item => parseInt(item.user_id) === user?.id || item.user_id === null);
+                const arbitreUser = res.data.filter(item => parseInt(item.user_id) == user?.id 
+                || item.user_id == null
+            );
+
+                console.log("   ", arbitreUser);
+                
 
                 const transformedOption = arbitreUser.map(item => ({
                     value: item.id,
@@ -91,7 +96,7 @@ export function Matche(props) {
             })
         axiosClinet.get('/delegue')
             .then((res) => {
-                const delegueUser = res.data.filter(item => parseInt(item.user_id) === user?.id || item.user_id === null);
+                const delegueUser = res.data.filter(item => parseInt(item.user_id) == user?.id || item.user_id === null);
                 const optionDelegue = delegueUser.map(item => ({
                     value: item.id,
                     label: item.nom.toUpperCase() + " " + item.prenom.toUpperCase(),
@@ -105,7 +110,7 @@ export function Matche(props) {
             })
         axiosClinet.get('/club')
             .then((res) => {
-                const clubUser = res.data.filter(item => parseInt(item.user_id) === user?.id || item.user_id === null);
+                const clubUser = res.data.filter(item => parseInt(item.user_id) == user?.id || item.user_id === null);
                 const optionClubs = clubUser.map(item => ({
                     value: item.id,
                     label: "(" + item.nom + ")" + item.abbr.toUpperCase(),
@@ -133,7 +138,7 @@ export function Matche(props) {
             })
         axiosClinet.get('/stade')
             .then((res) => {
-                const dataStades = res.data.filter(item => parseInt(item.user_id) === user?.id || item.user_id === null)
+                const dataStades = res.data.filter(item => parseInt(item.user_id) == user?.id || item.user_id === null)
                 const optionStades = dataStades.map(item => ({
                     value: item.id,
                     label: item.nom,
@@ -147,7 +152,7 @@ export function Matche(props) {
             })
         axiosClinet.get('/ville')
             .then((res) => {
-                const dataVilles = res.data.filter(item => parseInt(item.user_id) === user?.id || item.user_id === null)
+                const dataVilles = res.data.filter(item => parseInt(item.user_id) == user?.id || item.user_id === null)
                 const optionVilles = dataVilles.map(item => ({
                     value: item.id,
                     label: item.nom,
@@ -229,7 +234,7 @@ export function Matche(props) {
             })
         axiosClinet.get('/joueur')
             .then((res) => {
-                const dataJoueurs = res.data.filter(item => parseInt(item.user_id) === user?.id)
+                const dataJoueurs = res.data.filter(item => parseInt(item.user_id) == user?.id)
                 const optionJoueurs = dataJoueurs?.map(item => ({
                     value: item.joueur_nom,
                     label: item.joueur_nom,

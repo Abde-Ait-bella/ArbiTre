@@ -30,7 +30,7 @@ function Matches() {
 
     // Filtrer les matches de l'utilisateur
     const filteredMatches = allMatches?.filter(
-        m => parseInt(m.user_id) === user?.id || m.user_id === null
+        m => parseInt(m.user_id) == user?.id || m.user_id === null
     ) || [];
     
     // Transformer les données pour le DataTable

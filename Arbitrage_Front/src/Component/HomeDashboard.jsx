@@ -52,7 +52,7 @@ function Home() {
 
         axiosClinet.get('/matche')
             .then((res) => {
-                const dataMatche = res.data.filter((m) => parseInt(m.user_id) === user?.id)
+                const dataMatche = res.data.filter((m) => parseInt(m.user_id) == user?.id)
 
                 const filterMatch_season = dataMatche?.filter(match => {
                     const matchDate = new Date(match.date);
@@ -103,7 +103,7 @@ function Home() {
 
         axiosClinet.get('/avertissement')
             .then((res) => {
-                setAvertData(res.data.filter((a) => parseInt(a.matche.user_id) === user?.id))
+                setAvertData(res.data.filter((a) => parseInt(a.matche.user_id) == user?.id))
             });
 
     }, [user, season])

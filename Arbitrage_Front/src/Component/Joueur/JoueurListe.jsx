@@ -15,7 +15,7 @@ function JoueurListe() {
     // Utiliser nos hooks personnalisés
     const { data: joueurs, loading } = useDataFetching(
         '/joueur', 
-        (data, user) => data.filter(j => parseInt(j.user_id) === user?.id)
+        (data, user) => data.filter(j => parseInt(j.user_id) == user?.id)
     );
     
     const { handleDelete, loadingDelete, itemIdToDelete } = useDeleteItem(

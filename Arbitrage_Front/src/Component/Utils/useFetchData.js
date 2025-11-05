@@ -16,7 +16,7 @@ export const useFetchData = (endpoint, dependencies = []) => {
         
         const response = await axiosClinet.get(endpoint);
         const filteredData = response.data.filter(
-          (item) => parseInt(item.user_id) === user?.id || item.user_id === null
+          (item) => parseInt(item.user_id) == user?.id || item.user_id === null
         );
         
         setData(filteredData);

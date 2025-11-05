@@ -26,7 +26,7 @@ function ArbitreListe() {
 
     // Préparer les données: combiner les arbitres par défaut et ceux de l'utilisateur
     const arbitreDefault = allArbitres?.filter(a => a.user_id === null) || [];
-    const userArbitres = allArbitres?.filter(a => parseInt(a.user_id) === user?.id) || [];
+    const userArbitres = allArbitres?.filter(a => parseInt(a.user_id) == user?.id) || [];
     const arbitres = [...arbitreDefault, ...userArbitres];
     
     // Template pour afficher la ville

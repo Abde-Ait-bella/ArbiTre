@@ -33,7 +33,7 @@ function Matches() {
 
     // Filtrer les matches de l'utilisateur
     const matches = allMatches?.filter(
-        m => parseInt(m.user_id) === user?.id
+        m => parseInt(m.user_id) == user?.id
     ) || [];
     
     // Template pour afficher la date formatée

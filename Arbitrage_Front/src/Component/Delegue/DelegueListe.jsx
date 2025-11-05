@@ -29,7 +29,7 @@ function DelegueListe() {
 
     // Préparer les données: combiner les délégués par défaut et ceux de l'utilisateur
     const deleguesDefault = allDelegues?.filter(d => d.user_id === null) || [];
-    const userDelegues = allDelegues?.filter(d => parseInt(d.user_id) === user?.id) || [];
+    const userDelegues = allDelegues?.filter(d => parseInt(d.user_id) == user?.id) || [];
     const delegues = [...deleguesDefault, ...userDelegues];
     
     // Template pour afficher le nom de la ville
