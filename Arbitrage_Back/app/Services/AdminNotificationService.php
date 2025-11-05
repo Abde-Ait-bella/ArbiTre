@@ -39,7 +39,9 @@ class AdminNotificationService
     protected function sendEmail(User $user)
     {
         try {
+
             Mail::to($this->adminEmail)->send(new NewUserRegistered($user));
+
             Log::info("Email de notification envoyé à l'administrateur pour l'utilisateur: " . $user->email);
             return true;
         } catch (\Exception $e) {

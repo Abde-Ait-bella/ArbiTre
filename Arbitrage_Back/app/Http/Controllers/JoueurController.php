@@ -19,9 +19,10 @@ class JoueurController extends Controller
     public function store(Request $request)
     {
         $Joueur = Joueur::create($request->all());
+        
         return [
             "status" => true,
-            "data" => $Joueur
+            "data" => $Joueur,
         ];
     }
 

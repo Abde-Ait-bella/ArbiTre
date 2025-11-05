@@ -1,4 +1,4 @@
-import { React, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement, Filler, ArcElement, RadialLinearScale } from 'chart.js';
 import { Bar, Pie, PolarArea } from "react-chartjs-2";
 import { axiosClinet } from "../Api/axios";

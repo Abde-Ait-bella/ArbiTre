@@ -1,9 +1,9 @@
-import { React, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { axiosClinet } from "./Api/axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthUser } from "./AuthContext";
 import Logo from "./Component/Utils/Logo";
-import { showErrorToast, showSuccessToast, showAccessDeniedToast } from "./Component/Utils/ToastProvider";
+import { showSuccessToast, showAccessDeniedToast } from "./Component/Utils/ToastProvider";
 
 // Styles CSS pour les champs en erreur
 const loginStyles = {
@@ -134,6 +134,8 @@ function Login() {
                 (response) => {
                     const { status, data } = response;
                     userDataLogin(data.user)
+                    console.log("status:", status);
+                    
                     if (status === 200) {
                         setLoadingLogin(false)
                         localStorage.setItem('token', data.authorisation.token)
@@ -159,10 +161,10 @@ function Login() {
                 // Gestion des erreurs d'authentification
                 if (response?.data?.message === "These credentials do not match our records.") {
                     setErrorBack("هذه المعلومات لا تتطابق مع سجلاتنا .");
-                    showErrorToast("الاسم أو كلمة المرور غير صحيحة، يرجى التحقق والمحاولة مرة أخرى.");
+                    // showErrorToast("الاسم أو كلمة المرور غير صحيحة، يرجى التحقق والمحاولة مرة أخرى.");
                 } else if (response?.data?.message === "Too many login attempts. Please try again in 12 seconds.") {
                     setErrorBack("هناك عدد كبير جدًا من محاولات تسجيل الدخول. يرجى المحاولة مرة أخرى خلال 12 ثانية.");
-                    showErrorToast("عدد كبير من محاولات تسجيل الدخول. يرجى الانتظار قليلاً قبل المحاولة مرة أخرى.");
+                    // showErrorToast("عدد كبير من محاولات تسجيل الدخول. يرجى الانتظار قليلاً قبل المحاولة مرة أخرى.");
                 } else if (response?.status === 403 && response?.data?.user_status) {
                     // Gestion des erreurs de statut utilisateur
                     showAccessDeniedToast(response.data.user_status);
@@ -172,7 +174,7 @@ function Login() {
                 } else if (response?.status === 401) {
                     // Erreur d'authentification
                     setErrorBack("جلسة العمل منتهية أو غير صالحة.");
-                    showErrorToast("جلسة العمل منتهية، يرجى تسجيل الدخول مرة أخرى.");
+                    // showErrorToast("جلسة العمل منتهية، يرجى تسجيل الدخول مرة أخرى.");
                 } else if (response?.status === 422) {
                     // Erreur de validation
                     const validationErrors = response.data.errors;
@@ -183,19 +185,19 @@ function Login() {
                     }
                     
                     setErrorBack(errorMessage);
-                    showErrorToast("هناك أخطاء في البيانات المدخلة.");
+                    // showErrorToast("هناك أخطاء في البيانات المدخلة.");
                 } else if (response?.status === 500) {
                     // Erreur serveur
                     setErrorBack("حدث خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً.");
-                    showErrorToast("خطأ في الخادم. يرجى المحاولة لاحقاً أو الاتصال بالدعم الفني.");
+                    // showErrorToast("خطأ في الخادم. يرجى المحاولة لاحقاً أو الاتصال بالدعم الفني.");
                 } else if (error.message === "Network Error") {
                     // Erreur de connexion réseau
                     setErrorBack("تعذر الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت الخاص بك.");
-                    showErrorToast("لا يمكن الاتصال بالخادم. تحقق من اتصال الإنترنت.");
+                    // showErrorToast("لا يمكن الاتصال بالخادم. تحقق من اتصال الإنترنت.");
                 } else {
                     // Autres erreurs
                     setErrorBack("حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.");
-                    showErrorToast("حدث خطأ أثناء محاولة تسجيل الدخول. يرجى المحاولة مرة أخرى.");
+                    // showErrorToast("حدث خطأ أثناء محاولة تسجيل الدخول. يرجى المحاولة مرة أخرى.");
                     
                     // Journalisation de l'erreur pour le débogage
                     console.error("Erreur de connexion:", error);
@@ -228,7 +230,7 @@ function Login() {
                                                     style={loginStyles.errorAlert}
                                                 >
                                                     <div className="d-flex align-items-center">
-                                                        <i className="fas fa-exclamation-triangle me-2"></i>
+                                                        <i className="fas fa-exclamation-triangle ms-2"></i>
                                                         <div className="text-right">{errorBack}</div>
                                                     </div>
                                                 </div>

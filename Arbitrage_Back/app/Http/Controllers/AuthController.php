@@ -67,6 +67,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+
         // Envoyer des notifications à l'administrateur
         $this->adminNotificationService->notifyAdminOfNewUser($user);
 

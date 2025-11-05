@@ -30,7 +30,7 @@ function UpdateArbitre() {
     // Options pour les types d'arbitres
     const typeOptions = [
         { value: 'center', label: 'حكم الساحة' },
-        { value: 'Assistant', label: 'الحكم المساعد' }
+        { value: 'assistant', label: 'الحكم المساعد' }
     ];
 
     useEffect(() => {
