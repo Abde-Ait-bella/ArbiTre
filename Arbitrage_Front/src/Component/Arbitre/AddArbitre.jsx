@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { axiosClinet } from "../../Api/axios";
 import { AuthUser } from "../../AuthContext";
@@ -29,7 +29,7 @@ function AddArbitre() {
     // Options pour les types d'arbitres
     const typeOptions = [
         { value: 'center', label: 'حكم الساحة' },
-        { value: 'Assistant', label: 'الحكم المساعد' }
+        { value: 'assistant', label: 'الحكم المساعد' }
     ];
 
     useEffect(() => {

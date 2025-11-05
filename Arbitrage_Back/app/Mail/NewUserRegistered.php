@@ -22,12 +22,12 @@ class NewUserRegistered extends Mailable
     {
         $this->user = $user;
     }
-
+    
     /**
      * Build the message.
-     *
-     * @return $this
-     */
+    *
+    * @return $this
+    */
     public function build()
     {
         return $this->subject('Nouvel utilisateur inscrit sur ArbiTre')

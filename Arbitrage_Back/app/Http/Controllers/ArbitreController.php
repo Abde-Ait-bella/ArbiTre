@@ -20,8 +20,9 @@ class ArbitreController extends Controller
         $request->validate([
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
-            'type' => 'required|in:centre,assistant',
-            'user_id' => 'required|integer'
+            'type' => 'required',
+            'user_id' => 'required|integer',
+            'ville_id' => 'required|integer'
         ]);
 
         // Vérifier si l'arbitre existe déjà
@@ -40,6 +41,7 @@ class ArbitreController extends Controller
             'nom' => strtoupper($request->nom),
             'prenom' => strtoupper($request->prenom),
             'type' => $request->type,
+            'ville_id' => $request->ville_id,
             'user_id' => $request->user_id
         ]);
 

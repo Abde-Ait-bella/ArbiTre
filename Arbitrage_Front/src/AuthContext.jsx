@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (user) {
             if (user.status === 'pending') {
-                showInfoToast("Votre compte est en attente de validation par un administrateur.");
+                // showInfoToast("Votre compte est en attente de validation par un administrateur.");
                 
                 // Rediriger vers la page d'accueil si l'utilisateur essaie d'accéder au tableau de bord
                 if (window.location.pathname.includes('/dashboard')) {
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
                     window.location.href = "/";
                 }
             } else if (user.status === 'rejected') {
-                showErrorToast("Votre compte a été rejeté. Veuillez contacter un administrateur.");
+                // showErrorToast("Votre compte a été rejeté. Veuillez contacter un administrateur.");
                 
                 // Rediriger vers la page d'accueil si l'utilisateur essaie d'accéder au tableau de bord
                 if (window.location.pathname.includes('/dashboard')) {

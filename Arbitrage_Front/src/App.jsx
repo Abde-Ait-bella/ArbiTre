@@ -394,7 +394,6 @@ function App() {
                             Created By <a target="_blank" className='text-warning' href="https://aitbella.digital/">AbdeSsamad Ait-bella</a>
                             <br />
                           </div>
-
                       </div>
                     </div>
                   </div>

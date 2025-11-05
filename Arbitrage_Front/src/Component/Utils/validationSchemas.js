@@ -49,7 +49,7 @@ export const validationSchemas = {
       .required(errorMessages.required),
     type: yup.string()
       .required(errorMessages.required)
-      .oneOf(['center', 'Assistant'], 'يجب اختيار نوع التخصص')
+      .oneOf(['center', 'assistant'], 'يجب اختيار نوع التخصص')
   }),
 
   delegue: yup.object({

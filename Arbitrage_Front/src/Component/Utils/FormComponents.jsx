@@ -90,7 +90,7 @@ export const FormSelect = ({
       >
         <option value="">{placeholder}</option>
         {options?.map((option) => (
-          <option key={option.id} value={option.id}>
+          <option key={option.id} value={parseInt(option.id)}>
             {option.nom}
           </option>
         ))}

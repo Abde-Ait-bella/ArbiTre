@@ -44,7 +44,8 @@ export const useFormHandler = (schema, endpoint, successRoute, transformData = n
       // Nettoyage et préparation des données
       let finalData = { 
         ...data, 
-        user_id: parseInt(user?.id)
+        user_id: parseInt(user?.id),
+        ville_id: parseInt(data.ville_id)
       };
 
       // Nettoyage spécifique pour les joueurs
