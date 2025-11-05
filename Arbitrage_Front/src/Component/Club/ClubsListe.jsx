@@ -26,7 +26,7 @@ function ClubListe() {
 
     // Filtrer les clubs de l'utilisateur - MÊME PRINCIPE QUE RAPPORTLISTE
     const filteredClubs = allClubs?.filter(
-        club => parseInt(club.user_id) === user?.id || club.user_id === null
+        club => parseInt(club.user_id) == user?.id || club.user_id === null
     ) || [];
     
     // Transformer les données pour le DataTable - MÊME PRINCIPE QUE RAPPORTLISTE

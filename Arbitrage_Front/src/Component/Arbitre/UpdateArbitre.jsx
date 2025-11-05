@@ -38,7 +38,7 @@ function UpdateArbitre() {
             try {
                 const response = await axiosClinet.get('/ville');
                 const filteredVilles = response.data.filter(
-                    (v) => parseInt(v.user_id) === user?.id || v.user_id === null
+                    (v) => parseInt(v.user_id) == user?.id || v.user_id === null
                 );
                 setVilles(filteredVilles);
             } catch (error) {

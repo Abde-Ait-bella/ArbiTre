@@ -11,7 +11,7 @@ function VillesListe() {
     // Utiliser nos hooks personnalisés
     const { data: villes, loading } = useDataFetching(
         '/ville', 
-        (data, user) => data.filter(v => parseInt(v.user_id) === user?.id || v.user_id === null)
+        (data, user) => data.filter(v => parseInt(v.user_id) == user?.id || v.user_id === null)
     );
     
     const { handleDelete, loadingDelete, itemIdToDelete } = useDeleteItem(

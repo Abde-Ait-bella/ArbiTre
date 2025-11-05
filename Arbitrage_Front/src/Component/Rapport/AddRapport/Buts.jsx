@@ -30,7 +30,7 @@ export function Buts(props) {
                     axiosClinet.get('/matche'),
                 ]);
 
-                const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) === user?.id);
+                const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) == user?.id);
                 const optionJoueurs = dataJoueurs?.map(item => ({
                     value: item.nom,
                     label: item.nom.toUpperCase(),

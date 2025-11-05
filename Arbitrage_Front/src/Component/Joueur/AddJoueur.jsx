@@ -31,7 +31,7 @@ function AddJoueur() {
             try {
                 const response = await axiosClinet.get('/club');
                 const filteredClubs = response.data.filter(
-                    (c) => parseInt(c.user_id) === user?.id || c.user_id === null
+                    (c) => parseInt(c.user_id) == user?.id || c.user_id === null
                 );
                 setClubs(filteredClubs);
             } catch (error) {

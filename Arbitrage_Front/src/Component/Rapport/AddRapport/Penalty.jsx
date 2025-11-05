@@ -25,7 +25,7 @@ export function Penalty(props) {
                     axiosClinet.get('/matche'),
                 ]);
 
-                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) === user?.id || c.user_id === null);
+                const dataClubs = clubResponse.data.filter((c) => parseInt(c.user_id) == user?.id || c.user_id === null);
 
                 const dataMatch = matcheRespose.data;
                 if (!dataMatch || dataMatch.length === 0) {

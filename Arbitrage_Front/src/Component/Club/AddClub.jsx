@@ -41,10 +41,10 @@ function AddClub() {
                 ]);
 
                 const filteredVilles = villesRes.data.filter(
-                    (v) => parseInt(v.user_id) === user?.id || v.user_id === null
+                    (v) => parseInt(v.user_id) == user?.id || v.user_id === null
                 );
                 const filteredStades = stadesRes.data.filter(
-                    (s) => parseInt(s.user_id) === user?.id || s.user_id === null
+                    (s) => parseInt(s.user_id) == user?.id || s.user_id === null
                 );
 
                 setVilles(filteredVilles);

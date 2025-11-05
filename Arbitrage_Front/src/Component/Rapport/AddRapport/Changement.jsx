@@ -33,7 +33,7 @@ export function Changement(props) {
                     axiosClinet.get('/matche'),
                 ]);
 
-                const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) === user?.id);
+                const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) == user?.id);
 
                 const optionJoueursEntr = dataJoueurs?.map(item => ({
                     value: item.nom,
