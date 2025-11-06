@@ -35,195 +35,203 @@ export const usePdfPrinter = () => {
             const blob = new Blob([response.data], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
             
+            // Télécharger directement le PDF
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${fileName}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
             // Ouvrir dans une nouvelle fenêtre avec design personnalisé
-            const newWindow = window.open('', '_blank');
-            if (newWindow) {
-                newWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html dir="rtl" lang="ar">
-                    <head>
-                        <title>${fileName}</title>
-                        <meta charset="utf-8">
-                        <link rel="preconnect" href="https://fonts.googleapis.com">
-                        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-                        <style>
-                            @font-face {
-                                font-family: 'Cairo';
-                                src: url('./Fonts/Cairo-VariableFont_slntwght.ttf') format('truetype');
-                                font-weight: 100 900;
-                                font-style: normal;
-                            }
+            // const newWindow = window.open('', '_blank');
+            // if (newWindow) {
+            //     newWindow.document.write(`
+            //         <!DOCTYPE html>
+            //         <html dir="rtl" lang="ar">
+            //         <head>
+            //             <title>${fileName}</title>
+            //             <meta charset="utf-8">
+            //             <link rel="preconnect" href="https://fonts.googleapis.com">
+            //             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            //             <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+            //             <style>
+            //                 @font-face {
+            //                     font-family: 'Cairo';
+            //                     src: url('./Fonts/Cairo-VariableFont_slntwght.ttf') format('truetype');
+            //                     font-weight: 100 900;
+            //                     font-style: normal;
+            //                 }
                             
-                            * {
-                                margin: 0;
-                                padding: 0;
-                                box-sizing: border-box;
-                            }
+            //                 * {
+            //                     margin: 0;
+            //                     padding: 0;
+            //                     box-sizing: border-box;
+            //                 }
                             
-                            body { 
-                                margin: 0; 
-                                padding: 0; 
-                                font-family: 'Cairo', Arial, sans-serif;
-                                background-color: #dc3545;
-                                color: white;
-                                direction: rtl;
-                            }
+            //                 body { 
+            //                     margin: 0; 
+            //                     padding: 0; 
+            //                     font-family: 'Cairo', Arial, sans-serif;
+            //                     background-color: #dc3545;
+            //                     color: white;
+            //                     direction: rtl;
+            //                 }
                             
-                            .header {
-                                background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-                                padding: 15px 25px;
-                                border-bottom: 3px solid #ffffff20;
-                                display: flex;
-                                justify-content: space-between;
-                                align-items: center;
-                                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-                            }
+            //                 .header {
+            //                     background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            //                     padding: 15px 25px;
+            //                     border-bottom: 3px solid #ffffff20;
+            //                     display: flex;
+            //                     justify-content: space-between;
+            //                     align-items: center;
+            //                     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            //                 }
                             
-                            .logo-section {
-                                display: flex;
-                                align-items: center;
-                                gap: 15px;
-                            }
+            //                 .logo-section {
+            //                     display: flex;
+            //                     align-items: center;
+            //                     gap: 15px;
+            //                 }
                             
-                            .logo {
-                                width: 50px;
-                                height: 50px;
-                                background: white;
-                                border-radius: 8px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                font-weight: bold;
-                                color: #dc3545;
-                                font-size: 18px;
-                                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                            }
+            //                 .logo {
+            //                     width: 50px;
+            //                     height: 50px;
+            //                     background: white;
+            //                     border-radius: 8px;
+            //                     display: flex;
+            //                     align-items: center;
+            //                     justify-content: center;
+            //                     font-weight: bold;
+            //                     color: #dc3545;
+            //                     font-size: 18px;
+            //                     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            //                 }
                             
-                            .site-info {
-                                display: flex;
-                                flex-direction: column;
-                                align-items: flex-end;
-                            }
+            //                 .site-info {
+            //                     display: flex;
+            //                     flex-direction: column;
+            //                     align-items: flex-end;
+            //                 }
                             
-                            .site-subtitle {
-                                font-size: 12px;
-                                color: #ffffff90;
-                                font-weight: 400;
-                            }
+            //                 .site-subtitle {
+            //                     font-size: 12px;
+            //                     color: #ffffff90;
+            //                     font-weight: 400;
+            //                 }
                             
-                            .file-info {
-                                display: flex;
-                                flex-direction: column;
-                                align-items: flex-end;
-                                text-align: right;
-                            }
+            //                 .file-info {
+            //                     display: flex;
+            //                     flex-direction: column;
+            //                     align-items: flex-end;
+            //                     text-align: right;
+            //                 }
                             
-                            .filename {
-                                font-weight: 600;
-                                font-size: 16px;
-                                color: white;
-                                margin-bottom: 5px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-                            }
+            //                 .filename {
+            //                     font-weight: 600;
+            //                     font-size: 16px;
+            //                     color: white;
+            //                     margin-bottom: 5px;
+            //                     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            //                 }
                             
-                            .file-date {
-                                font-size: 12px;
-                                color: #ffffff80;
-                                font-weight: 400;
-                            }
+            //                 .file-date {
+            //                     font-size: 12px;
+            //                     color: #ffffff80;
+            //                     font-weight: 400;
+            //                 }
                             
-                            .download-btn {
-                                background: white;
-                                color: #dc3545;
-                                border: none;
-                                padding: 10px 20px;
-                                border-radius: 25px;
-                                cursor: pointer;
-                                text-decoration: none;
-                                font-size: 14px;
-                                font-weight: 600;
-                                transition: all 0.3s ease;
-                                box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-                                display: flex;
-                                align-items: center;
-                                gap: 8px;
-                            }
+            //                 .download-btn {
+            //                     background: white;
+            //                     color: #dc3545;
+            //                     border: none;
+            //                     padding: 10px 20px;
+            //                     border-radius: 25px;
+            //                     cursor: pointer;
+            //                     text-decoration: none;
+            //                     font-size: 14px;
+            //                     font-weight: 600;
+            //                     transition: all 0.3s ease;
+            //                     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            //                     display: flex;
+            //                     align-items: center;
+            //                     gap: 8px;
+            //                 }
                             
-                            .download-btn:hover {
-                                background: #f8f9fa;
-                                transform: translateY(-1px);
-                                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                            }
+            //                 .download-btn:hover {
+            //                     background: #f8f9fa;
+            //                     transform: translateY(-1px);
+            //                     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            //                 }
                             
-                            .pdf-container {
-                                background-color: #dc3545;
-                                height: calc(100vh - 80px);
-                                padding: 10px;
-                            }
+            //                 .pdf-container {
+            //                     background-color: #dc3545;
+            //                     height: calc(100vh - 80px);
+            //                     padding: 10px;
+            //                 }
                             
-                            iframe { 
-                                width: 100%; 
-                                height: 100%; 
-                                border: none; 
-                                border-radius: 8px;
-                                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-                            }
+            //                 iframe { 
+            //                     width: 100%; 
+            //                     height: 100%; 
+            //                     border: none; 
+            //                     border-radius: 8px;
+            //                     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            //                 }
                             
-                            @media (max-width: 768px) {
-                                .header {
-                                    flex-direction: column;
-                                    gap: 15px;
-                                    padding: 20px 15px;
-                                }
+            //                 @media (max-width: 768px) {
+            //                     .header {
+            //                         flex-direction: column;
+            //                         gap: 15px;
+            //                         padding: 20px 15px;
+            //                     }
                                 
-                                .logo-section {
-                                    order: 2;
-                                }
+            //                     .logo-section {
+            //                         order: 2;
+            //                     }
                                 
-                                .file-info {
-                                    order: 1;
-                                    align-items: center;
-                                    text-align: center;
-                                }
+            //                     .file-info {
+            //                         order: 1;
+            //                         align-items: center;
+            //                         text-align: center;
+            //                     }
                                 
-                                .download-btn {
-                                    order: 3;
-                                }
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="header">
+            //                     .download-btn {
+            //                         order: 3;
+            //                     }
+            //                 }
+            //             </style>
+            //         </head>
+            //         <body>
+            //             <div class="header">
                         
-                        <a href="${url}" download="${fileName}.pdf" class="download-btn">
-                            💾 تحميل التقرير
-                        </a>
+            //             <a href="${url}" download="${fileName}.pdf" class="download-btn">
+            //                 💾 تحميل التقرير
+            //             </a>
                         
-                        <div class="file-info">
-                        <div class="filename">📄 ${fileName}</div>
-                        <div class="file-date">${new Date().toLocaleDateString('fr')}</div>
-                        </div>
+            //             <div class="file-info">
+            //             <div class="filename">📄 ${fileName}</div>
+            //             <div class="file-date">${new Date().toLocaleDateString('fr')}</div>
+            //             </div>
 
-                        <div class="logo-section">
-                            <div class="site-info">
-                                <h1>ArbiTre</h1>
-                                <div class="site-subtitle">ArbiTre Platform</div>
-                            </div>
-                        </div>
-                        </div>
+            //             <div class="logo-section">
+            //                 <div class="site-info">
+            //                     <h1>ArbiTre</h1>
+            //                     <div class="site-subtitle">ArbiTre Platform</div>
+            //                 </div>
+            //             </div>
+            //             </div>
                         
-                        <div class="pdf-container">
-                            <iframe src="${url}#toolbar=1&navpanes=0&scrollbar=1&view=FitH" type="application/pdf"></iframe>
-                        </div>
-                    </body>
-                    </html>
-                `);
-                newWindow.document.close();
-            }
+            //             <div class="pdf-container">
+            //                 <iframe src="${url}#toolbar=1&navpanes=0&scrollbar=1&view=FitH" type="application/pdf"></iframe>
+            //             </div>
+            //         </body>
+            //         </html>
+            //     `);
+            //     newWindow.document.close();
+            // }
 
             // Nettoyer l'URL après utilisation
-            setTimeout(() => URL.revokeObjectURL(url), 10000);
+            // setTimeout(() => URL.revokeObjectURL(url), 10000);
             
         } catch (error) {
             setIsPdfLoading(false);
