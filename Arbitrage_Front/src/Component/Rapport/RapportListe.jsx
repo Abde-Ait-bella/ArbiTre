@@ -116,6 +116,7 @@ function Matches() {
                     homeClubName={rowData.homeClubName}
                     awayClubName={rowData.awayClubName}
                     matchDate={rowData.matchDate}
+                    whence={"rapportListe"}
                     className="rounded p-button-success p-button-sm"
                     tooltip="طباعة التقرير"
                 >

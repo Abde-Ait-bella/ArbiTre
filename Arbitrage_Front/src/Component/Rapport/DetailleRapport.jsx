@@ -262,7 +262,8 @@ function DetailleRapport() {
                   homeClubName={club?.find(c => c.id == parseInt(rapports?.club_id_1))?.nom || 'النادي الأول'}
                   awayClubName={club?.find(c => c.id == parseInt(rapports?.club_id_2))?.nom || 'النادي الثاني'}
                   matchDate={rapports?.date ? new Date(rapports.date).toISOString().split('T')[0] : 'no-date'}
-                  className="p-2 btn_print"
+                  whence={"detailleRapport"}
+                  className="p-2.5 btn_print"
                   icon="fa-print fa-solid text-secondary"
                   tooltip="طباعة التقرير"
                 >
