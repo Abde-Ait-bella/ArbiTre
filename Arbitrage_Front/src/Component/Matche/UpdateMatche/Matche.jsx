@@ -497,20 +497,30 @@ export function Matche(props) {
     };
 
     const handleSelectChange = (event) => {
-        
-        const { name, value } = event;    
-        
-        var ville = name == "ville_id" ? value : inputValue.ville_id
-        
-        var stadeClub_1 = name == "club_id_1" ? event?.stade : parseInt(matcheUpdate?.stade_id);
+        if (!event) {
+            // Guard: react-select can pass null when clearing. If no event we can't determine the field name,
+            // so just return to avoid runtime errors. Specific handlers (eg. handleDelegueSelectChange) manage nulls.
+            return;
+        }
+
+        const { name, value } = event;
+
+        // If the changed field is the ville, take the value directly; otherwise use existing value from matcheUpdate
+        var ville = name == "ville_id" ? value : matcheUpdate?.ville_id;
+
+        // Determine stade: when selecting a club, the option may include a `stade` object.
+        // Normalize to an option from state.stades when possible.
+        var stadeClub_1 = name == "club_id_1" ? event?.stade : (matcheUpdate ? parseInt(matcheUpdate?.stade_id) : null);
         if (name == "club_id_1") {
-            club_1_Option_update(event)
-            stadeClub_1 = state.stades.find((s) => stadeClub_1?.id == parseInt(s.value))
-            ville = stadeClub_1?.ville?.id
+            club_1_Option_update(event);
+            // event.stade might be an object like { id: X } or an id; try to find the matching stade option.
+            const stadiumId = event?.stade?.id ?? event?.stade ?? null;
+            stadeClub_1 = state.stades.find((s) => parseInt(s.value) === parseInt(stadiumId)) || event?.stade || null;
+            ville = stadeClub_1?.ville?.id ?? ville;
         } else if (name == "stade_id") {
-            stadeClub_1 = event
+            stadeClub_1 = event; // event is the stade option
         } else if (name == "club_id_2") {
-            club_2_Option_update(event)
+            club_2_Option_update(event);
         }
         // var villeStade = name == 'ville_id' ? ''  : state?.villes?.find((v) => parseInt(v.value) == parseInt(stadeClub_1?.ville?.id))
 
