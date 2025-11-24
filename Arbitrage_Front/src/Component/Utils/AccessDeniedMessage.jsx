@@ -3,14 +3,13 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 const AccessDeniedMessage = ({ status = 'pending', onClose }) => {
-  const navigate = useNavigate();
   
   // Le numéro de téléphone de l'administrateur
   const adminWhatsAppNumber = "+212681783861";
   
   // Message préformaté pour WhatsApp
   const whatsappMessage = encodeURIComponent(
-    `السلام عليكم، أنا مستخدم في موقع ArbiTre. حساب المستخدم الخاص بي ${status === 'pending' ? 'في انتظار التفعيل' : 'مرفوض'} وأحتاج إلى المساعدة. أنا حكم وأريد استخدام المنصة.`
+    `السلام عليكم،  أنا حكم وأريد استخدام المنصة حساب المستخدم الخاص بي ${status === 'pending' ? 'في انتظار التفعيل' : 'مرفوض'} وأحتاج إلى المساعدة.`
   );
   
   // Lien WhatsApp

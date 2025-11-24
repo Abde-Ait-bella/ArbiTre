@@ -67,41 +67,7 @@
     </style>
 </head>
 <body>
-    <!-- En-tête avec logos -->
-    <!-- <table style="width: 100%; border: none; padding-bottom: 20px;">
-        <tr>
-            <td style="width: 20%; margin-top: 10px; text-align: center; border: none;">
-            
-            <table style="width:100%; border:none;">
-                <tr>
-                    <td style="border:none; height:20px;"></td>
-                </tr>
-            </table>
-
-                <img src="{{ public_path('images/frmf.png') }}" alt="FRMF" style="height: 100px; width: auto;">
-            </td>
-            <td style="width: 30%; text-align: center; margin-top: -10px; border: none;">
-                <p style="margin: 0; font-size: 20px; font-weight: bold; line-height: 15px;">الجامعة الملكية المغربية لكرة القدم</p>
-                <p style="margin: 0; font-size: 16px;">العصبة الجهوية سوس ماسة لكرة القدم</p>
-                <p style="margin: 0; font-size: 14px;">اللجنة الجهوية للتحكيم - المديرية الجهوية للحكام</p>
-            </td>
-            <td style="width: 30%; text-align: center; margin-top: -10px; border: none;">
-                <p style="margin: 0; font-size: 20px; font-weight: bold; line-height: 15px;">Fédération royale marocaine de football</p>
-                <p style="margin: 0; font-size: 16px;">Ligue Régionale de Souss Massa de football</p>
-                <p style="margin: 0; font-size: 14px;">Comité Régional d'Arbitrage - Direction Régionale de l'Arbitrage</p>
-            </td>
-            <td style="width: 20%; margin-top: 10px; text-align: center; border: none;">
-           
-            <table style="width:100%; border:none;">
-                <tr>
-                    <td style="border:none; height:20px;"></td>
-                </tr>
-            </table>
-
-                    <img src="{{ public_path('images/ligue_souss.png') }}" alt="Ligue Souss" style="height: 100px; width: auto;">
-                </td>
-            </tr>
-        </table> -->
+    
 
      <table style="width:100%; border:none;">
         <tr>
@@ -226,10 +192,10 @@
                         <td colspan="5" style="background-color: #cccccc; font-weight: bold; border: solid #000 2px">الانذارات</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold; border: solid #000 2px; width: 59px">الفريق</td>
-                        <td style="font-weight: bold; border: solid #000 2px; width: 212px">إسم اللاعب</td>
-                        <td style="font-weight: bold; border: solid #000 2px; width: 212px">الرخصة</td>
-                        <td style="font-weight: bold; border: solid #000 2px; width: 212px">سبب الإنذار</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 65px">الفريق</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 210px">إسم اللاعب</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 210px">الرخصة</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 210px">سبب الإنذار</td>
                         <td style="font-weight: bold; border: solid #000 2px;  width: 46px">الدقيقة</td>
                     </tr>
                     @if(empty($avertissementsG) || count($avertissementsG) == 0)
@@ -244,12 +210,11 @@
                         @foreach($avertissementsG as $a)
                             <tr>
                                 <td style="border: solid #000 2px">
-                                    <!-- @foreach($clubs as $c)
+                                    @foreach($clubs as $c)
                                         @if($c->id == $a->club_id)
                                             {{ $c->abbr }}
                                         @endif
-                                    @endforeach -->
-                                    UJST
+                                    @endforeach
                                 </td>
                                 <td style="border: solid #000 2px">{{ $a->nom }}</td>
                                 <td style="border: solid #000 2px">{{ $a->joueur_numero_licence }}</td>
@@ -277,10 +242,10 @@
                         <td colspan="5" style="background-color: #cccccc; font-weight: bold; border: solid #000 2px">الطرد</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold; border: solid #000 2px; width: 59px">الفريق</td>
-                        <td style="font-weight: bold; border: solid #000 2px; width: 212px">إسم اللاعب</td>
-                        <td style="font-weight: bold; border: solid #000 2px; width: 212px">الرخصة</td>
-                        <td style="font-weight: bold; border: solid #000 2px; width: 212px">سبب الطرد</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 65px">الفريق</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 210px">إسم اللاعب</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 210px">الرخصة</td>
+                        <td style="font-weight: bold; border: solid #000 2px; width: 210px">سبب الطرد</td>
                         <td style="font-weight: bold; border: solid #000 2px; width: 46px">الدقيقة</td>
                     </tr>
                     @if(empty($avertissementsR) || count($avertissementsR) == 0)
