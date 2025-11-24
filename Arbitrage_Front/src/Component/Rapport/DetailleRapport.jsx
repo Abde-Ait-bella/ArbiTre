@@ -468,9 +468,11 @@ function DetailleRapport() {
                                   <th className="p-1 px-3">
                                     {
                                       club?.find(
-                                        (c) => c.id == parseInt(a.club_id)
-                                      )?.abbr
+                                        (c) => c.id === parseInt(a.club_id)
+                                      ).abbr
                                     }
+                                    {console.log(club)}
+                                    {/* {avertissemetG} */}
                                   </th>
                                   <th className="p-1 px-3">
                                     {a?.nom.toUpperCase()}
