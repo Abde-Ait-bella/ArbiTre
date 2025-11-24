@@ -378,7 +378,8 @@ export function Matche(props) {
 
     const sendData = () => {
         const numberKey = Object.keys(inputValue).length;
-        if (numberKey >= 27) {
+        console.log("numberKey", numberKey, inputValue);
+        if (numberKey >= 23) {
             props.dataMatche(inputValue);
             setIsValideData(prev => !prev)
             setError("")
@@ -1241,7 +1242,7 @@ export function Matche(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="my-2 row">
+                        {/* <div className="my-2 row">
                             <div className="col-md-12">
                                 <div class="card text-center bg-light text-white mx-1">
                                     <div class="card-header bg-secondary">
@@ -1260,20 +1261,20 @@ export function Matche(props) {
                                             <div className="form-group col-md-4">
                                                 <label htmlFor="inputNombre_agents_sécurité">3.	عدد رجال الامن</label>
                                                 <input type="nember" name='nombre_agents_sécurité' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputNombre_agents_sécurité" />
-                                            </div>
-                                            <div className="form-group col-md-6">
+                                            </div> */}
+                                            {/* <div className="form-group col-md-6">
                                                 <label htmlFor="inputEtat_stade">4.	ارضية الملعب</label>
                                                 <input type="text" name='etat_stade' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputEtat_stade" />
                                             </div>
                                             <div className="form-group col-md-6">
                                                 <label htmlFor="inputEtat_vestiaire">5.	مستودع ملابس الحكام </label>
                                                 <input type="text" name='etat_vestiaire' onChange={handleInputChange} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
-                                            </div>
+                                            </div> 
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="my-2 row">
                             <div className="col-md-12">
                                 <div class="card text-center bg-light text-white mx-1">
