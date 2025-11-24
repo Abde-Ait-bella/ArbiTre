@@ -1091,7 +1091,7 @@ export function Matche(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="my-2 row">
+                        {/* <div className="my-2 row">
                             <div className="col-md-12">
                                 <div class="card text-center bg-light text-white mx-1">
                                     <div class="card-header bg-secondary">
@@ -1123,7 +1123,7 @@ export function Matche(props) {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="my-2 row">
                             <div className="col-md-12">
                                 <div class="card text-center bg-light text-white mx-1">
