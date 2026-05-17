@@ -2,19 +2,19 @@ import { React,useEffect, useRef } from 'react'
 import "./style/Navbar.scss"
 import { Link } from 'react-router-dom'
 import SplitType from 'split-type'
-import gsap from 'gsap';
+// import gsap from 'gsap';
 import { AuthUser } from './AuthContext';
 import logo_red from "../public/img/png/logo_white.png"
 import Logo from './Component/Utils/Logo';
 
 function navbar() {
-    const logoRef = useRef();
-    const {user} = AuthUser();
+    // const logoRef = useRef();
+    // const {user} = AuthUser();
 
-    useEffect(() =>{
-        new SplitType(logoRef.current, { types: 'words, chars' });
-        gsap.to('.char', { y: 0, stagger: 0.05, delay: 0.2, duration: .1 });
-    },[])
+    // // useEffect(() =>{
+    // //     new SplitType(logoRef.current, { types: 'words, chars' });
+    // //     gsap.to('.char', { y: 0, stagger: 0.05, delay: 0.2, duration: .1 });
+    // // },[])
   return (
     <>
        <div className='navbar-home' dir='rtl'>

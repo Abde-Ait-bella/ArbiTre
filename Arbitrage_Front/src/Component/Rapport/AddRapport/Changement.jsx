@@ -21,8 +21,6 @@ export function Changement(props) {
     const { user, club_1, club_2 } = AuthUser();
 
     // 1. Initialiser tous les états d'options comme des tableaux vides
-    const [optionsJEntr, setOptionsJEntr] = useState([]);
-    const [optionsJSort, setOptionsJSort] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,16 +33,7 @@ export function Changement(props) {
 
                 const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) == user?.id);
 
-                const optionJoueursEntr = dataJoueurs?.map(item => ({
-                    value: item.nom,
-                    label: item.nom.toUpperCase(),
-                    name: "joueur_nom_entr",
-                }))
-                const optionJoueursSort = dataJoueurs?.map(item => ({
-                    value: item.nom,
-                    label: item.nom.toUpperCase(),
-                    name: "joueur_nom_sort",
-                }))
+                
 
                 
                 const hasClubs = !!club_1 || !!club_2;
@@ -69,8 +58,7 @@ export function Changement(props) {
                     matchNamber: parseInt(matchNamber.pop() + 1)
                 }))
 
-                setOptionsJEntr(optionJoueursEntr);
-                setOptionsJSort(optionJoueursSort);
+                
                 setLoading(false)
 
             } catch (error) {
@@ -81,118 +69,7 @@ export function Changement(props) {
     }, [club_1, club_2]);
 
 
-    //--------Sélection joueur entrant
-
-    const createOptionJEntr = (label) => ({
-        label: label.toUpperCase(),
-        value: label.toLowerCase(),
-        name: "joueur_nom_entr"
-    });
-
-    const [isLoadingJEntr, setIsLoadingJEntr] = useState(false);
-
-
-
-    const handleCreateJEntr = (inputValue) => {
-        if (currentEditingIndex === null) return;
-
-        setIsLoadingJEntr(true);
-
-        // Créer la nouvelle option
-        const newOption = createOptionJEntr(inputValue);
-
-        // Important: créer la nouvelle liste d'options avant de mettre à jour l'état
-        const updatedOptions = [...optionsJEntr, newOption];
-
-        // Mettre à jour les options disponibles
-        setOptionsJEntr(updatedOptions);
-
-        // Mettre à jour le changement avec le nouveau nom
-        const newChanges = [...change];
-        newChanges[currentEditingIndex].joueur_nom_entr = newOption.value;
-
-        // Stocker aussi la référence à l'option complète pour un affichage immédiat
-        newChanges[currentEditingIndex]._activeOption = newOption;
-
-        setChange(newChanges);
-        setIsLoadingJEntr(false);
-        setIsValide(false);
-    };
-
-    const handleChangeSelectJEntr = (event, index) => {
-        let valeur = event
-        if (valeur === null) {
-            valeur = {
-                value: "",
-                name: "joueur_nom_entr"
-            }
-            const { name, value } = valeur;
-            const newChange = [...change];
-            newChange[index][name] = value;
-            setChange(newChange);
-
-        } else {
-            const { name, value } = valeur;
-            const newChnage = [...change];
-            newChnage[index][name] = value
-            setChange(newChnage)
-        }
-        setIsValide(false);
-    }
-
-    //--------Sélection du joueur sortant
-
-    const createOptionJSort = (label) => ({
-        label: label.toUpperCase(),
-        value: label.toLowerCase(),
-        name: "joueur_nom_sort"
-    });
-
-    const [isLoadingJSort, setIsLoadingJSort] = useState(false);
-    const [valueJSort, setValueJSort] = useState();
-
-    const handleCreateSort = (inputValue) => {
-        if (currentEditingIndex === null) return;
-
-        setIsLoadingJSort(true);
-
-        // Créer la nouvelle option
-        const newOption = createOptionJSort(inputValue);
-
-        // Ajouter l'option aux joueurs disponibles
-        setOptionsJSort(prevOptions => [...prevOptions, newOption]);
-
-        // Mettre à jour immédiatement le changement avec le nouveau nom
-        const newChanges = [...change];
-        newChanges[currentEditingIndex].joueur_nom_sort = newOption.value;
-        setChange(newChanges);
-
-        setIsLoadingJSort(false);
-        setIsValide(false);
-    };
-
-    const handleChangeSelectJSort = (event, index) => {
-        let valeur = event
-        if (valeur === null) {
-            valeur = {
-                value: "",
-                name: "joueur_nom_sort"
-            }
-            const { name, value } = valeur;
-            const newChange = [...change];
-            newChange[index][name] = value;
-            setChange(newChange)
-
-
-        } else {
-            const { name, value } = valeur;
-            const newChange = [...change];
-            newChange[index][name] = value;
-            setChange(newChange)
-        }
-        setValueJSort(event)
-        setIsValide(false);
-    }
+    
 
     const handleChangeSelect = (event, index) => {
 
@@ -217,8 +94,6 @@ export function Changement(props) {
         // Champs obligatoires pour chaque changement
         const requiredFields = [
             "club_id",
-            "joueur_nom_entr",
-            "joueur_nom_sort",
             "joueur_num_entr",
             "joueur_num_sort",
             "minute",
@@ -262,8 +137,8 @@ export function Changement(props) {
         // Champs obligatoires pour chaque changement
         const requiredFields = [
             "club_id",
-            "joueur_nom_entr",
-            "joueur_nom_sort",
+            // "joueur_nom_entr",
+            // "joueur_nom_sort",
             "joueur_num_entr",
             "joueur_num_sort",
             "minute",
@@ -298,11 +173,7 @@ export function Changement(props) {
         setIsOpen(!isOpen);
     };
 
-    const [currentEditingIndex, setCurrentEditingIndex] = useState(null);
-
-    const handleFocusField = (index) => {
-        setCurrentEditingIndex(index);
-    };
+    
 
     return (
         <>
@@ -347,7 +218,7 @@ export function Changement(props) {
                                                     <CreatableSelect className='text-light' options={state.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder={`${state?.clubs.length > 0 ? 'اكتب و اختر' : 'اختر الفرق أعلاه !!'}`} />
                                                 </div>
                                             </div>
-                                            <div className="form-group col-md-3">
+                                            {/* <div className="form-group col-md-3">
                                                 <label>اسم الاعب الداخل</label>
                                                 <div className='my-2'>
                                                     <CreatableSelect className='text-light'
@@ -367,14 +238,14 @@ export function Changement(props) {
                                                         onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="form-group col-md-3">
                                                 <label >رقم الاعب الداخل</label>
                                                 <div className='my-2'>
                                                     <input type="number" name='joueur_num_entr' onChange={(event) => handleChangeInput(event, index)} className="my-2 bg-white form-control border-light" id="inputPassword4" />
                                                 </div>
                                             </div>
-                                            <div className="form-group col-md-3">
+                                            {/* <div className="form-group col-md-3">
                                                 <label >اسم الاعب الخارج</label>
                                                 <div className='my-2'>
                                                     <CreatableSelect className='text-light'
@@ -389,14 +260,14 @@ export function Changement(props) {
                                                         onFocus={() => handleFocusField(index)}
                                                     />
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="form-group col-md-3">
                                                 <label >رقم الاعب الخارج</label>
                                                 <div className='my-2'>
                                                     <input type="number" name='joueur_num_sort' onChange={(event) => handleChangeInput(event, index)} className="my-2 bg-white form-control border-light" id="inputPassword4" />
                                                 </div>
                                             </div>
-                                            <div className="form-group col-md-2">
+                                            <div className="form-group col-md-3">
                                                 <label >الدقيقة</label>
                                                 <div className='my-2'>
                                                     <input type="text" name='minute' onChange={(event) => handleChangeInput(event, index)} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />

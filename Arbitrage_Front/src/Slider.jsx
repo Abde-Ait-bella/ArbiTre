@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import "../src/style/Slider.scss"
 import SplitType from 'split-type'
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin(ScrollTrigger);
 import { useInView } from 'react-intersection-observer';
 import { Typewriter } from 'react-simple-typewriter'
 import { Link } from 'react-router-dom';
@@ -63,51 +63,51 @@ function Slider() {
       wordsClass: "word"
     });
 
-    gsap.to(splitText.words,
-      {
-        y: 50,
-        delay: 1,
-        ease: "back.inOut(8)",
-        stagger: 0.2,
-      });
+//     gsap.to(splitText.words,
+//       {
+//         y: 50,
+//         delay: 1,
+//         ease: "back.inOut(8)",
+//         stagger: 0.2,
+//       });
 
-    gsap.fromTo(textRefArab.current,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        y: 50,
-        delay: 2.5,
-        ease: "back.inOut(8)",
-        stagger: 0.2,
-        duration: 1,
-      });
+//     gsap.fromTo(textRefArab.current,
+//       { opacity: 0 },
+//       {
+//         opacity: 1,
+//         y: 50,
+//         delay: 2.5,
+//         ease: "back.inOut(8)",
+//         stagger: 0.2,
+//         duration: 1,
+//       });
 
-    if (window.innerWidth > 992) {
-      const contents = gsap.utils.toArray("#section-parent .section");
+//     if (window.innerWidth > 992) {
+//       const contents = gsap.utils.toArray("#section-parent .section");
 
-      gsap.to(contents, {
-        xPercent: -100 * (contents.length - 1),
-        scrollTrigger: {
-          trigger: refHome.current,
-          scrub: 0.2,
-          // end: '+=' + refHome.current.offsetWidth,
-//           end: '+=' + refHome.current.offsetWidth * (contents.length - 1), 
-//           pin : true,
-//           // snap : 1 / (refHome.current - 1),
-//           // snap: {
-//           //   snapTo: 1 / (contents.length - 1), // يعني غادي ينتقل من section لآخر مباشرة
-//           //   duration: {min: 0.2, max: 0.5}, // مدة الانتقال، يمكن تعدلها 
-//           //   ease: "power1.inOut" // تخلي الحركة سلسة
-//           // },
-//           // delay: 1, // يمكن تزيد هاد الـ delay باش تعطي فرصة للتوقف في كل عنصر
-          end: '+=' + refHome.current.offsetWidth * (contents.length - 1),
-          pin: true,
-          snap: 1 / (refHome.current - 1),
-          delay: 0.1, // يمكن تزيد هاد الـ delay باش تعطي فرصة للتوقف في كل عنصر
-          pinSpacer: true,
-        }
-      });
-    }
+//       gsap.to(contents, {
+//         xPercent: -100 * (contents.length - 1),
+//         scrollTrigger: {
+//           trigger: refHome.current,
+//           scrub: 0.2,
+//           // end: '+=' + refHome.current.offsetWidth,
+// //           end: '+=' + refHome.current.offsetWidth * (contents.length - 1), 
+// //           pin : true,
+// //           // snap : 1 / (refHome.current - 1),
+// //           // snap: {
+// //           //   snapTo: 1 / (contents.length - 1), // يعني غادي ينتقل من section لآخر مباشرة
+// //           //   duration: {min: 0.2, max: 0.5}, // مدة الانتقال، يمكن تعدلها 
+// //           //   ease: "power1.inOut" // تخلي الحركة سلسة
+// //           // },
+// //           // delay: 1, // يمكن تزيد هاد الـ delay باش تعطي فرصة للتوقف في كل عنصر
+//           end: '+=' + refHome.current.offsetWidth * (contents.length - 1),
+//           pin: true,
+//           snap: 1 / (refHome.current - 1),
+//           delay: 0.1, // يمكن تزيد هاد الـ delay باش تعطي فرصة للتوقف في كل عنصر
+//           pinSpacer: true,
+//         }
+//       });
+//     }
   }, [])
 
   // Add new effect to handle video sound based on visibility
