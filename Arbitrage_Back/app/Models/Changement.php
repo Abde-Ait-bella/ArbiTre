@@ -12,8 +12,6 @@ class Changement extends Model
     protected $fillable = [
         'matche_id',
         'club_id',
-          'joueur_nom_sort',
-        'joueur_nom_entr',
         'joueur_num_sort',
         'joueur_num_entr',
         'minute',

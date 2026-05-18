@@ -12,8 +12,6 @@ import '../../../style/Matche/updateMatche.scss'
 export function Changement(props) {
 
     const [state, setState] = useState({
-        joueursEntre: [],
-        joueursSort: [],
         clubs: [],
     });
 
@@ -38,21 +36,7 @@ export function Changement(props) {
 
                 const dataJoueurs = joueurResponse.data.filter((j) => parseInt(j.user_id) == user?.id);
 
-                const optionJoueursEntr = dataJoueurs?.map(item => ({
-                    value: item.nom,
-                    label: item.nom.toUpperCase(),
-                    name: "joueur_nom_entr",
-                    licence: item.joueur_numero_licence
-                }))
-                const optionJoueursSort = dataJoueurs?.map(item => ({
-                    value: item.nom,
-                    label: item.nom.toUpperCase(),
-                    name: "joueur_nom_sort",
-                    licence: item.joueur_numero_licence
-                }))
-
-                setOptionsJEntr(optionJoueursEntr);
-                setOptionsJSort(optionJoueursSort);
+                
 
                 const hasClubs = !!club_1_update || !!club_2_update;
 
@@ -72,8 +56,6 @@ export function Changement(props) {
                 setState(prevData => ({
                     ...prevData,
                     clubs: optionClubs,
-                    joueursEntre: optionJoueursEntr,
-                    joueursSort: optionJoueursSort,
                 }))
 
                 setLoading(false)
@@ -84,74 +66,7 @@ export function Changement(props) {
         fetchData();
     }, [club_1_update, club_2_update]);
 
-    //--------Sélection joueur entrant
-
-    const createOptionJEntr = (label) => ({
-        label: label.toUpperCase(),
-        value: label.toLowerCase(),
-        name: "joueur_nom_entr"
-    });
-
-    const [isLoadingJEntr, setIsLoadingJEntr] = useState(false);
-    const [optionsJEntr, setOptionsJEntr] = useState();
-
-    const handleCreateJEntr = (inputValue) => {
-        setIsLoadingJEntr(true);
-        setTimeout(() => {
-            const newOption = createOptionJEntr(inputValue);
-            setIsLoadingJEntr(false);
-            setOptionsJEntr((prev) => [...prev, newOption]);
-        }, 1000);
-    };
-
-    const handleChangeSelectJEntr = (event, index) => {
-        if (event == null) {
-            var valeur = {
-                value: "",
-                name: "joueur_nom_entr"
-            }
-        }
-        const { name, value } = valeur ? valeur : event;
-        const newChnageUpdate = [...changeUpdate];
-        newChnageUpdate[index][name] = value;
-        setChangeUpdate(newChnageUpdate);
-        setIsValide(false);
-    }
-
-    /////////--------Sélection du joueur sortant
-
-    const createOptionJSort = (label) => ({
-        label: label.toUpperCase(),
-        value: label.toLowerCase(),
-        name: "joueur_nom_sort"
-    });
-
-    const [isLoadingJSort, setIsLoadingJSort] = useState(false);
-    const [optionsJSort, setOptionsJSort] = useState();
-
-    const handleCreateJSort = (inputValue) => {
-        setIsLoadingJSort(true);
-        setTimeout(() => {
-            const newOption = createOptionJSort(inputValue);
-            setIsLoadingJSort(false);
-            setOptionsJSort((prev) => [...prev, newOption]);
-        }, 1000);
-    };
-
-    const handleChangeSelectJSort = (event, index) => {
-        let valeur = event
-        if (valeur == null) {
-            valeur = {
-                value: "",
-                name: "joueur_nom_sort"
-            }
-        }
-        const { name, value } = valeur;
-        const newChange = [...changeUpdate];
-        newChange[index][name] = value;
-        setChangeUpdate(newChange)
-        setIsValide(false);
-    }
+    
 
     const handleChangeSelect = (event, index) => {
         const { name, value } = event;
@@ -175,8 +90,6 @@ export function Changement(props) {
         // Champs obligatoires pour chaque changement
         const requiredFields = [
             "club_id",
-            "joueur_nom_entr",
-            "joueur_nom_sort",
             "joueur_num_entr",
             "joueur_num_sort",
             "minute",
@@ -220,8 +133,6 @@ export function Changement(props) {
         // Champs obligatoires pour chaque changement
         const requiredFields = [
             "club_id",
-            "joueur_nom_entr",
-            "joueur_nom_sort",
             "joueur_num_entr",
             "joueur_num_sort",
             "minute",
@@ -251,72 +162,7 @@ export function Changement(props) {
         }
     };
 
-    // 1. Ajoutez ces états pour suivre l'index d'édition actuel
-    const [currentEditingIndex, setCurrentEditingIndex] = useState(null);
-
-    const handleFocusField = (index) => {
-        setCurrentEditingIndex(index);
-    };
-
-    // 2. Améliorez la fonction handleCreateEntree pour les joueurs entrants
-    const handleCreateEntree = (inputValue) => {
-        if (currentEditingIndex == null) return;
-
-        setIsLoadingEntree(true);
-
-        // Créer la nouvelle option
-        const newOption = createOptionJEntr(inputValue);
-
-        // Vérifier si l'option existe déjà
-        const optionExists = state.joueursEntre.some(
-            option => option.value == newOption.value
-        );
-
-        if (!optionExists) {
-            setState(prevState => ({
-                ...prevState,
-                joueursEntre: [...prevState.joueursEntre, newOption]
-            }));
-        }
-
-        // Mettre à jour le changement avec le nouveau nom
-        const newChangements = [...changeUpdate];
-        newChangements[currentEditingIndex].joueur_nom_entr = newOption.value;
-        setChangeUpdate(newChangements);
-
-        setIsLoadingEntree(false);
-        setIsValide(false);
-    };
-
-    // 3. Améliorez la fonction handleCreateSortie pour les joueurs sortants
-    const handleCreateSortie = (inputValue) => {
-        if (currentEditingIndex == null) return;
-
-        setIsLoadingSortie(true);
-
-        // Créer la nouvelle option
-        const newOption = createOptionJSort(inputValue);
-
-        // Vérifier si l'option existe déjà
-        const optionExists = state.joueursSort.some(
-            option => option.value == newOption.value
-        );
-
-        if (!optionExists) {
-            setState(prevState => ({
-                ...prevState,
-                joueursSort: [...prevState.joueursSort, newOption]
-            }));
-        }
-
-        // Mettre à jour le changement avec le nouveau nom
-        const newChangements = [...changeUpdate];
-        newChangements[currentEditingIndex].joueur_nom_sort = newOption.value;
-        setChangeUpdate(newChangements);
-
-        setIsLoadingSortie(false);
-        setIsValide(false);
-    };
+    
 
     // 1. Ajouter un état pour contrôler l'ouverture/fermeture
     const [isOpen, setIsOpen] = useState(false); // Par défaut ouvert
@@ -376,22 +222,7 @@ export function Changement(props) {
                                                                 <Select isClearable className='text-light' value={state?.clubs.find((c) => c.value == parseInt(item?.club_id))} options={state.clubs} onChange={(event) => handleChangeSelect(event, index)} placeholder="اكتب" />
                                                             </div>
                                                         </div>
-                                                        <div className="form-group col-md-3">
-                                                            <label>اسم الاعب الداخل</label>
-                                                            <div className='my-2'>
-                                                                <CreatableSelect className='text-light'
-                                                                    isClearable
-                                                                    isDisabled={isLoadingEntree}
-                                                                    isLoading={isLoadingEntree}
-                                                                    onChange={(event) => handleChangeSelectJEntr(event, index)}
-                                                                    onCreateOption={handleCreateEntree}  // Utiliser la nouvelle fonction
-                                                                    options={state.joueursEntre}         // Utiliser state au lieu de optionsJEntr
-                                                                    value={state?.joueursEntre.find((j) => (j.value == item?.joueur_nom_entr))}
-                                                                    placeholder="أكتب او اختر"
-                                                                    onFocus={() => handleFocusField(index)}  // Ajouter ceci
-                                                                />
-                                                            </div>
-                                                        </div>
+                                                        
                                                         <div className="form-group col-md-3">
                                                             <label >رقم الاعب الداخل</label>
                                                             <div className='my-2'>
@@ -399,29 +230,14 @@ export function Changement(props) {
 
                                                             </div>
                                                         </div>
-                                                        <div className="form-group col-md-3">
-                                                            <label >اسم الاعب الخارج</label>
-                                                            <div className='my-2'>
-                                                                <CreatableSelect className='text-light'
-                                                                    isClearable
-                                                                    isDisabled={isLoadingJSort}
-                                                                    isLoading={isLoadingJSort}
-                                                                    onChange={(event) => handleChangeSelectJSort(event, index)}
-                                                                    onCreateOption={handleCreateSortie}       // Utiliser la nouvelle fonction
-                                                                    options={state.joueursSort}               // Utiliser state au lieu de optionsJSort
-                                                                    value={state?.joueursSort.find((j) => (j.value == item?.joueur_nom_sort))}
-                                                                    placeholder="أكتب او اختر"
-                                                                    onFocus={() => handleFocusField(index)}   // Ajouter l'événement onFocus
-                                                                />
-                                                            </div>
-                                                        </div>
+                                                        
                                                         <div className="form-group col-md-3">
                                                             <label >رقم الاعب الخارج</label>
                                                             <div className='my-2'>
                                                                 <input type="number" name='joueur_num_sort' value={item?.joueur_num_sort} onChange={(event) => handleChangeInput(event, index)} className="my-2 bg-white form-control border-light" id="inputPassword4" />
                                                             </div>
                                                         </div>
-                                                        <div className="form-group col-md-2">
+                                                        <div className="form-group col-md-3">
                                                             <label >الدقيقة</label>
                                                             <div className='my-2'>
                                                                 <input type="text" name='minute' value={item?.minute} onChange={(event) => handleChangeInput(event, index)} className="mt-2 mb-2 bg-white form-control border-light" id="inputPassword4" />
