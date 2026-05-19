@@ -20,88 +20,61 @@ function AddMatche() {
     const { club_1_Option_update, club_2_Option_update } = AuthUser();
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        if (!dataMatche) {
-            toast.error('يا هاد الحكم دير حفض للمعلومات أولاً', {
-                position: "top-left",
+        e.preventDefault();
+
+        // If nothing changed, prevent saving
+        const hasAnyChange = dataMatche || dataAvert || dataChangement || dataButs || dataPenaltyUpdate;
+        if (!hasAnyChange) {
+            toast.error('لا يوجد تغييرات لحفظها', {
+                position: 'top-left',
                 autoClose: 4000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                type: "error",
             });
             return;
         }
-        if (dataMatche) {
-            setLoading(true)
-            await axiosClinet.put(`/matche/${id}`, dataMatche).then(
-                (response) => {
-                    const { data } = response;
-                    if (data.status == true) {
-                        setLoading(false)
-                        club_1_Option_update('')
-                        club_2_Option_update('')
-                        navigate('/dashboard/updatedMatche')
-                    }
+
+        setLoading(true);
+        let anySuccess = false;
+        try {
+            if (dataMatche) {
+                const resp = await axiosClinet.put(`/matche/${id}`, dataMatche);
+                if (resp?.data?.status === true) {
+                    anySuccess = true;
+                    club_1_Option_update('');
+                    club_2_Option_update('');
                 }
-                ).catch((response) => {
-                    setLoading(false)
-                })
             }
+
             if (dataAvert) {
-                setLoading(true)
-                await axiosClinet.put(`/avertissement/${id}`, dataAvert).then(
-                    (response) => {
-                        const { data } = response;
-                        if (data.status == true) {
-                            setLoading(false)
-                            navigate('/dashboard/updatedMatche')
-                        }
-                    }
-                    ).catch((response) => {
-                        setLoading(false)
-                    })
-                }
-        if (dataChangement) {
-            setLoading(true)
-            await axiosClinet.put(`/changement/${id}`, dataChangement).then(
-                (response) => {
-                    const { data } = response;
-                    if (data.status == true) {
-                        setLoading(false)
-                        navigate('/dashboard/updatedMatche')
-                    }
-                }
-            ).catch((response) => {
-                setLoading(false)
-            })
-        }
-        if (dataButs) {
-            setLoading(true)
-            await axiosClinet.put(`/but/${id}`, dataButs).then(
-                (response) => {
-                    const { data } = response;
-                    if (data.status == true) {
-                        setLoading(false)
-                        navigate('/dashboard/updatedMatche')
-                    }
-                }
-            ).catch((response) => {
-                setLoading(false)
-            })
-        }   if (dataPenaltyUpdate) {
-            await axiosClinet.put(`/penalty/${id}`, dataPenaltyUpdate).then(
-                (response) => {
-                    const { status } = response;
-                    if (status === 200) {
-                        setLoading(false)
-                    }
-                }
-            ).catch((response) => {
-                setLoading(false)
-            })
+                const resp = await axiosClinet.put(`/avertissement/${id}`, dataAvert);
+                if (resp?.data?.status === true) anySuccess = true;
+            }
+
+            if (dataChangement) {
+                const resp = await axiosClinet.put(`/changement/${id}`, dataChangement);
+                if (resp?.data?.status === true) anySuccess = true;
+            }
+
+            if (dataButs) {
+                const resp = await axiosClinet.put(`/but/${id}`, dataButs);
+                if (resp?.data?.status === true) anySuccess = true;
+            }
+
+            if (dataPenaltyUpdate) {
+                const resp = await axiosClinet.put(`/penalty/${id}`, dataPenaltyUpdate);
+                if (resp?.status === 200) anySuccess = true;
+            }
+
+            if (anySuccess) {
+                toast.success('تم الحفظ بنجاح', { position: 'top-left', autoClose: 2500 });
+                navigate('/dashboard/updatedMatche');
+            } else {
+                toast.info('لم يتم حفظ أي تغييرات', { position: 'top-left', autoClose: 2500 });
+            }
+        } catch (err) {
+            console.error(err);
+            toast.error('حدث خطأ أثناء الحفظ', { position: 'top-left', autoClose: 4000 });
+        } finally {
+            setLoading(false);
         }
     }
 
